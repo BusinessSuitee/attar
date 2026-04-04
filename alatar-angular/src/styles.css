@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--layout-max-width: 1440px;
+
+	--color-primary-700: #2d6a4f;
+	--color-primary-600: #2e6b50;
+	--color-primary-500: #11d47d;
+	--color-accent-orange: #e8871e;
+	--color-accent-gold: #d4af37;
+
+	--color-bg-light: #fcfdfc;
+	--color-bg-dark: #151d19;
+	--color-surface: #ffffff;
+	--color-text-main: #111815;
+	--color-text-muted: #5f766a;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	min-height: 100dvh;
+	color: var(--color-text-main);
+	background: var(--color-bg-light);
+	font-family: 'Cairo', 'Inter', 'Noto Sans', sans-serif;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	letter-spacing: -0.01em;
+}
+
+html[lang='ar'] h1,
+html[lang='ar'] h2,
+html[lang='ar'] h3,
+html[lang='ar'] h4 {
+	line-height: 1.28;
+}
+
+html[lang='en'] h1,
+html[lang='en'] h2,
+html[lang='en'] h3,
+html[lang='en'] h4,
+html[lang='ru'] h1,
+html[lang='ru'] h2,
+html[lang='ru'] h3,
+html[lang='ru'] h4 {
+	line-height: 1.22;
+}
+
+html[lang='ar'] p {
+	line-height: 1.9;
+}
+
+html[lang='en'] p,
+html[lang='ru'] p {
+	line-height: 1.72;
+}
+
+@media (max-width: 768px) {
+	html[lang='ar'] p {
+		line-height: 1.8;
+	}
+
+	html[lang='en'] p,
+	html[lang='ru'] p {
+		line-height: 1.65;
+	}
+}

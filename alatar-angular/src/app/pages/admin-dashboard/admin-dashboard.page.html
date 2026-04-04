@@ -1,0 +1,480 @@
+<app-navbar [showSidebarToggle]="true" (sidebarToggle)="toggleSidebar()"></app-navbar>
+
+<main class="dashboard-shell" dir="rtl" [class.sidebar-open]="isSidebarOpen">
+  <button
+    type="button"
+    class="sidebar-backdrop"
+    *ngIf="isSidebarOpen"
+    (click)="closeSidebar()"
+    aria-label="إغلاق القائمة">
+  </button>
+
+  <aside class="dashboard-sidebar" [class.is-open]="isSidebarOpen" aria-label="القائمة الإدارية">
+    <div class="sidebar-inner">
+      <header class="sidebar-brand">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" aria-hidden="true">agriculture</span>
+        </div>
+        <div>
+          <h1>أولاد العطار</h1>
+          <p>للتصدير الزراعي</p>
+        </div>
+      </header>
+
+      <nav class="sidebar-nav" aria-label="أقسام لوحة التحكم">
+        <button
+          type="button"
+          class="sidebar-link"
+          *ngFor="let section of sections"
+          [ngClass]="'sidebar-link--' + section.key"
+          [class.is-active]="activeSection === section.key"
+          (click)="selectSection(section.key)">
+          <span class="material-symbols-outlined" aria-hidden="true">{{ section.icon }}</span>
+          <span>{{ section.label }}</span>
+        </button>
+      </nav>
+
+      <button type="button" class="create-order-btn" (click)="openAddProductForm()">
+        <span class="material-symbols-outlined" aria-hidden="true">add</span>
+        <span>إضافة منتج</span>
+      </button>
+
+      <footer class="sidebar-actions">
+        <button type="button" class="side-action side-action--soft" (click)="loadProfile()">تحديث الجلسة</button>
+        <button type="button" class="side-action side-action--solid" (click)="logout()">تسجيل الخروج</button>
+      </footer>
+    </div>
+  </aside>
+
+  <section class="dashboard-main" aria-label="محتوى لوحة التحكم">
+    <div class="dashboard-content">
+      <section class="status-row" aria-live="polite" *ngIf="isLoading || !!loadError">
+        <div class="status loading" *ngIf="isLoading">جاري تحميل بيانات الجلسة...</div>
+        <div class="status error" *ngIf="!isLoading && loadError">{{ loadError }}</div>
+      </section>
+
+      <section class="content-grid" *ngIf="!isLoading && (activeSection === 'overview' || activeSection === 'orders')">
+        <article class="panel orders-panel">
+          <header class="panel-head">
+            <h3>
+              <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
+              أحدث الطلبات
+            </h3>
+            <button type="button" class="panel-link-btn">عرض الكل</button>
+          </header>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>رقم الطلب</th>
+                  <th>اسم العميل</th>
+                  <th>المحصول</th>
+                  <th>الكمية (طن)</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ORD-8821</td>
+                  <td>مجموعة الخريف - دبي</td>
+                  <td><span class="crop-chip crop-chip--orange">برتقال فريش</span></td>
+                  <td>120</td>
+                  <td><span class="state state--review">قيد المراجعة</span></td>
+                </tr>
+                <tr>
+                  <td>ORD-8795</td>
+                  <td>شركة يورو-جرين</td>
+                  <td><span class="crop-chip crop-chip--purple">عنب كريمسون</span></td>
+                  <td>45</td>
+                  <td><span class="state state--ok">تم التأكيد</span></td>
+                </tr>
+                <tr>
+                  <td>ORD-8782</td>
+                  <td>الأسواق العالمية - لندن</td>
+                  <td><span class="crop-chip crop-chip--red">رمان</span></td>
+                  <td>85</td>
+                  <td><span class="state state--ship">شحن</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel activity-panel">
+          <header class="panel-head panel-head--single">
+            <h3>أحدث النشاطات</h3>
+          </header>
+          <div class="activity-list">
+            <article class="activity-item">
+              <div class="activity-icon activity-icon--success">
+                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+              </div>
+              <div>
+                <p>تم تأكيد شحنة الفراولة المتجهة لميناء هامبورج</p>
+                <span>منذ 15 دقيقة - بواسطة محمد حسن</span>
+              </div>
+            </article>
+            <article class="activity-item">
+              <div class="activity-icon activity-icon--warning">
+                <span class="material-symbols-outlined" aria-hidden="true">warning</span>
+              </div>
+              <div>
+                <p>انخفاض مستوى الرطوبة في مخزن رقم 4 بمحطة العطار</p>
+                <span>منذ ساعتين - تنبيه آلي</span>
+              </div>
+            </article>
+            <article class="activity-item">
+              <div class="activity-icon activity-icon--new">
+                <span class="material-symbols-outlined" aria-hidden="true">add_box</span>
+              </div>
+              <div>
+                <p>طلب حجز جديد لـ 50 طن برتقال (موسم صيفي)</p>
+                <span>منذ 4 ساعات - عميل جديد: جلف فود</span>
+              </div>
+            </article>
+          </div>
+          <button type="button" class="history-btn">عرض السجل التاريخي الكامل</button>
+        </article>
+      </section>
+
+      <section class="products-grid" *ngIf="!isLoading && activeSection === 'products'">
+        <article class="panel add-product-panel">
+          <header class="panel-head">
+            <h3>
+              <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
+              إضافة منتج جديد
+            </h3>
+          </header>
+
+          <div class="product-builder">
+            <form id="add-product-form" class="product-form" (submit)="onCreateProduct($event)">
+              <label class="field">
+                <span>اسم المنتج</span>
+                <input
+                  class="text-input"
+                  type="text"
+                  placeholder="مثال: برتقال أبو سرة"
+                  [value]="productForm.name"
+                  (input)="onProductFieldInput('name', $any($event.target).value)" />
+              </label>
+
+              <div class="field-grid">
+                <label class="field">
+                  <span>SKU</span>
+                  <input
+                    class="text-input"
+                    type="text"
+                    placeholder="مثال: ORANGE-NAVEL-01"
+                    [value]="productForm.sku"
+                    (input)="onProductFieldInput('sku', $any($event.target).value)" />
+                </label>
+
+                <label class="field">
+                  <span>السعر</span>
+                  <input
+                    class="text-input"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    [value]="productForm.price"
+                    (input)="onProductFieldInput('price', $any($event.target).value)" />
+                </label>
+              </div>
+
+              <label class="field">
+                <span>المخزون الافتتاحي</span>
+                <input
+                  class="text-input"
+                  type="number"
+                  step="1"
+                  min="0"
+                  placeholder="0"
+                  [value]="productForm.openingStock"
+                  (input)="onProductFieldInput('openingStock', $any($event.target).value)" />
+              </label>
+
+              <div class="product-submit-state" *ngIf="productSubmitError || productSubmitSuccess">
+                <p class="status error" *ngIf="productSubmitError">{{ productSubmitError }}</p>
+                <p class="status loading product-success" *ngIf="!productSubmitError && productSubmitSuccess">
+                  {{ productSubmitSuccess }}
+                </p>
+              </div>
+
+              <button type="submit" class="product-submit-btn" [disabled]="isCreatingProduct">
+                <span class="material-symbols-outlined" aria-hidden="true">save</span>
+                <span>{{ isCreatingProduct ? 'جاري الحفظ...' : 'حفظ المنتج' }}</span>
+              </button>
+            </form>
+
+            <aside class="category-side" aria-label="إدارة الفئات">
+              <div class="category-side__head">
+                <h4>الفئات</h4>
+                <span>تم اختيار {{ selectedCategoriesCount }} فئة</span>
+              </div>
+
+              <p class="category-side__hint">اختر فئة واحدة أو أكثر للمنتج ثم احفظ.</p>
+
+              <div class="category-add-row">
+                <input
+                  class="text-input"
+                  type="text"
+                  placeholder="إضافة فئة جديدة"
+                  [value]="newCategoryName"
+                  (input)="onCategoryNameInput($any($event.target).value)" />
+                <button type="button" class="add-category-btn" (click)="addCategory()">إضافة</button>
+              </div>
+
+              <div class="category-list" *ngIf="hasCategories; else emptyCategories">
+                <label class="category-option" *ngFor="let category of categories; trackBy: trackByCategoryId">
+                  <input
+                    type="checkbox"
+                    [checked]="isCategorySelected(category.id)"
+                    (change)="toggleCategorySelection(category.id)" />
+                  <span class="category-pill" [ngClass]="category.colorClass">{{ category.name }}</span>
+                </label>
+              </div>
+
+              <ng-template #emptyCategories>
+                <p class="category-empty">لا توجد فئات حتى الآن.</p>
+              </ng-template>
+            </aside>
+          </div>
+        </article>
+
+        <article class="panel products-list-panel">
+          <header class="panel-head">
+            <h3>
+              <span class="material-symbols-outlined" aria-hidden="true">inventory</span>
+              المنتجات
+            </h3>
+            <button type="button" class="refresh-btn" (click)="refreshProducts()" [disabled]="isProductsLoading">
+              تحديث
+            </button>
+          </header>
+
+          <div class="products-status" *ngIf="isProductsLoading">جاري تحميل المنتجات...</div>
+          <div class="products-status products-status--error" *ngIf="!isProductsLoading && productsLoadError">
+            {{ productsLoadError }}
+          </div>
+          <div class="products-status" *ngIf="!isProductsLoading && !productsLoadError && !hasProducts">
+            لا توجد منتجات حالياً.
+          </div>
+
+          <div class="table-wrap" *ngIf="!isProductsLoading && !productsLoadError && hasProducts">
+            <table>
+              <thead>
+                <tr>
+                  <th>اسم المنتج</th>
+                  <th>SKU</th>
+                  <th>السعر</th>
+                  <th>المخزون</th>
+                  <th>الفئات</th>
+                  <th>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of productsWithCategories; trackBy: trackByProductId">
+                  <td>{{ product.name }}</td>
+                  <td class="product-sku">{{ product.sku }}</td>
+                  <td>{{ formatPrice(product.price) }} ج.م</td>
+                  <td>{{ product.stockQuantity }}</td>
+                  <td>
+                    <div class="product-category-chips" *ngIf="product.categories.length > 0; else noCategories">
+                      <span
+                        class="category-pill category-pill--small"
+                        *ngFor="let category of product.categories; trackBy: trackByCategoryId"
+                        [ngClass]="category.colorClass">
+                        {{ category.name }}
+                      </span>
+                    </div>
+                    <ng-template #noCategories>-</ng-template>
+                  </td>
+                  <td>
+                    <span class="state state--ok" *ngIf="product.status === 'Active'; else productStatus">
+                      نشط
+                    </span>
+                    <ng-template #productStatus>
+                      <span class="state state--review">{{ product.status }}</span>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="contacts-grid" *ngIf="!isLoading && activeSection === 'contacts'">
+        <article class="panel contact-leads-panel">
+          <header class="panel-head">
+            <h3>
+              <span class="material-symbols-outlined" aria-hidden="true">contact_mail</span>
+              طلبات التواصل
+            </h3>
+            <div class="contacts-actions">
+              <button type="button" class="refresh-btn" (click)="refreshContacts()" [disabled]="isContactsLoading">
+                تحديث
+              </button>
+              <div class="view-switch" aria-label="عرض البيانات">
+                <button
+                  type="button"
+                  class="view-btn"
+                  [class.is-active]="contactsView === 'rows'"
+                  (click)="setContactsView('rows')">
+                  <span class="material-symbols-outlined" aria-hidden="true">table_rows</span>
+                  <span>صفوف</span>
+                </button>
+                <button
+                  type="button"
+                  class="view-btn"
+                  [class.is-active]="contactsView === 'cards'"
+                  (click)="setContactsView('cards')">
+                  <span class="material-symbols-outlined" aria-hidden="true">view_module</span>
+                  <span>بطاقات</span>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <div class="contacts-status" *ngIf="isContactsLoading">جاري تحميل جهات التواصل...</div>
+          <div class="contacts-status contacts-status--error" *ngIf="!isContactsLoading && contactsLoadError">
+            {{ contactsLoadError }}
+          </div>
+
+          <div class="contacts-empty" *ngIf="!isContactsLoading && !contactsLoadError && !hasContacts">
+            لا توجد طلبات تواصل حالياً.
+          </div>
+
+          <div class="table-wrap" *ngIf="!isContactsLoading && !contactsLoadError && hasContacts && contactsView === 'rows'">
+            <table>
+              <thead>
+                <tr>
+                  <th>الاسم</th>
+                  <th>الرقم</th>
+                  <th>الشركة</th>
+                  <th>الدولة</th>
+                  <th>المحصول</th>
+                  <th>الكمية</th>
+                  <th>مدة التسليم</th>
+                  <th>نوع الخدمة</th>
+                  <th>حالة التواصل</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contact of contacts; trackBy: trackByContactId">
+                  <td>{{ contact.fullName }}</td>
+                  <td class="contact-phone">{{ contact.phoneNumber }}</td>
+                  <td>{{ displayValue(contact.companyName) }}</td>
+                  <td>{{ displayValue(contact.country) }}</td>
+                  <td>{{ displayValue(contact.crop) }}</td>
+                  <td>{{ quantityLabel(contact.quantityTons) }}</td>
+                  <td>{{ displayValue(contact.deliveryWindow) }}</td>
+                  <td>{{ serviceTypeLabel(contact) }}</td>
+                  <td>
+                    <select
+                      class="status-select"
+                      [ngClass]="statusSelectClass(contact)"
+                      [value]="statusValue(contact)"
+                      [disabled]="isStatusUpdating(contact.id) || isContactDeleting(contact.id)"
+                      (change)="onContactStatusChange(contact, $any($event.target).value)">
+                      <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+                    </select>
+                  </td>
+                  <td class="table-action-cell">
+                    <button
+                      type="button"
+                      class="delete-contact-btn"
+                      [disabled]="isContactDeleting(contact.id) || isStatusUpdating(contact.id)"
+                      (click)="onDeleteContact(contact)">
+                      <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                      <span>حذف</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="contact-cards" *ngIf="!isContactsLoading && !contactsLoadError && hasContacts && contactsView === 'cards'">
+            <article class="contact-card" *ngFor="let contact of contacts; trackBy: trackByContactId">
+              <header class="contact-card__head">
+                <h4>{{ contact.fullName }}</h4>
+                <span [class]="statusBadgeClass(contact)">{{ statusLabel(contact) }}</span>
+              </header>
+
+              <p class="contact-card__phone">{{ contact.phoneNumber }}</p>
+              <p class="contact-card__company">{{ displayValue(contact.companyName) }}</p>
+
+              <div class="contact-card__rows">
+                <div class="contact-row">
+                  <span class="contact-row__label">الدولة</span>
+                  <span class="contact-row__value">{{ displayValue(contact.country) }}</span>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-row__label">المحصول</span>
+                  <span class="contact-row__value">{{ displayValue(contact.crop) }}</span>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-row__label">الكمية</span>
+                  <span class="contact-row__value">{{ quantityLabel(contact.quantityTons) }}</span>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-row__label">مدة التسليم</span>
+                  <span class="contact-row__value">{{ displayValue(contact.deliveryWindow) }}</span>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-row__label">نوع الخدمة</span>
+                  <span class="contact-row__value">{{ serviceTypeLabel(contact) }}</span>
+                </div>
+              </div>
+
+              <label class="status-select-label">
+                <span>تحديث الحالة</span>
+                <select
+                  class="status-select"
+                  [ngClass]="statusSelectClass(contact)"
+                  [value]="statusValue(contact)"
+                  [disabled]="isStatusUpdating(contact.id) || isContactDeleting(contact.id)"
+                  (change)="onContactStatusChange(contact, $any($event.target).value)">
+                  <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+                </select>
+              </label>
+
+              <div class="contact-card__actions">
+                <button
+                  type="button"
+                  class="delete-contact-btn"
+                  [disabled]="isContactDeleting(contact.id) || isStatusUpdating(contact.id)"
+                  (click)="onDeleteContact(contact)">
+                  <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+                  <span>حذف جهة التواصل</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <footer class="pagination" *ngIf="!isContactsLoading && hasContacts">
+            <button type="button" class="page-btn" [disabled]="!canGoPrevious" (click)="loadPreviousPage()">
+              السابق
+            </button>
+            <p class="page-info">صفحة {{ currentPage }} من {{ totalPages || 1 }} - إجمالي {{ totalCount }} طلب</p>
+            <button type="button" class="page-btn" [disabled]="!canGoNext" (click)="loadNextPage()">
+              التالي
+            </button>
+          </footer>
+        </article>
+      </section>
+
+      <section class="single-panel-grid" *ngIf="!isLoading && activeSection === 'settings'">
+        <article class="panel">
+          <header class="panel-head panel-head--single">
+            <h3>الإعدادات</h3>
+          </header>
+          <p class="settings-note">يمكنك إضافة إعدادات الإدارة هنا لاحقًا.</p>
+        </article>
+      </section>
+    </div>
+  </section>
+</main>

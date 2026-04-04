@@ -1,0 +1,345 @@
+<app-navbar></app-navbar>
+
+<div
+	class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased"
+	dir="rtl"
+>
+	<main class="flex-grow">
+		<section
+			class="relative flex min-h-[400px] w-full items-center justify-center overflow-hidden bg-slate-900 py-20"
+		>
+			<div
+				class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
+				style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8'); filter: blur(4px)"
+			></div>
+			<div class="absolute inset-0 z-0 bg-primary/70 mix-blend-multiply"></div>
+			<div class="absolute inset-0 z-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+			<div
+				class="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center"
+			>
+				<span
+					class="mb-2 inline-block rounded border border-solid border-accent/40 bg-accent/20 px-3 py-1 text-sm font-bold uppercase tracking-widest text-accent backdrop-blur-sm"
+					>موسم 2024-2025</span
+				>
+				<h1 class="text-shadow-lg text-4xl font-black leading-tight tracking-tight text-white md:text-6xl">
+					محاصيلنا: من قلب مزارعنا إلى العالم
+				</h1>
+				<p
+					class="mx-auto mt-4 max-w-2xl text-lg font-light leading-relaxed text-slate-200 md:text-xl"
+				>
+					نقدم تشكيلة متنوعة من أجود المحاصيل المصرية، مزروعة بعناية ومجهزة وفقا لأعلى
+					معايير التصدير العالمية.
+				</p>
+			</div>
+		</section>
+
+		<div class="sticky top-20 z-40 border-b border-solid border-slate-200 bg-white shadow-sm">
+			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+				<div
+					class="no-scrollbar flex items-center justify-center gap-2 overflow-x-auto py-4 sm:justify-start sm:gap-4"
+				>
+					@for (filter of filterOptions; track filter.id) {
+						<button
+							type="button"
+							class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full border border-solid border-transparent px-6 py-2.5 text-sm font-bold outline-none transition-all"
+							[ngClass]="
+								activeFilter() === filter.id
+									? 'bg-primary text-white shadow-md border-none'
+									: 'bg-slate-100 text-slate-600 border-none hover:bg-slate-200 hover:text-primary'
+							"
+							[attr.aria-pressed]="activeFilter() === filter.id"
+							(click)="setFilter(filter.id)"
+						>
+							<span class="material-symbols-outlined text-lg">{{ filter.icon }}</span>
+							{{ filter.label }}
+						</button>
+					}
+				</div>
+			</div>
+		</div>
+
+		<section class="overflow-hidden bg-background-light py-20">
+			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+				<div class="flex flex-col items-center gap-12 lg:flex-row">
+					<div class="group relative w-full lg:w-1/2">
+						<div
+							class="absolute -inset-4 rounded-3xl bg-accent/20 opacity-50 blur-2xl transition-opacity group-hover:opacity-75"
+						></div>
+						<div class="relative h-[500px] overflow-hidden rounded-2xl border-4 border-solid border-white shadow-2xl">
+							<img
+								alt="البرتقال المصري"
+								class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+								src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmsanB1tlU06aaCmNIXzGESo7nXFoCl8xCYmf9V6olKVcX1SHBxiclG-IFA-gthlFEP258NK72jTQCdxg0AIhL_2W2S7NPSv2jnVIjzzY_zjZrN2rKGoqMSXouLNoftc8rQmr-TRLfSBPAtFhvLq7hauBYyG8fjvwpKDOZf-7xdtLBTRlE2Z4MX2Eqdff8ouEbotE487tDdz7ZItWCgsxuQ8rqICS9X1gUAdombNR9whDogwzhYE-plIDPo-1pWSIIrM9aqbhe1OA"
+							/>
+							<div
+								class="absolute bottom-6 right-6 flex items-center gap-2 rounded-lg bg-white/90 px-4 py-2 font-bold text-primary shadow-lg backdrop-blur"
+							>
+								<span class="material-symbols-outlined text-accent">verified</span>
+								المنتج الأكثر تصديرا
+							</div>
+						</div>
+					</div>
+					<div class="w-full space-y-8 lg:w-1/2">
+						<div>
+							<h2 class="mb-2 text-sm font-bold uppercase tracking-widest text-accent">
+								فخر الزراعة المصرية
+							</h2>
+							<h3 class="mb-4 text-4xl font-black leading-tight text-slate-900 lg:text-5xl">
+								الموالح والبرتقال المصري
+							</h3>
+							<p class="text-lg leading-relaxed text-slate-600">
+								تعد شركة أولاد العطار من الرواد في تصدير الموالح المصرية، حيث نمتلك مزارع
+								شاسعة تنتج أفخر أنواع البرتقال المطلوب عالميا بفضل المناخ المثالي والتربة
+								الخصبة، مع مراعاة أدق تفاصيل الجودة من الغرس حتى التعبئة.
+							</p>
+						</div>
+						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div class="rounded-xl border border-solid border-slate-100 bg-slate-50 p-5">
+								<h4 class="mb-3 flex items-center gap-2 font-bold text-primary">
+									<span class="material-symbols-outlined text-accent">category</span>
+									الأصناف المتوفرة
+								</h4>
+								<ul class="space-y-2 text-sm text-slate-600">
+									<li class="flex items-center gap-2">
+										<span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+										برتقال أبو سرة (Navel)
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+										فالنسيا (Valencia)
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+										بلدي (Baladi)
+									</li>
+								</ul>
+							</div>
+							<div class="rounded-xl border border-solid border-slate-100 bg-slate-50 p-5">
+								<h4 class="mb-3 flex items-center gap-2 font-bold text-primary">
+									<span class="material-symbols-outlined text-accent">calendar_month</span>
+									مواسم التوريد
+								</h4>
+								<div class="relative pt-2">
+									<div class="h-2 w-full rounded-full bg-slate-200">
+										<div class="absolute right-0 top-2 h-2 w-3/4 rounded-full bg-accent"></div>
+									</div>
+									<div class="mt-2 flex justify-between text-xs font-bold text-slate-500">
+										<span>نوفمبر</span>
+										<span>مايو</span>
+									</div>
+									<p class="mt-2 text-xs text-slate-400">متاح طوال موسم الشتاء والربيع</p>
+								</div>
+							</div>
+						</div>
+						<div class="flex flex-wrap gap-4 border-t border-slate-100 pt-4 border-solid">
+							<div
+								class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
+							>
+								<span class="material-symbols-outlined text-green-600">check_circle</span>
+								مطابق للمواصفات الأوروبية
+							</div>
+							<div
+								class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
+							>
+								<span class="material-symbols-outlined text-green-600">check_circle</span>
+								تعبئة آلية معقمة
+							</div>
+							<div
+								class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
+							>
+								<span class="material-symbols-outlined text-green-600">check_circle</span>
+								شحن مبرد
+							</div>
+						</div>
+						<button
+							type="button"
+							class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3.5 font-bold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 sm:w-auto"
+						>
+							<span class="material-symbols-outlined">request_quote</span>
+							طلب عرض أسعار للبرتقال
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="bg-slate-50 py-20">
+			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+				<div class="mb-16 text-center">
+					<span class="mb-2 block text-sm font-bold uppercase tracking-widest text-accent"
+						>تنوع لا يضاهى</span
+					>
+					<h2 class="text-3xl font-bold text-slate-900 md:text-4xl">قائمة المحاصيل الموسمية</h2>
+				</div>
+				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+					@for (product of visibleProducts(); track product.title) {
+						<article
+							class="group overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
+						>
+							<div class="relative h-64 overflow-hidden">
+								<img
+									[alt]="product.title"
+									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+									[src]="product.image"
+								/>
+								<div
+									class="absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white"
+									[ngClass]="product.badgeType === 'summer' ? 'bg-accent' : 'bg-primary'"
+								>
+									{{ product.badge }}
+								</div>
+								<div class="absolute bottom-0 left-0 h-1/2 w-full bg-gradient-to-t from-black/80 to-transparent"></div>
+								<h3 class="absolute bottom-4 right-4 text-2xl font-bold text-white">{{ product.title }}</h3>
+							</div>
+							<div class="p-6">
+								<p class="mb-4 flex items-center gap-1 text-sm text-slate-500">
+									<span class="material-symbols-outlined text-lg text-primary">calendar_month</span>
+									{{ product.season }}
+								</p>
+								<button
+									type="button"
+									class="w-full rounded-lg border border-solid border-primary bg-white py-2.5 font-bold text-primary outline-none transition-colors duration-300 hover:bg-primary hover:text-white"
+								>
+									طلب تسعير
+								</button>
+							</div>
+						</article>
+					}
+				</div>
+				@if (visibleProducts().length === 0) {
+					<div class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center border-solid">
+						<p class="mb-2 font-bold text-slate-700">لا توجد محاصيل متاحة في هذا التصنيف حالياً</p>
+						<p class="text-sm text-slate-500">
+							جرّب تصنيفًا آخر أو تواصل مع فريق المبيعات للتوفر القادم.
+						</p>
+					</div>
+				}
+			</div>
+		</section>
+
+		<section class="bg-primary py-12 text-white">
+			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+				<div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+					<div class="md:w-1/2">
+						<h2 class="mb-3 flex items-center gap-2 text-2xl font-bold">
+							<span class="material-symbols-outlined text-3xl text-accent">verified_user</span>
+							ضمان الجودة وسلامة الغذاء
+						</h2>
+						<p class="text-sm leading-relaxed text-slate-200">
+							نلتزم بأعلى معايير سلامة الغذاء العالمية لضمان وصول منتجاتنا صحية وآمنة للمستهلك.
+							جميع محطاتنا ومزارعنا تخضع لرقابة صارمة ومطبقة لأحدث البروتوكولات الزراعية.
+						</p>
+					</div>
+					<div class="flex flex-wrap items-center justify-center gap-6">
+						<div class="flex flex-col items-center gap-2">
+							<div
+								class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg"
+							>
+								GLOBAL<br />G.A.P
+							</div>
+							<span class="text-xs font-bold text-accent">الممارسات الزراعية</span>
+						</div>
+						<div class="flex flex-col items-center gap-2">
+							<div
+								class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-xs font-black text-primary shadow-lg"
+							>
+								HACCP
+							</div>
+							<span class="text-xs font-bold text-accent">سلامة الغذاء</span>
+						</div>
+						<div class="flex flex-col items-center gap-2">
+							<div
+								class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg"
+							>
+								ISO<br />22000
+							</div>
+							<span class="text-xs font-bold text-accent">إدارة الجودة</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="relative overflow-hidden bg-background-light py-20">
+			<div class="absolute right-0 top-0 h-full w-1/3 origin-top-right skew-x-12 transform bg-accent/5"></div>
+			<div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+				<h2 class="mb-6 text-3xl font-black text-slate-900 md:text-5xl">جاهز لطلب محصولك؟</h2>
+				<p class="mx-auto mb-10 max-w-2xl text-lg text-slate-600">
+					فريق المبيعات لدينا جاهز لمساعدتك في تأمين أفضل المحاصيل بالمواصفات والكميات التي
+					تحتاجها لأسواقك.
+				</p>
+				<a
+					class="inline-flex items-center gap-3 rounded-xl bg-accent px-10 py-4 text-lg font-bold text-white shadow-xl shadow-accent/20 transition-all hover:-translate-y-1 hover:bg-accent/90"
+					href="/#contact"
+				>
+					<span>احجز طلبية الآن</span>
+					<span class="material-symbols-outlined rtl:rotate-180">arrow_forward</span>
+				</a>
+			</div>
+		</section>
+	</main>
+
+	<footer class="border-t border-slate-200 bg-white pb-8 pt-16 border-solid">
+		<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+			<div class="grid grid-cols-1 gap-12 text-right md:grid-cols-2 lg:grid-cols-4" dir="rtl">
+				<div class="flex flex-col gap-4">
+					<div class="flex items-center gap-2 text-primary">
+						<span class="material-symbols-outlined text-3xl">agriculture</span>
+						<span class="text-xl font-bold text-slate-900">أولاد العطار</span>
+					</div>
+					<p class="text-sm leading-relaxed text-slate-500">
+						نصدر للعالم كنوز مصر الزراعية منذ عام 1975. الجودة، النزاهة، والاستدامة هي شعارنا
+						في كل حصاد.
+					</p>
+				</div>
+				<div>
+					<h4 class="mb-4 font-bold text-slate-900">الشركة</h4>
+					<ul class="flex flex-col gap-2 text-sm text-slate-500">
+						<li><a class="transition-colors hover:text-primary" routerLink="/" fragment="about">عن المجموعة</a></li>
+						<li><a class="transition-colors hover:text-primary" routerLink="/" fragment="about">قصتنا</a></li>
+						<li>
+							<a class="transition-colors hover:text-primary" routerLink="/" fragment="partners">الاستدامة</a>
+						</li>
+						<li><a class="transition-colors hover:text-primary" routerLink="/" fragment="contact">التوظيف</a></li>
+					</ul>
+				</div>
+				<div>
+					<h4 class="mb-6 font-bold text-slate-900">محاصيلنا الرئيسية</h4>
+					<ul class="space-y-4 text-sm">
+						<li><a class="transition-colors hover:text-primary" routerLink="/products">الموالح</a></li>
+						<li><a class="transition-colors hover:text-primary" routerLink="/products">البطاطس</a></li>
+						<li><a class="transition-colors hover:text-primary" routerLink="/products">البصل</a></li>
+						<li><a class="transition-colors hover:text-primary" routerLink="/products">العنب</a></li>
+					</ul>
+				</div>
+				<div>
+					<h4 class="mb-4 font-bold text-slate-900">تواصل معنا</h4>
+					<ul class="flex flex-col gap-2 text-sm text-slate-500">
+						<li class="flex items-center gap-2">
+							<span class="material-symbols-outlined text-xs text-accent">location_on</span>
+							طريق القاهرة الإسكندرية الصحراوي، مصر
+						</li>
+						<li class="flex items-center gap-2">
+							<span class="material-symbols-outlined text-xs text-accent">mail</span>
+							export@awlad-elattar.com
+						</li>
+						<li class="flex items-center gap-2">
+							<span class="material-symbols-outlined text-xs text-accent">call</span>
+							+20 123 456 7890
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div
+				class="mt-16 flex flex-col items-center justify-between border-t border-slate-100 pt-8 text-sm text-slate-400 md:flex-row-reverse border-solid"
+			>
+				<p>© 2026 مجموعة أولاد العطار. جميع الحقوق محفوظة.</p>
+				<div class="mt-4 flex gap-6 md:mt-0">
+					<a class="hover:text-slate-600" routerLink="/">سياسة الخصوصية</a>
+					<a class="hover:text-slate-600" routerLink="/">الشروط والأحكام</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+

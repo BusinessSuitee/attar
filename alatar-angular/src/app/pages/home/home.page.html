@@ -1,0 +1,305 @@
+<app-navbar></app-navbar>
+<app-hero></app-hero>
+
+<main class="page-shell" *transloco="let t; read: 'home'">
+  <section id="about" class="founder-section">
+    <span class="founder-glow founder-glow--left" aria-hidden="true"></span>
+    <span class="founder-glow founder-glow--right" aria-hidden="true"></span>
+
+    <div class="founder-shell">
+      <div class="founder-grid">
+        <div class="founder-media-wrap">
+          <figure class="founder-media" [attr.aria-label]="t('founder.name')">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD79T7gm_JRiaXpLTgJylGUGJcp4WSJgXDfub-SVRGf9xCIjgitpx0tvAq-_JeGhhFZU5-jMhNTQRXe07bVt_3FXU3g0JMmoD5Q3lvd_G9LCjJ1VPO5358uNgilOyXvssWLgbtICm7g64vsNIZ0Qmr_rxbXd3-BhO5wsfep2LLc0c_9RYcxNJqDh0EMRFtblZ41zMZ1zmeoqeTwkQ2D6ZOowuXqtTvSVvNiyErujlHH5pIoo7fKbOQlp34dj98VuEedFcHx-gGcXyc"
+              [alt]="t('founder.name')"
+              loading="lazy"
+            />
+            <figcaption>
+              <h3>{{ t('founder.name') }}</h3>
+              <p>{{ t('founder.role') }}</p>
+            </figcaption>
+          </figure>
+          <span class="founder-frame founder-frame--primary" aria-hidden="true"></span>
+          <span class="founder-frame founder-frame--accent" aria-hidden="true"></span>
+        </div>
+
+        <article class="founder-content">
+          <span class="founder-tag">{{ t('founder.tag') }}</span>
+          <h2>{{ t('founder.name') }}</h2>
+
+          <p class="founder-quote">
+            {{ t('founder.quote') }}
+          </p>
+
+          <p>
+            {{ t('founder.p1') }}
+          </p>
+
+          <p>
+            {{ t('founder.p2') }}
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="partners" class="partners-section">
+    <div class="partners-shell">
+      <header class="partners-head">
+        <span class="partners-kicker">{{ t('partners.kicker') }}</span>
+        <h2>{{ t('partners.title') }}</h2>
+        <p>
+          {{ t('partners.desc') }}
+        </p>
+      </header>
+
+      <div class="partners-grid" role="list">
+        <article class="partner-card partner-card--local" role="listitem">
+          <span class="partner-orb partner-orb--top" aria-hidden="true"></span>
+
+          <div class="partner-card__head">
+            <div class="partner-icon" aria-hidden="true">
+              <span class="material-symbols-outlined">warehouse</span>
+            </div>
+            <div class="partner-title-wrap">
+              <h3>{{ t('partners.local_title') }}</h3>
+              <p>{{ t('partners.local_subtitle') }}</p>
+            </div>
+          </div>
+
+          <p class="partner-copy">
+            {{ t('partners.local_desc') }}
+          </p>
+
+          <div class="partner-panel">
+            <h4>{{ t('partners.local_partners') }}</h4>
+            <div class="partner-chip-list">
+              <span>الوادي (Al-Wadi)</span>
+              <span>نهضة مصر (Nahdet Misr)</span>
+              <span>بيكو (Pico)</span>
+              <span>مغربي (Maghrabi)</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="partner-card partner-card--global" role="listitem">
+          <span class="partner-orb partner-orb--bottom" aria-hidden="true"></span>
+
+          <div class="partner-card__head">
+            <div class="partner-icon" aria-hidden="true">
+              <span class="material-symbols-outlined">public</span>
+            </div>
+            <div class="partner-title-wrap">
+              <h3>{{ t('partners.global_title') }}</h3>
+              <p>{{ t('partners.global_subtitle') }}</p>
+            </div>
+          </div>
+
+          <p class="partner-copy">
+            {{ t('partners.global_desc') }}
+          </p>
+
+          <div class="partner-panel">
+            <h4>{{ t('partners.global_partners') }}</h4>
+            <div class="partner-signal-list">
+              <div class="partner-signal">
+                <span class="material-symbols-outlined" aria-hidden="true">factory</span>
+                <span>محطة العطار (Al-Attar Station)</span>
+              </div>
+              <div class="partner-signal">
+                <span class="material-symbols-outlined" aria-hidden="true">factory</span>
+                <span>محطة MHA</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" class="products-section">
+    <div class="products-shell">
+      <header class="products-head">
+        <div>
+          <span class="products-kicker">{{ t('products.kicker') }}</span>
+          <h2>{{ t('products.title') }}</h2>
+        </div>
+
+        <a class="products-link" routerLink="/products">
+          {{ t('products.view_all') }}
+          <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+        </a>
+      </header>
+
+      <div class="products-grid" role="list">
+        <article class="product-card" role="listitem">
+          <img
+            class="product-card__image"
+            src="https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=1200&q=80"
+            alt="Fresh Oranges"
+            loading="lazy"
+          />
+          <div class="product-card__overlay" aria-hidden="true"></div>
+
+          <div class="product-card__badge" aria-hidden="true">
+            <span class="material-symbols-outlined">verified</span>
+            <span>{{ t('products.badge') }}</span>
+          </div>
+
+          <div class="product-card__content">
+            <h3>{{ t('products.citrus_title') }}</h3>
+            <p>
+              {{ t('products.citrus_desc') }}
+            </p>
+
+            <div class="product-card__meta">
+              <span>
+                <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+                {{ t('products.citrus_meta1') }}
+              </span>
+              <span>
+                <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+                {{ t('products.citrus_meta2') }}
+              </span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem">
+          <img
+            class="product-card__image"
+            src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=1200&q=80"
+            alt="Premium Grapes"
+            loading="lazy"
+          />
+          <div class="product-card__overlay" aria-hidden="true"></div>
+
+          <div class="product-card__badge" aria-hidden="true">
+            <span class="material-symbols-outlined">verified</span>
+            <span>{{ t('products.badge') }}</span>
+          </div>
+
+          <div class="product-card__content">
+            <h3>{{ t('products.grapes_title') }}</h3>
+            <p>
+              {{ t('products.grapes_desc') }}
+            </p>
+
+            <div class="product-card__meta">
+              <span>
+                <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+                {{ t('products.grapes_meta1') }}
+              </span>
+              <span>
+                <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
+                {{ t('products.grapes_meta2') }}
+              </span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white relative overflow-hidden" id="insights">
+    <div class="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/5 blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl"></div>
+    <div class="mx-auto max-w-[1440px] px-6 lg:px-10 relative z-10">
+      <div class="mb-14 text-center">
+        <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
+          <span class="material-symbols-outlined text-base">menu_book</span>
+          {{ t('insights.kicker') }}
+        </span>
+        <h2 class="mt-5 text-3xl font-black text-slate-900 md:text-5xl">{{ t('insights.title') }}</h2>
+        <p class="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
+          {{ t('insights.desc') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+        <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+          <div class="relative h-56 overflow-hidden">
+            <img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80" alt="مراقبة جودة البرتقال في المزرعة" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <span class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary">{{ t('insights.tag1') }}</span>
+          </div>
+          <div class="p-6 text-right">
+            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">{{ t('insights.date1') }}</p>
+            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">{{ t('insights.title1') }}</h3>
+            <p class="mb-6 text-sm leading-relaxed text-slate-600">
+              {{ t('insights.desc1') }}
+            </p>
+            <a href="products.html" class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80">
+              {{ t('insights.read_article') }}
+              <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+          <div class="relative h-56 overflow-hidden">
+            <img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80" alt="توقيت حصاد العنب في المزارع" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <span class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary">{{ t('insights.tag2') }}</span>
+          </div>
+          <div class="p-6 text-right">
+            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">{{ t('insights.date2') }}</p>
+            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">{{ t('insights.title2') }}</h3>
+            <p class="mb-6 text-sm leading-relaxed text-slate-600">
+              {{ t('insights.desc2') }}
+            </p>
+            <a href="about.html" class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80">
+              {{ t('insights.read_article') }}
+              <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+          <div class="relative h-56 overflow-hidden">
+            <img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80" alt="معايير التعبئة والتغليف للتصدير" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <span class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary">{{ t('insights.tag3') }}</span>
+          </div>
+          <div class="p-6 text-right">
+            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">{{ t('insights.date3') }}</p>
+            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">{{ t('insights.title3') }}</h3>
+            <p class="mb-6 text-sm leading-relaxed text-slate-600">
+              {{ t('insights.desc3') }}
+            </p>
+            <a href="partners.html" class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80">
+              {{ t('insights.read_article') }}
+              <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-12 flex justify-center">
+        <a href="#" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all hover:border-primary hover:text-primary hover:shadow-md">
+          {{ t('insights.view_all') }}
+          <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-primary py-24 relative overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center px-6">
+      <h2 class="text-3xl font-bold text-white md:text-5xl mb-6">{{ t('cta.title') }}</h2>
+      <p class="max-w-2xl text-lg text-white/90 leading-relaxed mb-10">
+        {{ t('cta.desc') }}
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <button class="cta-btn flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 text-lg font-bold text-primary shadow-lg transition-all hover:bg-slate-50 hover:-translate-y-1" data-action="sales">
+          {{ t('cta.sales') }}
+        </button>
+        <button class="cta-btn flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-transparent px-8 text-lg font-bold text-white transition-all hover:bg-white/10 hover:border-white" data-action="catalog">
+          {{ t('cta.catalog') }}
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

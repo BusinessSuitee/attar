@@ -1,0 +1,47 @@
+<main class="login-page" dir="rtl">
+  <section class="login-card" aria-labelledby="admin-login-title">
+    <header class="login-head">
+      <p class="login-kicker">لوحة التحكم</p>
+      <h1 id="admin-login-title">تسجيل دخول الأدمن</h1>
+      <p class="login-subtitle">استخدم بيانات حساب الإدارة للوصول إلى إدارة المحاصيل والمحتوى.</p>
+    </header>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
+      <label class="field">
+        <span>البريد الإلكتروني</span>
+        <input
+          type="email"
+          formControlName="email"
+          autocomplete="username"
+          placeholder="admin@attar-eg.com"
+        />
+      </label>
+
+      <p class="field-error" *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+        أدخل بريد إلكتروني صالح.
+      </p>
+
+      <label class="field">
+        <span>كلمة المرور</span>
+        <input
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          placeholder="****************"
+        />
+      </label>
+
+      <p class="field-error" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+        كلمة المرور يجب أن تكون 12 حرفا على الأقل.
+      </p>
+
+      <p class="request-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'جاري التحقق...' : 'تسجيل الدخول' }}
+      </button>
+    </form>
+
+    <a routerLink="/" class="back-link">العودة إلى الصفحة الرئيسية</a>
+  </section>
+</main>

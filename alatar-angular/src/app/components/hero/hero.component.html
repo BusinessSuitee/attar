@@ -1,0 +1,50 @@
+<section id="home" class="hero" aria-labelledby="hero-title" *transloco="let t; read: 'home.hero'">
+  <div class="hero__media" aria-hidden="true">
+    <div class="hero__image hero__image--left"></div>
+    <div class="hero__image hero__image--right"></div>
+    <div class="hero__seam"></div>
+  </div>
+
+  <div class="hero__shade hero__shade--base"></div>
+  <div class="hero__shade hero__shade--tone"></div>
+
+  <div class="hero__content">
+    <div class="hero__chip">
+      <span class="material-symbols-outlined">verified</span>
+      <span>{{ t('badge') }}</span>
+    </div>
+
+    <h1 id="hero-title">
+      <span>{{ t('title1') }}</span>
+      <strong>{{ t('title2') }}</strong>
+    </h1>
+
+    <p>
+      {{ t('desc') }}
+    </p>
+
+    <div class="hero__actions">
+      <a class="hero-btn hero-btn--solid" routerLink="/products">{{ t('btn_products') }}</a>
+      <a class="hero-btn hero-btn--ghost" routerLink="/" fragment="contact">{{ t('btn_contact') }}</a>
+    </div>
+  </div>
+
+  <a
+    class="hero__down material-symbols-outlined"
+    routerLink="/" fragment="about"
+    aria-label="الانتقال للأسفل"
+  >
+    keyboard_arrow_down
+  </a>
+</section>
+
+<section class="hero-strip" dir="ltr" aria-label="مؤشرات سريعة" *transloco="let t; read: 'home.hero'">
+  <div class="hero-strip__track">
+    @for (item of stripItems; track trackByLabelKey($index, item)) {
+      <span class="hero-strip__item">
+        <span class="material-symbols-outlined">{{ item.icon }}</span>
+        <span>{{ t('strip.' + item.labelKey + '.label') }}</span>
+      </span>
+    }
+  </div>
+</section>

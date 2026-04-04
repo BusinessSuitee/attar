@@ -1,0 +1,245 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "partners": "Partners",
+    "products": "Products",
+    "stations": "Stations & Lands",
+    "gallery": "Gallery",
+    "contact": "Contact Us",
+    "more": "More"
+  },
+  "brand": {
+    "name": "Alatar Sons",
+    "established": "Est. 1975"
+  },
+  "home": {
+    "founder": {
+      "tag": "A Legacy of Trust",
+      "name": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar",
+      "quote": "\"Trade built on ethics and keeping promises... from our farms to the world with full honesty\"",
+      "p1": "Hajj Obada grew up embracing the Holy Quran and authentic morals, which formed the foundation of the \"Al-Attar Sons\" empire. He was not just a trader, but an advisor, a peacemaker, and a pioneer who laid the first stone for modern export agriculture in Egypt.",
+      "p2": "What began as a passion for the land transformed, through his vision and wisdom, into a deep-rooted institution lasting over half a century, preserving the covenant and passing the trust from generation to generation.",
+      "role": "Group Founder"
+    },
+    "partners": {
+      "kicker": "Supply and Export Power",
+      "title": "Giant Strategic Partnerships",
+      "desc": "We are the bridge connecting abundant local production with global export standards, handling over 50,000 tons annually.",
+      "local_title": "Local Supply Giant",
+      "local_subtitle": "The trusted partner for major factories",
+      "local_desc": "We are proud to be the main supplier for Egypt's largest agricultural and industrial companies, ensuring a steady flow of top-quality crops.",
+      "local_partners": "Partners in Success",
+      "global_title": "Global Export Gateway",
+      "global_subtitle": "+50,000 Tons Annually",
+      "global_desc": "Integrated infrastructure ensuring our products reach European and Asian markets fresh, supported by world-class packing stations.",
+      "global_partners": "Symbols of Trust and Quality"
+    },
+    "products": {
+      "kicker": "Pride of Our Production",
+      "title": "Egypt's Finest Crops",
+      "view_all": "View All Products",
+      "badge": "Quality Since 1975",
+      "citrus_title": "Citrus & Oranges",
+      "citrus_desc": "The Egyptian orange is globally renowned for its quality and taste. We pick the best fruits from our farms fresh for you.",
+      "citrus_meta1": "November - May",
+      "citrus_meta2": "Premium Packaging",
+      "grapes_title": "Premium Grapes",
+      "grapes_desc": "Carefully selected grape clusters. Export specifications catering to European market tastes.",
+      "grapes_meta1": "May - August",
+      "grapes_meta2": "Varied Packaging"
+    },
+    "insights": {
+      "kicker": "Knowledge Library",
+      "title": "Articles & Insights from Experience",
+      "desc": "Practical content sharing our expertise in agriculture, packing, and export to help our partners make better decisions throughout the season.",
+      "tag1": "Quality Chain",
+      "date1": "January 12, 2026",
+      "title1": "How Do We Ensure Orange Quality from Harvest to Export?",
+      "desc1": "The inspection, sorting, and cooling steps we rely on to guarantee Egyptian citrus reaches the end consumer perfectly fresh.",
+      "tag2": "Agricultural Tips",
+      "date2": "January 05, 2026",
+      "title2": "5 Indicators to Choose the Perfect Grape Harvest Time",
+      "desc2": "A quick guide to understanding color, firmness, and sugar ratio indicators to determine the best export timing.",
+      "tag3": "Global Markets",
+      "date3": "December 28, 2025",
+      "title3": "What Do European Markets Require for Crop Packaging?",
+      "desc3": "A look at practical requirements for packaging, labeling, and processing quality to minimize rejections.",
+      "read_article": "Read Article",
+      "view_all": "View All Articles"
+    },
+    "cta": {
+      "title": "Looking for a Reliable Agricultural Partner?",
+      "desc": "Whether you need massive volumes for the local market or global export quality, Al-Attar Sons ensures commitment and quality in every shipment.",
+      "sales": "Contact Sales",
+      "catalog": "Download Catalog"
+    },
+    "hero": {
+      "badge": "Since 1975",
+      "title1": "Alatar Sons",
+      "title2": "50 Years of Trust in Supplying and Exporting the Finest Egyptian Crops",
+      "desc": "Connecting the earths bounty with the world, from our farms to the biggest global and local markets.",
+      "btn_products": "Our Products",
+      "btn_contact": "Contact Us",
+      "strip": [
+        {
+          "icon": "public",
+          "label": "Global Export Hub"
+        },
+        {
+          "icon": "local_shipping",
+          "label": "+50,000 Tons Annually"
+        },
+        {
+          "icon": "history",
+          "label": "Rich History Since 1975"
+        },
+        {
+          "icon": "verified",
+          "label": "Global Quality Certifications"
+        }
+      ]
+    }
+  },
+  "about": {
+    "hero": {
+      "badge": "An Egyptian Success Story",
+      "titleMain": "A Legacy of Trust..",
+      "titleSub": "A story that began in 1975",
+      "description": "Discover the history of Haj Obada El-Attar, the journey of struggle and success in Egyptian agriculture, and how a small dream turned into a giant agricultural enterprise.",
+      "btnMore": "Discover More",
+      "btnVideo": "Watch Video",
+      "imgName": "Haj Obada El-Attar",
+      "imgRole": "Founder & Inspirer"
+    },
+    "stats": {
+      "stat1Num": "+45",
+      "stat1Text": "Years of Experience",
+      "stat2Num": "+50k",
+      "stat2Text": "Tons of Annual Production",
+      "stat3Num": "+500",
+      "stat3Text": "Partners and Clients",
+      "stat4Num": "12",
+      "stat4Text": "Countries Exported To"
+    },
+    "founder": {
+      "badge": "The Founder's Story",
+      "title": "Haj Abdel Fattah Youssef El-Attar",
+      "description": "Raised in an authentic rural environment, Haj Abdel Fattah memorized the Holy Quran at a young age, instilling in him the values of honesty and truthfulness. He started his journey as a reliable intermediary in agricultural crop trade, eventually becoming a symbol of trust in the Egyptian market.",
+      "card1Title": "Quranic Upbringing",
+      "card1Desc": "A religious upbringing that laid the foundation for work ethics, where memorizing the Quran was the first core of his balanced leadership character.",
+      "card2Title": "Honesty in Dealings",
+      "card2Desc": "Known as a reliable intermediary between farmers and traders, enabling him to build a strong network based on mutual respect.",
+      "card3Title": "Market Leadership",
+      "card3Desc": "Building a strong name that everyone relies on in the hardest times, solidifying the principle that a word is a contract and commitment is honor."
+    },
+    "timeline": {
+      "title": "The Journey of Success Through Time",
+      "y1975": "1975",
+      "y1975Title": "The First Beginning",
+      "y1975Desc": "Started by supplying citrus fruits on the desert road, laying the foundation for commercial work.",
+      "y1980": "1980s",
+      "y1980Title": "Building Partnerships",
+      "y1980Desc": "Building strategic partnerships with major agricultural companies such as El Wadi, Nahdet Misr, and Pico.",
+      "y1990": "1990s",
+      "y1990Title": "Expansion and Growth",
+      "y1990Desc": "Massive expansion in the farm network and starting to supply high-quality grapes and summer crops.",
+      "y2000": "2000s",
+      "y2000Title": "El-Attar Station",
+      "y2000Desc": "A turning point with the establishment of 'El-Attar Station' and the strategic shift into international export.",
+      "y2010": "2010s",
+      "y2010Title": "MHA Station",
+      "y2010Desc": "Establishing 'MHA Station', equipped with the latest technologies to enhance export capacity and meet global demand.",
+      "today": "Today",
+      "todayTitle": "El-Attar Brand",
+      "todayDesc": "Launching the brand as a symbol of quality, sustainability, and continuity for future generations."
+    },
+    "visionValues": {
+      "title": "Our Vision and Values",
+      "desc": "At El-Attar, we don't just grow crops; we grow trust. We believe that agriculture is the foundation of life, and offering a healthy, safe product is a responsibility we bear towards our clients worldwide.",
+      "val1Title": "Premium Quality",
+      "val1Desc": "Global standards with no compromise at every stage of agriculture and production.",
+      "val2Title": "Honesty and Trust",
+      "val2Desc": "The legacy of our founding grandfather that we uphold in all our business dealings."
+    },
+    "cta": {
+      "title": "Looking for a Reliable Agricultural Partner?",
+      "desc": "We are here to offer you the best products of Egyptian land with the highest global quality standards.",
+      "btnContact": "Contact Us Now",
+      "btnProducts": "Browse Our Products"
+    }
+  },
+  "partners": {
+    "hero": {
+      "badge": "Global Export Leadership",
+      "title": "Our Partners in Success: From Our Farms to Global Markets",
+      "desc": "We take pride in our strong partnerships spanning continents, delivering Egypt's finest crops fresh to every corner of the world with uncompromising quality standards.",
+      "btn1": "Discover Our Exports Network",
+      "btn2": "Watch Introductory Video"
+    },
+    "stats": {
+      "export_label": "Exporting to",
+      "export_value": "+20 Countries",
+      "volume_label": "Total annual exports",
+      "volume_value": "+50,000 Tons",
+      "quality_label": "Quality Standards",
+      "quality_value": "Global GAP"
+    },
+    "map": {
+      "kicker": "Reaching Globally",
+      "title": "World Export Map",
+      "desc": "From Egypt's heart, our products reach global markets in Russia, the EU, Arab nations, and East Asia. We ensure fresh delivery with the highest quality.",
+      "eu_region": "European Union",
+      "eu_products": "Oranges, Grapes, Strawberries",
+      "russia_region": "Russia & CIS",
+      "russia_products": "Citrus, Potatoes, Pomegranates",
+      "gulf_region": "Arab Gulf",
+      "gulf_products": "Leafy Vegetables, Seasonal Fruits",
+      "center": "Egypt (Main Hub)"
+    },
+    "strategic": {
+      "badge": "Excellence Partners",
+      "title": "Strategic Partners",
+      "desc": "We believe success is a team effort. We're proud of our partnerships with leading agricultural and export entities in the region.",
+      "logo_label": "Logo",
+      "partner1": "El-Wadi",
+      "partner1_sub": "for agricultural export",
+      "partner2": "Nahda Misr",
+      "partner2_sub": "for agricultural production",
+      "partner3": "Quality Family",
+      "partner3_sub": "Quality and Excellence",
+      "partner4": "Pico",
+      "partner4_sub": "Modern Agriculture",
+      "partner5": "Horus",
+      "partner5_sub": "Trade and Supply",
+      "partner6": "Al-Maghribi",
+      "partner6_sub": "Agriculture and Export"
+    },
+    "certifications": {
+      "title": "International Certificates & Accreditations",
+      "iso_label": "Quality Management",
+      "gap_label": "Certified",
+      "haccp_label": "Food Safety",
+      "brcgs_label": "Global Standard"
+    },
+    "cta": {
+      "title": "Be Our Partner in Success",
+      "desc": "Whether you're an importer seeking quality or a farmer aspiring for global reach, we're here to build a fruitful future together.",
+      "btn1": "Contact Us Now",
+      "btn2": "Download Company Profile"
+    },
+    "footer": {
+      "brand_name": "Alatar Sons",
+      "brand_desc": "We are committed to delivering Egypt's finest agricultural crops to the world while maintaining the highest standards of quality and sustainability.",
+      "quick_links_title": "Quick Links",
+      "link_about": "About Us",
+      "link_products": "Our Products",
+      "link_partners": "Success Partners",
+      "link_news": "News & Events",
+      "contact_title": "Contact Us",
+      "address": "Sadat City, Menoufia, Egypt",
+      "follow_title": "Follow Us",
+      "copyright": "© 2026 Alatar Sons. All rights reserved."
+    }
+  }
+}

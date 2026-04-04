@@ -1,0 +1,308 @@
+<!-- Navbar Outside of Wrapping Container -->
+<app-navbar></app-navbar>
+
+<div class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200">
+  <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<main class="flex-grow">
+      <ng-container *transloco="let t; read: 'about'">
+        <!-- Hero Section -->
+        <section class="relative bg-white dark:bg-slate-900 py-16 lg:py-24 px-6 lg:px-20 overflow-hidden">
+          <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 dark:bg-primary/10 rounded-bl-[100px] -z-10"></div>
+          <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 animate-fade-in-up">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold">
+                <span class="material-symbols-outlined text-sm">history_edu</span>
+                <span>{{ t("hero.badge") }}</span>
+              </div>
+              <h1 class="text-4xl lg:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+                {{ t("hero.titleMain") }}<br />
+                <span class="text-primary">{{ t("hero.titleSub") }}</span>
+              </h1>
+              <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+                {{ t("hero.description") }}
+              </p>
+              <div class="flex gap-4 pt-4">
+                <button class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark text-white text-base font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-1">
+                  {{ t("hero.btnMore") }}
+                </button>
+                <button class="flex items-center justify-center rounded-lg h-12 px-8 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white text-base font-bold transition-colors">
+                  {{ t("hero.btnVideo") }}
+                </button>
+              </div>
+            </div>
+            <div class="relative group">
+              <div class="absolute -inset-4 bg-accent-gold/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition duration-500"></div>
+              <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800">
+                <div class="bg-gray-200 aspect-[4/3] w-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD79T7gm_JRiaXpLTgJylGUGJcp4WSJgXDfub-SVRGf9xCIjgitpx0tvAq-_JeGhhFZU5-jMhNTQRXe07bVt_3FXU3g0JMmoD5Q3lvd_G9LCjJ1VPO5358uNgilOyXvssWLgbtICm7g64vsNIZ0Qmr_rxbXd3-BhO5wsfep2LLc0c_9RYcxNJqDh0EMRFtblZ41zMZ1zmeoqeTwkQ2D6ZOowuXqtTvSVvNiyErujlHH5pIoo7fKbOQlp34dj98VuEedFcHx-gGcXyc');"></div>
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
+                  <p class="font-bold text-lg">{{ t('hero.imgName') }}</p>
+                  <p class="text-sm opacity-90">{{ t('hero.imgRole') }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Stats Bar -->
+        <section class="bg-primary text-white py-12">
+          <div class="max-w-7xl mx-auto px-6 lg:px-20">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20 divide-x-reverse">
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">calendar_month</span>
+                <h3 class="text-4xl font-black">+45</h3>
+                <p class="text-white/80 font-medium">{{ t("hero.statYears") }}</p>
+              </div>
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">agriculture</span>
+                <h3 class="text-4xl font-black">+50k</h3>
+                <p class="text-white/80 font-medium">{{ t('stats.stat2Text') }}</p>
+              </div>
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">groups</span>
+                <h3 class="text-4xl font-black">+500</h3>
+                <p class="text-white/80 font-medium">{{ t('stats.stat3Text') }}</p>
+              </div>
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">public</span>
+                <h3 class="text-4xl font-black">12</h3>
+                <p class="text-white/80 font-medium">{{ t('stats.stat4Text') }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Founder Bio Section -->
+        <section class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark">
+          <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col gap-4 text-center mb-16">
+              <h2 class="text-accent-gold font-bold tracking-widest uppercase text-sm">{{ t('founder.badge') }}</h2>
+              <h3 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white">{{ t('founder.title') }}</h3>
+              <p class="text-slate-600 dark:text-slate-400 max-w-3xl mx-auto text-lg leading-relaxed">
+                {{ t('founder.description') }}
+              </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+              <!-- Value Card 1 -->
+              <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-3xl">menu_book</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ t('founder.card1Title') }}</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">{{ t('founder.card1Desc') }}</p>
+              </div>
+              <!-- Value Card 2 -->
+              <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-3xl">handshake</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ t('founder.card2Title') }}</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">{{ t('founder.card2Desc') }}</p>
+              </div>
+              <!-- Value Card 3 -->
+              <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-3xl">workspace_premium</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ t('founder.card3Title') }}</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">{{ t('founder.card3Desc') }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Timeline Section -->
+        <section class="py-20 px-6 lg:px-20 bg-white dark:bg-slate-900 overflow-hidden">
+          <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+              <h2 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-4">{{ t('timeline.title') }}</h2>
+              <div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+            </div>
+            <div class="relative border-r-4 border-slate-100 dark:border-slate-800 mr-4 md:mr-0 md:mx-auto md:border-r-0 md:before:absolute md:before:left-1/2 md:before:w-1 md:before:h-full md:before:bg-slate-100 dark:md:before:bg-slate-800 md:before:-ml-0.5">
+              <!-- Timeline Item 1 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full">
+                  <div class="hidden md:block md:w-5/12 text-left pl-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">1975</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">{{ t('timeline.y1975Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">{{ t('timeline.y1975Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">1975</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">{{ t('timeline.y1975Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('timeline.y1975Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                  <!-- Spacer -->
+                </div>
+              </div>
+              <!-- Timeline Item 2 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                  <div class="hidden md:block md:w-5/12 text-right pr-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">1980s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">{{ t('timeline.y1980Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">{{ t('timeline.y1980Title') }} الاستراتيجية مع كبرى الشركات الزراعية مثل الوادي، نهضة مصر، وبيكو.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-white border-4 border-primary z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">{{ t('timeline.y1980') }}</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">{{ t('timeline.y1980Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('timeline.y1980Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 3 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full">
+                  <div class="hidden md:block md:w-5/12 text-left pl-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">1990s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">{{ t('timeline.y1990Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">{{ t('timeline.y1990Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">{{ t('timeline.y1990') }}</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">{{ t('timeline.y1990Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('timeline.y1990Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 4 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                  <div class="hidden md:block md:w-5/12 text-right pr-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">2000s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">{{ t('timeline.y2000Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">نقطة تحول بتأسيس "{{ t('timeline.y2000Title') }}" وبدء الانتقال الاستراتيجي لمجال التصدير الدولي.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-white border-4 border-primary z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">2000s</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">{{ t('timeline.y2000Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('timeline.y2000Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 5 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full">
+                  <div class="hidden md:block md:w-5/12 text-left pl-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">2010s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">{{ t('timeline.y2010Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">تأسيس "{{ t('timeline.y2010Title') }}" المجهزة بأحدث التقنيات لتعزيز القدرة التصديرية وتلبية الطلب العالمي.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">2010s</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">{{ t('timeline.y2010Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('timeline.y2010Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 6 (Today) -->
+              <div class="relative">
+                <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                  <div class="hidden md:block md:w-5/12 text-right pr-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">Today</span>
+                    <div class="relative z-10 bg-primary text-white p-6 rounded-xl shadow-lg shadow-primary/30">
+                      <h3 class="text-xl font-bold mb-2">{{ t('timeline.todayTitle') }}</h3>
+                      <p class="text-white/90 text-sm">{{ t('timeline.todayDesc') }}</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-accent-gold ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-accent-gold font-bold text-xl block mb-2">{{ t('timeline.today') }}</span>
+                    <div class="bg-primary text-white p-4 rounded-lg">
+                      <h3 class="font-bold">{{ t('timeline.todayTitle') }}</h3>
+                      <p class="text-white/90 text-sm mt-1">{{ t('timeline.todayDesc') }}</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Vision & Mission Section -->
+        <section class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark relative">
+          <div class="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+          <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-6">{{ t('visionValues.title') }}</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                  {{ t('visionValues.desc') }}
+                </p>
+                <div class="flex flex-col gap-6">
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 size-12 rounded-full bg-accent-gold/20 flex items-center justify-center text-accent-gold">
+                      <span class="material-symbols-outlined">diamond</span>
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{{ t('visionValues.val1Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('visionValues.val1Desc') }}</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                      <span class="material-symbols-outlined">verified_user</span>
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{{ t('visionValues.val2Title') }}</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">{{ t('visionValues.val2Desc') }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4 mt-8">
+                  <div class="bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-lg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAe9k73L0jw6DZAgsaZc0HFCSdtvSx97XucaK-kz3yRmU64M3y0WwCB7S2JBZpFP8GCMCmbqo5X7e2crp4jgUKyvW19d9gz5huVunL3W0bjBMhvQnrBWs9XgUMqJa0uDSvlEDzf9xGGsF1K_MJfV7AaBpHx4xaIPL7mA1S5i8qEQCwcONX-cH43_xWcNuCF6iOLt_xeW41898_DG-GZcDUc_lss3uyIcP0RlM5U6KPCW-3pOAZN24tNDkwSCErZS3U6qqxtI44oGIM');"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-lg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBaugKQ3-Ahp-SHby4OkEnIOuUT3o0WUit_vYWJuABfGu-YyzYpNzwDIw5UTWcuNwc_GNnBfzadDEdHehtvBVMyk0Xf3KskeE27A0QpbSjsJZ3gAp2HvRtpfGwijFEv6J29ZaIbEcQo08QEmtyK_07VxAMgLLw7etPVCUOuVnQLTU7dJ8MjGgsnXt3kq27QMdYJ9HHPJgXT4b0ubC2wu5uvqM0g0VpQtR8EdkDb4hLQBSlLHz66o0LZhpZ_E5H1QeCnPNbVjexPZqU');"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- CTA Section -->
+        <section class="py-16 px-6 lg:px-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">{{ t('cta.title') }}</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-8">{{ t('cta.desc') }}</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <button class="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-primary hover:bg-primary-dark text-white font-bold transition-colors">
+                {{ t('cta.btnContact') }}
+              </button>
+              <button class="inline-flex items-center justify-center h-12 px-8 rounded-lg border border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary font-bold transition-colors">
+                {{ t('cta.btnProducts') }}
+              </button>
+            </div>
+          </div>
+        </section>
+            </ng-container>
+    </main>
+  </div>
+</div>

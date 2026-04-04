@@ -1,0 +1,110 @@
+<app-navbar></app-navbar>
+
+<main class="contact-shell" dir="rtl">
+  <section class="contact-layout">
+    <header class="contact-head">
+      <h1>نموذج التواصل</h1>
+      <p>املأ البيانات وسيقوم فريقنا بالتواصل معك.</p>
+    </header>
+
+    <section class="form-card" aria-label="نموذج التواصل">
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="fullName">الاسم <span class="required">*</span></label>
+            <input id="fullName" type="text" formControlName="fullName" placeholder="الاسم ثلاثي" />
+            <p class="field-error" *ngIf="fieldHasError('fullName', 'required')">الاسم مطلوب.</p>
+            <p class="field-error" *ngIf="fieldHasError('fullName', 'minlength')">
+              الاسم يجب أن يكون 3 أحرف على الأقل.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="phoneNumber">رقم الهاتف <span class="required">*</span></label>
+            <input
+              id="phoneNumber"
+              type="tel"
+              formControlName="phoneNumber"
+              placeholder="مثال: +201001234567" />
+            <p class="field-error" *ngIf="fieldHasError('phoneNumber', 'required')">الرقم مطلوب.</p>
+            <p class="field-error" *ngIf="fieldHasError('phoneNumber', 'minlength')">
+              الرقم يجب أن يكون 7 أرقام على الأقل.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="companyName">اسم الشركة</label>
+            <input id="companyName" type="text" formControlName="companyName" placeholder="اختياري" />
+          </div>
+
+          <div class="field">
+            <label>نوع الخدمة</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" formControlName="serviceType" value="local" />
+                <span>توريد محلي</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" formControlName="serviceType" value="export" />
+                <span>تصدير</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="country">
+              الدولة
+              <span class="required" *ngIf="isExportSelected">*</span>
+            </label>
+            <select id="country" formControlName="country">
+              <option value="">اختر الدولة</option>
+              <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+            </select>
+            <p class="field-note">إجباري فقط عند اختيار تصدير.</p>
+            <p class="field-error" *ngIf="fieldHasError('country', 'required')">الدولة مطلوبة في حالة التصدير.</p>
+          </div>
+
+          <div class="field">
+            <label for="crop">المحصول</label>
+            <select id="crop" formControlName="crop">
+              <option value="">اختر المحصول</option>
+              <option *ngFor="let crop of crops" [value]="crop">{{ crop }}</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="quantityTons">الكمية (طن)</label>
+            <input id="quantityTons" type="number" min="0" step="0.01" formControlName="quantityTons" />
+            <p class="field-error" *ngIf="fieldHasError('quantityTons', 'pattern')">
+              أدخل رقم صحيح أو اترك الحقل فارغاً.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="deliveryWindow">مدة التسليم المطلوبة</label>
+            <input id="deliveryWindow" type="text" formControlName="deliveryWindow" placeholder="مثال: خلال 14 يوم" />
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label for="notes">ملاحظات إضافية</label>
+          <textarea
+            id="notes"
+            rows="4"
+            formControlName="notes"
+            placeholder="أي تفاصيل إضافية مطلوبة"></textarea>
+        </div>
+
+        <p class="status status--success" *ngIf="submitSuccess">{{ submitSuccess }}</p>
+        <p class="status status--error" *ngIf="submitError">{{ submitError }}</p>
+
+        <div class="actions">
+          <button type="submit" [disabled]="isSubmitting">
+            <span *ngIf="!isSubmitting">إرسال</span>
+            <span *ngIf="isSubmitting">جاري الإرسال...</span>
+          </button>
+        </div>
+      </form>
+    </section>
+  </section>
+</main>

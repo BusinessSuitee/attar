@@ -1,0 +1,15 @@
+D:\alatar\alatar-dotnet\src\Alatar.Domain\bin\Debug\net10.0\Alatar.Domain.deps.json
+D:\alatar\alatar-dotnet\src\Alatar.Domain\bin\Debug\net10.0\Alatar.Domain.dll
+D:\alatar\alatar-dotnet\src\Alatar.Domain\bin\Debug\net10.0\Alatar.Domain.pdb
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.AssemblyInfoInputs.cache
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.AssemblyInfo.cs
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.csproj.CoreCompileInputs.cache
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.sourcelink.json
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.dll
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\refint\Alatar.Domain.dll
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\Alatar.Domain.pdb
+D:\alatar\alatar-dotnet\src\Alatar.Domain\obj\Debug\net10.0\ref\Alatar.Domain.dll
+d:\alatar\_verify\api-build\Alatar.Domain.deps.json
+d:\alatar\_verify\api-build\Alatar.Domain.dll
+d:\alatar\_verify\api-build\Alatar.Domain.pdb

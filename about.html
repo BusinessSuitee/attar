@@ -1,0 +1,459 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>أولاد العطار - من نحن</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&family=Noto+Sans+Arabic:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#0fbd66",
+              "primary-dark": "#0a8a4a",
+              "background-light": "#f6f8f7",
+              "background-dark": "#102219",
+              "accent-gold": "#d4af37",
+            },
+            fontFamily: {
+              display: ['"Noto Sans Arabic"', '"Work Sans"', "sans-serif"],
+              sans: ['"Noto Sans Arabic"', '"Work Sans"', "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .animate-fade-in-up {
+        animation: fadeInUp 0.9s ease-out both;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+      <!-- Navigation -->
+      <header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 lg:px-10">
+          <div class="flex items-center gap-4 text-primary">
+            <div class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary border border-primary/20">
+              <span class="material-symbols-outlined text-3xl">agriculture</span>
+            </div>
+            <div class="flex flex-col">
+              <h2 class="text-xl font-bold leading-none tracking-tight text-slate-900">أولاد العطار</h2>
+              <span class="text-[10px] uppercase tracking-widest text-primary font-bold">تأسست 1975</span>
+            </div>
+          </div>
+          <nav class="hidden items-center gap-8 lg:flex">
+            <a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary hover:font-bold" href="index.html">الرئيسية</a>
+            <a class="text-sm font-bold text-primary transition-colors" href="about.html">من نحن</a>
+            <a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary hover:font-bold" href="partners.html">شركاؤنا</a>
+            <a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary hover:font-bold" href="products.html">المحاصيل</a>
+            <a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary hover:font-bold" href="stations.html">المحطات والأراضي</a>
+            <a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary hover:font-bold" href="gallery.html">المعرض</a>
+            <a class="text-sm font-medium text-slate-600 transition-colors hover:text-primary hover:font-bold" href="contact.html">اتصل بنا</a>
+          </nav>
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-200 p-1" dir="ltr">
+              <button class="lang-btn px-2 py-1 text-xs font-medium text-slate-500 hover:text-primary" data-lang="EN">EN</button>
+              <button class="lang-btn active px-2 py-1 text-xs font-bold text-slate-900 bg-white shadow-sm rounded" data-lang="AR">AR</button>
+              <button class="lang-btn px-2 py-1 text-xs font-medium text-slate-500 hover:text-primary" data-lang="RU">RU</button>
+            </div>
+            <button class="flex size-9 items-center justify-center rounded-lg bg-slate-100 text-slate-700 lg:hidden hover:bg-slate-200" id="mobileMenuBtn">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+          </div>
+        </div>
+        <div class="hidden border-t border-primary/10 bg-white px-6 py-4 lg:hidden" id="mobileMenu">
+          <nav class="flex flex-col gap-3 text-right">
+            <a class="text-sm font-semibold text-slate-700 hover:text-primary" href="index.html">الرئيسية</a>
+            <a class="text-sm font-semibold text-primary" href="about.html">من نحن</a>
+            <a class="text-sm font-semibold text-slate-700 hover:text-primary" href="partners.html">شركاؤنا</a>
+            <a class="text-sm font-semibold text-slate-700 hover:text-primary" href="products.html">المحاصيل</a>
+            <a class="text-sm font-semibold text-slate-700 hover:text-primary" href="stations.html">المحطات والأراضي</a>
+            <a class="text-sm font-semibold text-slate-700 hover:text-primary" href="gallery.html">المعرض</a>
+            <a class="text-sm font-semibold text-slate-700 hover:text-primary" href="contact.html">اتصل بنا</a>
+          </nav>
+        </div>
+      </header>
+      <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative bg-white dark:bg-slate-900 py-16 lg:py-24 px-6 lg:px-20 overflow-hidden">
+          <div class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 dark:bg-primary/10 rounded-bl-[100px] -z-10"></div>
+          <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 animate-fade-in-up">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold">
+                <span class="material-symbols-outlined text-sm">history_edu</span>
+                <span>قصة نجاح مصرية</span>
+              </div>
+              <h1 class="text-4xl lg:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+                إرث من الثقة..<br />
+                <span class="text-primary">قصة بدأت منذ 1975</span>
+              </h1>
+              <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+                تعرف على تاريخ الحاج عبادة العطار ورحلة الكفاح والنجاح في الزراعة المصرية، وكيف تحول الحلم الصغير إلى صرح زراعي عملاق.
+              </p>
+              <div class="flex gap-4 pt-4">
+                <button class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark text-white text-base font-bold shadow-lg shadow-primary/30 transition-all hover:-translate-y-1">
+                  اكتشف المزيد
+                </button>
+                <button class="flex items-center justify-center rounded-lg h-12 px-8 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white text-base font-bold transition-colors">
+                  شاهد الفيديو
+                </button>
+              </div>
+            </div>
+            <div class="relative group">
+              <div class="absolute -inset-4 bg-accent-gold/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition duration-500"></div>
+              <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800">
+                <div class="bg-gray-200 aspect-[4/3] w-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD79T7gm_JRiaXpLTgJylGUGJcp4WSJgXDfub-SVRGf9xCIjgitpx0tvAq-_JeGhhFZU5-jMhNTQRXe07bVt_3FXU3g0JMmoD5Q3lvd_G9LCjJ1VPO5358uNgilOyXvssWLgbtICm7g64vsNIZ0Qmr_rxbXd3-BhO5wsfep2LLc0c_9RYcxNJqDh0EMRFtblZ41zMZ1zmeoqeTwkQ2D6ZOowuXqtTvSVvNiyErujlHH5pIoo7fKbOQlp34dj98VuEedFcHx-gGcXyc');"></div>
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white">
+                  <p class="font-bold text-lg">الحاج عبادة العطار</p>
+                  <p class="text-sm opacity-90">المؤسس والملهم</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Stats Bar -->
+        <section class="bg-primary text-white py-12">
+          <div class="max-w-7xl mx-auto px-6 lg:px-20">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20 divide-x-reverse">
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">calendar_month</span>
+                <h3 class="text-4xl font-black">+45</h3>
+                <p class="text-white/80 font-medium">عاماً من الخبرة</p>
+              </div>
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">agriculture</span>
+                <h3 class="text-4xl font-black">+50k</h3>
+                <p class="text-white/80 font-medium">طن إنتاج سنوي</p>
+              </div>
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">groups</span>
+                <h3 class="text-4xl font-black">+500</h3>
+                <p class="text-white/80 font-medium">شريك وعميل</p>
+              </div>
+              <div class="space-y-2">
+                <span class="material-symbols-outlined text-4xl opacity-80">public</span>
+                <h3 class="text-4xl font-black">12</h3>
+                <p class="text-white/80 font-medium">دولة تصدير</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Founder Bio Section -->
+        <section class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark">
+          <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col gap-4 text-center mb-16">
+              <h2 class="text-accent-gold font-bold tracking-widest uppercase text-sm">قصة المؤسس</h2>
+              <h3 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white">الحاج عبد الفتاح يوسف العطار</h3>
+              <p class="text-slate-600 dark:text-slate-400 max-w-3xl mx-auto text-lg leading-relaxed">
+                نشأ الحاج عبد الفتاح في بيئة ريفية أصيلة، وحفظ القرآن الكريم في صغره، مما غرس فيه قيم الأمانة والصدق. بدأ رحلته كوسيط موثوق في تجارة الحاصلات الزراعية، ليصبح بمرور الوقت رمزاً للثقة في السوق المصري.
+              </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+              <!-- Value Card 1 -->
+              <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-3xl">menu_book</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3">النشأة القرآنية</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">تربية دينية أسست لقيم العمل والأخلاق، حيث كان حفظ القرآن الكريم النواة الأولى لشخصيته القيادية المتزنة.</p>
+              </div>
+              <!-- Value Card 2 -->
+              <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-3xl">handshake</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3">الأمانة في التعامل</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">عُرف بكونه وسيطاً موثوقاً به بين المزارعين والتجار، مما مكنه من بناء شبكة علاقات قوية مبنية على الاحترام المتبادل.</p>
+              </div>
+              <!-- Value Card 3 -->
+              <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <span class="material-symbols-outlined text-3xl">workspace_premium</span>
+                </div>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-3">الريادة في السوق</h4>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">بناء اسم قوي يعتمد عليه الجميع في أصعب الأوقات، مرسخاً مبدأ أن الكلمة عقد والالتزام شرف.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Timeline Section -->
+        <section class="py-20 px-6 lg:px-20 bg-white dark:bg-slate-900 overflow-hidden">
+          <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+              <h2 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-4">مسيرة النجاح عبر الزمن</h2>
+              <div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+            </div>
+            <div class="relative border-r-4 border-slate-100 dark:border-slate-800 mr-4 md:mr-0 md:mx-auto md:border-r-0 md:before:absolute md:before:left-1/2 md:before:w-1 md:before:h-full md:before:bg-slate-100 dark:md:before:bg-slate-800 md:before:-ml-0.5">
+              <!-- Timeline Item 1 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full">
+                  <div class="hidden md:block md:w-5/12 text-left pl-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">1975</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">البداية الأولى</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">البداية في توريد الموالح على الطريق الصحراوي، ووضع حجر الأساس للعمل التجاري.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">1975</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">البداية الأولى</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">البداية في توريد الموالح على الطريق الصحراوي.</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                  <!-- Spacer -->
+                </div>
+              </div>
+              <!-- Timeline Item 2 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                  <div class="hidden md:block md:w-5/12 text-right pr-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">1980s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">بناء الشراكات</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">بناء الشراكات الاستراتيجية مع كبرى الشركات الزراعية مثل الوادي، نهضة مصر، وبيكو.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-white border-4 border-primary z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">الثمانينات</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">بناء الشراكات</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">شراكات مع الوادي، نهضة مصر، وبيكو.</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 3 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full">
+                  <div class="hidden md:block md:w-5/12 text-left pl-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">1990s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">التوسع والنمو</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">التوسع الكبير في شبكة المزارع وبدء توريد العنب والمحاصيل الصيفية بجودة عالية.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">التسعينات</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">التوسع والنمو</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">التوسع في شبكة المزارع وتوريد العنب.</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 4 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                  <div class="hidden md:block md:w-5/12 text-right pr-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">2000s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">محطة العطار</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">نقطة تحول بتأسيس "محطة العطار" وبدء الانتقال الاستراتيجي لمجال التصدير الدولي.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-white border-4 border-primary z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">2000s</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">محطة العطار</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">تأسيس المحطة والانتقال لمجال التصدير.</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 5 -->
+              <div class="relative mb-12 md:mb-24">
+                <div class="md:flex items-center justify-between w-full">
+                  <div class="hidden md:block md:w-5/12 text-left pl-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">2010s</span>
+                    <div class="relative z-10 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-100 dark:border-slate-700">
+                      <h3 class="text-xl font-bold text-primary mb-2">محطة MHA</h3>
+                      <p class="text-slate-600 dark:text-slate-300 text-sm">تأسيس "محطة MHA" المجهزة بأحدث التقنيات لتعزيز القدرة التصديرية وتلبية الطلب العالمي.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-primary font-bold text-xl block mb-2">2010s</span>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                      <h3 class="font-bold text-slate-900 dark:text-white">محطة MHA</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">تأسيس محطة جديدة لتعزيز القدرة التصديرية.</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+              <!-- Timeline Item 6 (Today) -->
+              <div class="relative">
+                <div class="md:flex items-center justify-between w-full flex-row-reverse">
+                  <div class="hidden md:block md:w-5/12 text-right pr-8">
+                    <span class="text-6xl font-black text-slate-100 dark:text-slate-800 block -mb-10 relative z-0">Today</span>
+                    <div class="relative z-10 bg-primary text-white p-6 rounded-xl shadow-lg shadow-primary/30">
+                      <h3 class="text-xl font-bold mb-2">براند "أولاد العطار"</h3>
+                      <p class="text-white/90 text-sm">إطلاق العلامة التجارية كرمز للجودة، الاستدامة، والاستمرارية للأجيال القادمة.</p>
+                    </div>
+                  </div>
+                  <div class="absolute right-[-11px] md:static md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-accent-gold ring-4 ring-white dark:ring-slate-900 z-20"></div>
+                  <div class="md:hidden pr-8">
+                    <span class="text-accent-gold font-bold text-xl block mb-2">اليوم</span>
+                    <div class="bg-primary text-white p-4 rounded-lg">
+                      <h3 class="font-bold">براند "أولاد العطار"</h3>
+                      <p class="text-white/90 text-sm mt-1">إطلاق العلامة التجارية كرمز للجودة والاستمرارية.</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:block md:w-5/12"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Vision & Mission Section -->
+        <section class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark relative">
+          <div class="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+          <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-6">رؤيتنا وقيمنا</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                  في أولاد العطار، لا نزرع المحاصيل فحسب، بل نزرع الثقة. نؤمن بأن الزراعة هي أساس الحياة، وأن تقديم منتج صحي وآمن هو أمانة نحملها على عاتقنا أمام عملائنا في جميع أنحاء العالم.
+                </p>
+                <div class="flex flex-col gap-6">
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 size-12 rounded-full bg-accent-gold/20 flex items-center justify-center text-accent-gold">
+                      <span class="material-symbols-outlined">diamond</span>
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold text-slate-900 dark:text-white">الجودة الفائقة</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">معايير عالمية لا تقبل التهاون في كل مرحلة من مراحل الزراعة والإنتاج.</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-4">
+                    <div class="shrink-0 size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                      <span class="material-symbols-outlined">verified_user</span>
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold text-slate-900 dark:text-white">الأمانة والثقة</h3>
+                      <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">إرث الجد المؤسس الذي نتمسك به في كل تعاملاتنا التجارية.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4 mt-8">
+                  <div class="bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-lg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAe9k73L0jw6DZAgsaZc0HFCSdtvSx97XucaK-kz3yRmU64M3y0WwCB7S2JBZpFP8GCMCmbqo5X7e2crp4jgUKyvW19d9gz5huVunL3W0bjBMhvQnrBWs9XgUMqJa0uDSvlEDzf9xGGsF1K_MJfV7AaBpHx4xaIPL7mA1S5i8qEQCwcONX-cH43_xWcNuCF6iOLt_xeW41898_DG-GZcDUc_lss3uyIcP0RlM5U6KPCW-3pOAZN24tNDkwSCErZS3U6qqxtI44oGIM');"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-lg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBaugKQ3-Ahp-SHby4OkEnIOuUT3o0WUit_vYWJuABfGu-YyzYpNzwDIw5UTWcuNwc_GNnBfzadDEdHehtvBVMyk0Xf3KskeE27A0QpbSjsJZ3gAp2HvRtpfGwijFEv6J29ZaIbEcQo08QEmtyK_07VxAMgLLw7etPVCUOuVnQLTU7dJ8MjGgsnXt3kq27QMdYJ9HHPJgXT4b0ubC2wu5uvqM0g0VpQtR8EdkDb4hLQBSlLHz66o0LZhpZ_E5H1QeCnPNbVjexPZqU');"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- CTA Section -->
+        <section class="py-16 px-6 lg:px-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">هل تبحث عن شريك زراعي موثوق؟</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-8">نحن هنا لنقدم لك أفضل منتجات الأرض المصرية بأعلى معايير الجودة العالمية.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <button class="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-primary hover:bg-primary-dark text-white font-bold transition-colors">
+                تواصل معنا الآن
+              </button>
+              <button class="inline-flex items-center justify-center h-12 px-8 rounded-lg border border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary font-bold transition-colors">
+                تصفح منتجاتنا
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="bg-background-dark text-white py-12 px-6 lg:px-20">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
+          <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-primary text-3xl">spa</span>
+              <h2 class="text-xl font-bold">أولاد العطار</h2>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">منذ 1975، نقدم خيرات الأرض المصرية للعالم. جودة، أمانة، وتاريخ عريق.</p>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4 text-primary">روابط سريعة</h3>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li><a class="hover:text-white transition-colors" href="index.html">الرئيسية</a></li>
+              <li><a class="hover:text-white transition-colors" href="about.html">من نحن</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">منتجاتنا</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">المدونة</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4 text-primary">تواصل معنا</h3>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-xs">location_on</span>
+                الطريق الصحراوي، مصر
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-xs">call</span>
+                +20 123 456 789
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-xs">mail</span>
+                info@alattar-agro.com
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4 text-primary">النشرة البريدية</h3>
+            <div class="flex flex-col gap-2">
+              <input class="bg-white/10 border-none rounded text-white text-sm placeholder-gray-500 focus:ring-1 focus:ring-primary px-4 py-2" placeholder="بريدك الإلكتروني" type="email" />
+              <button class="bg-primary hover:bg-primary-dark text-white text-sm font-bold py-2 rounded transition-colors">اشترك</button>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/10 mt-12 pt-8 text-center text-sm text-gray-500">© 2026 أولاد العطار. جميع الحقوق محفوظة.</div>
+      </footer>
+    </div>
+    <script src="home.js"></script>
+    <script src="i18n.js"></script>
+    <script src="ui-sim.js"></script>
+  </body>
+</html>
+
+
+
+
+

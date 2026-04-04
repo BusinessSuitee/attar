@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Alatar.Api/Alatar.Api.csproj" />
+    <Project Path="src/Alatar.Application/Alatar.Application.csproj" />
+    <Project Path="src/Alatar.Domain/Alatar.Domain.csproj" />
+    <Project Path="src/Alatar.Infrastructure/Alatar.Infrastructure.csproj" />
+  </Folder>
+</Solution>
