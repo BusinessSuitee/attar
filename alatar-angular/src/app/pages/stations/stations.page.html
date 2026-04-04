@@ -1,13 +1,13 @@
 <app-navbar></app-navbar>
 
-<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display" dir="rtl">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display" *transloco="let t; read: 'stations'">
 <main class="flex-grow">
       <section class="relative h-[400px] md:h-[500px] w-full overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCZlmAY-NvDYu0-F79mrIHmyhRuTFkoW9rCmppXMZCni8ggo3JALLslweFAPvtBgUZsgeHq4MWo-dKN-8s7NWQZMUv3-HDd22jhnYJOZvwM-zahkMMdsH-kkGqinvAYPPZsMeaaAIcFm2rEybXfrKGPLj65OHXJiGruEIlP0NKEIuzRZrYT6Rd4iIoyLayEebcri8dZ9IwYQCJgR0lzliFVTB5DtTrAV3KZL3osoZVKocCpYfjFZpH5D9HEcMrdPBPK7jx3lpl6TSs');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-background-dark/40 to-transparent"></div>
         <div class="relative z-10 h-full max-w-[1280px] mx-auto px-4 sm:px-10 flex flex-col justify-end pb-16">
-          <h1 class="text-white text-3xl md:text-5xl font-bold leading-tight max-w-3xl mb-4 drop-shadow-md">محطاتنا وأراضينا: منبع الجودة والاحترافية</h1>
-          <p class="text-slate-200 text-lg md:text-xl font-medium max-w-2xl">رحلة الجودة تبدأ من مزارعنا الممتدة وتنتهي في محطات التعبئة المتطورة لضمان أفضل المنتجات للعالم.</p>
+          <h1 class="text-white text-3xl md:text-5xl font-bold leading-tight max-w-3xl mb-4 drop-shadow-md">{{ t('hero.title') }}</h1>
+          <p class="text-slate-200 text-lg md:text-xl font-medium max-w-2xl">{{ t('hero.desc') }}</p>
         </div>
       </section>
 
@@ -18,28 +18,28 @@
               <span class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary">
                 <span class="material-symbols-outlined">factory</span>
               </span>
-              <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">محطة العطار</h2>
+              <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">{{ t('attar.title') }}</h2>
             </div>
-            <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">أولى محطاتنا، مجهزة بأحدث خطوط الفرز والتعبئة لضمان وصول المنتج بأعلى معايير الجودة. نفتخر بقدرتنا على معالجة آلاف الأطنان سنويا بكفاءة عالية.</p>
+            <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">{{ t('attar.desc') }}</p>
             <div class="grid grid-cols-2 gap-4 pt-4">
               <div class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50">
                 <div class="text-primary mb-2">
                   <span class="material-symbols-outlined text-3xl">warehouse</span>
                 </div>
-                <h3 class="font-bold text-lg mb-1">سعة تخزينية</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400">مخازن مبردة تصل لـ 5000 طن</p>
+                <h3 class="font-bold text-lg mb-1">{{ t('attar.storage_title') }}</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('attar.storage_desc') }}</p>
               </div>
               <div class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50">
                 <div class="text-primary mb-2">
                   <span class="material-symbols-outlined text-3xl">conveyor_belt</span>
                 </div>
-                <h3 class="font-bold text-lg mb-1">طاقة إنتاجية</h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400">200 طن يوميا من الموالح</p>
+                <h3 class="font-bold text-lg mb-1">{{ t('attar.production_title') }}</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('attar.production_desc') }}</p>
               </div>
             </div>
             <div class="pt-4">
               <button class="flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors group">
-                <span>شاهد تفاصيل المحطة</span>
+                <span>{{ t('attar.details_btn') }}</span>
                 <span class="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform rtl:rotate-180">arrow_forward</span>
               </button>
             </div>
@@ -68,27 +68,27 @@
                 <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                   <span class="material-symbols-outlined">globe</span>
                 </span>
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">محطة MHA</h2>
-                <span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20">معايير عالمية</span>
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">{{ t('mha.title') }}</h2>
+                <span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20">{{ t('mha.badge') }}</span>
               </div>
-              <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">محطة MHA تمثل قمة التكنولوجيا في مجال تعبئة وتغليف الحاصلات الزراعية. نلتزم بأعلى معايير الجودة العالمية لضمان سلامة الغذاء ورضا العملاء.</p>
+              <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">{{ t('mha.desc') }}</p>
               <div class="flex flex-wrap gap-4 pt-2">
                 <div class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50">
                   <span class="material-symbols-outlined text-green-600">verified</span>
-                  <span class="font-semibold text-sm">Global GAP</span>
+                  <span class="font-semibold text-sm">{{ t('mha.cert_gap') }}</span>
                 </div>
                 <div class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50">
                   <span class="material-symbols-outlined text-green-600">health_and_safety</span>
-                  <span class="font-semibold text-sm">HACCP Certified</span>
+                  <span class="font-semibold text-sm">{{ t('mha.cert_haccp') }}</span>
                 </div>
                 <div class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50">
                   <span class="material-symbols-outlined text-green-600">eco</span>
-                  <span class="font-semibold text-sm">Organic</span>
+                  <span class="font-semibold text-sm">{{ t('mha.cert_organic') }}</span>
                 </div>
               </div>
               <div class="pt-6">
                 <a class="inline-flex items-center justify-center rounded-lg h-12 px-8 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-sm font-bold shadow hover:opacity-90 transition-opacity" href="#">
-                  زيارة موقع MHA
+                  {{ t('mha.visit_btn') }}
                   <span class="material-symbols-outlined mr-2 rtl:ml-2 text-base">open_in_new</span>
                 </a>
               </div>
@@ -97,7 +97,7 @@
               <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-xl border-4 border-white dark:border-background-dark relative group">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDh2hUBs-DUe4CBESNlwuFw4v1SvBpvwAFpTZHQDgbuXXOM14ywUWSKBWojdraCrtNLQncJBVhPKwuASgEMyxNb8-RKrcJzZAEqCwk-qjbNXckYoKQis8omVXSYBinuBepvMHV53-YlcwVlguyHheddFiIs40p6AyZcxW65bomqtcIjWBIxXTWbp46riAXNigKZaits-ARn_rePCWLXUbyhY2jBU2wMfaz6T2bkxGmzPDyfo7ml_q6kNGWpjVzJnWpj0j9lzEVv_Tc');"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-                  <p class="text-white font-bold text-lg">تقنيات تعبئة آلية بالكامل</p>
+                  <p class="text-white font-bold text-lg">{{ t('mha.video_caption') }}</p>
                 </div>
               </div>
               <div class="absolute -z-10 top-[-20px] left-[-20px] w-full h-full border-2 border-primary/30 rounded-2xl"></div>
@@ -108,9 +108,9 @@
 
       <section class="py-20 px-4 sm:px-10 max-w-[1280px] mx-auto">
         <div class="text-center max-w-3xl mx-auto mb-16">
-          <span class="text-primary font-bold tracking-wide uppercase text-sm mb-2 block">جذورنا</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">أراضينا ومزارعنا الشريكة</h2>
-          <p class="text-slate-600 dark:text-slate-300">شبكة واسعة من المزارع تمتد على طول طريق القاهرة الإسكندرية الصحراوي، من النوبارية إلى وادي النطرون.</p>
+          <span class="text-primary font-bold tracking-wide uppercase text-sm mb-2 block">{{ t('lands.kicker') }}</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">{{ t('lands.title') }}</h2>
+          <p class="text-slate-600 dark:text-slate-300">{{ t('lands.desc') }}</p>
         </div>
         <div class="grid lg:grid-cols-3 gap-8">
           <div class="lg:col-span-2 bg-neutral-light dark:bg-neutral-dark rounded-2xl overflow-hidden min-h-[400px] relative shadow-inner border border-neutral-light/50 dark:border-neutral-dark/50">
@@ -118,22 +118,22 @@
             <div class="absolute top-1/4 left-1/3 transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
               <div class="w-4 h-4 bg-primary rounded-full animate-ping absolute"></div>
               <div class="w-4 h-4 bg-primary rounded-full border-2 border-white relative z-10"></div>
-              <div class="absolute top-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded shadow-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">النوبارية</div>
+              <div class="absolute top-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded shadow-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">{{ t('lands.loc_nubaria') }}</div>
             </div>
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
               <div class="w-4 h-4 bg-primary rounded-full animate-ping absolute delay-75"></div>
               <div class="w-4 h-4 bg-primary rounded-full border-2 border-white relative z-10"></div>
-              <div class="absolute top-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded shadow-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">وادي النطرون</div>
+              <div class="absolute top-6 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 px-3 py-1 rounded shadow-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">{{ t('lands.loc_natron') }}</div>
             </div>
             <div class="absolute bottom-4 right-4 bg-white/90 dark:bg-background-dark/90 backdrop-blur p-4 rounded-xl shadow-lg max-w-xs">
-              <h4 class="font-bold text-sm mb-2">توزيع الأراضي</h4>
+              <h4 class="font-bold text-sm mb-2">{{ t('lands.distribution_title') }}</h4>
               <div class="flex items-center gap-2 mb-1">
                 <span class="w-3 h-3 rounded-full bg-primary"></span>
-                <span class="text-xs">مزارع خاصة</span>
+                <span class="text-xs">{{ t('lands.private_farms') }}</span>
               </div>
               <div class="flex items-center gap-2">
                 <span class="w-3 h-3 rounded-full bg-blue-500"></span>
-                <span class="text-xs">شراكات استراتيجية</span>
+                <span class="text-xs">{{ t('lands.strategic_partnerships') }}</span>
               </div>
             </div>
           </div>
@@ -142,15 +142,15 @@
             <div class="grid grid-cols-2 gap-4">
               <div class="bg-white dark:bg-neutral-dark p-6 rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50 text-center">
                 <div class="text-4xl font-bold text-primary mb-1">100+</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 font-bold">مزرعة شريكة</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 font-bold">{{ t('lands.partner_farms') }}</div>
               </div>
               <div class="bg-white dark:bg-neutral-dark p-6 rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50 text-center">
                 <div class="text-4xl font-bold text-primary mb-1">5000</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 font-bold">فدان إجمالي</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 font-bold">{{ t('lands.total_acres') }}</div>
               </div>
             </div>
             <div class="bg-white dark:bg-neutral-dark p-6 rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50 flex-1">
-              <h3 class="font-bold text-lg mb-6 border-b border-neutral-light dark:border-neutral-dark/50 pb-2">من المزرعة إلى العالم</h3>
+              <h3 class="font-bold text-lg mb-6 border-b border-neutral-light dark:border-neutral-dark/50 pb-2">{{ t('lands.journey_title') }}</h3>
               <div class="space-y-6 relative">
                 <div class="absolute top-2 bottom-2 right-[19px] w-0.5 bg-neutral-light dark:bg-slate-700"></div>
                 <div class="flex items-start gap-4 relative z-10">
@@ -158,8 +158,8 @@
                     <span class="material-symbols-outlined text-sm">agriculture</span>
                   </div>
                   <div>
-                    <h4 class="font-bold text-sm">الحصاد</h4>
-                    <p class="text-xs text-slate-500 mt-1">جمع المحصول بعناية فائقة</p>
+                    <h4 class="font-bold text-sm">{{ t('lands.step1_title') }}</h4>
+                    <p class="text-xs text-slate-500 mt-1">{{ t('lands.step1_desc') }}</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-4 relative z-10">
@@ -167,8 +167,8 @@
                     <span class="material-symbols-outlined text-sm">local_shipping</span>
                   </div>
                   <div>
-                    <h4 class="font-bold text-sm">النقل للمحطات</h4>
-                    <p class="text-xs text-slate-500 mt-1">أسطول مجهز لضمان السلامة</p>
+                    <h4 class="font-bold text-sm">{{ t('lands.step2_title') }}</h4>
+                    <p class="text-xs text-slate-500 mt-1">{{ t('lands.step2_desc') }}</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-4 relative z-10">
@@ -176,8 +176,8 @@
                     <span class="material-symbols-outlined text-sm">precision_manufacturing</span>
                   </div>
                   <div>
-                    <h4 class="font-bold text-sm">الفرز والتعبئة</h4>
-                    <p class="text-xs text-slate-500 mt-1">تجهيز للتصدير</p>
+                    <h4 class="font-bold text-sm">{{ t('lands.step3_title') }}</h4>
+                    <p class="text-xs text-slate-500 mt-1">{{ t('lands.step3_desc') }}</p>
                   </div>
                 </div>
                 <div class="flex items-start gap-4 relative z-10">
@@ -185,8 +185,8 @@
                     <span class="material-symbols-outlined text-sm">public</span>
                   </div>
                   <div>
-                    <h4 class="font-bold text-sm">التصدير</h4>
-                    <p class="text-xs text-slate-500 mt-1">وصول لأكثر من 40 دولة</p>
+                    <h4 class="font-bold text-sm">{{ t('lands.step4_title') }}</h4>
+                    <p class="text-xs text-slate-500 mt-1">{{ t('lands.step4_desc') }}</p>
                   </div>
                 </div>
               </div>
@@ -199,12 +199,12 @@
         <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
           <div class="mb-10 flex flex-col sm:flex-row justify-between items-end">
             <div>
-              <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">خطوط الإنتاج</h2>
-              <p class="text-slate-600 dark:text-slate-400">نظرة مقربة على مراحل العمل داخل محطاتنا</p>
+              <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">{{ t('production.title') }}</h2>
+              <p class="text-slate-600 dark:text-slate-400">{{ t('production.desc') }}</p>
             </div>
             <div class="hidden sm:block">
               <button class="text-primary font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">
-                عرض كل الصور
+                {{ t('production.view_all') }}
                 <span class="material-symbols-outlined text-lg rtl:rotate-180">arrow_right_alt</span>
               </button>
             </div>
@@ -215,32 +215,32 @@
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC5WHiLK8oVCMlNZjlgdvUbYUl0W5p9T7Yybf5ITSgaHKDGOf4SFvxsBoWXmuOBtiWS1rPyTsGDsBMitXookDEQ6NpcYh1DERTNrt8Z1HGlPWcdk0imrRA32uOGXGEPk-t0m1cf9k4whyZzC8f5-Pcg39faLIVI5mMle4AiZdN1OBdiyhKqjEayVgP1vBhlSJiJeTTsyJ23wjBEZqXRRZpR-PspxboBUDFZ1_Y3f495337BTBo_OXJubhOKHXlmlBpEXC_GO7K-7Gg');"></div>
                 <div class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow">01</div>
               </div>
-              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">مرحلة الغسيل</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">تنظيف وتعقيم أولي للمحصول</p>
+              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">{{ t('production.card1_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('production.card1_desc') }}</p>
             </div>
             <div class="group cursor-pointer">
               <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCkGDrkCBALuVuJK40ZbaaKo2ZpQ8qNoz72PJZUdqO2GTEX11we_WyP0fgqC_rFIh5HfbT9HWuep3XaTYDa9RbKq3hNLSxQnyOiz5edtqTy74yTOZw5jHwOxkD9yvMckYE1cQtHVehU82eF42YoV00oiyyCm9vc9WMkJEs74jgDpTsrHCIfl7OW9RAmcmyW2m7NuT4uIgui8wOBDfKow5L4ORamDcdXCFBbldG4EWAep1rodKV88VBqfTdeeKHTbqOUoWGB2xsZsm4');"></div>
                 <div class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow">02</div>
               </div>
-              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">الفرز الآلي</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">فرز بصري للأحجام والعيوب</p>
+              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">{{ t('production.card2_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('production.card2_desc') }}</p>
             </div>
             <div class="group cursor-pointer">
               <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAXsRMacwlvEl_-n0GelwFAMI2b7k-Q3cEavnAY261VUnwvckjF6bI0C9kb_d6nlGazqqeCUEbyawPS-_HVXDGp4gfgArQ7oUVOCzvKJSzZJtUtvmxzGClsKdEQjfxXPktrl1SMpa5D6HKcNEIw91Pj_Rnjx8VQhrQDkWGt_u7IiTJPAotSD2X_nwC-gmCeH2Qg6Z-lq1jWkaGvrfyUMqjnGpEljJJJbNhyGSKUBgfjW_UwlqT9AptvZh6MdGLh5-BLU2RgWhNEv0I');"></div>
                 <div class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow">03</div>
               </div>
-              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">التشميع</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">حماية المنتج وزيادة فترة صلاحيته</p>
+              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">{{ t('production.card3_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('production.card3_desc') }}</p>
             </div>
             <div class="group cursor-pointer">
               <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCG9Yi61EfRdbIEk5-6dwgcsK_9Ezf5el4pB_3-lnRqKnqegNwkHLKT1B4dBXFMXPpZiVDl1Y_m9yAJv5xfjDmVnsPFJFWbCHhM59LwyXEV-3xYGnXOiN5zxSV4Kt7XVu7ZY_G4P9X8kTsK3khdb7U37VlEEEDkEfIYG9nkQRmN7-RUJS9R1x1dlOlJ9mVxb6GPjgfS3_LV108Adc1hUycLZDg1RKZZusnd1s9qY2PDLeL-C9fYI-LfCdB9-o0HyftavahKD5dYbws');"></div>
                 <div class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow">04</div>
               </div>
-              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">التعبئة النهائية</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">تعبئة في عبوات التصدير المعتمدة</p>
+              <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">{{ t('production.card4_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('production.card4_desc') }}</p>
             </div>
           </div>
         </div>
@@ -249,16 +249,16 @@
       <section class="relative py-20 px-4 sm:px-10 overflow-hidden bg-background-dark">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#11d47d 1px, transparent 1px); background-size: 24px 24px;"></div>
         <div class="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">نرحب بزيارتكم في أي وقت</h2>
-          <p class="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">يسعدنا استقبالكم في محطاتنا للاطلاع على سير العمل وجودة منتجاتنا على أرض الواقع.</p>
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">{{ t('cta.title') }}</h2>
+          <p class="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">{{ t('cta.desc') }}</p>
           <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a class="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-lg transition-all shadow-lg hover:shadow-primary/30" href="#">
               <span class="material-symbols-outlined">map</span>
-              تفضل بزيارة محطاتنا
+              {{ t('cta.visit_btn') }}
             </a>
             <a class="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 text-white border border-white/30 font-bold py-4 px-8 rounded-lg transition-all" href="#">
               <span class="material-symbols-outlined">call</span>
-              تواصل مع المبيعات
+              {{ t('cta.sales_btn') }}
             </a>
           </div>
         </div>
@@ -273,9 +273,9 @@
               <div class="size-8 text-primary">
                 <span class="material-symbols-outlined text-3xl">eco</span>
               </div>
-              <h2 class="text-xl font-bold">أولاد العطار</h2>
+              <h2 class="text-xl font-bold">{{ t('footer.brand_name') }}</h2>
             </div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">رؤية عصرية في عالم الزراعة والتصدير، نجمع بين أصالة الأرض وأحدث تقنيات العالم.</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">{{ t('footer.brand_desc') }}</p>
             <div class="flex gap-4">
               <a class="w-8 h-8 rounded-full bg-neutral-light dark:bg-background-dark flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-primary hover:text-white transition-colors" href="#">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
@@ -286,27 +286,27 @@
             </div>
           </div>
           <div>
-            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-4">روابط سريعة</h3>
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-4">{{ t('footer.quick_links_title') }}</h3>
             <ul class="space-y-3">
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">عن الشركة</a></li>
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">منتجاتنا</a></li>
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/stations">المحطات</a></li>
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">أخبارنا</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/about">{{ t('footer.link_about') }}</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/products">{{ t('footer.link_products') }}</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/stations">{{ t('footer.link_stations') }}</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/" fragment="gallery">{{ t('footer.link_news') }}</a></li>
             </ul>
           </div>
           <div>
-            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-4">الدعم والمساعدة</h3>
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-4">{{ t('footer.support_title') }}</h3>
             <ul class="space-y-3">
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/contacts">اتصل بنا</a></li>
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">الأسئلة الشائعة</a></li>
-              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">سياسة الخصوصية</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" routerLink="/contacts">{{ t('footer.link_contact') }}</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">{{ t('footer.link_faq') }}</a></li>
+              <li><a class="text-slate-500 dark:text-slate-400 hover:text-primary text-sm" href="#">{{ t('footer.link_privacy') }}</a></li>
             </ul>
           </div>
           <div>
-            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-4">نشرة الأخبار</h3>
-            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">اشترك ليصلك كل جديد عن مواسم الحصاد</p>
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-4">{{ t('footer.newsletter_title') }}</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">{{ t('footer.newsletter_desc') }}</p>
             <div class="flex gap-2">
-              <input class="flex-1 bg-background-light dark:bg-background-dark border border-neutral-light dark:border-neutral-dark/50 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="بريدك الإلكتروني" type="email" />
+              <input class="flex-1 bg-background-light dark:bg-background-dark border border-neutral-light dark:border-neutral-dark/50 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" [placeholder]="t('footer.newsletter_placeholder')" type="email" />
               <button class="bg-primary hover:bg-primary/90 text-white rounded-lg px-3 py-2">
                 <span class="material-symbols-outlined text-sm">send</span>
               </button>
@@ -314,9 +314,9 @@
           </div>
         </div>
         <div class="border-t border-neutral-light dark:border-neutral-dark/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p class="text-slate-400 text-xs">© 2026 أولاد العطار. جميع الحقوق محفوظة.</p>
+          <p class="text-slate-400 text-xs">{{ t('footer.copyright') }}</p>
           <div class="flex gap-6">
-            <p class="text-slate-400 text-xs">صنع بكل فخر في مصر</p>
+            <p class="text-slate-400 text-xs">{{ t('footer.made_in') }}</p>
           </div>
         </div>
       </div>
