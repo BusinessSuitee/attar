@@ -24,18 +24,17 @@
         <span
           class="mb-2 inline-block rounded border border-solid border-accent/40 bg-accent/20 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-accent backdrop-blur-sm"
         >
-          أولاد العطار
+          {{ 'gallery_page.hero.tag' | transloco }}
         </span>
         <h1
           class="text-shadow-lg text-4xl sm:text-5xl font-black leading-tight tracking-tight text-white md:text-6xl"
         >
-          معرض الصور المرئي
+          {{ 'gallery_page.hero.title' | transloco }}
         </h1>
         <p
           class="mx-auto mt-4 max-w-2xl text-base sm:text-lg font-light leading-relaxed text-slate-200 md:text-xl"
         >
-          توثيق بصري لرحلة أولاد العطار في الزراعة والتصدير.. جولة داخل مزارعنا ومحطات الفرز الحديثة
-          التي تضمن أعلى درجات الجودة.
+          {{ 'gallery_page.hero.subtitle' | transloco }}
         </p>
       </div>
     </section>
@@ -100,7 +99,7 @@
                 class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
               >
                 <span class="text-xs font-bold text-accent uppercase tracking-wider mb-2"
-                  >أولاد العطار</span
+                  >{{ 'gallery_page.hero.tag' | transloco }}</span
                 >
                 <h3 class="text-white font-bold text-xl sm:text-2xl leading-tight">
                   {{ 'gallery_page.items.' + item.titleKey + '.title' | transloco }}
@@ -129,17 +128,16 @@
             <span class="material-symbols-outlined text-6xl text-slate-300 mb-4 block"
               >image_not_supported</span
             >
-            <p class="mb-2 font-bold text-slate-700 text-lg">لا توجد صور في هذا القسم حالياً</p>
+            <p class="mb-2 font-bold text-slate-700 text-lg">{{ 'gallery_page.not_found.title' | transloco }}</p>
             <p class="text-sm text-slate-500 max-w-md mx-auto">
-              نقوم بتحديث المعرض باستمرار، يمكنك تصفح الأقسام الأخرى أو الاطلاع على صور محاصيلنا
-              المتوفرة!
+              {{ 'gallery_page.not_found.desc' | transloco }}
             </p>
             <button
               type="button"
               class="mt-6 rounded-lg bg-primary/10 text-primary px-6 py-2.5 font-bold hover:bg-primary hover:text-white transition-colors"
               (click)="setFilter('crops')"
             >
-              تصفح صور المحاصيل
+              {{ 'gallery_page.not_found.btn' | transloco }}
             </button>
           </div>
         }

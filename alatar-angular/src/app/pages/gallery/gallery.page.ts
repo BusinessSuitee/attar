@@ -35,7 +35,7 @@ export class GalleryPageComponent {
   readonly filterOptions: FilterOption[] = [
     { id: "all", labelKey: "all", icon: "collections" },
     { id: "farms", labelKey: "farms", icon: "landscape" },
-    { id: "stations", labelKey: "sorting", icon: "precission_manufacturing" },
+    { id: "stations", labelKey: "sorting", icon: "precision_manufacturing" },
     { id: "crops", labelKey: "crops", icon: "agriculture" },
     { id: "legacy", labelKey: "legacy", icon: "workspace_premium" },
   ];
