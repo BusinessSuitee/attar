@@ -33,20 +33,62 @@ export class GalleryPageComponent {
   readonly selectedImageIndex = signal<number | null>(null);
 
   readonly filterOptions: FilterOption[] = [
-    { id: "all", labelKey: "all", icon: "collections" },
-    { id: "farms", labelKey: "farms", icon: "landscape" },
-    { id: "stations", labelKey: "sorting", icon: "precision_manufacturing" },
-    { id: "crops", labelKey: "crops", icon: "agriculture" },
-    { id: "legacy", labelKey: "legacy", icon: "workspace_premium" },
+    { id: 'all', labelKey: 'all', icon: 'collections' },
+    { id: 'farms', labelKey: 'farms', icon: 'landscape' },
+    { id: 'stations', labelKey: 'sorting', icon: 'precision_manufacturing' },
+    { id: 'crops', labelKey: 'crops', icon: 'agriculture' },
+    { id: 'legacy', labelKey: 'legacy', icon: 'workspace_premium' },
   ];
 
   readonly items: GalleryItem[] = [
-    { id: 1, category: "crops", src: "assets/Images/2.jpeg", alt: "Orange", titleKey: "crops_1", descKey: "crops_1" },
-    { id: 2, category: "crops", src: "assets/Images/1.jpeg", alt: "Grapes", titleKey: "crops_2", descKey: "crops_2" },
-    { id: 3, category: "crops", src: "assets/Images/3.jpeg", alt: "Grapes", titleKey: "crops_3", descKey: "crops_3" },
-    { id: 4, category: "crops", src: "assets/Images/4.jpeg", alt: "Mango", titleKey: "crops_4", descKey: "crops_4" },
-    { id: 5, category: "crops", src: "assets/Images/7.jpeg", alt: "Strawberry", titleKey: "crops_5", descKey: "crops_5" },
-    { id: 6, category: "crops", src: "assets/Images/8.jpeg", alt: "Onion", titleKey: "crops_6", descKey: "crops_6" },
+    {
+      id: 1,
+      category: 'crops',
+      src: 'assets/Images/2.jpeg',
+      alt: 'Orange',
+      titleKey: 'crops_1',
+      descKey: 'crops_1',
+    },
+    {
+      id: 2,
+      category: 'crops',
+      src: 'assets/Images/1.jpeg',
+      alt: 'Grapes',
+      titleKey: 'crops_2',
+      descKey: 'crops_2',
+    },
+    {
+      id: 3,
+      category: 'crops',
+      src: 'assets/Images/3.jpeg',
+      alt: 'Grapes',
+      titleKey: 'crops_3',
+      descKey: 'crops_3',
+    },
+    {
+      id: 4,
+      category: 'crops',
+      src: 'assets/Images/4.jpeg',
+      alt: 'Mango',
+      titleKey: 'crops_4',
+      descKey: 'crops_4',
+    },
+    {
+      id: 5,
+      category: 'crops',
+      src: 'assets/Images/7.jpeg',
+      alt: 'Strawberry',
+      titleKey: 'crops_5',
+      descKey: 'crops_5',
+    },
+    {
+      id: 6,
+      category: 'crops',
+      src: 'assets/Images/8.jpeg',
+      alt: 'Onion',
+      titleKey: 'crops_6',
+      descKey: 'crops_6',
+    },
   ];
 
   readonly visibleItems = computed(() => {

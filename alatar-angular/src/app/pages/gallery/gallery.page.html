@@ -98,9 +98,9 @@
               <div
                 class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
               >
-                <span class="text-xs font-bold text-accent uppercase tracking-wider mb-2"
-                  >{{ 'gallery_page.hero.tag' | transloco }}</span
-                >
+                <span class="text-xs font-bold text-accent uppercase tracking-wider mb-2">{{
+                  'gallery_page.hero.tag' | transloco
+                }}</span>
                 <h3 class="text-white font-bold text-xl sm:text-2xl leading-tight">
                   {{ 'gallery_page.items.' + item.titleKey + '.title' | transloco }}
                 </h3>
@@ -128,7 +128,9 @@
             <span class="material-symbols-outlined text-6xl text-slate-300 mb-4 block"
               >image_not_supported</span
             >
-            <p class="mb-2 font-bold text-slate-700 text-lg">{{ 'gallery_page.not_found.title' | transloco }}</p>
+            <p class="mb-2 font-bold text-slate-700 text-lg">
+              {{ 'gallery_page.not_found.title' | transloco }}
+            </p>
             <p class="text-sm text-slate-500 max-w-md mx-auto">
               {{ 'gallery_page.not_found.desc' | transloco }}
             </p>
@@ -207,13 +209,18 @@
                 <h3
                   class="text-white font-bold text-xl sm:text-2xl drop-shadow-md text-center max-w-3xl"
                 >
-                  {{ 'gallery_page.items.' + currentSelectedImage()?.titleKey + '.title' | transloco }}
+                  {{
+                    'gallery_page.items.' + currentSelectedImage()?.titleKey + '.title' | transloco
+                  }}
                 </h3>
                 @if (currentSelectedImage()?.descKey) {
                   <p
                     class="text-slate-300 text-sm mt-2 font-medium drop-shadow text-center max-w-2xl"
                   >
-                    {{ 'gallery_page.items.' + currentSelectedImage()?.descKey + '.description' | transloco }}
+                    {{
+                      'gallery_page.items.' + currentSelectedImage()?.descKey + '.description'
+                        | transloco
+                    }}
                   </p>
                 }
               </div>
