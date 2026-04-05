@@ -241,5 +241,88 @@
       "follow_title": "Follow Us",
       "copyright": "© 2026 Alatar Sons. All rights reserved."
     }
+  },
+  "stations": {
+    "hero": {
+      "title": "Our Stations: Export Infrastructure Built to Global Standards",
+      "desc": "From Al-Attar Station to MHA Station, we operate an integrated sorting, packing, and preparation system that delivers premium quality to local and international markets."
+    },
+    "attar": {
+      "title": "Al-Attar Station",
+      "desc": "Al-Attar Station is the core starting point of our operations, where receiving, sorting, and initial preparation are handled through precise quality-controlled procedures.",
+      "storage_title": "Cold Storage",
+      "storage_desc": "Large storage capacity to preserve crop quality before shipping.",
+      "production_title": "Production Lines",
+      "production_desc": "Specialized sorting and packing lines prepared for export.",
+      "details_btn": "Explore Station Details"
+    },
+    "mha": {
+      "title": "MHA Station",
+      "badge": "Export Certified",
+      "desc": "MHA Station is equipped with modern operational technologies and strict control standards, efficiently serving export needs across Europe, Russia, and the Gulf.",
+      "cert_gap": "Global GAP",
+      "cert_haccp": "HACCP",
+      "cert_organic": "Organic Ready",
+      "visit_btn": "Visit the Station",
+      "video_caption": "Field Tour Inside MHA Station"
+    },
+    "lands": {
+      "kicker": "Our Agricultural Reach",
+      "title": "Our Lands and Supply Network",
+      "desc": "We operate a broad network of owned lands and partner farms in strategic regions, ensuring steady production continuity and stable supply throughout the season.",
+      "loc_nubaria": "Nubaria",
+      "loc_natron": "Wadi El-Natroun",
+      "distribution_title": "Land Distribution",
+      "private_farms": "Our Private Farms",
+      "strategic_partnerships": "Strategic Agricultural Partnerships",
+      "partner_farms": "Partner Farms",
+      "total_acres": "Total Acres",
+      "journey_title": "Crop Journey",
+      "step1_title": "Cultivation & Monitoring",
+      "step1_desc": "Close field supervision to ensure healthy and consistent growth.",
+      "step2_title": "Harvest & Transport",
+      "step2_desc": "Timely harvesting and fast, safe transport to the station.",
+      "step3_title": "Sorting & Packing",
+      "step3_desc": "Preparation according to quality standards and destination market needs.",
+      "step4_title": "Export to Markets",
+      "step4_desc": "Organized shipping that ensures on-time, high-quality delivery."
+    },
+    "production": {
+      "title": "Inside Our Production Lines",
+      "desc": "We apply a precise workflow that tracks every shipment from receiving to loading.",
+      "view_all": "View All Processing Stages",
+      "card1_title": "Receiving & Initial Sorting",
+      "card1_desc": "Inspecting incoming batches and excluding non-compliant produce.",
+      "card2_title": "Washing & Drying",
+      "card2_desc": "Cleaning and drying crops with dedicated equipment to preserve integrity.",
+      "card3_title": "Smart Packing",
+      "card3_desc": "Flexible packing formats tailored to each client and market.",
+      "card4_title": "Shipment Preparation",
+      "card4_desc": "Final preparation and full documentation before loading and export."
+    },
+    "cta": {
+      "title": "Ready to Welcome New Partners to Our Stations",
+      "desc": "Contact us to schedule a station visit and discover our operational capabilities and supply options.",
+      "visit_btn": "Book a Field Visit",
+      "sales_btn": "Contact Sales"
+    },
+    "footer": {
+      "brand_name": "Alatar Sons",
+      "brand_desc": "An integrated station ecosystem for sorting, packing, and exporting Egyptian crops at premium quality.",
+      "quick_links_title": "Quick Links",
+      "link_about": "About Us",
+      "link_products": "Products",
+      "link_stations": "Stations & Lands",
+      "link_news": "News & Events",
+      "support_title": "Support",
+      "link_contact": "Contact Us",
+      "link_faq": "FAQ",
+      "link_privacy": "Privacy Policy",
+      "newsletter_title": "Newsletter",
+      "newsletter_desc": "Subscribe for crop updates, seasonal insights, and supply opportunities.",
+      "newsletter_placeholder": "Enter your email",
+      "copyright": "© 2026 Alatar Sons. All rights reserved.",
+      "made_in": "Made in Egypt"
+    }
   }
 }
