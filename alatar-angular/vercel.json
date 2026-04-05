@@ -1,7 +1,7 @@
 {
   "version": 2,
   "framework": null,
-  "installCommand": "npm ci",
+  "installCommand": "npm i",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/alatar-angular/browser",
   "routes": [
