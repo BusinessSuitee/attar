@@ -441,53 +441,46 @@
     "hero": {
       "tag": "Alatar Sons",
       "title": "Visual Gallery",
-      "subtitle": "A visual documentation of Alatar Sons' journey in farming and export. A tour inside our farms and modern sorting stations ensuring the highest quality."
+      "subtitle": "A visual documentation of Alatar Sons' journey in agriculture and export. A tour inside our farms and modern sorting stations ensuring the highest quality."
     },
     "filters": {
       "all": "All",
-      "farms": "Our Farms",
-      "sorting": "Sorting & Packing",
+      "farms": "Farms & Lands",
+      "sorting": "Stations & Production",
       "export": "Export",
-      "crops": "Crops"
+      "crops": "Crops",
+      "legacy": "Founder's Legacy"
     },
     "items": {
       "crops_1": {
-        "title": "Fresh Strawberry Crop",
-        "description": "Hand-picked to preserve strawberry fruits before reaching sorting stations"
+        "title": "Egyptian Oranges for Fresh Consumption",
+        "description": "Premium winter crop for export."
       },
       "crops_2": {
-        "title": "Avocado Crop",
-        "description": "Avocado trees at Alatar Sons farms"
+        "title": "Seedless White Grapes",
+        "description": "Fresh summer crop."
       },
       "crops_3": {
-        "title": "Red Grapes for Export",
-        "description": "Grape clusters in peak ripeness"
+        "title": "Premium Black Grapes",
+        "description": "Summer crop for early export."
       },
       "crops_4": {
-        "title": "Sweet Potato Crop",
-        "description": "Sweet potato harvest from Egyptian farms"
+        "title": "Egyptian Mangoes",
+        "description": "Hand-picked fruits with high flavor."
       },
       "crops_5": {
-        "title": "Onion Farms",
-        "description": "Harvesting and curing onions before packing"
+        "title": "Fresh Strawberries",
+        "description": "The top winter export crop."
       },
       "crops_6": {
-        "title": "Garlic Fields",
-        "description": "Selecting the best whole bulbs"
-      },
-      "crops_7": {
-        "title": "Green Beans Crop",
-        "description": "Harvesting fresh green beans"
-      },
-      "crops_8": {
-        "title": "Fresh Carrots",
-        "description": "Harvesting and trimming carrots in the fields"
+        "title": "Red Onions",
+        "description": "Excellent firmness and storage capacity."
       }
     },
     "not_found": {
       "title": "No images currently in this section",
-      "desc": "We continuously update the gallery, you can browse other sections or check our available crops images!",
-      "btn": "Browse Crops Images"
+      "desc": "We are continuously updating the gallery. You can browse other sections or check our available crops.",
+      "btn": "Browse Crops"
     }
   }
 }

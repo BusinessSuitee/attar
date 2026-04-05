@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { TranslocoModule } from '@jsverse/transloco';
 import { ChangeDetectionStrategy, Component, computed, signal, HostListener } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 
@@ -6,7 +7,7 @@ type GalleryCategory = 'all' | 'farms' | 'stations' | 'crops' | 'legacy';
 
 interface FilterOption {
   id: GalleryCategory;
-  label: string;
+  labelKey: string;
   icon: string;
 }
 
@@ -15,14 +16,14 @@ interface GalleryItem {
   category: GalleryCategory;
   src: string;
   alt: string;
-  title: string;
-  description?: string;
+  titleKey: string;
+  descKey?: string;
 }
 
 @Component({
   selector: 'app-gallery-page',
   standalone: true,
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, NavbarComponent, TranslocoModule],
   templateUrl: './gallery.page.html',
   styleUrl: './gallery.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,63 +33,20 @@ export class GalleryPageComponent {
   readonly selectedImageIndex = signal<number | null>(null);
 
   readonly filterOptions: FilterOption[] = [
-    { id: 'all', label: 'الكل', icon: 'collections' },
-    { id: 'farms', label: 'المزارع والأراضي', icon: 'landscape' },
-    { id: 'stations', label: 'المحطات والإنتاج', icon: 'precision_manufacturing' },
-    { id: 'crops', label: 'المحاصيل', icon: 'agriculture' },
-    { id: 'legacy', label: 'إرث المؤسس', icon: 'workspace_premium' },
+    { id: "all", labelKey: "all", icon: "collections" },
+    { id: "farms", labelKey: "farms", icon: "landscape" },
+    { id: "stations", labelKey: "sorting", icon: "precission_manufacturing" },
+    { id: "crops", labelKey: "crops", icon: "agriculture" },
+    { id: "legacy", labelKey: "legacy", icon: "workspace_premium" },
   ];
 
   readonly items: GalleryItem[] = [
-    // --- Crops (Real assets) ---
-    {
-      id: 1,
-      category: 'crops',
-      src: 'assets/Images/2.jpeg',
-      alt: 'البرتقال المصري',
-      title: 'البرتقال المصري للاستهلاك الطازج',
-      description: 'محصول شتوي متميز للتصدير.',
-    },
-    {
-      id: 2,
-      category: 'crops',
-      src: 'assets/Images/1.jpeg',
-      alt: 'عنب أبيض',
-      title: 'عنب أبيض بدون بذور',
-      description: 'محصول صيفي طازج.',
-    },
-    {
-      id: 3,
-      category: 'crops',
-      src: 'assets/Images/3.jpeg',
-      alt: 'عنب أسود',
-      title: 'عنب أسود فاخر',
-      description: 'محصول صيفي للتصدير المبكر.',
-    },
-    {
-      id: 4,
-      category: 'crops',
-      src: 'assets/Images/4.jpeg',
-      alt: 'المانجو',
-      title: 'مانجو مصرية',
-      description: 'ثمرات منتقاة وعالية المذاق.',
-    },
-    {
-      id: 5,
-      category: 'crops',
-      src: 'assets/Images/7.jpeg',
-      alt: 'الفراولة',
-      title: 'فراولة طازجة',
-      description: 'محصول التصدير الأول شتوياً.',
-    },
-    {
-      id: 6,
-      category: 'crops',
-      src: 'assets/Images/8.jpeg',
-      alt: 'بصل مصري',
-      title: 'بصل أحمر',
-      description: 'صلابة وقدرة تخزينية ممتازة.',
-    },
+    { id: 1, category: "crops", src: "assets/Images/2.jpeg", alt: "Orange", titleKey: "crops_1", descKey: "crops_1" },
+    { id: 2, category: "crops", src: "assets/Images/1.jpeg", alt: "Grapes", titleKey: "crops_2", descKey: "crops_2" },
+    { id: 3, category: "crops", src: "assets/Images/3.jpeg", alt: "Grapes", titleKey: "crops_3", descKey: "crops_3" },
+    { id: 4, category: "crops", src: "assets/Images/4.jpeg", alt: "Mango", titleKey: "crops_4", descKey: "crops_4" },
+    { id: 5, category: "crops", src: "assets/Images/7.jpeg", alt: "Strawberry", titleKey: "crops_5", descKey: "crops_5" },
+    { id: 6, category: "crops", src: "assets/Images/8.jpeg", alt: "Onion", titleKey: "crops_6", descKey: "crops_6" },
   ];
 
   readonly visibleItems = computed(() => {
