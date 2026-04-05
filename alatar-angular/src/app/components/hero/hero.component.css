@@ -69,7 +69,12 @@
 
 .hero__shade--tone {
   z-index: 2;
-  background: linear-gradient(to top, rgba(45, 106, 79, 0.75), rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.25));
+  background: linear-gradient(
+    to top,
+    rgba(45, 106, 79, 0.75),
+    rgba(0, 0, 0, 0.35),
+    rgba(0, 0, 0, 0.25)
+  );
 }
 
 .hero__content {
@@ -157,7 +162,10 @@
   text-decoration: none;
   font-size: 1rem;
   font-weight: 800;
-  transition: transform 170ms ease, box-shadow 170ms ease, background-color 170ms ease;
+  transition:
+    transform 170ms ease,
+    box-shadow 170ms ease,
+    background-color 170ms ease;
 }
 
 .hero-btn:hover {

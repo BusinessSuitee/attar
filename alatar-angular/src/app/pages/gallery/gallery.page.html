@@ -1,0 +1,247 @@
+<app-navbar #nav></app-navbar>
+
+<div
+  class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased"
+  dir="rtl"
+>
+  <main class="flex-grow">
+    <!-- Hero / Header -->
+    <section
+      class="relative flex min-h-[350px] sm:min-h-[400px] w-full items-center justify-center overflow-hidden bg-slate-900 py-16 sm:py-20"
+    >
+      <div
+        class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
+        style="
+          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8');
+          filter: blur(4px);
+        "
+      ></div>
+      <div class="absolute inset-0 z-0 bg-primary/80 mix-blend-multiply"></div>
+      <div class="absolute inset-0 z-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+      <div
+        class="relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-4 px-6 text-center"
+      >
+        <span
+          class="mb-2 inline-block rounded border border-solid border-accent/40 bg-accent/20 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-widest text-accent backdrop-blur-sm"
+        >
+          أولاد العطار
+        </span>
+        <h1
+          class="text-shadow-lg text-4xl sm:text-5xl font-black leading-tight tracking-tight text-white md:text-6xl"
+        >
+          معرض الصور المرئي
+        </h1>
+        <p
+          class="mx-auto mt-4 max-w-2xl text-base sm:text-lg font-light leading-relaxed text-slate-200 md:text-xl"
+        >
+          توثيق بصري لرحلة أولاد العطار في الزراعة والتصدير.. جولة داخل مزارعنا ومحطات الفرز الحديثة
+          التي تضمن أعلى درجات الجودة.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sticky Filter menu -->
+    <div
+      class="sticky z-40 border-b border-solid border-slate-200 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-200"
+      [ngClass]="nav?.topNavVisible?.() ? 'top-[75px] sm:top-20' : 'top-0'"
+    >
+      <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
+        <div
+          class="no-scrollbar flex w-full flex-nowrap items-center justify-start gap-2 py-4 sm:gap-3 overflow-x-auto scroll-smooth"
+        >
+          @for (filter of filterOptions; track filter.id) {
+            <button
+              type="button"
+              class="flex items-center gap-2 whitespace-nowrap rounded-full border border-solid px-5 py-2.5 text-[13px] sm:text-sm font-bold outline-none transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+              [ngClass]="
+                activeFilter() === filter.id
+                  ? 'bg-primary text-white border-primary shadow-md'
+                  : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-primary'
+              "
+              [attr.aria-pressed]="activeFilter() === filter.id"
+              (click)="setFilter(filter.id)"
+            >
+              <span class="material-symbols-outlined text-lg sm:text-xl">{{ filter.icon }}</span>
+              {{ filter.label }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <section class="bg-background-light py-12 sm:py-20 min-h-[50vh]">
+      <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
+        <!-- Masonry-like CSS Grid -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-[250px]"
+        >
+          @for (item of visibleItems(); track item.id; let i = $index) {
+            <div
+              class="group relative overflow-hidden rounded-2xl bg-slate-200 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              [ngClass]="{ 'md:col-span-2 md:row-span-2': i % 7 === 0 }"
+              (click)="openImage(i)"
+            >
+              <!-- Image -->
+              <img
+                [src]="item.src"
+                [alt]="item.alt"
+                loading="lazy"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+
+              <!-- Gradient Overlay -->
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"
+              ></div>
+
+              <!-- Content Overlay -->
+              <div
+                class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+              >
+                <span class="text-xs font-bold text-accent uppercase tracking-wider mb-2"
+                  >أولاد العطار</span
+                >
+                <h3 class="text-white font-bold text-xl sm:text-2xl leading-tight">
+                  {{ item.title }}
+                </h3>
+                @if (item.description) {
+                  <p class="text-slate-200 text-sm mt-2 line-clamp-2 md:line-clamp-none">
+                    {{ item.description }}
+                  </p>
+                }
+              </div>
+
+              <!-- Enlarge Icon indicator -->
+              <div
+                class="absolute top-4 left-4 h-10 w-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white opacity-0 transform scale-50 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+              >
+                <span class="material-symbols-outlined text-xl">zoom_in</span>
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (visibleItems().length === 0) {
+          <div
+            class="rounded-3xl border border-dashed border-slate-300 bg-white p-12 text-center border-solid w-full mt-8"
+          >
+            <span class="material-symbols-outlined text-6xl text-slate-300 mb-4 block"
+              >image_not_supported</span
+            >
+            <p class="mb-2 font-bold text-slate-700 text-lg">لا توجد صور في هذا القسم حالياً</p>
+            <p class="text-sm text-slate-500 max-w-md mx-auto">
+              نقوم بتحديث المعرض باستمرار، يمكنك تصفح الأقسام الأخرى أو الاطلاع على صور محاصيلنا
+              المتوفرة!
+            </p>
+            <button
+              type="button"
+              class="mt-6 rounded-lg bg-primary/10 text-primary px-6 py-2.5 font-bold hover:bg-primary hover:text-white transition-colors"
+              (click)="setFilter('crops')"
+            >
+              تصفح صور المحاصيل
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- App-Like Lightbox Modal -->
+    @if (selectedImageIndex() !== null) {
+      <div class="fixed inset-0 z-[120] flex items-center justify-center p-0 sm:p-6" dir="ltr">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/95 transition-opacity" (click)="closeImage()"></div>
+
+        <!-- Container -->
+        <div
+          class="relative w-full h-full sm:rounded-2xl flex flex-col justify-center select-none overflow-hidden"
+          (click)="closeImage()"
+        >
+          <!-- Top Toolbar (Close) -->
+          <div
+            class="absolute top-0 right-0 left-0 p-4 sm:p-6 flex justify-between z-30 bg-gradient-to-b from-black/60 to-transparent pointer-events-auto"
+            dir="rtl"
+          >
+            <button
+              (click)="closeImage()"
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-transform hover:scale-110 text-2xl font-bold border border-white/20 cursor-pointer"
+            >
+              <span class="material-symbols-outlined">close</span>
+            </button>
+            <div
+              class="text-white text-sm font-medium tracking-widest self-center opacity-80 font-sans"
+            >
+              {{ (selectedImageIndex() ?? 0) + 1 }} / {{ visibleItems().length }}
+            </div>
+          </div>
+
+          <!-- Central Image Area -->
+          <div
+            class="relative flex-1 flex items-center justify-center w-full h-full max-h-[100dvh]"
+          >
+            <!-- Prev Button Desktop (RTL layout: prev means right arrow visually but structurally moving index backwards, but here we just bind to left/right logically) -->
+            <!-- We will use left/right arrows absolutely positioned -->
+            <button
+              (click)="prevImage($event)"
+              class="absolute left-4 z-[130] hidden sm:flex h-14 w-14 items-center justify-center rounded-full bg-black/50 text-white hover:bg-white hover:text-black mt-[-28px] focus:outline-none transition-all cursor-pointer pointer-events-auto backdrop-blur-sm"
+              aria-label="Previous"
+            >
+              <span class="material-symbols-outlined text-3xl">chevron_left</span>
+            </button>
+
+            <!-- Image Container -->
+            <div
+              class="relative w-full h-full flex flex-col justify-center max-w-7xl mx-auto px-0 sm:px-20 pointer-events-none"
+              dir="rtl"
+            >
+              <img
+                [src]="currentSelectedImage()?.src"
+                [alt]="currentSelectedImage()?.alt"
+                class="w-full max-h-[80vh] sm:max-h-[85vh] object-contain pointer-events-auto rounded-none sm:rounded-xl shadow-2xl"
+                (click)="$event.stopPropagation()"
+              />
+
+              <!-- Caption -->
+              <div
+                class="absolute bottom-0 left-0 w-full sm:-bottom-10 flex flex-col items-center justify-center p-6 bg-gradient-to-t from-black/90 to-transparent sm:bg-transparent pointer-events-auto"
+                (click)="$event.stopPropagation()"
+              >
+                <h3
+                  class="text-white font-bold text-xl sm:text-2xl drop-shadow-md text-center max-w-3xl"
+                >
+                  {{ currentSelectedImage()?.title }}
+                </h3>
+                @if (currentSelectedImage()?.description) {
+                  <p
+                    class="text-slate-300 text-sm mt-2 font-medium drop-shadow text-center max-w-2xl"
+                  >
+                    {{ currentSelectedImage()?.description }}
+                  </p>
+                }
+              </div>
+            </div>
+
+            <!-- Next Button Desktop -->
+            <button
+              (click)="nextImage($event)"
+              class="absolute right-4 z-[130] hidden sm:flex h-14 w-14 items-center justify-center rounded-full bg-black/50 text-white hover:bg-white hover:text-black mt-[-28px] focus:outline-none transition-all cursor-pointer pointer-events-auto backdrop-blur-sm"
+              aria-label="Next"
+            >
+              <span class="material-symbols-outlined text-3xl">chevron_right</span>
+            </button>
+          </div>
+
+          <!-- Mobile Swipe Handles (Invisible full heights on left and right for tapping on mobile) -->
+          <div
+            class="absolute inset-y-20 left-0 w-1/4 sm:hidden z-20"
+            (click)="prevImage($event)"
+          ></div>
+          <div
+            class="absolute inset-y-20 right-0 w-1/4 sm:hidden z-20"
+            (click)="nextImage($event)"
+          ></div>
+        </div>
+      </div>
+    }
+  </main>
+</div>

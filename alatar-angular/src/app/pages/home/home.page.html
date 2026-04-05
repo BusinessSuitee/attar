@@ -133,7 +133,7 @@
       </header>
 
       <div class="products-grid" role="list">
-        <article class="product-card" role="listitem">
+        <article class="product-card cursor-pointer" role="listitem" routerLink="/products">
           <img
             class="product-card__image"
             src="https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=1200&q=80"
@@ -166,7 +166,7 @@
           </div>
         </article>
 
-        <article class="product-card" role="listitem">
+        <article class="product-card cursor-pointer" role="listitem" routerLink="/products">
           <img
             class="product-card__image"
             src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=1200&q=80"
@@ -207,68 +207,120 @@
     <div class="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl"></div>
     <div class="mx-auto max-w-[1440px] px-6 lg:px-10 relative z-10">
       <div class="mb-14 text-center">
-        <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary"
+        >
           <span class="material-symbols-outlined text-base">menu_book</span>
           {{ t('insights.kicker') }}
         </span>
-        <h2 class="mt-5 text-3xl font-black text-slate-900 md:text-5xl">{{ t('insights.title') }}</h2>
+        <h2 class="mt-5 text-3xl font-black text-slate-900 md:text-5xl">
+          {{ t('insights.title') }}
+        </h2>
         <p class="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
           {{ t('insights.desc') }}
         </p>
       </div>
 
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-        <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+        <article
+          class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+        >
           <div class="relative h-56 overflow-hidden">
-            <img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80" alt="مراقبة جودة البرتقال في المزرعة" />
+            <img
+              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80"
+              alt="مراقبة جودة البرتقال في المزرعة"
+            />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary">{{ t('insights.tag1') }}</span>
+            <span
+              class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary"
+              >{{ t('insights.tag1') }}</span
+            >
           </div>
           <div class="p-6 text-right">
-            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">{{ t('insights.date1') }}</p>
-            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">{{ t('insights.title1') }}</h3>
+            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">
+              {{ t('insights.date1') }}
+            </p>
+            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">
+              {{ t('insights.title1') }}
+            </h3>
             <p class="mb-6 text-sm leading-relaxed text-slate-600">
               {{ t('insights.desc1') }}
             </p>
-            <a href="products.html" class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80">
+            <a
+              routerLink="/products"
+              class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80"
+            >
               {{ t('insights.read_article') }}
               <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
             </a>
           </div>
         </article>
 
-        <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+        <article
+          class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+        >
           <div class="relative h-56 overflow-hidden">
-            <img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80" alt="توقيت حصاد العنب في المزارع" />
+            <img
+              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&q=80"
+              alt="توقيت حصاد العنب في المزارع"
+            />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary">{{ t('insights.tag2') }}</span>
+            <span
+              class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary"
+              >{{ t('insights.tag2') }}</span
+            >
           </div>
           <div class="p-6 text-right">
-            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">{{ t('insights.date2') }}</p>
-            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">{{ t('insights.title2') }}</h3>
+            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">
+              {{ t('insights.date2') }}
+            </p>
+            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">
+              {{ t('insights.title2') }}
+            </h3>
             <p class="mb-6 text-sm leading-relaxed text-slate-600">
               {{ t('insights.desc2') }}
             </p>
-            <a href="about.html" class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80">
+            <a
+              routerLink="/about"
+              class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80"
+            >
               {{ t('insights.read_article') }}
               <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
             </a>
           </div>
         </article>
 
-        <article class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+        <article
+          class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+        >
           <div class="relative h-56 overflow-hidden">
-            <img class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80" alt="معايير التعبئة والتغليف للتصدير" />
+            <img
+              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+              alt="معايير التعبئة والتغليف للتصدير"
+            />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary">{{ t('insights.tag3') }}</span>
+            <span
+              class="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-primary"
+              >{{ t('insights.tag3') }}</span
+            >
           </div>
           <div class="p-6 text-right">
-            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">{{ t('insights.date3') }}</p>
-            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">{{ t('insights.title3') }}</h3>
+            <p class="mb-3 text-xs font-bold uppercase tracking-wide text-slate-400">
+              {{ t('insights.date3') }}
+            </p>
+            <h3 class="mb-3 text-xl font-bold leading-snug text-slate-900">
+              {{ t('insights.title3') }}
+            </h3>
             <p class="mb-6 text-sm leading-relaxed text-slate-600">
               {{ t('insights.desc3') }}
             </p>
-            <a href="partners.html" class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80">
+            <a
+              routerLink="/partners"
+              class="inline-flex items-center gap-2 text-sm font-bold text-primary transition-colors hover:text-primary/80"
+            >
               {{ t('insights.read_article') }}
               <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
             </a>
@@ -277,7 +329,10 @@
       </div>
 
       <div class="mt-12 flex justify-center">
-        <a href="#" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all hover:border-primary hover:text-primary hover:shadow-md">
+        <a
+          routerLink="/products"
+          class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all hover:border-primary hover:text-primary hover:shadow-md"
+        >
           {{ t('insights.view_all') }}
           <span class="material-symbols-outlined text-base rtl:rotate-180">arrow_forward</span>
         </a>
@@ -286,19 +341,27 @@
   </section>
 
   <section class="bg-primary py-24 relative overflow-hidden">
-    <div class="absolute inset-0 z-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <div
+      class="absolute inset-0 z-0 opacity-10"
+      style="
+        background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        background-size: 24px 24px;
+      "
+    ></div>
     <div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center px-6">
       <h2 class="text-3xl font-bold text-white md:text-5xl mb-6">{{ t('cta.title') }}</h2>
       <p class="max-w-2xl text-lg text-white/90 leading-relaxed mb-10">
         {{ t('cta.desc') }}
       </p>
       <div class="flex flex-wrap justify-center gap-4">
-        <button class="cta-btn flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 text-lg font-bold text-primary shadow-lg transition-all hover:bg-slate-50 hover:-translate-y-1" data-action="sales">
+        <a
+          href="https://wa.me/201000000000"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cta-btn flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 text-lg font-bold text-primary shadow-lg transition-all hover:bg-slate-50 hover:-translate-y-1"
+        >
           {{ t('cta.sales') }}
-        </button>
-        <button class="cta-btn flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-transparent px-8 text-lg font-bold text-white transition-all hover:bg-white/10 hover:border-white" data-action="catalog">
-          {{ t('cta.catalog') }}
-        </button>
+        </a>
       </div>
     </div>
   </section>

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Alatar.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9908b0da57bc980eeddf7408433da6565d9b67bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+598d4385336f71563b1890a1743aafb1d6b5e555")]
 [assembly: System.Reflection.AssemblyProductAttribute("Alatar.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Alatar.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

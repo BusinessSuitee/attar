@@ -14,14 +14,14 @@ interface HeroStripItem {
   imports: [RouterLink, TranslocoModule, CommonModule],
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
   readonly stripItems: HeroStripItem[] = [
-    { icon: 'public', labelKey: '0' },
-    { icon: 'local_shipping', labelKey: '1' },
-    { icon: 'history', labelKey: '2' },
-    { icon: 'verified', labelKey: '3' }
+    { icon: 'public', labelKey: 'strip_hub' },
+    { icon: 'local_shipping', labelKey: 'strip_capacity' },
+    { icon: 'history', labelKey: 'strip_history' },
+    { icon: 'verified', labelKey: 'strip_quality' },
   ];
 
   trackByLabelKey(_: number, item: HeroStripItem): string {

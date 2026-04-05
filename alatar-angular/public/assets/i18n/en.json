@@ -81,24 +81,10 @@
       "desc": "Connecting the earths bounty with the world, from our farms to the biggest global and local markets.",
       "btn_products": "Our Products",
       "btn_contact": "Contact Us",
-      "strip": [
-        {
-          "icon": "public",
-          "label": "Global Export Hub"
-        },
-        {
-          "icon": "local_shipping",
-          "label": "+50,000 Tons Annually"
-        },
-        {
-          "icon": "history",
-          "label": "Rich History Since 1975"
-        },
-        {
-          "icon": "verified",
-          "label": "Global Quality Certifications"
-        }
-      ]
+      "strip_hub": "Global Export Hub",
+      "strip_capacity": "+50,000 Tons Annually",
+      "strip_history": "Rich History Since 1975",
+      "strip_quality": "Global Quality Certifications"
     }
   },
   "about": {
@@ -323,6 +309,185 @@
       "newsletter_placeholder": "Enter your email",
       "copyright": "© 2026 Alatar Sons. All rights reserved.",
       "made_in": "Made in Egypt"
+    }
+  },
+  "products_page": {
+    "hero": {
+      "badge": "Season 2024-2025",
+      "title": "Our Crops: From Our Farms to the World",
+      "desc": "We offer a diverse selection of premium Egyptian crops, carefully grown and processed to the highest global export standards."
+    },
+    "filters": {
+      "all": "All",
+      "winter": "Winter Season",
+      "summer": "Summer Season",
+      "vegetables": "Vegetables",
+      "frozen": "Frozen"
+    },
+    "featured": {
+      "badge": "Pride of Egyptian Agriculture",
+      "title": "Egyptian Citrus & Oranges",
+      "desc": "Alatar is a pioneer in exporting Egyptian citrus, owning vast farms that produce the finest oranges globally demanded due to the ideal climate and fertile soil, with strict quality control from planting to packing.",
+      "varieties": "Available Varieties",
+      "var_navel": "Navel Oranges",
+      "var_valencia": "Valencia Oranges",
+      "var_baladi": "Baladi Oranges",
+      "seasons": "Supply Seasons",
+      "month_start": "November",
+      "month_end": "May",
+      "season_desc": "Available throughout Winter and Spring",
+      "feature1": "Meets European Standards",
+      "feature2": "Automated Sterile Packing",
+      "feature3": "Refrigerated Shipping",
+      "btn_quote": "Request a Quote for Oranges",
+      "overlay_badge": "Most Exported Product"
+    },
+    "list": {
+      "badge": "Unmatched Variety",
+      "title": "List of Seasonal Crops",
+      "btn_quote": "Request Pricing",
+      "empty_title": "No crops available in this category currently",
+      "empty_desc": "Try another category or contact our sales team for upcoming availability."
+    },
+    "quality": {
+      "title": "Quality & Food Safety Guarantee",
+      "desc": "We strictly adhere to global food safety standards ensuring our products arrive healthy and safe for consumers. All our stations and farms are tightly monitored and apply the latest agricultural protocols.",
+      "cert1": "Agricultural Practices",
+      "cert2": "Food Safety",
+      "cert3": "Quality Management"
+    },
+    "cta": {
+      "title": "Ready to order your crops?",
+      "desc": "Our sales team is ready to help you secure the best crops with the specifications and quantities you need for your markets.",
+      "btn": "Book an Order Now"
+    },
+    "items": {
+      "grape_white": {
+        "title": "White Grapes",
+        "season": "May - August",
+        "desc": "Premium white grapes (Superior & Seedless), featuring large seedless berries and a refreshing sweet taste. Highly popular in European markets, carefully picked to ensure quality."
+      },
+      "orange": {
+        "title": "Egyptian Oranges",
+        "season": "November - May",
+        "desc": "Premium Egyptian oranges, rich in juice and Vitamin C. Considered the most exported product and best suited for juices and fresh consumption in global markets."
+      },
+      "grape_black": {
+        "title": "Premium Black Grapes",
+        "season": "May - August",
+        "desc": "Premium black seedless grapes, known for their sweet taste and rich color. Carefully sorted according to European export standards to guarantee a longer shelf life."
+      },
+      "mango": {
+        "title": "Egyptian Mangoes",
+        "season": "June - September",
+        "desc": "Egyptian mangoes of excellent varieties with a unique tropical taste. Chosen and picked at the perfect time to ensure balanced ripeness and irresistible flavor."
+      },
+      "grape_red": {
+        "title": "Excellent Red Grapes",
+        "season": "May - August",
+        "desc": "Excellent, highly sweet and crunchy red grapes. Symmetrical bunches, cooled and packed using optimal methods to preserve freshness and nutritional value for long periods."
+      },
+      "strawberry": {
+        "title": "Fresh Strawberries",
+        "season": "November - April",
+        "desc": "Fresh strawberries with a bright red color and distinct taste. Harvested and packed immediately to preserve their quality and delivered swiftly to our clients in all markets."
+      },
+      "onion": {
+        "title": "Egyptian Onions",
+        "season": "Available all year",
+        "desc": "Solid, high-quality Egyptian onions, featuring a long storage period and high endurance under shipping conditions. Available in sizes that suit all needs."
+      },
+      "lemon": {
+        "title": "Lemons",
+        "season": "Available mostly all year",
+        "desc": "Egyptian lemons with a high juice percentage and perfect peel. A staple product sorted and processed professionally to meet fresh consumption demands."
+      },
+      "mandarin": {
+        "title": "Mandarins / Tangerines",
+        "season": "November - May",
+        "desc": "Fresh, easy-to-peel mandarins with a balanced sweet citrus flavor. Carefully packed to retain their aesthetic appearance and distinct taste."
+      }
+    },
+    "whatsapp_message": "Hello, I would like to inquire about details and pricing for",
+    "whatsapp_btn": "Order via WhatsApp",
+    "quality_badge": {
+      "title": "Quality",
+      "desc": "First Class Export"
+    },
+    "delivery_badge": {
+      "title": "Delivery",
+      "desc": "Logistics & Expertise"
+    },
+    "footer": {
+      "about": "Exporting Egypt's agricultural treasures to the world since 1975. Quality, Integrity, and Sustainability are our mottos in every harvest.",
+      "company": "The Company",
+      "about_group": "About the Group",
+      "our_story": "Our Story",
+      "sustainability": "Sustainability",
+      "careers": "Careers",
+      "main_crops": "Main Crops",
+      "citrus": "Citrus",
+      "potatoes": "Potatoes",
+      "onions": "Onions",
+      "grapes": "Grapes",
+      "contact_us": "Contact Us",
+      "address": "Cairo-Alexandria Desert Road, Egypt",
+      "copyright": "© 2026 Alatar Group. All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions"
+    }
+  },
+  "gallery_page": {
+    "hero": {
+      "tag": "Alatar Sons",
+      "title": "Visual Gallery",
+      "subtitle": "A visual documentation of Alatar Sons' journey in farming and export. A tour inside our farms and modern sorting stations ensuring the highest quality."
+    },
+    "filters": {
+      "all": "All",
+      "farms": "Our Farms",
+      "sorting": "Sorting & Packing",
+      "export": "Export",
+      "crops": "Crops"
+    },
+    "items": {
+      "crops_1": {
+        "title": "Fresh Strawberry Crop",
+        "description": "Hand-picked to preserve strawberry fruits before reaching sorting stations"
+      },
+      "crops_2": {
+        "title": "Avocado Crop",
+        "description": "Avocado trees at Alatar Sons farms"
+      },
+      "crops_3": {
+        "title": "Red Grapes for Export",
+        "description": "Grape clusters in peak ripeness"
+      },
+      "crops_4": {
+        "title": "Sweet Potato Crop",
+        "description": "Sweet potato harvest from Egyptian farms"
+      },
+      "crops_5": {
+        "title": "Onion Farms",
+        "description": "Harvesting and curing onions before packing"
+      },
+      "crops_6": {
+        "title": "Garlic Fields",
+        "description": "Selecting the best whole bulbs"
+      },
+      "crops_7": {
+        "title": "Green Beans Crop",
+        "description": "Harvesting fresh green beans"
+      },
+      "crops_8": {
+        "title": "Fresh Carrots",
+        "description": "Harvesting and trimming carrots in the fields"
+      }
+    },
+    "not_found": {
+      "title": "No images currently in this section",
+      "desc": "We continuously update the gallery, you can browse other sections or check our available crops images!",
+      "btn": "Browse Crops Images"
     }
   }
 }

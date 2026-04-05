@@ -5,7 +5,7 @@ import {
   provideZonelessChangeDetection,
   isDevMode
 } from '@angular/core';
-import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
+import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from './transloco-loader';
@@ -36,7 +36,12 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withEnabledBlockingInitialNavigation()),
+    provideRouter(
+      routes,
+      withEnabledBlockingInitialNavigation(),
+      withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
+      withViewTransitions()
+    ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
     provideTransloco({

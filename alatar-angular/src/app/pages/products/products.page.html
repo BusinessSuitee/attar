@@ -1,345 +1,600 @@
-<app-navbar></app-navbar>
+<app-navbar #nav></app-navbar>
 
 <div
-	class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased"
-	dir="rtl"
+  class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased"
 >
-	<main class="flex-grow">
-		<section
-			class="relative flex min-h-[400px] w-full items-center justify-center overflow-hidden bg-slate-900 py-20"
-		>
-			<div
-				class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
-				style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8'); filter: blur(4px)"
-			></div>
-			<div class="absolute inset-0 z-0 bg-primary/70 mix-blend-multiply"></div>
-			<div class="absolute inset-0 z-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-			<div
-				class="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center"
-			>
-				<span
-					class="mb-2 inline-block rounded border border-solid border-accent/40 bg-accent/20 px-3 py-1 text-sm font-bold uppercase tracking-widest text-accent backdrop-blur-sm"
-					>موسم 2024-2025</span
-				>
-				<h1 class="text-shadow-lg text-4xl font-black leading-tight tracking-tight text-white md:text-6xl">
-					محاصيلنا: من قلب مزارعنا إلى العالم
-				</h1>
-				<p
-					class="mx-auto mt-4 max-w-2xl text-lg font-light leading-relaxed text-slate-200 md:text-xl"
-				>
-					نقدم تشكيلة متنوعة من أجود المحاصيل المصرية، مزروعة بعناية ومجهزة وفقا لأعلى
-					معايير التصدير العالمية.
-				</p>
-			</div>
-		</section>
+  <main class="flex-grow">
+    <section
+      class="relative flex min-h-[400px] w-full items-center justify-center overflow-hidden bg-slate-900 py-20"
+    >
+      <div
+        class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
+        style="
+          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8');
+          filter: blur(4px);
+        "
+      ></div>
+      <div class="absolute inset-0 z-0 bg-primary/70 mix-blend-multiply"></div>
+      <div class="absolute inset-0 z-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+      <div
+        class="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center"
+      >
+        <span
+          class="mb-2 inline-block rounded border border-solid border-accent/40 bg-accent/20 px-3 py-1 text-sm font-bold uppercase tracking-widest text-accent backdrop-blur-sm"
+          >{{ 'products_page.hero.badge' | transloco }}</span
+        >
+        <h1
+          class="text-shadow-lg text-4xl font-black leading-tight tracking-tight text-white md:text-6xl"
+        >
+          {{ 'products_page.hero.title' | transloco }}
+        </h1>
+        <p
+          class="mx-auto mt-4 max-w-2xl text-lg font-light leading-relaxed text-slate-200 md:text-xl"
+        >
+          نقدم تشكيلة متنوعة من أجود المحاصيل المصرية، مزروعة بعناية ومجهزة وفقا لأعلى معايير
+          التصدير العالمية.
+        </p>
+      </div>
+    </section>
 
-		<div class="sticky top-20 z-40 border-b border-solid border-slate-200 bg-white shadow-sm">
-			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-				<div
-					class="no-scrollbar flex items-center justify-center gap-2 overflow-x-auto py-4 sm:justify-start sm:gap-4"
-				>
-					@for (filter of filterOptions; track filter.id) {
-						<button
-							type="button"
-							class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full border border-solid border-transparent px-6 py-2.5 text-sm font-bold outline-none transition-all"
-							[ngClass]="
-								activeFilter() === filter.id
-									? 'bg-primary text-white shadow-md border-none'
-									: 'bg-slate-100 text-slate-600 border-none hover:bg-slate-200 hover:text-primary'
-							"
-							[attr.aria-pressed]="activeFilter() === filter.id"
-							(click)="setFilter(filter.id)"
-						>
-							<span class="material-symbols-outlined text-lg">{{ filter.icon }}</span>
-							{{ filter.label }}
-						</button>
-					}
-				</div>
-			</div>
-		</div>
+    <div
+      class="sticky z-40 border-b border-solid border-slate-200 bg-white shadow-sm transition-all duration-200"
+      [ngClass]="nav?.topNavVisible?.() ? 'top-[75px] sm:top-20' : 'top-0'"
+    >
+      <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+        <div
+          class="no-scrollbar flex w-full flex-nowrap items-center justify-start gap-3 overflow-x-auto py-4 sm:gap-4 scroll-smooth"
+        >
+          @for (filter of filterOptions; track filter.id) {
+            <button
+              type="button"
+              class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full border border-solid border-transparent px-6 py-2.5 text-sm font-bold outline-none transition-all"
+              [ngClass]="
+                activeFilter() === filter.id
+                  ? 'bg-primary text-white shadow-md border-none'
+                  : 'bg-slate-100 text-slate-600 border-none hover:bg-slate-200 hover:text-primary'
+              "
+              [attr.aria-pressed]="activeFilter() === filter.id"
+              (click)="setFilter(filter.id)"
+            >
+              <span class="material-symbols-outlined text-lg">{{ filter.icon }}</span>
+              {{ filter.labelKey | transloco }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
 
-		<section class="overflow-hidden bg-background-light py-20">
-			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-				<div class="flex flex-col items-center gap-12 lg:flex-row">
-					<div class="group relative w-full lg:w-1/2">
-						<div
-							class="absolute -inset-4 rounded-3xl bg-accent/20 opacity-50 blur-2xl transition-opacity group-hover:opacity-75"
-						></div>
-						<div class="relative h-[500px] overflow-hidden rounded-2xl border-4 border-solid border-white shadow-2xl">
-							<img
-								alt="البرتقال المصري"
-								class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-								src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmsanB1tlU06aaCmNIXzGESo7nXFoCl8xCYmf9V6olKVcX1SHBxiclG-IFA-gthlFEP258NK72jTQCdxg0AIhL_2W2S7NPSv2jnVIjzzY_zjZrN2rKGoqMSXouLNoftc8rQmr-TRLfSBPAtFhvLq7hauBYyG8fjvwpKDOZf-7xdtLBTRlE2Z4MX2Eqdff8ouEbotE487tDdz7ZItWCgsxuQ8rqICS9X1gUAdombNR9whDogwzhYE-plIDPo-1pWSIIrM9aqbhe1OA"
-							/>
-							<div
-								class="absolute bottom-6 right-6 flex items-center gap-2 rounded-lg bg-white/90 px-4 py-2 font-bold text-primary shadow-lg backdrop-blur"
-							>
-								<span class="material-symbols-outlined text-accent">verified</span>
-								المنتج الأكثر تصديرا
-							</div>
-						</div>
-					</div>
-					<div class="w-full space-y-8 lg:w-1/2">
-						<div>
-							<h2 class="mb-2 text-sm font-bold uppercase tracking-widest text-accent">
-								فخر الزراعة المصرية
-							</h2>
-							<h3 class="mb-4 text-4xl font-black leading-tight text-slate-900 lg:text-5xl">
-								الموالح والبرتقال المصري
-							</h3>
-							<p class="text-lg leading-relaxed text-slate-600">
-								تعد شركة أولاد العطار من الرواد في تصدير الموالح المصرية، حيث نمتلك مزارع
-								شاسعة تنتج أفخر أنواع البرتقال المطلوب عالميا بفضل المناخ المثالي والتربة
-								الخصبة، مع مراعاة أدق تفاصيل الجودة من الغرس حتى التعبئة.
-							</p>
-						</div>
-						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-							<div class="rounded-xl border border-solid border-slate-100 bg-slate-50 p-5">
-								<h4 class="mb-3 flex items-center gap-2 font-bold text-primary">
-									<span class="material-symbols-outlined text-accent">category</span>
-									الأصناف المتوفرة
-								</h4>
-								<ul class="space-y-2 text-sm text-slate-600">
-									<li class="flex items-center gap-2">
-										<span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-										برتقال أبو سرة (Navel)
-									</li>
-									<li class="flex items-center gap-2">
-										<span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-										فالنسيا (Valencia)
-									</li>
-									<li class="flex items-center gap-2">
-										<span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
-										بلدي (Baladi)
-									</li>
-								</ul>
-							</div>
-							<div class="rounded-xl border border-solid border-slate-100 bg-slate-50 p-5">
-								<h4 class="mb-3 flex items-center gap-2 font-bold text-primary">
-									<span class="material-symbols-outlined text-accent">calendar_month</span>
-									مواسم التوريد
-								</h4>
-								<div class="relative pt-2">
-									<div class="h-2 w-full rounded-full bg-slate-200">
-										<div class="absolute right-0 top-2 h-2 w-3/4 rounded-full bg-accent"></div>
-									</div>
-									<div class="mt-2 flex justify-between text-xs font-bold text-slate-500">
-										<span>نوفمبر</span>
-										<span>مايو</span>
-									</div>
-									<p class="mt-2 text-xs text-slate-400">متاح طوال موسم الشتاء والربيع</p>
-								</div>
-							</div>
-						</div>
-						<div class="flex flex-wrap gap-4 border-t border-slate-100 pt-4 border-solid">
-							<div
-								class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
-							>
-								<span class="material-symbols-outlined text-green-600">check_circle</span>
-								مطابق للمواصفات الأوروبية
-							</div>
-							<div
-								class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
-							>
-								<span class="material-symbols-outlined text-green-600">check_circle</span>
-								تعبئة آلية معقمة
-							</div>
-							<div
-								class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
-							>
-								<span class="material-symbols-outlined text-green-600">check_circle</span>
-								شحن مبرد
-							</div>
-						</div>
-						<button
-							type="button"
-							class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3.5 font-bold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 sm:w-auto"
-						>
-							<span class="material-symbols-outlined">request_quote</span>
-							طلب عرض أسعار للبرتقال
-						</button>
-					</div>
-				</div>
-			</div>
-		</section>
+    <section class="overflow-hidden bg-background-light py-20">
+      <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+        <div class="flex flex-col items-center gap-12 lg:flex-row">
+          <div class="group relative w-full lg:w-1/2">
+            <div
+              class="absolute -inset-4 rounded-3xl bg-accent/20 opacity-50 blur-2xl transition-opacity group-hover:opacity-75"
+            ></div>
+            <div
+              class="relative h-[500px] overflow-hidden rounded-2xl border-4 border-solid border-white shadow-2xl"
+            >
+              <img
+                alt="البرتقال المصري"
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmsanB1tlU06aaCmNIXzGESo7nXFoCl8xCYmf9V6olKVcX1SHBxiclG-IFA-gthlFEP258NK72jTQCdxg0AIhL_2W2S7NPSv2jnVIjzzY_zjZrN2rKGoqMSXouLNoftc8rQmr-TRLfSBPAtFhvLq7hauBYyG8fjvwpKDOZf-7xdtLBTRlE2Z4MX2Eqdff8ouEbotE487tDdz7ZItWCgsxuQ8rqICS9X1gUAdombNR9whDogwzhYE-plIDPo-1pWSIIrM9aqbhe1OA"
+              />
+              <div
+                class="absolute bottom-6 right-6 flex items-center gap-2 rounded-lg bg-white/90 px-4 py-2 font-bold text-primary shadow-lg backdrop-blur"
+              >
+                <span class="material-symbols-outlined text-accent">verified</span>
+                {{ 'products_page.featured.overlay_badge' | transloco }}
+              </div>
+            </div>
+          </div>
+          <div class="w-full space-y-8 lg:w-1/2">
+            <div>
+              <h2 class="mb-2 text-sm font-bold uppercase tracking-widest text-accent">
+                {{ 'products_page.featured.badge' | transloco }}
+              </h2>
+              <h3 class="mb-4 text-4xl font-black leading-tight text-slate-900 lg:text-5xl">
+                {{ 'products_page.featured.title' | transloco }}
+              </h3>
+              <p class="text-lg leading-relaxed text-slate-600">
+                تعد شركة أولاد العطار من الرواد في تصدير
+                {{ 'products_page.footer.citrus' | transloco }} المصرية، حيث نمتلك مزارع شاسعة تنتج
+                أفخر أنواع البرتقال المطلوب عالميا بفضل المناخ المثالي والتربة الخصبة، مع مراعاة أدق
+                تفاصيل {{ 'products_page.quality_badge.title' | transloco }} من الغرس حتى التعبئة.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div class="rounded-xl border border-solid border-slate-100 bg-slate-50 p-5">
+                <h4 class="mb-3 flex items-center gap-2 font-bold text-primary">
+                  <span class="material-symbols-outlined text-accent">category</span>
+                  {{ 'products_page.featured.varieties' | transloco }}
+                </h4>
+                <ul class="space-y-2 text-sm text-slate-600">
+                  <li class="flex items-center gap-2">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    {{ 'products_page.featured.var_navel' | transloco }}
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    {{ 'products_page.featured.var_valencia' | transloco }}
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    {{ 'products_page.featured.var_baladi' | transloco }}
+                  </li>
+                </ul>
+              </div>
+              <div class="rounded-xl border border-solid border-slate-100 bg-slate-50 p-5">
+                <h4 class="mb-3 flex items-center gap-2 font-bold text-primary">
+                  <span class="material-symbols-outlined text-accent">calendar_month</span>
+                  {{ 'products_page.featured.seasons' | transloco }}
+                </h4>
+                <div class="relative pt-2">
+                  <div class="h-2 w-full rounded-full bg-slate-200">
+                    <div class="absolute right-0 top-2 h-2 w-3/4 rounded-full bg-accent"></div>
+                  </div>
+                  <div class="mt-2 flex justify-between text-xs font-bold text-slate-500">
+                    <span>{{ 'products_page.featured.month_start' | transloco }}</span>
+                    <span>{{ 'products_page.featured.month_end' | transloco }}</span>
+                  </div>
+                  <p class="mt-2 text-xs text-slate-400">
+                    {{ 'products_page.featured.season_desc' | transloco }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-4 border-t border-slate-100 pt-4 border-solid">
+              <div
+                class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
+              >
+                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                {{ 'products_page.featured.feature1' | transloco }}
+              </div>
+              <div
+                class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
+              >
+                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                {{ 'products_page.featured.feature2' | transloco }}
+              </div>
+              <div
+                class="flex items-center gap-2 rounded border border-solid border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-500"
+              >
+                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                {{ 'products_page.featured.feature3' | transloco }}
+              </div>
+            </div>
+            <button
+              type="button"
+              class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3.5 font-bold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 sm:w-auto"
+            >
+              <span class="material-symbols-outlined">request_quote</span>
+              {{ 'products_page.featured.btn_quote' | transloco }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<section class="bg-slate-50 py-20">
-			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-				<div class="mb-16 text-center">
-					<span class="mb-2 block text-sm font-bold uppercase tracking-widest text-accent"
-						>تنوع لا يضاهى</span
-					>
-					<h2 class="text-3xl font-bold text-slate-900 md:text-4xl">قائمة المحاصيل الموسمية</h2>
-				</div>
-				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-					@for (product of visibleProducts(); track product.title) {
-						<article
-							class="group overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
-						>
-							<div class="relative h-64 overflow-hidden">
-								<img
-									[alt]="product.title"
-									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-									[src]="product.image"
-								/>
-								<div
-									class="absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white"
-									[ngClass]="product.badgeType === 'summer' ? 'bg-accent' : 'bg-primary'"
-								>
-									{{ product.badge }}
-								</div>
-								<div class="absolute bottom-0 left-0 h-1/2 w-full bg-gradient-to-t from-black/80 to-transparent"></div>
-								<h3 class="absolute bottom-4 right-4 text-2xl font-bold text-white">{{ product.title }}</h3>
-							</div>
-							<div class="p-6">
-								<p class="mb-4 flex items-center gap-1 text-sm text-slate-500">
-									<span class="material-symbols-outlined text-lg text-primary">calendar_month</span>
-									{{ product.season }}
-								</p>
-								<button
-									type="button"
-									class="w-full rounded-lg border border-solid border-primary bg-white py-2.5 font-bold text-primary outline-none transition-colors duration-300 hover:bg-primary hover:text-white"
-								>
-									طلب تسعير
-								</button>
-							</div>
-						</article>
-					}
-				</div>
-				@if (visibleProducts().length === 0) {
-					<div class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center border-solid">
-						<p class="mb-2 font-bold text-slate-700">لا توجد محاصيل متاحة في هذا التصنيف حالياً</p>
-						<p class="text-sm text-slate-500">
-							جرّب تصنيفًا آخر أو تواصل مع فريق المبيعات للتوفر القادم.
-						</p>
-					</div>
-				}
-			</div>
-		</section>
+    <section class="bg-slate-50 py-20">
+      <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+        <div class="mb-16 text-center">
+          <span class="mb-2 block text-sm font-bold uppercase tracking-widest text-accent">{{
+            'products_page.list.badge' | transloco
+          }}</span>
+          <h2 class="text-3xl font-bold text-slate-900 md:text-4xl">
+            {{ 'products_page.list.title' | transloco }}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          @for (product of visibleProducts(); track product.titleKey) {
+            <article
+              (click)="openProduct(product)"
+              class="cursor-pointer group overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+            >
+              <div class="relative h-64 overflow-hidden">
+                <img
+                  [alt]="product.titleKey | transloco"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  [src]="product.image"
+                />
+                <div
+                  class="absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white shadow-sm"
+                  [ngClass]="{
+                    'bg-orange-500': product.badgeType === 'summer',
+                    'bg-blue-600': product.badgeType === 'winter',
+                    'bg-green-600': product.badgeType === 'vegetables',
+                    'bg-teal-700': product.badgeType === 'frozen',
+                  }"
+                >
+                  {{ 'products_page.filters.' + product.badgeType | transloco }}
+                </div>
+                <div
+                  class="absolute bottom-0 left-0 h-1/2 w-full bg-gradient-to-t from-black/80 to-transparent"
+                ></div>
+                <h3 class="absolute bottom-4 right-4 text-2xl font-bold text-white">
+                  {{ product.titleKey | transloco }}
+                </h3>
+              </div>
+              <div class="p-6">
+                <p class="mb-4 flex items-center gap-1 text-sm text-slate-500">
+                  <span class="material-symbols-outlined text-lg text-primary">calendar_month</span>
+                  {{ product.seasonKey | transloco }}
+                </p>
+                <button
+                  type="button"
+                  class="w-full rounded-lg border border-solid border-primary bg-white py-2.5 font-bold text-primary outline-none transition-colors duration-300 hover:bg-primary hover:text-white"
+                >
+                  {{ 'products_page.list.btn_quote' | transloco }}
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+        @if (visibleProducts().length === 0) {
+          <div
+            class="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center border-solid"
+          >
+            <p class="mb-2 font-bold text-slate-700">
+              {{ 'products_page.list.empty_title' | transloco }}
+            </p>
+            <p class="text-sm text-slate-500">
+              {{ 'products_page.list.empty_desc' | transloco }}
+            </p>
+          </div>
+        }
+      </div>
+    </section>
 
-		<section class="bg-primary py-12 text-white">
-			<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-				<div class="flex flex-col items-center justify-between gap-8 md:flex-row">
-					<div class="md:w-1/2">
-						<h2 class="mb-3 flex items-center gap-2 text-2xl font-bold">
-							<span class="material-symbols-outlined text-3xl text-accent">verified_user</span>
-							ضمان الجودة وسلامة الغذاء
-						</h2>
-						<p class="text-sm leading-relaxed text-slate-200">
-							نلتزم بأعلى معايير سلامة الغذاء العالمية لضمان وصول منتجاتنا صحية وآمنة للمستهلك.
-							جميع محطاتنا ومزارعنا تخضع لرقابة صارمة ومطبقة لأحدث البروتوكولات الزراعية.
-						</p>
-					</div>
-					<div class="flex flex-wrap items-center justify-center gap-6">
-						<div class="flex flex-col items-center gap-2">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg"
-							>
-								GLOBAL<br />G.A.P
-							</div>
-							<span class="text-xs font-bold text-accent">الممارسات الزراعية</span>
-						</div>
-						<div class="flex flex-col items-center gap-2">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-xs font-black text-primary shadow-lg"
-							>
-								HACCP
-							</div>
-							<span class="text-xs font-bold text-accent">سلامة الغذاء</span>
-						</div>
-						<div class="flex flex-col items-center gap-2">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg"
-							>
-								ISO<br />22000
-							</div>
-							<span class="text-xs font-bold text-accent">إدارة الجودة</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <section class="bg-primary py-12 text-white">
+      <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+        <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+          <div class="md:w-1/2">
+            <h2 class="mb-3 flex items-center gap-2 text-2xl font-bold">
+              <span class="material-symbols-outlined text-3xl text-accent">verified_user</span>
+              {{ 'products_page.quality.title' | transloco }}
+            </h2>
+            <p class="text-sm leading-relaxed text-slate-200">
+              {{ 'products_page.quality.desc' | transloco }}
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-6">
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg"
+              >
+                GLOBAL<br />G.A.P
+              </div>
+              <span class="text-xs font-bold text-accent">{{
+                'products_page.quality.cert1' | transloco
+              }}</span>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-xs font-black text-primary shadow-lg"
+              >
+                HACCP
+              </div>
+              <span class="text-xs font-bold text-accent">{{
+                'products_page.quality.cert2' | transloco
+              }}</span>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg"
+              >
+                ISO<br />22000
+              </div>
+              <span class="text-xs font-bold text-accent">{{
+                'products_page.quality.cert3' | transloco
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<section class="relative overflow-hidden bg-background-light py-20">
-			<div class="absolute right-0 top-0 h-full w-1/3 origin-top-right skew-x-12 transform bg-accent/5"></div>
-			<div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
-				<h2 class="mb-6 text-3xl font-black text-slate-900 md:text-5xl">جاهز لطلب محصولك؟</h2>
-				<p class="mx-auto mb-10 max-w-2xl text-lg text-slate-600">
-					فريق المبيعات لدينا جاهز لمساعدتك في تأمين أفضل المحاصيل بالمواصفات والكميات التي
-					تحتاجها لأسواقك.
-				</p>
-				<a
-					class="inline-flex items-center gap-3 rounded-xl bg-accent px-10 py-4 text-lg font-bold text-white shadow-xl shadow-accent/20 transition-all hover:-translate-y-1 hover:bg-accent/90"
-					href="/#contact"
-				>
-					<span>احجز طلبية الآن</span>
-					<span class="material-symbols-outlined rtl:rotate-180">arrow_forward</span>
-				</a>
-			</div>
-		</section>
-	</main>
+    <section class="relative overflow-hidden bg-background-light py-20">
+      <div
+        class="absolute right-0 top-0 h-full w-1/3 origin-top-right skew-x-12 transform bg-accent/5"
+      ></div>
+      <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
+        <h2 class="mb-6 text-3xl font-black text-slate-900 md:text-5xl">
+          {{ 'products_page.cta.title' | transloco }}
+        </h2>
+        <p class="mx-auto mb-10 max-w-2xl text-lg text-slate-600">
+          {{ 'products_page.cta.desc' | transloco }}
+        </p>
+        <a
+          class="inline-flex items-center gap-3 rounded-xl bg-accent px-10 py-4 text-lg font-bold text-white shadow-xl shadow-accent/20 transition-all hover:-translate-y-1 hover:bg-accent/90"
+          href="/contact"
+        >
+          <span>{{ 'products_page.cta.btn' | transloco }}</span>
+          <span class="material-symbols-outlined rtl:rotate-180">arrow_forward</span>
+        </a>
+      </div>
+    </section>
 
-	<footer class="border-t border-slate-200 bg-white pb-8 pt-16 border-solid">
-		<div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-			<div class="grid grid-cols-1 gap-12 text-right md:grid-cols-2 lg:grid-cols-4" dir="rtl">
-				<div class="flex flex-col gap-4">
-					<div class="flex items-center gap-2 text-primary">
-						<span class="material-symbols-outlined text-3xl">agriculture</span>
-						<span class="text-xl font-bold text-slate-900">أولاد العطار</span>
-					</div>
-					<p class="text-sm leading-relaxed text-slate-500">
-						نصدر للعالم كنوز مصر الزراعية منذ عام 1975. الجودة، النزاهة، والاستدامة هي شعارنا
-						في كل حصاد.
-					</p>
-				</div>
-				<div>
-					<h4 class="mb-4 font-bold text-slate-900">الشركة</h4>
-					<ul class="flex flex-col gap-2 text-sm text-slate-500">
-						<li><a class="transition-colors hover:text-primary" routerLink="/" fragment="about">عن المجموعة</a></li>
-						<li><a class="transition-colors hover:text-primary" routerLink="/" fragment="about">قصتنا</a></li>
-						<li>
-							<a class="transition-colors hover:text-primary" routerLink="/" fragment="partners">الاستدامة</a>
-						</li>
-						<li><a class="transition-colors hover:text-primary" routerLink="/" fragment="contact">التوظيف</a></li>
-					</ul>
-				</div>
-				<div>
-					<h4 class="mb-6 font-bold text-slate-900">محاصيلنا الرئيسية</h4>
-					<ul class="space-y-4 text-sm">
-						<li><a class="transition-colors hover:text-primary" routerLink="/products">الموالح</a></li>
-						<li><a class="transition-colors hover:text-primary" routerLink="/products">البطاطس</a></li>
-						<li><a class="transition-colors hover:text-primary" routerLink="/products">البصل</a></li>
-						<li><a class="transition-colors hover:text-primary" routerLink="/products">العنب</a></li>
-					</ul>
-				</div>
-				<div>
-					<h4 class="mb-4 font-bold text-slate-900">تواصل معنا</h4>
-					<ul class="flex flex-col gap-2 text-sm text-slate-500">
-						<li class="flex items-center gap-2">
-							<span class="material-symbols-outlined text-xs text-accent">location_on</span>
-							طريق القاهرة الإسكندرية الصحراوي، مصر
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="material-symbols-outlined text-xs text-accent">mail</span>
-							export@awlad-elattar.com
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="material-symbols-outlined text-xs text-accent">call</span>
-							+20 123 456 7890
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div
-				class="mt-16 flex flex-col items-center justify-between border-t border-slate-100 pt-8 text-sm text-slate-400 md:flex-row-reverse border-solid"
-			>
-				<p>© 2026 مجموعة أولاد العطار. جميع الحقوق محفوظة.</p>
-				<div class="mt-4 flex gap-6 md:mt-0">
-					<a class="hover:text-slate-600" routerLink="/">سياسة الخصوصية</a>
-					<a class="hover:text-slate-600" routerLink="/">الشروط والأحكام</a>
-				</div>
-			</div>
-		</div>
-	</footer>
+    <!-- App-Like Modal -->
+    @if (selectedProduct(); as product) {
+      <div
+        class="fixed inset-0 z-[100] flex flex-col justify-end sm:items-center sm:justify-center sm:p-6"
+      >
+        <!-- Backdrop -->
+        <div
+          class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity"
+          (click)="closeProduct()"
+        ></div>
+
+        <!-- Modal Container (Bottom Sheet on mobile, Centered Dialogue on Desktop) -->
+        <div
+          class="relative w-full max-w-5xl h-[92dvh] sm:h-auto sm:max-h-[90vh] overflow-hidden rounded-t-[2.5rem] sm:rounded-3xl bg-white shadow-2xl z-10 flex flex-col"
+        >
+          <!-- Drag indicator for Mobile -->
+          <div
+            class="absolute top-0 left-0 w-full flex justify-center py-3 z-30 sm:hidden"
+            (click)="closeProduct()"
+          >
+            <div class="w-12 h-1.5 bg-black/20 rounded-full shadow-sm"></div>
+          </div>
+
+          <!-- Close Button -->
+          <button
+            (click)="closeProduct()"
+            class="absolute left-4 top-4 sm:left-6 sm:top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 sm:bg-white/90 text-white sm:text-slate-800 shadow-sm sm:shadow-md backdrop-blur transition-transform hover:scale-110 text-xl font-bold border-none cursor-pointer"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+
+          <!-- Content Wrapper -->
+          <div
+            class="flex flex-col lg:flex-row h-full overflow-y-auto overflow-x-hidden no-scrollbar pb-[80px] sm:pb-0"
+          >
+            <!-- Image Gallery -->
+            <div
+              class="w-full lg:w-1/2 sm:p-8 sm:bg-slate-50 flex flex-col sm:gap-4 relative shrink-0"
+            >
+              <div
+                class="relative w-full aspect-square sm:aspect-[4/3] sm:rounded-2xl overflow-hidden bg-slate-200"
+              >
+                <img
+                  [src]="product.images[activeImageIndex()]"
+                  [alt]="product.titleKey | transloco"
+                  class="w-full h-full object-cover transition-opacity duration-300"
+                />
+                <!-- Subtle gradient at the top to make the close button pop and indicator visible on mobile -->
+                <div
+                  class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/40 to-transparent sm:hidden"
+                ></div>
+              </div>
+
+              @if (product.images.length > 1) {
+                <div
+                  class="flex flex-row gap-2 sm:gap-3 overflow-x-auto px-4 py-3 sm:px-0 sm:py-2 scrollbar-hide snap-x bg-white sm:bg-transparent -mt-4 rounded-t-2xl sm:mt-0 sm:rounded-none relative z-10"
+                >
+                  @for (img of product.images; track img; let i = $index) {
+                    <button
+                      (click)="setActiveImage(i)"
+                      [class.ring-2]="activeImageIndex() === i"
+                      class="relative h-16 w-20 sm:h-20 sm:w-24 flex-shrink-0 snap-center overflow-hidden rounded-xl border border-slate-200 bg-white ring-primary transition-all hover:opacity-90 outline-none cursor-pointer shadow-sm sm:shadow-none"
+                    >
+                      <img [src]="img" class="h-full w-full object-cover" />
+                      @if (activeImageIndex() !== i) {
+                        <div class="absolute inset-0 bg-white/40"></div>
+                      }
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Product Details -->
+            <div class="w-full lg:w-1/2 px-5 py-6 sm:p-10 flex flex-col bg-white flex-grow">
+              <div class="mb-4 flex items-center gap-3">
+                <span
+                  class="rounded-full px-3 py-1.5 text-xs font-bold text-white shadow-sm"
+                  [ngClass]="{
+                    'bg-orange-500': product.badgeType === 'summer',
+                    'bg-blue-600': product.badgeType === 'winter',
+                    'bg-green-600': product.badgeType === 'vegetables',
+                    'bg-teal-700': product.badgeType === 'frozen',
+                  }"
+                >
+                  {{ 'products_page.filters.' + product.badgeType | transloco }}
+                </span>
+                <span
+                  class="flex items-center gap-1 text-sm font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full"
+                >
+                  <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                  {{ product.seasonKey | transloco }}
+                </span>
+              </div>
+
+              <h2 class="mb-4 text-3xl sm:text-4xl font-black text-slate-900 leading-tight">
+                {{ product.titleKey | transloco }}
+              </h2>
+
+              <div class="mb-6 sm:mb-8">
+                <p class="text-base sm:text-lg leading-relaxed text-slate-600">
+                  {{ product.descriptionKey | transloco }}
+                </p>
+              </div>
+
+              <div class="flex flex-col gap-4 border-t border-slate-100 pt-6 sm:mt-auto">
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-2 sm:mb-4">
+                  <div
+                    class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 border border-slate-100 border-solid transition-colors hover:border-primary/20 hover:bg-primary/5"
+                  >
+                    <span class="material-symbols-outlined text-primary text-2xl">verified</span>
+                    <div>
+                      <p class="text-[11px] sm:text-xs font-bold text-slate-400">
+                        {{ 'products_page.quality_badge.title' | transloco }}
+                      </p>
+                      <p class="text-sm font-bold text-slate-800">
+                        {{ 'products_page.quality_badge.desc' | transloco }}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 border border-slate-100 border-solid transition-colors hover:border-accent/20 hover:bg-accent/5"
+                  >
+                    <span class="material-symbols-outlined text-accent text-2xl"
+                      >local_shipping</span
+                    >
+                    <div>
+                      <p class="text-[11px] sm:text-xs font-bold text-slate-400">
+                        {{ 'products_page.delivery_badge.title' | transloco }}
+                      </p>
+                      <p class="text-sm font-bold text-slate-800">
+                        {{ 'products_page.delivery_badge.desc' | transloco }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Desktop CTA (Hidden on mobile) -->
+                <a
+                  [href]="'https://wa.me/201000000000?text=' + encodeWhatsAppMessage(product)"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hidden sm:flex w-full items-center justify-center gap-3 rounded-xl bg-[#25D366] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#25D366]/30 transition-all hover:-translate-y-1 hover:bg-green-500 hover:shadow-xl no-underline"
+                >
+                  <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"
+                    ></path>
+                  </svg>
+                  {{ 'products_page.whatsapp_btn' | transloco }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Sticky Bottom Bar (App-like) -->
+          <div
+            class="absolute bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-slate-100 p-4 border-solid pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] sm:hidden z-20"
+          >
+            <a
+              [href]="'https://wa.me/201000000000?text=' + encodeWhatsAppMessage(product)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-[#25D366]/30 transition-all active:scale-95 no-underline"
+            >
+              <svg class="h-[22px] w-[22px] fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"
+                ></path>
+              </svg>
+              {{ 'products_page.whatsapp_btn' | transloco }}
+            </a>
+          </div>
+        </div>
+      </div>
+    }
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white pb-8 pt-16 border-solid">
+    <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+      <div class="grid grid-cols-1 gap-12 text-right md:grid-cols-2 lg:grid-cols-4">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-2 text-primary">
+            <span class="material-symbols-outlined text-3xl">agriculture</span>
+            <span class="text-xl font-bold text-slate-900">أولاد العطار</span>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-500">
+            نصدر للعالم كنوز مصر الزراعية منذ عام 1975.
+            {{ 'products_page.quality_badge.title' | transloco }}، النزاهة، و{{
+              'products_page.footer.sustainability' | transloco
+            }}
+            هي شعارنا في كل حصاد.
+          </p>
+        </div>
+        <div>
+          <h4 class="mb-4 font-bold text-slate-900">
+            {{ 'products_page.footer.company' | transloco }}
+          </h4>
+          <ul class="flex flex-col gap-2 text-sm text-slate-500">
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="about">{{
+                'products_page.footer.about_group' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="about">{{
+                'products_page.footer.our_story' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="partners">{{
+                'products_page.footer.sustainability' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="contact">{{
+                'products_page.footer.careers' | transloco
+              }}</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mb-6 font-bold text-slate-900">
+            {{ 'products_page.footer.main_crops' | transloco }}
+          </h4>
+          <ul class="space-y-4 text-sm">
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/products">{{
+                'products_page.footer.citrus' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/products">{{
+                'products_page.footer.potatoes' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/products">{{
+                'products_page.footer.onions' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/products">{{
+                'products_page.footer.grapes' | transloco
+              }}</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="mb-4 font-bold text-slate-900">
+            {{ 'products_page.footer.contact_us' | transloco }}
+          </h4>
+          <ul class="flex flex-col gap-2 text-sm text-slate-500">
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-xs text-accent">location_on</span>
+              {{ 'products_page.footer.address' | transloco }}
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-xs text-accent">mail</span>
+              export@awlad-elattar.com
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-xs text-accent">call</span>
+              +20 123 456 7890
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="mt-16 flex flex-col items-center justify-between border-t border-slate-100 pt-8 text-sm text-slate-400 md:flex-row-reverse border-solid"
+      >
+        <p>{{ 'products_page.footer.copyright' | transloco }}</p>
+        <div class="mt-4 flex gap-6 md:mt-0">
+          <a class="hover:text-slate-600" routerLink="/">{{
+            'products_page.footer.privacy' | transloco
+          }}</a>
+          <a class="hover:text-slate-600" routerLink="/">{{
+            'products_page.footer.terms' | transloco
+          }}</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
-

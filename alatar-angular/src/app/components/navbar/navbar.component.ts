@@ -1,18 +1,20 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostListener,
   Input,
+  OnDestroy,
   Output,
   OnInit,
   inject,
-  signal
+  signal,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { TranslocoService, TranslocoPipe, TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoService, TranslocoPipe } from '@jsverse/transloco';
 
 type LanguageCode = 'ar' | 'en' | 'ru';
 
@@ -20,7 +22,8 @@ interface NavItem {
   id: string;
   label: string; // fallback if transloco isn't used or used dynamically
   translocoKey: string;
-  route: string; fragment?: string;
+  route: string;
+  fragment?: string;
 }
 
 interface DockItem {
@@ -29,27 +32,31 @@ interface DockItem {
   icon: string;
   kind: 'navigate' | 'menu';
   target?: string;
+  route?: string;
+  fragment?: string;
 }
 
 interface LanguageOption {
   code: LanguageCode;
-  flag: string;
+  flagSrc: string;
   name: string;
 }
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslocoPipe, TranslocoDirective],
+  imports: [CommonModule, RouterModule, TranslocoPipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   private readonly doc = inject(DOCUMENT);
+  private readonly router = inject(Router);
   private readonly mobileBreakpoint = 767;
   private readonly hideOffset = 72;
   private lastScrollY = 0;
+  private routeEventsSub?: Subscription;
 
   @Input() showSidebarToggle = false;
   @Output() sidebarToggle = new EventEmitter<void>();
@@ -64,32 +71,103 @@ export class NavbarComponent implements OnInit {
 
   readonly navItems: NavItem[] = [
     { id: 'home', translocoKey: 'nav.home', label: 'الرئيسية', route: '/', fragment: 'home' },
-    { id: 'about', translocoKey: 'nav.about', label: 'من نحن', route: '/about', fragment: undefined },
-    { id: 'partners', translocoKey: 'nav.partners', label: 'شركاؤنا', route: '/partners', fragment: undefined },
-    { id: 'products', translocoKey: 'nav.products', label: 'المحاصيل', route: '/products', fragment: undefined },
-    { id: 'stations', translocoKey: 'nav.stations', label: 'المحطات والأراضي', route: '/stations', fragment: undefined },
-    { id: 'gallery', translocoKey: 'nav.gallery', label: 'المعرض', route: '/', fragment: 'gallery' },
-    { id: 'contact', translocoKey: 'nav.contact', label: 'اتصل بنا', route: '/contact', fragment: undefined }
+    {
+      id: 'about',
+      translocoKey: 'nav.about',
+      label: 'من نحن',
+      route: '/about',
+      fragment: undefined,
+    },
+    {
+      id: 'partners',
+      translocoKey: 'nav.partners',
+      label: 'شركاؤنا',
+      route: '/partners',
+      fragment: undefined,
+    },
+    {
+      id: 'products',
+      translocoKey: 'nav.products',
+      label: 'المحاصيل',
+      route: '/products',
+      fragment: undefined,
+    },
+    {
+      id: 'stations',
+      translocoKey: 'nav.stations',
+      label: 'المحطات والأراضي',
+      route: '/stations',
+      fragment: undefined,
+    },
+    {
+      id: 'gallery',
+      translocoKey: 'nav.gallery',
+      label: 'المعرض',
+      route: '/gallery',
+      fragment: undefined,
+    },
+    {
+      id: 'contact',
+      translocoKey: 'nav.contact',
+      label: 'اتصل بنا',
+      route: '/contact',
+      fragment: undefined,
+    },
   ];
 
   readonly dockItems: DockItem[] = [
-    { id: 'home', label: 'الرئيسية', icon: 'home', kind: 'navigate', target: 'home' },
-    { id: 'products', label: 'المحاصيل', icon: 'agriculture', kind: 'navigate', target: 'products' },
-    { id: 'gallery', label: 'المعرض', icon: 'photo_library', kind: 'navigate', target: 'gallery' },
-    { id: 'contact', label: 'تواصل', icon: 'call', kind: 'navigate', target: 'contact' },
-    { id: 'more', label: 'المزيد', icon: 'widgets', kind: 'menu' }
+    {
+      id: 'home',
+      label: 'الرئيسية',
+      icon: 'home',
+      kind: 'navigate',
+      target: 'home',
+      route: '/',
+      fragment: 'home',
+    },
+    {
+      id: 'products',
+      label: 'المحاصيل',
+      icon: 'agriculture',
+      kind: 'navigate',
+      target: 'products',
+      route: '/products',
+      fragment: undefined,
+    },
+    {
+      id: 'gallery',
+      label: 'المعرض',
+      icon: 'photo_library',
+      kind: 'navigate',
+      target: 'gallery',
+      route: '/gallery',
+      fragment: undefined,
+    },
+    {
+      id: 'contact',
+      label: 'تواصل',
+      icon: 'call',
+      kind: 'navigate',
+      target: 'contact',
+      route: '/contact',
+      fragment: undefined,
+    },
+    { id: 'more', label: 'المزيد', icon: 'widgets', kind: 'menu' },
   ];
 
   readonly languages: LanguageOption[] = [
-    { code: 'ar', flag: '🇪🇬', name: 'العربية' },
-    { code: 'en', flag: '🇬🇧', name: 'English' },
-    { code: 'ru', flag: '🇷🇺', name: 'Русский' }
+    { code: 'ar', flagSrc: 'assets/flags/eg.svg', name: 'العربية' },
+    { code: 'en', flagSrc: 'assets/flags/gb.svg', name: 'English' },
+    { code: 'ru', flagSrc: 'assets/flags/ru.svg', name: 'Русский' },
   ];
 
   private readonly dockNavigationIds = new Set(
     this.dockItems
-      .filter((item): item is DockItem & { target: string } => item.kind === 'navigate' && Boolean(item.target))
-      .map((item) => item.target)
+      .filter(
+        (item): item is DockItem & { target: string } =>
+          item.kind === 'navigate' && Boolean(item.target),
+      )
+      .map((item) => item.target),
   );
 
   @HostListener('window:scroll')
@@ -181,7 +259,7 @@ export class NavbarComponent implements OnInit {
       products: 'agriculture',
       stations: 'factory',
       gallery: 'photo_library',
-      contact: 'call'
+      contact: 'call',
     };
 
     return iconMap[itemId] ?? 'chevron_left';
@@ -215,13 +293,55 @@ export class NavbarComponent implements OnInit {
         langToSet = savedLang;
       }
     }
-    
+
     // Always call setLanguage on init to apply lang/dir to document synchronously
     this.activeLanguage.set(langToSet);
     this.translocoService.setActiveLang(langToSet);
     const dir = langToSet === 'ar' ? 'rtl' : 'ltr';
     this.doc.documentElement.lang = langToSet;
     this.doc.documentElement.dir = dir;
+
+    this.syncActiveItemFromUrl();
+
+    this.routeEventsSub = this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+
+      this.syncActiveItemFromUrl();
+      this.topNavVisible.set(true);
+
+      if (typeof window !== 'undefined') {
+        this.lastScrollY = Math.max(window.scrollY, 0);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routeEventsSub?.unsubscribe();
+  }
+
+  private syncActiveItemFromUrl(): void {
+    const tree = this.router.parseUrl(this.router.url);
+    const primary = tree.root.children['primary'];
+    const routePath = primary ? `/${primary.segments.map((s) => s.path).join('/')}` : '/';
+    const path = routePath === '//' ? '/' : routePath;
+    const fragment = tree.fragment ?? undefined;
+
+    let matchedItem: NavItem | undefined;
+
+    if (path === '/' && fragment) {
+      matchedItem = this.navItems.find((item) => item.route === '/' && item.fragment === fragment);
+    }
+
+    if (!matchedItem) {
+      matchedItem = this.navItems.find((item) => item.route === path && !item.fragment);
+    }
+
+    if (!matchedItem && path === '/') {
+      matchedItem = this.navItems.find((item) => item.id === 'home');
+    }
+
+    this.activeItem.set(matchedItem?.id ?? 'home');
   }
 }
-

@@ -25,25 +25,31 @@
 
     <div class="hero__actions">
       <a class="hero-btn hero-btn--solid" routerLink="/products">{{ t('btn_products') }}</a>
-      <a class="hero-btn hero-btn--ghost" routerLink="/" fragment="contact">{{ t('btn_contact') }}</a>
+      <a class="hero-btn hero-btn--ghost" routerLink="/contact">{{ t('btn_contact') }}</a>
     </div>
   </div>
 
   <a
     class="hero__down material-symbols-outlined"
-    routerLink="/" fragment="about"
+    routerLink="/"
+    fragment="about"
     aria-label="الانتقال للأسفل"
   >
     keyboard_arrow_down
   </a>
 </section>
 
-<section class="hero-strip" dir="ltr" aria-label="مؤشرات سريعة" *transloco="let t; read: 'home.hero'">
+<section
+  class="hero-strip"
+  dir="ltr"
+  aria-label="مؤشرات سريعة"
+  *transloco="let t; read: 'home.hero'"
+>
   <div class="hero-strip__track">
     @for (item of stripItems; track trackByLabelKey($index, item)) {
       <span class="hero-strip__item">
         <span class="material-symbols-outlined">{{ item.icon }}</span>
-        <span>{{ t('strip.' + item.labelKey + '.label') }}</span>
+        <span>{{ t(item.labelKey) }}</span>
       </span>
     }
   </div>
