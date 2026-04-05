@@ -362,11 +362,6 @@
       "btn": "Book an Order Now"
     },
     "items": {
-      "grape_white": {
-        "title": "White Grapes",
-        "season": "May - August",
-        "desc": "Premium white grapes (Superior & Seedless), featuring large seedless berries and a refreshing sweet taste. Highly popular in European markets, carefully picked to ensure quality."
-      },
       "orange": {
         "title": "Egyptian Oranges",
         "season": "November - May",
@@ -406,6 +401,11 @@
         "title": "Mandarins / Tangerines",
         "season": "November - May",
         "desc": "Fresh, easy-to-peel mandarins with a balanced sweet citrus flavor. Carefully packed to retain their aesthetic appearance and distinct taste."
+      },
+      "pepper": {
+        "title": "Pepper",
+        "season": "May - August",
+        "desc": "High quality fresh pepper for local and export markets. Excellent firmness and storage capacity."
       }
     },
     "whatsapp_message": "Hello, I would like to inquire about details and pricing for",
@@ -457,8 +457,8 @@
         "description": "Premium winter crop for export."
       },
       "crops_2": {
-        "title": "Seedless White Grapes",
-        "description": "Fresh summer crop."
+        "title": "Pepper",
+        "description": "High quality fresh crop."
       },
       "crops_3": {
         "title": "Premium Black Grapes",

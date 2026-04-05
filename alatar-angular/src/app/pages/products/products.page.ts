@@ -45,8 +45,8 @@ export class ProductsPageComponent {
 
   readonly products: ProductCard[] = [
     {
-      titleKey: 'products_page.items.grape_white.title',
-      seasonKey: 'products_page.items.grape_white.season',
+      titleKey: 'products_page.items.pepper.title',
+      seasonKey: 'products_page.items.pepper.season',
       image: 'assets/Images/1.jpeg',
       images: [
         'assets/Images/1.jpeg',
@@ -54,7 +54,7 @@ export class ProductsPageComponent {
         'assets/Images/001.jpeg',
         'assets/Images/0001.jpeg',
       ],
-      descriptionKey: 'products_page.items.grape_white.desc',
+      descriptionKey: 'products_page.items.pepper.desc',
       badgeType: 'summer',
       categories: ['summer'],
     },

@@ -53,7 +53,7 @@ export class GalleryPageComponent {
       id: 2,
       category: 'crops',
       src: 'assets/Images/1.jpeg',
-      alt: 'Grapes',
+      alt: 'Pepper',
       titleKey: 'crops_2',
       descKey: 'crops_2',
     },
