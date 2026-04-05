@@ -5,11 +5,12 @@ import { ReactiveFormsModule, Validators, NonNullableFormBuilder } from '@angula
 import { finalize } from 'rxjs';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ContactService, ContactUiServiceType } from '../../core/contacts/contact.service';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-contact-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NavbarComponent],
+  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, TranslocoModule],
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.css'
 })
@@ -17,24 +18,25 @@ export class ContactPageComponent {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly contactService = inject(ContactService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly translocoService = inject(TranslocoService);
 
   readonly countries = [
-    'مصر',
-    'السعودية',
-    'الإمارات',
-    'الكويت',
-    'روسيا',
-    'الاتحاد الأوروبي'
+    'egypt',
+    'saudi',
+    'uae',
+    'kuwait',
+    'russia',
+    'eu'
   ];
 
   readonly crops = [
-    'برتقال',
-    'عنب',
-    'مانجو',
-    'فراولة',
-    'بطاطس',
-    'بصل',
-    'رمان'
+    'oranges',
+    'grapes',
+    'mangoes',
+    'strawberries',
+    'potatoes',
+    'onions',
+    'pomegranates'
   ];
 
   readonly form = this.formBuilder.group({
@@ -77,7 +79,7 @@ export class ContactPageComponent {
     const quantityTons = quantityValue === '' ? null : Number(quantityValue);
 
     if (quantityTons !== null && Number.isNaN(quantityTons)) {
-      this.submitError = 'الكمية يجب أن تكون رقماً صحيحاً.';
+      this.submitError = 'err_quantity_pattern';
       return;
     }
 
@@ -118,10 +120,10 @@ export class ContactPageComponent {
           this.applyCountryValidation('local');
           this.form.markAsPristine();
           this.form.markAsUntouched();
-          this.submitSuccess = 'تم إرسال طلب التواصل بنجاح.';
+          this.submitSuccess = 'msg_success';
         },
         error: () => {
-          this.submitError = 'تعذر إرسال الطلب حالياً. حاول مرة أخرى.';
+          this.submitError = 'msg_error';
         }
       });
   }
