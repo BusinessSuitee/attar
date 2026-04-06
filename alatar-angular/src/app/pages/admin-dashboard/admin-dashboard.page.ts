@@ -212,6 +212,7 @@ export class AdminDashboardPageComponent {
   private readonly activeSectionSignal = signal<DashboardSectionKey>('overview');
   private readonly updatingStatusIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
   private readonly updatingOrderStatusIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
+  private readonly deletingOrderRequestIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
   private readonly deletingContactIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
 
   private readonly productsWithCategoriesSignal = computed<ProductWithCategories[]>(() => {
@@ -746,9 +747,9 @@ export class AdminDashboardPageComponent {
 
     // Load existing images if available
     const existingImages = product.images ?? [];
-    const formattedImages = existingImages.map(img => ({
+    const formattedImages = existingImages.map((img) => ({
       id: img.id,
-      url: this.resolveImageUrl(img.url)
+      url: this.resolveImageUrl(img.url),
     }));
 
     this.existingImagePreviewsSignal.set(formattedImages);
@@ -786,21 +787,22 @@ export class AdminDashboardPageComponent {
 
     this.productSubmitErrorSignal.set('');
 
-    this.productService.deleteProductImage(product.id, imageId).pipe(
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe({
-      next: () => {
-        this.existingImagePreviewsSignal.update(current =>
-          current.filter(img => img.id !== imageId)
-        );
-        this.productSubmitSuccessSignal.set('تم حذف الصورة بنجاح.');
-        setTimeout(() => this.productSubmitSuccessSignal.set(''), 3000);
-        this.loadProducts(true);
-      },
-      error: () => {
-        this.productSubmitErrorSignal.set('تعذر حذف الصورة. حاول مرة أخرى.');
-      }
-    });
+    this.productService
+      .deleteProductImage(product.id, imageId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.existingImagePreviewsSignal.update((current) =>
+            current.filter((img) => img.id !== imageId),
+          );
+          this.productSubmitSuccessSignal.set('تم حذف الصورة بنجاح.');
+          setTimeout(() => this.productSubmitSuccessSignal.set(''), 3000);
+          this.loadProducts(true);
+        },
+        error: () => {
+          this.productSubmitErrorSignal.set('تعذر حذف الصورة. حاول مرة أخرى.');
+        },
+      });
   }
 
   onProductFieldInput(field: ProductTextField, value: string): void {
@@ -1096,10 +1098,22 @@ export class AdminDashboardPageComponent {
   onOrderStatusChange(orderRequest: OrderRequestListItem, rawValue: string): void {
     const nextStatus = rawValue as OrderRequestStatus;
     const currentStatus = this.orderStatusValue(orderRequest);
+    const previousBackendStatus = orderRequest.status;
+    const nextBackendStatus = this.toBackendOrderStatus(nextStatus);
 
-    if (nextStatus === currentStatus || this.isOrderStatusUpdating(orderRequest.id)) {
+    if (
+      nextStatus === currentStatus ||
+      this.isOrderStatusUpdating(orderRequest.id) ||
+      this.isOrderDeleting(orderRequest.id)
+    ) {
       return;
     }
+
+    this.orderRequestsSignal.update((items) =>
+      items.map((item) =>
+        item.id === orderRequest.id ? { ...item, status: nextBackendStatus } : item,
+      ),
+    );
 
     this.updatingOrderStatusIdsSignal.update((current) => {
       const next = new Set(current);
@@ -1122,15 +1136,64 @@ export class AdminDashboardPageComponent {
       )
       .subscribe({
         next: () => {
-          const backendStatus = this.toBackendOrderStatus(nextStatus);
-          this.orderRequestsSignal.update((items) =>
-            items.map((item) =>
-              item.id === orderRequest.id ? { ...item, status: backendStatus } : item,
-            ),
-          );
+          // Optimistic update already applied above.
         },
         error: () => {
+          this.orderRequestsSignal.update((items) =>
+            items.map((item) =>
+              item.id === orderRequest.id ? { ...item, status: previousBackendStatus } : item,
+            ),
+          );
           this.ordersLoadErrorSignal.set('تعذر تحديث حالة الطلب.');
+        },
+      });
+  }
+
+  onDeleteOrderRequest(orderRequest: OrderRequestListItem): void {
+    if (this.isOrderDeleting(orderRequest.id) || this.isOrderStatusUpdating(orderRequest.id)) {
+      return;
+    }
+
+    if (this.isBrowser) {
+      const confirmed = window.confirm(
+        `هل أنت متأكد من حذف طلب "${orderRequest.productNameSnapshot}" للعميل "${orderRequest.requesterName}"؟`,
+      );
+
+      if (!confirmed) {
+        return;
+      }
+    }
+
+    this.deletingOrderRequestIdsSignal.update((current) => {
+      const next = new Set(current);
+      next.add(orderRequest.id);
+      return next;
+    });
+    this.ordersLoadErrorSignal.set('');
+
+    this.orderRequestService
+      .deleteOrderRequest(orderRequest.id)
+      .pipe(
+        finalize(() => {
+          this.deletingOrderRequestIdsSignal.update((current) => {
+            const next = new Set(current);
+            next.delete(orderRequest.id);
+            return next;
+          });
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          const targetPage =
+            this.orderRequestsSignal().length === 1 && this.ordersCurrentPageSignal() > 1
+              ? this.ordersCurrentPageSignal() - 1
+              : this.ordersCurrentPageSignal();
+
+          this.loadOrderRequests(targetPage, true);
+        },
+        error: () => {
+          this.ordersLoadErrorSignal.set('تعذر حذف الطلب. حاول مرة أخرى.');
         },
       });
   }
@@ -1141,6 +1204,10 @@ export class AdminDashboardPageComponent {
 
   isOrderStatusUpdating(orderRequestId: string): boolean {
     return this.updatingOrderStatusIdsSignal().has(orderRequestId);
+  }
+
+  isOrderDeleting(orderRequestId: string): boolean {
+    return this.deletingOrderRequestIdsSignal().has(orderRequestId);
   }
 
   onDeleteContact(contact: ContactListItem): void {
@@ -1272,6 +1339,30 @@ export class AdminDashboardPageComponent {
 
   orderStatusValue(orderRequest: OrderRequestListItem): OrderRequestStatus {
     return this.orderRequestService.normalizeStatus(orderRequest.status);
+  }
+
+  orderStatusLabel(orderRequest: OrderRequestListItem): string {
+    return (
+      this.orderStatusOptions.find((option) => option.value === this.orderStatusValue(orderRequest))
+        ?.label ?? 'جديد'
+    );
+  }
+
+  orderStatusBadgeClass(orderRequest: OrderRequestListItem): string {
+    const status = this.orderStatusValue(orderRequest);
+
+    switch (status) {
+      case 'in_review':
+        return 'state state--review';
+      case 'contacted':
+        return 'state state--ship';
+      case 'confirmed':
+        return 'state state--ok';
+      case 'closed':
+        return 'state state--closed';
+      default:
+        return 'state state--new';
+    }
   }
 
   orderStatusSelectClass(orderRequest: OrderRequestListItem): string {
@@ -1475,7 +1566,7 @@ export class AdminDashboardPageComponent {
 
     const updatePayload = {
       ...payload,
-      stockQuantity: payload.openingStock
+      stockQuantity: payload.openingStock,
     };
 
     this.productService

@@ -31,6 +31,8 @@ public sealed class OrderRequest
         SelectedSize = selectedSize;
         SelectedGrade = selectedGrade;
         Status = OrderRequestStatus.New;
+        IsDeleted = false;
+        DeletedAtUtc = null;
         CreatedAtUtc = DateTime.UtcNow;
         UpdatedAtUtc = DateTime.UtcNow;
     }
@@ -47,6 +49,8 @@ public sealed class OrderRequest
     public string? SelectedSize { get; private set; }
     public string? SelectedGrade { get; private set; }
     public OrderRequestStatus Status { get; private set; }
+    public bool IsDeleted { get; private set; }
+    public DateTime? DeletedAtUtc { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
     public DateTime UpdatedAtUtc { get; private set; }
 
@@ -89,6 +93,18 @@ public sealed class OrderRequest
         }
 
         Status = status;
+        UpdatedAtUtc = DateTime.UtcNow;
+    }
+
+    public void SoftDelete()
+    {
+        if (IsDeleted)
+        {
+            return;
+        }
+
+        IsDeleted = true;
+        DeletedAtUtc = DateTime.UtcNow;
         UpdatedAtUtc = DateTime.UtcNow;
     }
 

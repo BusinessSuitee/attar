@@ -102,6 +102,10 @@ export class OrderRequestService {
     );
   }
 
+  deleteOrderRequest(orderRequestId: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiBaseUrl}/api/order-requests/${orderRequestId}`);
+  }
+
   normalizeStatus(status: string): OrderRequestStatus {
     switch (status.trim().toLowerCase()) {
       case 'inreview':

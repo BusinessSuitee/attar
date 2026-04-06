@@ -13,4 +13,8 @@ public interface IOrderRequestRepository : IGeneralRepository<OrderRequest, Guid
         Guid id,
         OrderRequestStatus status,
         CancellationToken cancellationToken);
+
+    Task<bool> SoftDeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken);
 }

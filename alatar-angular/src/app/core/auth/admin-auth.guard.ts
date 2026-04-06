@@ -3,6 +3,10 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 export const adminAuthGuard: CanActivateFn = (_route, state) => {
+  if (typeof window === 'undefined') {
+    return true;
+  }
+
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -12,7 +16,7 @@ export const adminAuthGuard: CanActivateFn = (_route, state) => {
 
   return router.createUrlTree(['/admin/login'], {
     queryParams: {
-      returnUrl: state.url
-    }
+      returnUrl: state.url,
+    },
   });
 };

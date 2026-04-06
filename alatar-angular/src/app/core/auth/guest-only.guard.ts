@@ -3,6 +3,10 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 export const guestOnlyGuard: CanActivateFn = () => {
+  if (typeof window === 'undefined') {
+    return true;
+  }
+
   const authService = inject(AuthService);
   const router = inject(Router);
 

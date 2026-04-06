@@ -142,6 +142,8 @@ public static class DatabaseInitializer
                                    [SelectedSize] NVARCHAR(120) NULL,
                                    [SelectedGrade] NVARCHAR(120) NULL,
                                    [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_OrderRequests_Status] DEFAULT N'New',
+                                   [IsDeleted] BIT NOT NULL CONSTRAINT [DF_OrderRequests_IsDeleted] DEFAULT 0,
+                                   [DeletedAtUtc] DATETIME2 NULL,
                                    [CreatedAtUtc] DATETIME2 NOT NULL,
                                    [UpdatedAtUtc] DATETIME2 NOT NULL,
                                    CONSTRAINT [PK_OrderRequests] PRIMARY KEY ([Id]),
@@ -210,6 +212,18 @@ public static class DatabaseInitializer
                                ADD [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_OrderRequests_Status] DEFAULT N'New';
                            END
 
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'IsDeleted') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [IsDeleted] BIT NOT NULL CONSTRAINT [DF_OrderRequests_IsDeleted] DEFAULT 0;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'DeletedAtUtc') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [DeletedAtUtc] DATETIME2 NULL;
+                           END
+
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'CreatedAtUtc') IS NULL
                            BEGIN
                                ALTER TABLE [dbo].[OrderRequests]
@@ -242,6 +256,17 @@ public static class DatabaseInitializer
                            BEGIN
                                CREATE INDEX [IX_OrderRequests_Status]
                                    ON [dbo].[OrderRequests]([Status]);
+                           END
+
+                           IF NOT EXISTS (
+                               SELECT 1
+                               FROM sys.indexes
+                               WHERE name = N'IX_OrderRequests_IsDeleted'
+                                   AND object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                           )
+                           BEGIN
+                               CREATE INDEX [IX_OrderRequests_IsDeleted]
+                                   ON [dbo].[OrderRequests]([IsDeleted]);
                            END
 
                            IF NOT EXISTS (

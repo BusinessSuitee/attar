@@ -194,6 +194,12 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
             .HasMaxLength(32)
             .IsRequired();
 
+        orderRequest.Property(x => x.IsDeleted)
+            .HasDefaultValue(false)
+            .IsRequired();
+
+        orderRequest.Property(x => x.DeletedAtUtc);
+
         orderRequest.Property(x => x.CreatedAtUtc)
             .IsRequired();
 
@@ -202,6 +208,7 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 
         orderRequest.HasIndex(x => x.ProductId);
         orderRequest.HasIndex(x => x.Status);
+        orderRequest.HasIndex(x => x.IsDeleted);
         orderRequest.HasIndex(x => x.CreatedAtUtc);
 
         orderRequest.HasOne<Product>()

@@ -2,6 +2,7 @@ using Alatar.Api.Common;
 using Alatar.Api.Contracts.OrderRequests;
 using Alatar.Api.Security;
 using Alatar.Application.Features.OrderRequests.AddOrderRequest;
+using Alatar.Application.Features.OrderRequests.DeleteOrderRequest;
 using Alatar.Application.Features.OrderRequests.GetOrderRequests;
 using Alatar.Application.Features.OrderRequests.UpdateOrderRequestStatus;
 using Alatar.Domain.OrderRequests;
@@ -61,6 +62,16 @@ public sealed class OrderRequestsController(ISender sender) : ControllerBase
             (OrderRequestStatus)request.Status);
 
         var result = await sender.Send(command, cancellationToken);
+        return this.ToActionResult(result);
+    }
+
+    [HttpDelete("{orderRequestId:guid}")]
+    [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
+    public async Task<IActionResult> Delete(
+        [FromRoute] Guid orderRequestId,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new DeleteOrderRequestCommand(orderRequestId), cancellationToken);
         return this.ToActionResult(result);
     }
 }
