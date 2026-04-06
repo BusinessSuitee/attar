@@ -358,6 +358,204 @@
 
             </div>
 
+            <!-- Quick request form -->
+            <div class="mt-7 rounded-2xl border border-solid border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+              <div class="mb-4">
+                <h3 class="mb-1 text-lg font-black text-slate-900">
+                  {{ 'products_page.modal.request_title' | transloco }}
+                </h3>
+                <p class="m-0 text-sm text-slate-600">
+                  {{ 'products_page.modal.request_desc' | transloco }}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
+                  <p class="mb-2 text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.variety_label' | transloco }}
+                  </p>
+                  @if (product.varieties.length > 0) {
+                    <div class="flex flex-wrap gap-2">
+                      @for (variety of product.varieties; track variety) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
+                          [ngClass]="isOrderOptionSelected('selectedVariety', variety)
+                            ? 'border-primary bg-primary text-white'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
+                          (click)="setOrderOption('selectedVariety', variety)">
+                          {{ variety }}
+                        </button>
+                      }
+                    </div>
+                  } @else {
+                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                  }
+                </div>
+
+                <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
+                  <p class="mb-2 text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.packaging_label' | transloco }}
+                  </p>
+                  @if (product.packagingOptions.length > 0) {
+                    <div class="flex flex-wrap gap-2">
+                      @for (packaging of product.packagingOptions; track packaging) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
+                          [ngClass]="isOrderOptionSelected('selectedPackaging', packaging)
+                            ? 'border-primary bg-primary text-white'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
+                          (click)="setOrderOption('selectedPackaging', packaging)">
+                          {{ packaging }}
+                        </button>
+                      }
+                    </div>
+                  } @else {
+                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                  }
+                </div>
+
+                <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
+                  <p class="mb-2 text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.weight_label' | transloco }}
+                  </p>
+                  @if (product.weightOptions.length > 0) {
+                    <div class="flex flex-wrap gap-2">
+                      @for (weight of product.weightOptions; track weight) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
+                          [ngClass]="isOrderOptionSelected('selectedWeight', weight)
+                            ? 'border-primary bg-primary text-white'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
+                          (click)="setOrderOption('selectedWeight', weight)">
+                          {{ weight }}
+                        </button>
+                      }
+                    </div>
+                  } @else {
+                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                  }
+                </div>
+
+                <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
+                  <p class="mb-2 text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.size_label' | transloco }}
+                  </p>
+                  @if (product.sizeOptions.length > 0) {
+                    <div class="flex flex-wrap gap-2">
+                      @for (size of product.sizeOptions; track size) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
+                          [ngClass]="isOrderOptionSelected('selectedSize', size)
+                            ? 'border-primary bg-primary text-white'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
+                          (click)="setOrderOption('selectedSize', size)">
+                          {{ size }}
+                        </button>
+                      }
+                    </div>
+                  } @else {
+                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                  }
+                </div>
+
+                <div class="rounded-xl border border-solid border-slate-200 bg-white p-3 sm:col-span-2">
+                  <p class="mb-2 text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.grade_label' | transloco }}
+                  </p>
+                  @if (product.gradeOptions.length > 0) {
+                    <div class="flex flex-wrap gap-2">
+                      @for (grade of product.gradeOptions; track grade) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
+                          [ngClass]="isOrderOptionSelected('selectedGrade', grade)
+                            ? 'border-primary bg-primary text-white'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
+                          (click)="setOrderOption('selectedGrade', grade)">
+                          {{ grade }}
+                        </button>
+                      }
+                    </div>
+                  } @else {
+                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                  }
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <label class="block">
+                  <span class="mb-1 block text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.requester_name_label' | transloco }}
+                  </span>
+                  <input
+                    type="text"
+                    class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                    [placeholder]="'products_page.modal.requester_name_placeholder' | transloco"
+                    [value]="orderRequestForm().requesterName"
+                    (input)="onOrderTextFieldInput('requesterName', $any($event.target).value)" />
+                </label>
+
+                <label class="block">
+                  <span class="mb-1 block text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.phone_label' | transloco }}
+                  </span>
+                  <input
+                    type="tel"
+                    dir="ltr"
+                    inputmode="tel"
+                    class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                    [placeholder]="'products_page.modal.phone_placeholder' | transloco"
+                    [value]="orderRequestForm().phoneNumber"
+                    (input)="onOrderTextFieldInput('phoneNumber', $any($event.target).value)" />
+                </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="mb-1 block text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.quantity_label' | transloco }}
+                  </span>
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    dir="ltr"
+                    inputmode="decimal"
+                    class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                    [placeholder]="'products_page.modal.quantity_placeholder' | transloco"
+                    [value]="orderRequestForm().quantityTons"
+                    (input)="onOrderTextFieldInput('quantityTons', $any($event.target).value)" />
+                </label>
+              </div>
+
+              @if (orderSubmitError()) {
+                <div class="mt-3 rounded-xl border border-solid border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600">
+                  {{ orderSubmitError() }}
+                </div>
+              }
+
+              @if (!orderSubmitError() && orderSubmitSuccess()) {
+                <div class="mt-3 rounded-xl border border-solid border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">
+                  {{ orderSubmitSuccess() }}
+                </div>
+              }
+
+              <button
+                type="button"
+                class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border-none bg-primary px-4 py-3 text-sm font-bold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                [disabled]="isSubmittingOrderRequest()"
+                (click)="submitOrderRequest()">
+                <span class="material-symbols-outlined text-lg">send</span>
+                @if (isSubmittingOrderRequest()) {
+                  {{ 'products_page.modal.submit_loading' | transloco }}
+                } @else {
+                  {{ 'products_page.modal.submit_request' | transloco }}
+                }
+              </button>
+            </div>
+
             <!-- Quality badges -->
             <div class="mt-6 grid grid-cols-2 gap-3">
               <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-100 border-solid">

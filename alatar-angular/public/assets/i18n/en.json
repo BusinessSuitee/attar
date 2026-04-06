@@ -413,6 +413,38 @@
         "desc": "High quality fresh pepper for local and export markets. Excellent firmness and storage capacity."
       }
     },
+    "modal": {
+      "request_title": "Request this product now",
+      "request_desc": "Choose your preferred specifications and submit your request directly to our sales team.",
+      "variety_label": "Variety",
+      "packaging_label": "Packaging",
+      "weight_label": "Weight",
+      "size_label": "Size",
+      "grade_label": "Grade",
+      "not_available": "Not available for this product",
+      "requester_name_label": "Your Name",
+      "requester_name_placeholder": "Enter your full name",
+      "phone_label": "Phone Number",
+      "phone_placeholder": "e.g. +201001234567",
+      "quantity_label": "Required Quantity (tons)",
+      "quantity_placeholder": "e.g. 12.5",
+      "submit_request": "Send product request",
+      "submit_loading": "Sending request...",
+      "request_success": "Your request has been sent successfully. Our team will contact you soon.",
+      "request_error": "Unable to submit your request now. Please try again.",
+      "validation": {
+        "name_required": "Please enter your name.",
+        "name_min": "Name must be at least 3 characters.",
+        "phone_required": "Please enter your phone number.",
+        "phone_min": "Phone number must be at least 7 digits.",
+        "quantity_invalid": "Please enter a valid quantity greater than zero.",
+        "variety_required": "Please select a variety.",
+        "packaging_required": "Please select a packaging option.",
+        "weight_required": "Please select a weight option.",
+        "size_required": "Please select a size option.",
+        "grade_required": "Please select a grade option."
+      }
+    },
     "whatsapp_message": "Hello, I would like to inquire about details and pricing for",
     "whatsapp_btn": "Order via WhatsApp",
     "quality_badge": {

@@ -413,6 +413,38 @@
         "desc": "فلفل طازج عالي الجودة للأسواق المحلية والتصدير. يتميز بصلابة وقدرة ممتازة على التخزين."
       }
     },
+    "modal": {
+      "request_title": "اطلب هذا المنتج الآن",
+      "request_desc": "اختر المواصفات المناسبة لك وأرسل طلبك مباشرة إلى فريق المبيعات.",
+      "variety_label": "الصنف",
+      "packaging_label": "التعبئة",
+      "weight_label": "الوزن",
+      "size_label": "المقاس",
+      "grade_label": "الدرجة",
+      "not_available": "غير متاح لهذا المنتج",
+      "requester_name_label": "اسمك",
+      "requester_name_placeholder": "اكتب الاسم بالكامل",
+      "phone_label": "رقم الهاتف",
+      "phone_placeholder": "مثال: +201001234567",
+      "quantity_label": "الكمية المطلوبة (طن)",
+      "quantity_placeholder": "مثال: 12.5",
+      "submit_request": "إرسال طلب المنتج",
+      "submit_loading": "جاري إرسال الطلب...",
+      "request_success": "تم إرسال طلبك بنجاح. سيتواصل فريقنا معك قريباً.",
+      "request_error": "تعذر إرسال الطلب حالياً. حاول مرة أخرى.",
+      "validation": {
+        "name_required": "من فضلك أدخل الاسم.",
+        "name_min": "الاسم يجب أن يكون 3 أحرف على الأقل.",
+        "phone_required": "من فضلك أدخل رقم الهاتف.",
+        "phone_min": "رقم الهاتف يجب أن يكون 7 أرقام على الأقل.",
+        "quantity_invalid": "أدخل كمية صحيحة أكبر من صفر.",
+        "variety_required": "من فضلك اختر الصنف.",
+        "packaging_required": "من فضلك اختر نوع التعبئة.",
+        "weight_required": "من فضلك اختر الوزن.",
+        "size_required": "من فضلك اختر المقاس.",
+        "grade_required": "من فضلك اختر الدرجة."
+      }
+    },
     "whatsapp_message": "أهلاً، أرغب في الاستفسار عن تفاصيل وأسعار",
     "whatsapp_btn": "طلب عبر واتساب",
     "quality_badge": {
