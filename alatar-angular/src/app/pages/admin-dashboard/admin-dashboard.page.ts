@@ -209,7 +209,7 @@ export class AdminDashboardPageComponent {
   private readonly ordersCurrentPageSignal = signal(1);
   private readonly ordersTotalPagesSignal = signal(0);
   private readonly ordersTotalCountSignal = signal(0);
-  private readonly activeSectionSignal = signal<DashboardSectionKey>('overview');
+  private readonly activeSectionSignal = signal<DashboardSectionKey>('products');
   private readonly updatingStatusIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
   private readonly updatingOrderStatusIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
   private readonly deletingOrderRequestIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
@@ -265,8 +265,7 @@ export class AdminDashboardPageComponent {
   ];
 
   readonly sections: DashboardSection[] = [
-    { key: 'overview', label: 'لوحة التحكم', icon: 'dashboard' },
-    { key: 'orders', label: 'الطلبات', icon: 'shopping_cart' },
+    { key: 'orders', label: 'لوحة التحكم', icon: 'dashboard' },
     { key: 'products', label: 'إضافة منتج', icon: 'add_box' },
     { key: 'contacts', label: 'التواصل', icon: 'contact_phone' },
     { key: 'settings', label: 'الإعدادات', icon: 'settings' },
@@ -1724,6 +1723,8 @@ export class AdminDashboardPageComponent {
 
   private resolveSectionByRoute(routePath: string): DashboardSectionKey {
     switch (routePath) {
+      case '/admin':
+        return 'products';
       case '/admin/orders':
         return 'orders';
       case '/admin/products':
@@ -1733,7 +1734,7 @@ export class AdminDashboardPageComponent {
       case '/admin/settings':
         return 'settings';
       default:
-        return 'overview';
+        return 'products';
     }
   }
 

@@ -21,7 +21,7 @@ export class AdminLoginPageComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly loginForm = this.formBuilder.nonNullable.group({
-    email: ['admin@attar-eg.com', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(11)]],
   });
 
