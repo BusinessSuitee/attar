@@ -2,13 +2,34 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, finalize } from 'rxjs';
+import { filter, finalize, map, of, switchMap } from 'rxjs';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { AuthService, AuthenticatedAdmin } from '../../core/auth/auth.service';
-import { ContactListItem, ContactService, ContactStatus } from '../../core/contacts/contact.service';
-import { CreateProductPayload, ProductListItem, ProductService } from '../../core/products/product.service';
+import {
+  ContactListItem,
+  ContactService,
+  ContactStatus,
+} from '../../core/contacts/contact.service';
+import { API_BASE_URL } from '../../core/config/api-base-url.token';
+import {
+  CreateProductPayload,
+  ProductListItem,
+  ProductSeason,
+  ProductService,
+  ProductState,
+  ProductType,
+} from '../../core/products/product.service';
 
 type DashboardSectionKey = 'overview' | 'orders' | 'products' | 'contacts' | 'settings';
+
+type ProductFormStep = 1 | 2 | 3 | 4;
+
+type ImagePreview = {
+  file: File;
+  url: string;
+  name: string;
+  size: string;
+};
 
 type DashboardSection = {
   key: DashboardSectionKey;
@@ -25,10 +46,30 @@ type ContactStatusOption = {
 
 type ProductFormState = {
   name: string;
+  nameAr: string;
   sku: string;
   price: string;
   openingStock: string;
+  descriptionEn: string;
+  descriptionAr: string;
+  productType: ProductType;
+  productState: ProductState;
+  season: ProductSeason;
+  varieties: string[];
+  packagingOptions: string[];
+  weightOptions: string[];
+  sizeOptions: string[];
+  gradeOptions: string[];
 };
+
+type ProductOptionField =
+  | 'varieties'
+  | 'packagingOptions'
+  | 'weightOptions'
+  | 'sizeOptions'
+  | 'gradeOptions';
+
+type ProductTextField = Exclude<keyof ProductFormState, ProductOptionField>;
 
 type CategoryItem = {
   id: string;
@@ -45,12 +86,13 @@ type ProductWithCategories = ProductListItem & {
   standalone: true,
   imports: [CommonModule, NavbarComponent],
   templateUrl: './admin-dashboard.page.html',
-  styleUrl: './admin-dashboard.page.css'
+  styleUrl: './admin-dashboard.page.css',
 })
 export class AdminDashboardPageComponent {
   private readonly authService = inject(AuthService);
   private readonly contactService = inject(ContactService);
   private readonly productService = inject(ProductService);
+  private readonly apiBaseUrl = inject(API_BASE_URL);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly isBrowser = typeof window !== 'undefined';
@@ -62,24 +104,24 @@ export class AdminDashboardPageComponent {
     orders: '/admin/orders',
     products: '/admin/products',
     contacts: '/admin/contacts',
-    settings: '/admin/settings'
+    settings: '/admin/settings',
   };
 
   private readonly categoryColorClasses = [
     'category-pill--green',
     'category-pill--orange',
     'category-pill--blue',
-    'category-pill--purple'
+    'category-pill--purple',
   ] as const;
   private readonly priceFormatter = new Intl.NumberFormat('ar-EG', {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   });
 
   private readonly defaultCategories: CategoryItem[] = [
     { id: 'citrus', name: 'موالح', colorClass: 'category-pill--green' },
     { id: 'grapes', name: 'عنب', colorClass: 'category-pill--purple' },
-    { id: 'potatoes', name: 'بطاطس', colorClass: 'category-pill--orange' }
+    { id: 'potatoes', name: 'بطاطس', colorClass: 'category-pill--orange' },
   ];
 
   private contactsLoadedOnce = false;
@@ -90,27 +132,53 @@ export class AdminDashboardPageComponent {
   private readonly productsSignal = signal<ProductListItem[]>([]);
   private readonly productFormSignal = signal<ProductFormState>({
     name: '',
+    nameAr: '',
     sku: '',
     price: '',
-    openingStock: ''
+    openingStock: '',
+    descriptionEn: '',
+    descriptionAr: '',
+    productType: 'Fruit',
+    productState: 'Fresh',
+    season: 'AllYear',
+    varieties: [],
+    packagingOptions: [],
+    weightOptions: [],
+    sizeOptions: [],
+    gradeOptions: [],
   });
+  private readonly productOptionDraftsSignal = signal<Record<ProductOptionField, string>>({
+    varieties: '',
+    packagingOptions: '',
+    weightOptions: '',
+    sizeOptions: '',
+    gradeOptions: '',
+  });
+  private readonly selectedProductImagesSignal = signal<readonly File[]>([]);
+  private readonly imagePreviewsSignal = signal<readonly ImagePreview[]>([]);
+  private readonly productImageIndexSignal = signal<Record<string, number>>({});
+  private readonly currentStepSignal = signal<ProductFormStep>(1);
+  private readonly isDraggingOverSignal = signal(false);
   private readonly categoriesSignal = signal<CategoryItem[]>(this.readCategoriesFromStorage());
   private readonly selectedCategoryIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
   private readonly productCategoryMapSignal = signal<Record<string, string[]>>(
-    this.readProductCategoryMapFromStorage()
+    this.readProductCategoryMapFromStorage(),
   );
   private readonly newCategoryNameSignal = signal('');
   private readonly isLoadingSignal = signal(false);
   private readonly isContactsLoadingSignal = signal(false);
   private readonly isProductsLoadingSignal = signal(false);
   private readonly isCreatingProductSignal = signal(false);
+  private readonly isUpdatingProductSignal = signal(false);
+  private readonly editingProductSignal = signal<ProductListItem | null>(null);
+  private readonly existingImagePreviewsSignal = signal<Array<{ id: string; url: string }>>([]);
   private readonly loadErrorSignal = signal('');
   private readonly contactsLoadErrorSignal = signal('');
   private readonly productsLoadErrorSignal = signal('');
   private readonly productSubmitErrorSignal = signal('');
   private readonly productSubmitSuccessSignal = signal('');
   private readonly isSidebarOpenSignal = signal(
-    this.isBrowser ? window.innerWidth >= this.desktopBreakpoint : false
+    this.isBrowser ? window.innerWidth >= this.desktopBreakpoint : false,
   );
   private readonly contactsViewSignal = signal<ContactsView>('rows');
   private readonly currentPageSignal = signal(1);
@@ -142,7 +210,23 @@ export class AdminDashboardPageComponent {
   readonly statusOptions: ContactStatusOption[] = [
     { value: 'in_progress', label: 'جاري التواصل' },
     { value: 'contacted', label: 'تم التواصل' },
-    { value: 'sale_confirmed', label: 'تم تأكيد البيع' }
+    { value: 'sale_confirmed', label: 'تم تأكيد البيع' },
+  ];
+
+  readonly productTypeOptions: Array<{ value: ProductType; label: string }> = [
+    { value: 'Fruit', label: 'Fruit / فاكهة' },
+    { value: 'Vegetable', label: 'Vegetable / خضار' },
+  ];
+
+  readonly productStateOptions: Array<{ value: ProductState; label: string }> = [
+    { value: 'Fresh', label: 'Fresh / طازج' },
+    { value: 'Frozen', label: 'Frozen / مجمد' },
+  ];
+
+  readonly productSeasonOptions: Array<{ value: ProductSeason; label: string }> = [
+    { value: 'Summer', label: 'Summer / صيفي' },
+    { value: 'Winter', label: 'Winter / شتوي' },
+    { value: 'AllYear', label: 'All year / طول العام' },
   ];
 
   readonly sections: DashboardSection[] = [
@@ -150,7 +234,7 @@ export class AdminDashboardPageComponent {
     { key: 'orders', label: 'الطلبات', icon: 'shopping_cart' },
     { key: 'products', label: 'إضافة منتج', icon: 'add_box' },
     { key: 'contacts', label: 'التواصل', icon: 'contact_phone' },
-    { key: 'settings', label: 'الإعدادات', icon: 'settings' }
+    { key: 'settings', label: 'الإعدادات', icon: 'settings' },
   ];
 
   get profile(): AuthenticatedAdmin | null {
@@ -167,6 +251,34 @@ export class AdminDashboardPageComponent {
 
   get productForm(): ProductFormState {
     return this.productFormSignal();
+  }
+
+  get productOptionDrafts(): Record<ProductOptionField, string> {
+    return this.productOptionDraftsSignal();
+  }
+
+  get selectedProductImages(): readonly File[] {
+    return this.selectedProductImagesSignal();
+  }
+
+  get imagePreviews(): readonly ImagePreview[] {
+    return this.imagePreviewsSignal();
+  }
+
+  get existingImagePreviews(): Array<{ id: string; url: string }> {
+    return this.existingImagePreviewsSignal();
+  }
+
+  get currentStep(): ProductFormStep {
+    return this.currentStepSignal();
+  }
+
+  get isDraggingOver(): boolean {
+    return this.isDraggingOverSignal();
+  }
+
+  get stepProgress(): number {
+    return (this.currentStepSignal() / 4) * 100;
   }
 
   get categories(): CategoryItem[] {
@@ -191,6 +303,14 @@ export class AdminDashboardPageComponent {
 
   get isCreatingProduct(): boolean {
     return this.isCreatingProductSignal();
+  }
+
+  get isUpdatingProduct(): boolean {
+    return this.isUpdatingProductSignal();
+  }
+
+  get editingProduct(): ProductListItem | null {
+    return this.editingProductSignal();
   }
 
   get loadError(): string {
@@ -253,6 +373,21 @@ export class AdminDashboardPageComponent {
     return this.selectedCategoryIdsSignal().size;
   }
 
+  get productDivisionLabel(): string {
+    const form = this.productFormSignal();
+    const typeLabel = form.productType === 'Fruit' ? 'فواكه' : 'خضروات';
+    const stateLabel = form.productState === 'Fresh' ? 'طازج' : 'مجمد';
+
+    let seasonLabel = 'طول العام';
+    if (form.season === 'Summer') {
+      seasonLabel = 'صيفي';
+    } else if (form.season === 'Winter') {
+      seasonLabel = 'شتوي';
+    }
+
+    return `${stateLabel} / ${typeLabel} / ${seasonLabel}`;
+  }
+
   get canGoPrevious(): boolean {
     return this.currentPage > 1;
   }
@@ -274,7 +409,7 @@ export class AdminDashboardPageComponent {
     this.router.events
       .pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
         this.syncSectionWithRoute();
@@ -291,7 +426,7 @@ export class AdminDashboardPageComponent {
         finalize(() => {
           this.isLoadingSignal.set(false);
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: (profile) => {
@@ -300,7 +435,7 @@ export class AdminDashboardPageComponent {
         error: () => {
           this.profileSignal.set(null);
           this.loadErrorSignal.set('تعذر تحميل بيانات الجلسة. حاول تسجيل الدخول مرة أخرى.');
-        }
+        },
       });
   }
 
@@ -320,7 +455,7 @@ export class AdminDashboardPageComponent {
         finalize(() => {
           this.isContactsLoadingSignal.set(false);
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: (response) => {
@@ -336,7 +471,7 @@ export class AdminDashboardPageComponent {
           this.totalPagesSignal.set(0);
           this.contactsLoadedOnce = false;
           this.contactsLoadErrorSignal.set('تعذر تحميل بيانات التواصل.');
-        }
+        },
       });
   }
 
@@ -354,18 +489,20 @@ export class AdminDashboardPageComponent {
         finalize(() => {
           this.isProductsLoadingSignal.set(false);
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: (products) => {
           this.productsSignal.set(products);
+          this.syncProductImageIndexes(products);
           this.productsLoadedOnce = true;
         },
         error: () => {
           this.productsSignal.set([]);
+          this.productImageIndexSignal.set({});
           this.productsLoadedOnce = false;
           this.productsLoadErrorSignal.set('تعذر تحميل المنتجات.');
-        }
+        },
       });
   }
 
@@ -438,6 +575,8 @@ export class AdminDashboardPageComponent {
       this.loadProducts(!this.productsLoadedOnce);
     }
 
+    this.cancelEdit();
+
     if (!this.isBrowser) {
       return;
     }
@@ -448,7 +587,94 @@ export class AdminDashboardPageComponent {
     });
   }
 
-  onProductFieldInput(field: keyof ProductFormState, value: string): void {
+  startEditProduct(product: ProductWithCategories): void {
+    if (this.activeSectionSignal() !== 'products') {
+      this.selectSection('products');
+    }
+
+    this.editingProductSignal.set(product);
+    
+    this.productFormSignal.set({
+      name: product.name,
+      nameAr: product.nameAr,
+      sku: product.sku,
+      price: product.price.toString(),
+      openingStock: product.stockQuantity.toString(), // Used for mapping but won't be sent in update payload
+      descriptionEn: product.descriptionEn,
+      descriptionAr: product.descriptionAr,
+      productType: product.productType,
+      productState: product.productState,
+      season: product.season,
+      varieties: [...product.varieties],
+      packagingOptions: [...product.packagingOptions],
+      weightOptions: [...product.weightOptions],
+      sizeOptions: [...product.sizeOptions],
+      gradeOptions: [...product.gradeOptions],
+    });
+
+    const categoryIds = new Set(product.categories.map((c) => c.id));
+    this.selectedCategoryIdsSignal.set(categoryIds);
+
+    // Load existing images if available
+    const existingImages = product.images ?? [];
+    const formattedImages = existingImages.map(img => ({
+      id: img.id,
+      url: this.resolveImageUrl(img.url)
+    }));
+    
+    this.existingImagePreviewsSignal.set(formattedImages);
+    this.imagePreviewsSignal.set([]);
+    this.selectedProductImagesSignal.set([]);
+    
+    this.currentStepSignal.set(1);
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+
+    if (this.isBrowser) {
+      requestAnimationFrame(() => {
+        const formElement = document.getElementById('add-product-form');
+        formElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  cancelEdit(): void {
+    this.editingProductSignal.set(null);
+    this.resetProductForm();
+    this.existingImagePreviewsSignal.set([]);
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+  }
+
+  deleteExistingImage(imageId: string): void {
+    const product = this.editingProductSignal();
+    if (!product) return;
+
+    if (this.isBrowser) {
+      const confirmed = window.confirm('هل أنت متأكد من حذف هذه الصورة نهائياً؟');
+      if (!confirmed) return;
+    }
+
+    this.productSubmitErrorSignal.set('');
+    
+    this.productService.deleteProductImage(product.id, imageId).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
+      next: () => {
+        this.existingImagePreviewsSignal.update(current => 
+          current.filter(img => img.id !== imageId)
+        );
+        this.productSubmitSuccessSignal.set('تم حذف الصورة بنجاح.');
+        setTimeout(() => this.productSubmitSuccessSignal.set(''), 3000);
+        this.loadProducts(true);
+      },
+      error: () => {
+        this.productSubmitErrorSignal.set('تعذر حذف الصورة. حاول مرة أخرى.');
+      }
+    });
+  }
+
+  onProductFieldInput(field: ProductTextField, value: string): void {
     let nextValue = value;
 
     if (field === 'sku') {
@@ -458,6 +684,177 @@ export class AdminDashboardPageComponent {
     this.productFormSignal.update((current) => ({ ...current, [field]: nextValue }));
     this.productSubmitErrorSignal.set('');
     this.productSubmitSuccessSignal.set('');
+  }
+
+  onProductOptionDraftInput(field: ProductOptionField, value: string): void {
+    this.productOptionDraftsSignal.update((current) => ({ ...current, [field]: value }));
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+  }
+
+  addProductOption(field: ProductOptionField): void {
+    const draft = this.productOptionDraftsSignal()[field].trim();
+
+    if (!draft) {
+      return;
+    }
+
+    this.productFormSignal.update((current) => {
+      const normalized = draft.toLowerCase();
+      const exists = current[field].some((item) => item.trim().toLowerCase() === normalized);
+
+      if (exists) {
+        return current;
+      }
+
+      return {
+        ...current,
+        [field]: [...current[field], draft],
+      };
+    });
+
+    this.productOptionDraftsSignal.update((current) => ({ ...current, [field]: '' }));
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+  }
+
+  onProductOptionEnter(event: Event, field: ProductOptionField): void {
+    event.preventDefault();
+    this.addProductOption(field);
+  }
+
+  removeProductOption(field: ProductOptionField, index: number): void {
+    this.productFormSignal.update((current) => ({
+      ...current,
+      [field]: current[field].filter((_, itemIndex) => itemIndex !== index),
+    }));
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+  }
+
+  onProductImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement | null;
+    const files = input?.files;
+
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    this.addFilesWithPreviews(Array.from(files));
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeSelectedProductImage(index: number): void {
+    const previews = this.imagePreviewsSignal();
+    if (previews[index]) {
+      URL.revokeObjectURL(previews[index].url);
+    }
+    this.imagePreviewsSignal.update((current) => current.filter((_, i) => i !== index));
+    this.selectedProductImagesSignal.update((current) =>
+      current.filter((_, fileIndex) => fileIndex !== index),
+    );
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingOverSignal.set(true);
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingOverSignal.set(false);
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDraggingOverSignal.set(false);
+
+    const files = event.dataTransfer?.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    const imageFiles = Array.from(files).filter((f) => f.type.startsWith('image/'));
+    if (imageFiles.length > 0) {
+      this.addFilesWithPreviews(imageFiles);
+    }
+  }
+
+  nextStep(): void {
+    const current = this.currentStepSignal();
+    if (current < 4 && this.canProceedFromStep(current)) {
+      this.currentStepSignal.set((current + 1) as ProductFormStep);
+    }
+  }
+
+  prevStep(): void {
+    const current = this.currentStepSignal();
+    if (current > 1) {
+      this.currentStepSignal.set((current - 1) as ProductFormStep);
+    }
+  }
+
+  goToStep(step: ProductFormStep): void {
+    const current = this.currentStepSignal();
+    if (step <= current || this.canProceedFromStep((step - 1) as ProductFormStep)) {
+      this.currentStepSignal.set(step);
+    }
+  }
+
+  canProceedFromStep(step: ProductFormStep): boolean {
+    const draft = this.productFormSignal();
+    switch (step) {
+      case 1:
+        return (
+          draft.name.trim().length > 0 &&
+          draft.nameAr.trim().length > 0 &&
+          draft.sku.trim().length > 0
+        );
+      case 2:
+      case 3:
+        return true;
+      case 4:
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  isStepCompleted(step: ProductFormStep): boolean {
+    const current = this.currentStepSignal();
+    return step < current;
+  }
+
+  isStepActive(step: ProductFormStep): boolean {
+    return this.currentStepSignal() === step;
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  private addFilesWithPreviews(files: File[]): void {
+    const newPreviews: ImagePreview[] = files.map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+      name: file.name,
+      size: this.formatFileSize(file.size),
+    }));
+
+    this.selectedProductImagesSignal.update((current) => [...current, ...files]);
+    this.imagePreviewsSignal.update((current) => [...current, ...newPreviews]);
   }
 
   onCategoryNameInput(value: string): void {
@@ -474,7 +871,7 @@ export class AdminDashboardPageComponent {
     }
 
     const exists = this.categoriesSignal().some(
-      (category) => category.name.trim().toLowerCase() === candidateName.toLowerCase()
+      (category) => category.name.trim().toLowerCase() === candidateName.toLowerCase(),
     );
 
     if (exists) {
@@ -485,7 +882,7 @@ export class AdminDashboardPageComponent {
     const nextCategory: CategoryItem = {
       id: this.createLocalId(),
       name: candidateName,
-      colorClass: this.pickCategoryColorClass(this.categoriesSignal().length)
+      colorClass: this.pickCategoryColorClass(this.categoriesSignal().length),
     };
 
     const nextCategories = [...this.categoriesSignal(), nextCategory];
@@ -512,16 +909,24 @@ export class AdminDashboardPageComponent {
     return this.selectedCategoryIdsSignal().has(categoryId);
   }
 
-  onCreateProduct(event: Event): void {
+  onSubmitProduct(event: Event): void {
     event.preventDefault();
-    this.createProduct();
+    if (this.editingProductSignal() !== null) {
+      this.updateProduct();
+    } else {
+      this.createProduct();
+    }
   }
 
   onContactStatusChange(contact: ContactListItem, rawValue: string): void {
     const nextStatus = rawValue as ContactStatus;
     const currentStatus = this.statusValue(contact);
 
-    if (nextStatus === currentStatus || this.isStatusUpdating(contact.id) || this.isContactDeleting(contact.id)) {
+    if (
+      nextStatus === currentStatus ||
+      this.isStatusUpdating(contact.id) ||
+      this.isContactDeleting(contact.id)
+    ) {
       return;
     }
 
@@ -542,18 +947,20 @@ export class AdminDashboardPageComponent {
             return next;
           });
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
           const backendStatus = this.toBackendStatus(nextStatus);
           this.contactsSignal.update((items) =>
-            items.map((item) => (item.id === contact.id ? { ...item, status: backendStatus } : item))
+            items.map((item) =>
+              item.id === contact.id ? { ...item, status: backendStatus } : item,
+            ),
           );
         },
         error: () => {
           this.contactsLoadErrorSignal.set('تعذر تحديث حالة التواصل.');
-        }
+        },
       });
   }
 
@@ -591,7 +998,7 @@ export class AdminDashboardPageComponent {
             return next;
           });
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
@@ -609,7 +1016,7 @@ export class AdminDashboardPageComponent {
         },
         error: () => {
           this.contactsLoadErrorSignal.set('تعذر حذف جهة التواصل.');
-        }
+        },
       });
   }
 
@@ -622,7 +1029,9 @@ export class AdminDashboardPageComponent {
   }
 
   statusLabel(contact: ContactListItem): string {
-    return this.statusOptions.find((x) => x.value === this.statusValue(contact))?.label ?? 'جاري التواصل';
+    return (
+      this.statusOptions.find((x) => x.value === this.statusValue(contact))?.label ?? 'جاري التواصل'
+    );
   }
 
   statusBadgeClass(contact: ContactListItem): string {
@@ -686,6 +1095,89 @@ export class AdminDashboardPageComponent {
     return this.priceFormatter.format(price);
   }
 
+  formatProductDivision(product: ProductListItem): string {
+    return `${product.productType} / ${product.productState} / ${product.season}`;
+  }
+
+  formatArrayPreview(values: string[]): string {
+    if (values.length === 0) {
+      return '-';
+    }
+
+    if (values.length <= 3) {
+      return values.join(' - ');
+    }
+
+    return `${values.slice(0, 3).join(' - ')} +${values.length - 3}`;
+  }
+
+  productImageUrls(product: ProductListItem): string[] {
+    return this.resolveProductImageUrls(product.imageUrls);
+  }
+
+  hasProductImages(product: ProductListItem): boolean {
+    return this.productImageUrls(product).length > 0;
+  }
+
+  currentProductImageIndex(product: ProductListItem): number {
+    const images = this.productImageUrls(product);
+
+    if (images.length === 0) {
+      return 0;
+    }
+
+    const current = this.productImageIndexSignal()[product.id] ?? 0;
+
+    if (current < 0 || current >= images.length) {
+      return 0;
+    }
+
+    return current;
+  }
+
+  currentProductImageUrl(product: ProductListItem): string | null {
+    const images = this.productImageUrls(product);
+    if (images.length === 0) {
+      return null;
+    }
+
+    return images[this.currentProductImageIndex(product)];
+  }
+
+  nextProductImage(product: ProductListItem): void {
+    const images = this.productImageUrls(product);
+
+    if (images.length <= 1) {
+      return;
+    }
+
+    const current = this.currentProductImageIndex(product);
+    const next = (current + 1) % images.length;
+    this.setProductImageIndex(product.id, next);
+  }
+
+  previousProductImage(product: ProductListItem): void {
+    const images = this.productImageUrls(product);
+
+    if (images.length <= 1) {
+      return;
+    }
+
+    const current = this.currentProductImageIndex(product);
+    const next = (current - 1 + images.length) % images.length;
+    this.setProductImageIndex(product.id, next);
+  }
+
+  goToProductImage(product: ProductListItem, index: number): void {
+    const images = this.productImageUrls(product);
+
+    if (images.length === 0 || index < 0 || index >= images.length) {
+      return;
+    }
+
+    this.setProductImageIndex(product.id, index);
+  }
+
   private createProduct(): void {
     if (this.isCreatingProductSignal()) {
       return;
@@ -698,7 +1190,11 @@ export class AdminDashboardPageComponent {
       return;
     }
 
-    const selectedCategoryIds = this.normalizeSelectedCategoryIds();
+    const selectedImages = [...this.selectedProductImagesSignal()];
+    const withImagesSuccessText =
+      selectedImages.length > 0
+        ? `تمت إضافة المنتج ورفع ${selectedImages.length} صورة بنجاح.`
+        : 'تمت إضافة المنتج بنجاح.';
 
     this.isCreatingProductSignal.set(true);
     this.productSubmitErrorSignal.set('');
@@ -707,45 +1203,166 @@ export class AdminDashboardPageComponent {
     this.productService
       .createProduct(payload)
       .pipe(
+        switchMap((created) => {
+          if (selectedImages.length === 0) {
+            return of(created);
+          }
+
+          return this.productService
+            .uploadProductImages(created.productId, selectedImages)
+            .pipe(map(() => created));
+        }),
         finalize(() => {
           this.isCreatingProductSignal.set(false);
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
-          if (selectedCategoryIds.length > 0) {
+          const categoryIds = [...this.selectedCategoryIdsSignal()];
+          if (categoryIds.length > 0) {
             this.productCategoryMapSignal.update((current) => ({
               ...current,
-              [this.normalizeSku(payload.sku)]: selectedCategoryIds
+              [payload.sku]: categoryIds,
             }));
             this.persistProductCategoryMap();
           }
 
-          this.productFormSignal.set({
-            name: '',
-            sku: '',
-            price: '',
-            openingStock: ''
-          });
-          this.selectedCategoryIdsSignal.set(new Set<string>());
-          this.productSubmitSuccessSignal.set('تمت إضافة المنتج بنجاح.');
+          this.resetProductForm();
+          this.productSubmitSuccessSignal.set(withImagesSuccessText);
           this.loadProducts(true);
         },
         error: () => {
-          this.productSubmitErrorSignal.set('تعذر إضافة المنتج. تأكد من صحة البيانات أو تكرار SKU.');
-        }
+          this.productSubmitErrorSignal.set(
+            'تعذر إضافة المنتج أو رفع الصور. تأكد من صحة البيانات أو تكرار SKU.',
+          );
+        },
       });
+  }
+
+  private updateProduct(): void {
+    const product = this.editingProductSignal();
+    if (this.isUpdatingProductSignal() || !product) {
+      return;
+    }
+
+    const draft = this.productFormSignal();
+    const payload = this.buildProductPayload(draft);
+
+    if (!payload) {
+      return;
+    }
+
+    const selectedImages = [...this.selectedProductImagesSignal()];
+    const withImagesSuccessText =
+      selectedImages.length > 0
+        ? `تم تعديل المنتج ورفع ${selectedImages.length} صور جديدة بنجاح.`
+        : 'تم تعديل المنتج بنجاح.';
+
+    this.isUpdatingProductSignal.set(true);
+    this.productSubmitErrorSignal.set('');
+    this.productSubmitSuccessSignal.set('');
+
+    const updatePayload = {
+      ...payload,
+      stockQuantity: payload.openingStock
+    };
+
+    this.productService
+      .updateProduct(product.id, updatePayload)
+      .pipe(
+        switchMap((updated) => {
+          if (selectedImages.length === 0) {
+            return of(updated);
+          }
+
+          return this.productService
+            .uploadProductImages(updated.productId, selectedImages)
+            .pipe(map(() => updated));
+        }),
+        finalize(() => {
+          this.isUpdatingProductSignal.set(false);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          const categoryIds = [...this.selectedCategoryIdsSignal()];
+          if (categoryIds.length > 0) {
+            this.productCategoryMapSignal.update((current) => ({
+              ...current,
+              [payload.sku]: categoryIds,
+            }));
+            this.persistProductCategoryMap();
+          }
+
+          this.cancelEdit();
+          this.productSubmitSuccessSignal.set(withImagesSuccessText);
+          setTimeout(() => this.productSubmitSuccessSignal.set(''), 3000);
+          this.loadProducts(true);
+        },
+        error: () => {
+          this.productSubmitErrorSignal.set('تعذر تعديل المنتج أو رفع الصور.');
+        },
+      });
+  }
+
+  private resetProductForm(): void {
+    this.productFormSignal.set({
+      name: '',
+      nameAr: '',
+      sku: '',
+      price: '',
+      openingStock: '',
+      descriptionEn: '',
+      descriptionAr: '',
+      productType: 'Fruit',
+      productState: 'Fresh',
+      season: 'AllYear',
+      varieties: [],
+      packagingOptions: [],
+      weightOptions: [],
+      sizeOptions: [],
+      gradeOptions: [],
+    });
+    this.productOptionDraftsSignal.set({
+      varieties: '',
+      packagingOptions: '',
+      weightOptions: '',
+      sizeOptions: '',
+      gradeOptions: '',
+    });
+    // Revoke all image preview URLs
+    for (const preview of this.imagePreviewsSignal()) {
+      URL.revokeObjectURL(preview.url);
+    }
+    this.selectedProductImagesSignal.set([]);
+    this.imagePreviewsSignal.set([]);
+    this.currentStepSignal.set(1);
+    this.selectedCategoryIdsSignal.set(new Set<string>());
   }
 
   private buildProductPayload(draft: ProductFormState): CreateProductPayload | null {
     const name = draft.name.trim();
+    const nameAr = draft.nameAr.trim();
     const sku = this.normalizeSku(draft.sku);
-    const price = Number(draft.price);
-    const openingStock = Number(draft.openingStock);
+    const price = draft.price.trim() === '' ? 0 : Number(draft.price);
+    const openingStock = draft.openingStock.trim() === '' ? 0 : Number(draft.openingStock);
+    const descriptionEn = draft.descriptionEn.trim();
+    const descriptionAr = draft.descriptionAr.trim();
+    const varieties = [...draft.varieties];
+    const packagingOptions = [...draft.packagingOptions];
+    const weightOptions = [...draft.weightOptions];
+    const sizeOptions = [...draft.sizeOptions];
+    const gradeOptions = [...draft.gradeOptions];
 
     if (!name) {
       this.productSubmitErrorSignal.set('اسم المنتج مطلوب.');
+      return null;
+    }
+
+    if (!nameAr) {
+      this.productSubmitErrorSignal.set('الاسم العربي للمنتج مطلوب.');
       return null;
     }
 
@@ -766,17 +1383,21 @@ export class AdminDashboardPageComponent {
 
     return {
       name,
+      nameAr,
       sku,
       price,
-      openingStock
+      openingStock,
+      descriptionEn,
+      descriptionAr,
+      productType: draft.productType,
+      productState: draft.productState,
+      season: draft.season,
+      varieties,
+      packagingOptions,
+      weightOptions,
+      sizeOptions,
+      gradeOptions,
     };
-  }
-
-  private normalizeSelectedCategoryIds(): string[] {
-    const allowedCategoryIds = new Set(this.categoriesSignal().map((category) => category.id));
-    return Array.from(this.selectedCategoryIdsSignal()).filter((categoryId) =>
-      allowedCategoryIds.has(categoryId)
-    );
   }
 
   private syncSectionWithRoute(): void {
@@ -847,6 +1468,64 @@ export class AdminDashboardPageComponent {
     return sku.trim().toUpperCase();
   }
 
+  private resolveProductImageUrls(imageUrls: string[] | undefined): string[] {
+    if (!imageUrls || imageUrls.length === 0) {
+      return [];
+    }
+
+    return imageUrls
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0)
+      .map((item) => this.resolveImageUrl(item));
+  }
+
+  private resolveImageUrl(pathOrUrl: string): string {
+    if (
+      /^(https?:)?\/\//i.test(pathOrUrl) ||
+      pathOrUrl.startsWith('data:') ||
+      pathOrUrl.startsWith('blob:')
+    ) {
+      return pathOrUrl;
+    }
+
+    const base = this.apiBaseUrl.trim().replace(/\/+$/, '');
+
+    if (!base) {
+      return pathOrUrl;
+    }
+
+    if (pathOrUrl.startsWith('/')) {
+      return `${base}${pathOrUrl}`;
+    }
+
+    return `${base}/${pathOrUrl}`;
+  }
+
+  private setProductImageIndex(productId: string, index: number): void {
+    this.productImageIndexSignal.update((current) => ({
+      ...current,
+      [productId]: index,
+    }));
+  }
+
+  private syncProductImageIndexes(products: ProductListItem[]): void {
+    const current = this.productImageIndexSignal();
+    const next: Record<string, number> = {};
+
+    for (const product of products) {
+      const imageCount = this.resolveProductImageUrls(product.imageUrls).length;
+
+      if (imageCount === 0) {
+        continue;
+      }
+
+      const currentIndex = current[product.id] ?? 0;
+      next[product.id] = currentIndex >= 0 && currentIndex < imageCount ? currentIndex : 0;
+    }
+
+    this.productImageIndexSignal.set(next);
+  }
+
   private readCategoriesFromStorage(): CategoryItem[] {
     if (!this.isBrowser || typeof localStorage === 'undefined') {
       return this.defaultCategories.map((category) => ({ ...category }));
@@ -871,9 +1550,12 @@ export class AdminDashboardPageComponent {
             return null;
           }
 
-          const id = typeof (item as { id?: unknown }).id === 'string' ? (item as { id: string }).id : '';
+          const id =
+            typeof (item as { id?: unknown }).id === 'string' ? (item as { id: string }).id : '';
           const name =
-            typeof (item as { name?: unknown }).name === 'string' ? (item as { name: string }).name.trim() : '';
+            typeof (item as { name?: unknown }).name === 'string'
+              ? (item as { name: string }).name.trim()
+              : '';
           const colorClass =
             typeof (item as { colorClass?: unknown }).colorClass === 'string'
               ? (item as { colorClass: string }).colorClass
@@ -884,7 +1566,7 @@ export class AdminDashboardPageComponent {
           }
 
           const normalizedColorClass = this.categoryColorClasses.includes(
-            colorClass as (typeof this.categoryColorClasses)[number]
+            colorClass as (typeof this.categoryColorClasses)[number],
           )
             ? colorClass
             : this.pickCategoryColorClass(index);
@@ -892,7 +1574,7 @@ export class AdminDashboardPageComponent {
           return {
             id,
             name,
-            colorClass: normalizedColorClass
+            colorClass: normalizedColorClass,
           };
         })
         .filter((item): item is CategoryItem => item !== null);
@@ -933,7 +1615,9 @@ export class AdminDashboardPageComponent {
         }
 
         const normalizedSku = this.normalizeSku(key);
-        const categoryIds = value.filter((item): item is string => typeof item === 'string' && item.length > 0);
+        const categoryIds = value.filter(
+          (item): item is string => typeof item === 'string' && item.length > 0,
+        );
 
         if (categoryIds.length > 0) {
           next[normalizedSku] = categoryIds;
@@ -959,6 +1643,9 @@ export class AdminDashboardPageComponent {
       return;
     }
 
-    localStorage.setItem(this.productCategoryStorageKey, JSON.stringify(this.productCategoryMapSignal()));
+    localStorage.setItem(
+      this.productCategoryStorageKey,
+      JSON.stringify(this.productCategoryMapSignal()),
+    );
   }
 }

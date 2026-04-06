@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Alatar.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e00e32b303d3a394920bf84aef1260d86e577ab0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42aef33dd5c2916cbcf9679f697317fc1955e336")]
 [assembly: System.Reflection.AssemblyProductAttribute("Alatar.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Alatar.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

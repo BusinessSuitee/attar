@@ -16,7 +16,7 @@
   "home": {
     "founder": {
       "tag": "A Legacy of Trust",
-      "name": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar",
+      "name": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar (Obada Al-Attar)",
       "quote": "\"Trade built on ethics and keeping promises... from our farms to the world with full honesty\"",
       "p1": "Hajj Obada grew up embracing the Holy Quran and authentic morals, which formed the foundation of the \"Al-Attar Sons\" empire. He was not just a trader, but an advisor, a peacemaker, and a pioneer who laid the first stone for modern export agriculture in Egypt.",
       "p2": "What began as a passion for the land transformed, through his vision and wisdom, into a deep-rooted institution lasting over half a century, preserving the covenant and passing the trust from generation to generation.",
@@ -110,7 +110,7 @@
     },
     "founder": {
       "badge": "The Founder's Story",
-      "title": "Haj Abdel Fattah Youssef El-Attar",
+      "title": "Haj Abdel Fattah Youssef El-Attar (Obada Al-Attar)",
       "description": "Raised in an authentic rural environment, Haj Abdel Fattah memorized the Holy Quran at a young age, instilling in him the values of honesty and truthfulness. He started his journey as a reliable intermediary in agricultural crop trade, eventually becoming a symbol of trust in the Egyptian market.",
       "card1Title": "Quranic Upbringing",
       "card1Desc": "A religious upbringing that laid the foundation for work ethics, where memorizing the Quran was the first core of his balanced leadership character.",
@@ -319,10 +319,15 @@
     },
     "filters": {
       "all": "All",
-      "winter": "Winter Season",
-      "summer": "Summer Season",
+      "fruits": "Fruits",
       "vegetables": "Vegetables",
       "frozen": "Frozen"
+    },
+    "seasons": {
+      "all": "All",
+      "summer": "Summer",
+      "winter": "Winter",
+      "all_year": "All Year"
     },
     "featured": {
       "badge": "Pride of Egyptian Agriculture",

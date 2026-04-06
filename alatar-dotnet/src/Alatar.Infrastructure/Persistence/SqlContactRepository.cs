@@ -47,6 +47,11 @@ public sealed class SqlContactRepository(IAlatarDbContext dbContext) : IContactR
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task UpdateAsync(ContactLead entity, CancellationToken cancellationToken)
+    {
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task RemoveAsync(ContactLead entity, CancellationToken cancellationToken)
     {
         dbContext.RemoveContact(entity);

@@ -12,6 +12,7 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
     public IQueryable<Category> Categories => Set<Category>();
     public IQueryable<ContactLead> Contacts => Set<ContactLead>();
     public IQueryable<Product> Products => Set<Product>();
+    public IQueryable<ProductImage> ProductImages => Set<ProductImage>();
 
     public async Task AddCategoryAsync(Category category, CancellationToken cancellationToken)
     {
@@ -28,6 +29,11 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
         await Set<Product>().AddAsync(product, cancellationToken);
     }
 
+    public async Task AddProductImageAsync(ProductImage image, CancellationToken cancellationToken)
+    {
+        await Set<ProductImage>().AddAsync(image, cancellationToken);
+    }
+
     public void RemoveContact(ContactLead contactLead)
     {
         Set<ContactLead>().Remove(contactLead);
@@ -41,6 +47,11 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
     public void RemoveProduct(Product product)
     {
         Set<Product>().Remove(product);
+    }
+
+    public void RemoveProductImage(ProductImage image)
+    {
+        Set<ProductImage>().Remove(image);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,6 +74,16 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 
         category.HasIndex(x => x.NormalizedName)
             .IsUnique();
+
+        category.Property(x => x.Type)
+            .HasConversion<string>()
+            .HasMaxLength(32)
+            .IsRequired();
+
+        category.Property(x => x.Season)
+            .HasConversion<string>()
+            .HasMaxLength(32)
+            .IsRequired();
 
         category.Property(x => x.CreatedAtUtc)
             .IsRequired();
@@ -126,6 +147,10 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
             .HasMaxLength(200)
             .IsRequired();
 
+        product.Property(x => x.NameAr)
+            .HasMaxLength(200)
+            .IsRequired();
+
         product.Property(x => x.Sku)
             .HasMaxLength(64)
             .IsRequired();
@@ -135,6 +160,49 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 
         product.Property(x => x.Price)
             .HasPrecision(18, 2);
+
+        product.Property(x => x.DescriptionEn)
+            .HasMaxLength(2000)
+            .IsRequired();
+
+        product.Property(x => x.DescriptionAr)
+            .HasMaxLength(2000)
+            .IsRequired();
+
+        product.Property(x => x.ProductType)
+            .HasConversion<string>()
+            .HasMaxLength(24)
+            .IsRequired();
+
+        product.Property(x => x.ProductState)
+            .HasConversion<string>()
+            .HasMaxLength(24)
+            .IsRequired();
+
+        product.Property(x => x.Season)
+            .HasConversion<string>()
+            .HasMaxLength(24)
+            .IsRequired();
+
+        product.Property(x => x.VarietiesJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.PackagingOptionsJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.WeightOptionsJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.SizeOptionsJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.GradeOptionsJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
 
         product.Property(x => x.Status)
             .HasConversion<string>()
@@ -149,5 +217,33 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 
         product.Property(x => x.UpdatedAtUtc)
             .IsRequired();
+
+        var productImage = modelBuilder.Entity<ProductImage>();
+
+        productImage.ToTable("ProductImages");
+        productImage.HasKey(x => x.Id);
+
+        productImage.Property(x => x.Id)
+            .ValueGeneratedNever();
+
+        productImage.Property(x => x.ProductId)
+            .IsRequired();
+
+        productImage.Property(x => x.RelativePath)
+            .HasMaxLength(500)
+            .IsRequired();
+
+        productImage.Property(x => x.DisplayOrder)
+            .IsRequired();
+
+        productImage.Property(x => x.CreatedAtUtc)
+            .IsRequired();
+
+        productImage.HasIndex(x => x.ProductId);
+
+        productImage.HasOne<Product>()
+            .WithMany()
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

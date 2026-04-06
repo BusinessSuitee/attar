@@ -9,7 +9,6 @@ public sealed class SqlCategoryRepository(IAlatarDbContext dbContext) : ICategor
     public async Task<Category?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await dbContext.Categories
-            .AsNoTracking()
             .FirstOrDefaultAsync(category => category.Id == id, cancellationToken);
     }
 
@@ -24,6 +23,11 @@ public sealed class SqlCategoryRepository(IAlatarDbContext dbContext) : ICategor
     public async Task AddAsync(Category entity, CancellationToken cancellationToken)
     {
         await dbContext.AddCategoryAsync(entity, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task UpdateAsync(Category entity, CancellationToken cancellationToken)
+    {
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 

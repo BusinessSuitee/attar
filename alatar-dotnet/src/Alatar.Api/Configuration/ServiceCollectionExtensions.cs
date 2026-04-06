@@ -1,6 +1,8 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Alatar.Api.Options;
 using Alatar.Api.Security;
+using Alatar.Api.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,7 +15,12 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration,
         IWebHostEnvironment environment)
     {
-        services.AddControllers();
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         services.AddEndpointsApiExplorer();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
@@ -93,6 +100,7 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<IProductImageStorage, LocalProductImageStorage>();
 
         return services;
     }

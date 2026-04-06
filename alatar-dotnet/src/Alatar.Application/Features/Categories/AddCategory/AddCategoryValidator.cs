@@ -10,5 +10,11 @@ public sealed class AddCategoryValidator : AbstractValidator<AddCategoryCommand>
             .NotEmpty()
             .MinimumLength(2)
             .MaximumLength(120);
+
+        RuleFor(command => command.Type)
+            .NotEmpty();
+
+        RuleFor(command => command.Season)
+            .NotEmpty();
     }
 }

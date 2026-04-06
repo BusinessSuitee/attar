@@ -14,6 +14,7 @@ var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 app.UseCors(CorsPolicies.Frontend);
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 

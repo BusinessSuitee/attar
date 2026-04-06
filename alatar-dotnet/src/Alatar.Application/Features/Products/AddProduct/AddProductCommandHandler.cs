@@ -19,7 +19,22 @@ public sealed class AddProductCommandHandler(IProductRepository productRepositor
                 $"Product with sku '{normalizedSku}' already exists."));
         }
 
-        var product = Product.Create(command.Name, normalizedSku, command.Price, command.OpeningStock);
+        var product = Product.Create(
+            command.Name,
+            command.NameAr,
+            normalizedSku,
+            command.Price,
+            command.OpeningStock,
+            command.DescriptionEn,
+            command.DescriptionAr,
+            command.ProductType,
+            command.ProductState,
+            command.Season,
+            command.Varieties,
+            command.PackagingOptions,
+            command.WeightOptions,
+            command.SizeOptions,
+            command.GradeOptions);
 
         await productRepository.AddAsync(product, cancellationToken);
 

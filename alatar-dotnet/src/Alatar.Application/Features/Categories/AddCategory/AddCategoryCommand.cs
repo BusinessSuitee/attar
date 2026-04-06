@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Alatar.Application.Features.Categories.AddCategory;
 
-public sealed record AddCategoryCommand(string Name) : IRequest<Result<Guid>>;
+public sealed record AddCategoryCommand(string Name, string Type, string Season) : IRequest<Result<Guid>>;

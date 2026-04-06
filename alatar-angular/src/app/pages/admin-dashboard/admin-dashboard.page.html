@@ -6,8 +6,8 @@
     class="sidebar-backdrop"
     *ngIf="isSidebarOpen"
     (click)="closeSidebar()"
-    aria-label="إغلاق القائمة">
-  </button>
+    aria-label="إغلاق القائمة"
+  ></button>
 
   <aside class="dashboard-sidebar" [class.is-open]="isSidebarOpen" aria-label="القائمة الإدارية">
     <div class="sidebar-inner">
@@ -28,7 +28,8 @@
           *ngFor="let section of sections"
           [ngClass]="'sidebar-link--' + section.key"
           [class.is-active]="activeSection === section.key"
-          (click)="selectSection(section.key)">
+          (click)="selectSection(section.key)"
+        >
           <span class="material-symbols-outlined" aria-hidden="true">{{ section.icon }}</span>
           <span>{{ section.label }}</span>
         </button>
@@ -40,8 +41,12 @@
       </button>
 
       <footer class="sidebar-actions">
-        <button type="button" class="side-action side-action--soft" (click)="loadProfile()">تحديث الجلسة</button>
-        <button type="button" class="side-action side-action--solid" (click)="logout()">تسجيل الخروج</button>
+        <button type="button" class="side-action side-action--soft" (click)="loadProfile()">
+          تحديث الجلسة
+        </button>
+        <button type="button" class="side-action side-action--solid" (click)="logout()">
+          تسجيل الخروج
+        </button>
       </footer>
     </div>
   </aside>
@@ -53,7 +58,10 @@
         <div class="status error" *ngIf="!isLoading && loadError">{{ loadError }}</div>
       </section>
 
-      <section class="content-grid" *ngIf="!isLoading && (activeSection === 'overview' || activeSection === 'orders')">
+      <section
+        class="content-grid"
+        *ngIf="!isLoading && (activeSection === 'overview' || activeSection === 'orders')"
+      >
         <article class="panel orders-panel">
           <header class="panel-head">
             <h3>
@@ -137,172 +145,967 @@
         </article>
       </section>
 
-      <section class="products-grid" *ngIf="!isLoading && activeSection === 'products'">
-        <article class="panel add-product-panel">
-          <header class="panel-head">
-            <h3>
-              <span class="material-symbols-outlined" aria-hidden="true">inventory_2</span>
-              إضافة منتج جديد
-            </h3>
-          </header>
-
-          <div class="product-builder">
-            <form id="add-product-form" class="product-form" (submit)="onCreateProduct($event)">
-              <label class="field">
-                <span>اسم المنتج</span>
-                <input
-                  class="text-input"
-                  type="text"
-                  placeholder="مثال: برتقال أبو سرة"
-                  [value]="productForm.name"
-                  (input)="onProductFieldInput('name', $any($event.target).value)" />
-              </label>
-
-              <div class="field-grid">
-                <label class="field">
-                  <span>SKU</span>
-                  <input
-                    class="text-input"
-                    type="text"
-                    placeholder="مثال: ORANGE-NAVEL-01"
-                    [value]="productForm.sku"
-                    (input)="onProductFieldInput('sku', $any($event.target).value)" />
-                </label>
-
-                <label class="field">
-                  <span>السعر</span>
-                  <input
-                    class="text-input"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    placeholder="0.00"
-                    [value]="productForm.price"
-                    (input)="onProductFieldInput('price', $any($event.target).value)" />
-                </label>
+      <section class="wizard-products-section" *ngIf="!isLoading && activeSection === 'products'">
+        <!-- ═══════════ ADD PRODUCT WIZARD ═══════════ -->
+        <div class="wizard-container">
+          <!-- Wizard Header -->
+          <header class="wizard-header">
+            <div class="wizard-header__title-row">
+              <div class="wizard-header__icon-wrap">
+                <span class="material-symbols-outlined">add_box</span>
               </div>
-
-              <label class="field">
-                <span>المخزون الافتتاحي</span>
-                <input
-                  class="text-input"
-                  type="number"
-                  step="1"
-                  min="0"
-                  placeholder="0"
-                  [value]="productForm.openingStock"
-                  (input)="onProductFieldInput('openingStock', $any($event.target).value)" />
-              </label>
-
-              <div class="product-submit-state" *ngIf="productSubmitError || productSubmitSuccess">
-                <p class="status error" *ngIf="productSubmitError">{{ productSubmitError }}</p>
-                <p class="status loading product-success" *ngIf="!productSubmitError && productSubmitSuccess">
-                  {{ productSubmitSuccess }}
+              <div>
+                <h2 class="wizard-header__title">إضافة منتج جديد</h2>
+                <p class="wizard-header__subtitle">
+                  أكمل الخطوات التالية لإضافة المنتج إلى الكتالوج
                 </p>
               </div>
+            </div>
+          </header>
 
-              <button type="submit" class="product-submit-btn" [disabled]="isCreatingProduct">
-                <span class="material-symbols-outlined" aria-hidden="true">save</span>
-                <span>{{ isCreatingProduct ? 'جاري الحفظ...' : 'حفظ المنتج' }}</span>
+          <!-- Stepper Bar -->
+          <nav class="stepper" aria-label="خطوات إضافة المنتج">
+            <div class="stepper__track">
+              <div class="stepper__progress" [style.width.%]="stepProgress"></div>
+            </div>
+            <div class="stepper__steps">
+              <button
+                type="button"
+                class="stepper__step"
+                [class.is-active]="isStepActive(1)"
+                [class.is-completed]="isStepCompleted(1)"
+                (click)="goToStep(1)"
+              >
+                <span class="stepper__dot">
+                  <span class="material-symbols-outlined" *ngIf="isStepCompleted(1)">check</span>
+                  <span *ngIf="!isStepCompleted(1)">1</span>
+                </span>
+                <span class="stepper__label">المعلومات الأساسية</span>
               </button>
+
+              <button
+                type="button"
+                class="stepper__step"
+                [class.is-active]="isStepActive(2)"
+                [class.is-completed]="isStepCompleted(2)"
+                (click)="goToStep(2)"
+              >
+                <span class="stepper__dot">
+                  <span class="material-symbols-outlined" *ngIf="isStepCompleted(2)">check</span>
+                  <span *ngIf="!isStepCompleted(2)">2</span>
+                </span>
+                <span class="stepper__label">التصنيف والمخزون</span>
+              </button>
+
+              <button
+                type="button"
+                class="stepper__step"
+                [class.is-active]="isStepActive(3)"
+                [class.is-completed]="isStepCompleted(3)"
+                (click)="goToStep(3)"
+              >
+                <span class="stepper__dot">
+                  <span class="material-symbols-outlined" *ngIf="isStepCompleted(3)">check</span>
+                  <span *ngIf="!isStepCompleted(3)">3</span>
+                </span>
+                <span class="stepper__label">خيارات المنتج</span>
+              </button>
+
+              <button
+                type="button"
+                class="stepper__step"
+                [class.is-active]="isStepActive(4)"
+                [class.is-completed]="isStepCompleted(4)"
+                (click)="goToStep(4)"
+              >
+                <span class="stepper__dot">
+                  <span class="material-symbols-outlined" *ngIf="isStepCompleted(4)">check</span>
+                  <span *ngIf="!isStepCompleted(4)">4</span>
+                </span>
+                <span class="stepper__label">الصور والمراجعة</span>
+              </button>
+            </div>
+          </nav>
+
+          <!-- Wizard Body -->
+          <div class="wizard-body">
+            <!-- Main Form Area -->
+            <form id="add-product-form" class="wizard-form" (submit)="onCreateProduct($event)">
+              <!-- ── STEP 1: Basic Info ── -->
+              <div class="wizard-step" *ngIf="currentStep === 1">
+                <div class="step-card">
+                  <div class="step-card__header">
+                    <span class="material-symbols-outlined step-card__icon">badge</span>
+                    <div>
+                      <h3>المعلومات الأساسية</h3>
+                      <p>أدخل بيانات المنتج الرئيسية</p>
+                    </div>
+                  </div>
+                  <div class="step-card__body">
+                    <div class="wz-form-grid wz-form-grid--2col">
+                      <label class="wz-field">
+                        <span class="wz-field__label">
+                          اسم المنتج (EN)
+                          <span class="wz-field__required">مطلوب</span>
+                        </span>
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">translate</span>
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: Valencia Orange"
+                            required
+                            [value]="productForm.name"
+                            (input)="onProductFieldInput('name', $any($event.target).value)"
+                          />
+                        </div>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label">
+                          اسم المنتج (AR)
+                          <span class="wz-field__required">مطلوب</span>
+                        </span>
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">language</span>
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: برتقال فالنسيا"
+                            required
+                            [value]="productForm.nameAr"
+                            (input)="onProductFieldInput('nameAr', $any($event.target).value)"
+                          />
+                        </div>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label">
+                          SKU
+                          <span class="wz-field__required">مطلوب</span>
+                        </span>
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">qr_code_2</span>
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: ORANGE-VALENCIA-01"
+                            required
+                            [value]="productForm.sku"
+                            (input)="onProductFieldInput('sku', $any($event.target).value)"
+                          />
+                        </div>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >السعر <span class="wz-field__optional">اختياري</span></span
+                        >
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">payments</span>
+                          <input
+                            class="wz-field__input"
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            placeholder="0.00"
+                            [value]="productForm.price"
+                            (input)="onProductFieldInput('price', $any($event.target).value)"
+                          />
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── STEP 2: Classification & Stock ── -->
+              <div class="wizard-step" *ngIf="currentStep === 2">
+                <div class="step-card">
+                  <div class="step-card__header">
+                    <span class="material-symbols-outlined step-card__icon">category</span>
+                    <div>
+                      <h3>التصنيف والمخزون</h3>
+                      <p>حدد نوع المنتج وحالته والموسم</p>
+                    </div>
+                  </div>
+                  <div class="step-card__body">
+                    <div class="wz-form-grid wz-form-grid--2col">
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >نوع المنتج <span class="wz-field__required">مطلوب</span></span
+                        >
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">eco</span>
+                          <select
+                            class="wz-field__input wz-field__select"
+                            required
+                            [value]="productForm.productType"
+                            (change)="onProductFieldInput('productType', $any($event.target).value)"
+                          >
+                            <option
+                              *ngFor="let option of productTypeOptions"
+                              [value]="option.value"
+                            >
+                              {{ option.label }}
+                            </option>
+                          </select>
+                        </div>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >حالة المنتج <span class="wz-field__required">مطلوب</span></span
+                        >
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">ac_unit</span>
+                          <select
+                            class="wz-field__input wz-field__select"
+                            required
+                            [value]="productForm.productState"
+                            (change)="
+                              onProductFieldInput('productState', $any($event.target).value)
+                            "
+                          >
+                            <option
+                              *ngFor="let option of productStateOptions"
+                              [value]="option.value"
+                            >
+                              {{ option.label }}
+                            </option>
+                          </select>
+                        </div>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >الموسم <span class="wz-field__required">مطلوب</span></span
+                        >
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon"
+                            >calendar_month</span
+                          >
+                          <select
+                            class="wz-field__input wz-field__select"
+                            required
+                            [value]="productForm.season"
+                            (change)="onProductFieldInput('season', $any($event.target).value)"
+                          >
+                            <option
+                              *ngFor="let option of productSeasonOptions"
+                              [value]="option.value"
+                            >
+                              {{ option.label }}
+                            </option>
+                          </select>
+                        </div>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >المخزن الافتتاحي <span class="wz-field__optional">اختياري</span></span
+                        >
+                        <div class="wz-field__input-wrap">
+                          <span class="material-symbols-outlined wz-field__icon">warehouse</span>
+                          <input
+                            class="wz-field__input"
+                            type="number"
+                            step="1"
+                            min="0"
+                            placeholder="0"
+                            [value]="productForm.openingStock"
+                            (input)="onProductFieldInput('openingStock', $any($event.target).value)"
+                          />
+                        </div>
+                      </label>
+                    </div>
+
+                    <!-- Division Preview -->
+                    <div class="wz-division-preview">
+                      <span class="material-symbols-outlined">folder_special</span>
+                      <div>
+                        <span class="wz-division-preview__label">التقسيم النهائي:</span>
+                        <strong class="wz-division-preview__value">{{
+                          productDivisionLabel
+                        }}</strong>
+                      </div>
+                    </div>
+
+                    <!-- Descriptions -->
+                    <div class="wz-form-grid wz-form-grid--2col" style="margin-top: 0.5rem">
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >الوصف (EN) <span class="wz-field__optional">اختياري</span></span
+                        >
+                        <textarea
+                          class="wz-field__textarea"
+                          rows="3"
+                          placeholder="وصف مختصر جاهز للتصدير"
+                          [value]="productForm.descriptionEn"
+                          (input)="onProductFieldInput('descriptionEn', $any($event.target).value)"
+                        ></textarea>
+                      </label>
+
+                      <label class="wz-field">
+                        <span class="wz-field__label"
+                          >الوصف (AR) <span class="wz-field__optional">اختياري</span></span
+                        >
+                        <textarea
+                          class="wz-field__textarea"
+                          rows="3"
+                          placeholder="وصف المنتج بالعربي"
+                          [value]="productForm.descriptionAr"
+                          (input)="onProductFieldInput('descriptionAr', $any($event.target).value)"
+                        ></textarea>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── STEP 3: Product Options ── -->
+              <div class="wizard-step" *ngIf="currentStep === 3">
+                <div class="step-card">
+                  <div class="step-card__header">
+                    <span class="material-symbols-outlined step-card__icon">tune</span>
+                    <div>
+                      <h3>خيارات المنتج</h3>
+                      <p>أضف الأصناف والتعبئة والأوزان وغيرها</p>
+                    </div>
+                  </div>
+                  <div class="step-card__body">
+                    <div class="wz-options-grid">
+                      <!-- Varieties -->
+                      <div class="wz-option-block">
+                        <span class="wz-option-block__label">
+                          <span class="material-symbols-outlined">spa</span>
+                          الأصناف / الأنواع
+                        </span>
+                        <div class="wz-option-block__input-row">
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: Valencia"
+                            [value]="productOptionDrafts.varieties"
+                            (input)="
+                              onProductOptionDraftInput('varieties', $any($event.target).value)
+                            "
+                            (keydown.enter)="onProductOptionEnter($event, 'varieties')"
+                          />
+                          <button
+                            type="button"
+                            class="wz-option-block__add"
+                            (click)="addProductOption('varieties')"
+                          >
+                            <span class="material-symbols-outlined">add</span>
+                          </button>
+                        </div>
+                        <div class="wz-chips" *ngIf="productForm.varieties.length > 0">
+                          <button
+                            type="button"
+                            class="wz-chip"
+                            *ngFor="let item of productForm.varieties; let i = index"
+                            (click)="removeProductOption('varieties', i)"
+                          >
+                            {{ item }}
+                            <span class="material-symbols-outlined">close</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Packaging -->
+                      <div class="wz-option-block">
+                        <span class="wz-option-block__label">
+                          <span class="material-symbols-outlined">deployed_code</span>
+                          التعبئة
+                        </span>
+                        <div class="wz-option-block__input-row">
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: Open Top"
+                            [value]="productOptionDrafts.packagingOptions"
+                            (input)="
+                              onProductOptionDraftInput(
+                                'packagingOptions',
+                                $any($event.target).value
+                              )
+                            "
+                            (keydown.enter)="onProductOptionEnter($event, 'packagingOptions')"
+                          />
+                          <button
+                            type="button"
+                            class="wz-option-block__add"
+                            (click)="addProductOption('packagingOptions')"
+                          >
+                            <span class="material-symbols-outlined">add</span>
+                          </button>
+                        </div>
+                        <div class="wz-chips" *ngIf="productForm.packagingOptions.length > 0">
+                          <button
+                            type="button"
+                            class="wz-chip"
+                            *ngFor="let item of productForm.packagingOptions; let i = index"
+                            (click)="removeProductOption('packagingOptions', i)"
+                          >
+                            {{ item }}
+                            <span class="material-symbols-outlined">close</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Weights -->
+                      <div class="wz-option-block">
+                        <span class="wz-option-block__label">
+                          <span class="material-symbols-outlined">monitor_weight</span>
+                          الأوزان
+                        </span>
+                        <div class="wz-option-block__input-row">
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: 10 كجم"
+                            [value]="productOptionDrafts.weightOptions"
+                            (input)="
+                              onProductOptionDraftInput('weightOptions', $any($event.target).value)
+                            "
+                            (keydown.enter)="onProductOptionEnter($event, 'weightOptions')"
+                          />
+                          <button
+                            type="button"
+                            class="wz-option-block__add"
+                            (click)="addProductOption('weightOptions')"
+                          >
+                            <span class="material-symbols-outlined">add</span>
+                          </button>
+                        </div>
+                        <div class="wz-chips" *ngIf="productForm.weightOptions.length > 0">
+                          <button
+                            type="button"
+                            class="wz-chip"
+                            *ngFor="let item of productForm.weightOptions; let i = index"
+                            (click)="removeProductOption('weightOptions', i)"
+                          >
+                            {{ item }}
+                            <span class="material-symbols-outlined">close</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Sizes -->
+                      <div class="wz-option-block">
+                        <span class="wz-option-block__label">
+                          <span class="material-symbols-outlined">straighten</span>
+                          الأحجام
+                        </span>
+                        <div class="wz-option-block__input-row">
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: 36"
+                            [value]="productOptionDrafts.sizeOptions"
+                            (input)="
+                              onProductOptionDraftInput('sizeOptions', $any($event.target).value)
+                            "
+                            (keydown.enter)="onProductOptionEnter($event, 'sizeOptions')"
+                          />
+                          <button
+                            type="button"
+                            class="wz-option-block__add"
+                            (click)="addProductOption('sizeOptions')"
+                          >
+                            <span class="material-symbols-outlined">add</span>
+                          </button>
+                        </div>
+                        <div class="wz-chips" *ngIf="productForm.sizeOptions.length > 0">
+                          <button
+                            type="button"
+                            class="wz-chip"
+                            *ngFor="let item of productForm.sizeOptions; let i = index"
+                            (click)="removeProductOption('sizeOptions', i)"
+                          >
+                            {{ item }}
+                            <span class="material-symbols-outlined">close</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Grades -->
+                      <div class="wz-option-block">
+                        <span class="wz-option-block__label">
+                          <span class="material-symbols-outlined">grade</span>
+                          الدرجات
+                        </span>
+                        <div class="wz-option-block__input-row">
+                          <input
+                            class="wz-field__input"
+                            type="text"
+                            placeholder="مثال: Class I"
+                            [value]="productOptionDrafts.gradeOptions"
+                            (input)="
+                              onProductOptionDraftInput('gradeOptions', $any($event.target).value)
+                            "
+                            (keydown.enter)="onProductOptionEnter($event, 'gradeOptions')"
+                          />
+                          <button
+                            type="button"
+                            class="wz-option-block__add"
+                            (click)="addProductOption('gradeOptions')"
+                          >
+                            <span class="material-symbols-outlined">add</span>
+                          </button>
+                        </div>
+                        <div class="wz-chips" *ngIf="productForm.gradeOptions.length > 0">
+                          <button
+                            type="button"
+                            class="wz-chip"
+                            *ngFor="let item of productForm.gradeOptions; let i = index"
+                            (click)="removeProductOption('gradeOptions', i)"
+                          >
+                            {{ item }}
+                            <span class="material-symbols-outlined">close</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── STEP 4: Images & Review ── -->
+              <div class="wizard-step" *ngIf="currentStep === 4">
+                <!-- Image Upload -->
+                <div class="step-card">
+                  <div class="step-card__header">
+                    <span class="material-symbols-outlined step-card__icon">photo_library</span>
+                    <div>
+                      <h3>صور المنتج</h3>
+                      <p>اسحب الصور هنا أو اختر من جهازك</p>
+                    </div>
+                  </div>
+                  <div class="step-card__body">
+                    <!-- Drop Zone -->
+                    <div
+                      class="wz-dropzone"
+                      [class.is-dragging]="isDraggingOver"
+                      (dragover)="onDragOver($event)"
+                      (dragleave)="onDragLeave($event)"
+                      (drop)="onDrop($event)"
+                    >
+                      <div class="wz-dropzone__content">
+                        <span class="material-symbols-outlined wz-dropzone__icon"
+                          >cloud_upload</span
+                        >
+                        <p class="wz-dropzone__title">اسحب الصور وأفلتها هنا</p>
+                        <p class="wz-dropzone__hint">أو</p>
+                        <label class="wz-dropzone__btn">
+                          <span class="material-symbols-outlined">folder_open</span>
+                          اختر من الجهاز
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            style="display: none"
+                            (change)="onProductImagesSelected($event)"
+                          />
+                        </label>
+                        <p class="wz-dropzone__formats">PNG, JPG, WebP — بدون حد أقصى</p>
+                      </div>
+                    </div>
+
+                    <!-- Image Gallery Preview -->
+                    <div class="wz-gallery" *ngIf="imagePreviews.length > 0">
+                      <h4 class="wz-gallery__title">
+                        <span class="material-symbols-outlined">collections</span>
+                        الصور المختارة ({{ imagePreviews.length }})
+                      </h4>
+                      <div class="wz-gallery__grid">
+                        <div
+                          class="wz-gallery__item"
+                          *ngFor="let preview of imagePreviews; let i = index"
+                        >
+                          <img [src]="preview.url" [alt]="preview.name" class="wz-gallery__img" />
+                          <div class="wz-gallery__overlay">
+                            <button
+                              type="button"
+                              class="wz-gallery__remove"
+                              (click)="removeSelectedProductImage(i)"
+                            >
+                              <span class="material-symbols-outlined">delete</span>
+                            </button>
+                          </div>
+                          <div class="wz-gallery__meta">
+                            <span class="wz-gallery__name">{{ preview.name }}</span>
+                            <span class="wz-gallery__size">{{ preview.size }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Review Summary -->
+                <div class="step-card step-card--review">
+                  <div class="step-card__header">
+                    <span class="material-symbols-outlined step-card__icon">fact_check</span>
+                    <div>
+                      <h3>مراجعة المنتج</h3>
+                      <p>تأكد من البيانات قبل الحفظ</p>
+                    </div>
+                  </div>
+                  <div class="step-card__body">
+                    <div class="wz-review-grid">
+                      <div class="wz-review-item">
+                        <span class="wz-review-item__label">الاسم (EN)</span>
+                        <span class="wz-review-item__value">{{ productForm.name || '—' }}</span>
+                      </div>
+                      <div class="wz-review-item">
+                        <span class="wz-review-item__label">الاسم (AR)</span>
+                        <span class="wz-review-item__value">{{ productForm.nameAr || '—' }}</span>
+                      </div>
+                      <div class="wz-review-item">
+                        <span class="wz-review-item__label">SKU</span>
+                        <span class="wz-review-item__value wz-review-item__value--mono">{{
+                          productForm.sku || '—'
+                        }}</span>
+                      </div>
+                      <div class="wz-review-item">
+                        <span class="wz-review-item__label">السعر</span>
+                        <span class="wz-review-item__value"
+                          >{{ productForm.price || '0.00' }} ج.م</span
+                        >
+                      </div>
+                      <div class="wz-review-item">
+                        <span class="wz-review-item__label">التقسيم</span>
+                        <span class="wz-review-item__value wz-review-item__value--accent">{{
+                          productDivisionLabel
+                        }}</span>
+                      </div>
+                      <div class="wz-review-item">
+                        <span class="wz-review-item__label">المخزون</span>
+                        <span class="wz-review-item__value">{{
+                          productForm.openingStock || '0'
+                        }}</span>
+                      </div>
+                      <div
+                        class="wz-review-item wz-review-item--wide"
+                        *ngIf="productForm.varieties.length > 0"
+                      >
+                        <span class="wz-review-item__label">الأصناف</span>
+                        <span class="wz-review-item__value">{{
+                          productForm.varieties.join(' · ')
+                        }}</span>
+                      </div>
+                      <div
+                        class="wz-review-item wz-review-item--wide"
+                        *ngIf="imagePreviews.length > 0"
+                      >
+                        <span class="wz-review-item__label">الصور</span>
+                        <span class="wz-review-item__value">{{ imagePreviews.length }} صورة</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Form Status ── -->
+              <div class="wz-status" *ngIf="productSubmitError || productSubmitSuccess">
+                <div class="wz-status__msg wz-status__msg--error" *ngIf="productSubmitError">
+                  <span class="material-symbols-outlined">error</span>
+                  <span>{{ productSubmitError }}</span>
+                </div>
+                <div
+                  class="wz-status__msg wz-status__msg--success"
+                  *ngIf="!productSubmitError && productSubmitSuccess"
+                >
+                  <span class="material-symbols-outlined">check_circle</span>
+                  <span>{{ productSubmitSuccess }}</span>
+                </div>
+              </div>
+
+              <!-- ── Step Navigation ── -->
+              <div class="wizard-nav">
+                <button
+                  type="button"
+                  class="wizard-nav__btn wizard-nav__btn--prev"
+                  *ngIf="currentStep > 1"
+                  (click)="prevStep()"
+                >
+                  <span class="material-symbols-outlined">arrow_forward</span>
+                  السابق
+                </button>
+                <div class="wizard-nav__spacer" *ngIf="currentStep === 1"></div>
+
+                <button
+                  type="button"
+                  class="wizard-nav__btn wizard-nav__btn--next"
+                  *ngIf="currentStep < 4"
+                  [disabled]="!canProceedFromStep(currentStep)"
+                  (click)="nextStep()"
+                >
+                  التالي
+                  <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+
+                <button
+                  type="submit"
+                  class="wizard-nav__btn wizard-nav__btn--submit"
+                  *ngIf="currentStep === 4"
+                  [disabled]="isCreatingProduct"
+                >
+                  <span class="material-symbols-outlined">rocket_launch</span>
+                  {{ isCreatingProduct ? 'جاري الحفظ...' : 'حفظ المنتج' }}
+                </button>
+              </div>
             </form>
 
-            <aside class="category-side" aria-label="إدارة الفئات">
-              <div class="category-side__head">
-                <h4>الفئات</h4>
-                <span>تم اختيار {{ selectedCategoriesCount }} فئة</span>
+            <!-- Live Preview Sidebar -->
+            <aside class="wizard-preview" aria-label="معاينة المنتج">
+              <div class="wizard-preview__card">
+                <div class="wizard-preview__header">
+                  <span class="material-symbols-outlined">visibility</span>
+                  <h4>معاينة حية</h4>
+                </div>
+
+                <div class="wizard-preview__body">
+                  <!-- Product Image Preview -->
+                  <div class="wizard-preview__image-area">
+                    <img
+                      *ngIf="imagePreviews.length > 0"
+                      [src]="imagePreviews[0].url"
+                      alt="معاينة"
+                      class="wizard-preview__img"
+                    />
+                    <div class="wizard-preview__no-img" *ngIf="imagePreviews.length === 0">
+                      <span class="material-symbols-outlined">image</span>
+                      <span>لا توجد صورة</span>
+                    </div>
+                  </div>
+
+                  <!-- Product Name -->
+                  <h5 class="wizard-preview__name">{{ productForm.name || 'اسم المنتج' }}</h5>
+                  <p class="wizard-preview__name-ar">{{ productForm.nameAr || 'الاسم العربي' }}</p>
+
+                  <!-- Details -->
+                  <div class="wizard-preview__details">
+                    <div class="wizard-preview__detail-row">
+                      <span>SKU</span>
+                      <strong>{{ productForm.sku || '—' }}</strong>
+                    </div>
+                    <div class="wizard-preview__detail-row">
+                      <span>السعر</span>
+                      <strong>{{ productForm.price || '0.00' }} ج.م</strong>
+                    </div>
+                    <div class="wizard-preview__detail-row">
+                      <span>التقسيم</span>
+                      <strong>{{ productDivisionLabel }}</strong>
+                    </div>
+                    <div
+                      class="wizard-preview__detail-row"
+                      *ngIf="productForm.varieties.length > 0"
+                    >
+                      <span>الأصناف</span>
+                      <strong>{{ productForm.varieties.length }}</strong>
+                    </div>
+                    <div class="wizard-preview__detail-row" *ngIf="imagePreviews.length > 0">
+                      <span>الصور</span>
+                      <strong>{{ imagePreviews.length }}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Category Quick Reference -->
+                <div class="wizard-preview__categories">
+                  <h6>التقسيمات</h6>
+                  <div class="wizard-preview__cat-list">
+                    <span class="wizard-preview__cat-pill wizard-preview__cat-pill--fresh"
+                      >طازج</span
+                    >
+                    <span class="wizard-preview__cat-pill wizard-preview__cat-pill--frozen"
+                      >مجمد</span
+                    >
+                    <span class="wizard-preview__cat-pill wizard-preview__cat-pill--summer"
+                      >صيفي</span
+                    >
+                    <span class="wizard-preview__cat-pill wizard-preview__cat-pill--winter"
+                      >شتوي</span
+                    >
+                    <span class="wizard-preview__cat-pill wizard-preview__cat-pill--allyear"
+                      >طول العام</span
+                    >
+                  </div>
+                </div>
               </div>
-
-              <p class="category-side__hint">اختر فئة واحدة أو أكثر للمنتج ثم احفظ.</p>
-
-              <div class="category-add-row">
-                <input
-                  class="text-input"
-                  type="text"
-                  placeholder="إضافة فئة جديدة"
-                  [value]="newCategoryName"
-                  (input)="onCategoryNameInput($any($event.target).value)" />
-                <button type="button" class="add-category-btn" (click)="addCategory()">إضافة</button>
-              </div>
-
-              <div class="category-list" *ngIf="hasCategories; else emptyCategories">
-                <label class="category-option" *ngFor="let category of categories; trackBy: trackByCategoryId">
-                  <input
-                    type="checkbox"
-                    [checked]="isCategorySelected(category.id)"
-                    (change)="toggleCategorySelection(category.id)" />
-                  <span class="category-pill" [ngClass]="category.colorClass">{{ category.name }}</span>
-                </label>
-              </div>
-
-              <ng-template #emptyCategories>
-                <p class="category-empty">لا توجد فئات حتى الآن.</p>
-              </ng-template>
             </aside>
           </div>
-        </article>
+        </div>
 
-        <article class="panel products-list-panel">
-          <header class="panel-head">
-            <h3>
-              <span class="material-symbols-outlined" aria-hidden="true">inventory</span>
-              المنتجات
-            </h3>
-            <button type="button" class="refresh-btn" (click)="refreshProducts()" [disabled]="isProductsLoading">
+        <!-- ═══════════ PRODUCTS LIST ═══════════ -->
+        <div class="wz-products-list-card">
+          <header class="wz-products-list-card__header">
+            <div class="wz-products-list-card__title">
+              <span class="material-symbols-outlined">inventory</span>
+              <h3>المنتجات الحالية</h3>
+            </div>
+            <button
+              type="button"
+              class="wz-refresh-btn"
+              (click)="refreshProducts()"
+              [disabled]="isProductsLoading"
+            >
+              <span class="material-symbols-outlined">refresh</span>
               تحديث
             </button>
           </header>
 
-          <div class="products-status" *ngIf="isProductsLoading">جاري تحميل المنتجات...</div>
-          <div class="products-status products-status--error" *ngIf="!isProductsLoading && productsLoadError">
-            {{ productsLoadError }}
-          </div>
-          <div class="products-status" *ngIf="!isProductsLoading && !productsLoadError && !hasProducts">
-            لا توجد منتجات حالياً.
-          </div>
+          <div class="wz-products-list-card__body">
+            <!-- Loading -->
+            <div class="wz-center-status" *ngIf="isProductsLoading">
+              <div class="wz-spinner">
+                <span class="material-symbols-outlined">progress_activity</span>
+              </div>
+              <p>جاري تحميل المنتجات...</p>
+            </div>
 
-          <div class="table-wrap" *ngIf="!isProductsLoading && !productsLoadError && hasProducts">
-            <table>
-              <thead>
-                <tr>
-                  <th>اسم المنتج</th>
-                  <th>SKU</th>
-                  <th>السعر</th>
-                  <th>المخزون</th>
-                  <th>الفئات</th>
-                  <th>الحالة</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let product of productsWithCategories; trackBy: trackByProductId">
-                  <td>{{ product.name }}</td>
-                  <td class="product-sku">{{ product.sku }}</td>
-                  <td>{{ formatPrice(product.price) }} ج.م</td>
-                  <td>{{ product.stockQuantity }}</td>
-                  <td>
-                    <div class="product-category-chips" *ngIf="product.categories.length > 0; else noCategories">
-                      <span
-                        class="category-pill category-pill--small"
-                        *ngFor="let category of product.categories; trackBy: trackByCategoryId"
-                        [ngClass]="category.colorClass">
-                        {{ category.name }}
-                      </span>
-                    </div>
-                    <ng-template #noCategories>-</ng-template>
-                  </td>
-                  <td>
-                    <span class="state state--ok" *ngIf="product.status === 'Active'; else productStatus">
-                      نشط
-                    </span>
-                    <ng-template #productStatus>
-                      <span class="state state--review">{{ product.status }}</span>
-                    </ng-template>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <!-- Error -->
+            <div
+              class="wz-center-status wz-center-status--error"
+              *ngIf="!isProductsLoading && productsLoadError"
+            >
+              <span class="material-symbols-outlined">error</span>
+              <p>{{ productsLoadError }}</p>
+            </div>
+
+            <!-- Empty -->
+            <div
+              class="wz-center-status"
+              *ngIf="!isProductsLoading && !productsLoadError && !hasProducts"
+            >
+              <span class="material-symbols-outlined">inbox</span>
+              <p>لا توجد منتجات حالياً — أضف أول منتج من الأعلى!</p>
+            </div>
+
+            <!-- Product Cards -->
+            <div
+              class="wz-prod-grid"
+              *ngIf="!isProductsLoading && !productsLoadError && hasProducts"
+            >
+              <article
+                class="wz-prod-card"
+                *ngFor="let product of productsWithCategories; trackBy: trackByProductId"
+              >
+                <div class="wz-prod-card__top">
+                  <div>
+                    <h4 class="wz-prod-card__name">{{ product.name }}</h4>
+                    <p class="wz-prod-card__name-ar">{{ product.nameAr || '-' }}</p>
+                  </div>
+                  <span
+                    class="wz-prod-card__badge"
+                    [class.wz-prod-card__badge--active]="product.status === 'Active'"
+                    [class.wz-prod-card__badge--review]="product.status !== 'Active'"
+                  >
+                    {{ product.status === 'Active' ? 'نشط' : product.status }}
+                  </span>
+                </div>
+
+                <div
+                  class="wz-prod-card__media"
+                  *ngIf="hasProductImages(product); else productNoImageState"
+                >
+                  <img
+                    class="wz-prod-card__image"
+                    [src]="currentProductImageUrl(product)"
+                    [alt]="product.name"
+                    loading="lazy"
+                  />
+
+                  <div
+                    class="wz-prod-card__media-overlay"
+                    *ngIf="productImageUrls(product).length > 1"
+                  >
+                    <button
+                      type="button"
+                      class="wz-prod-card__media-nav wz-prod-card__media-nav--prev"
+                      (click)="previousProductImage(product)"
+                      [attr.aria-label]="'الصورة السابقة لمنتج ' + product.name"
+                    >
+                      <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="wz-prod-card__media-nav wz-prod-card__media-nav--next"
+                      (click)="nextProductImage(product)"
+                      [attr.aria-label]="'الصورة التالية لمنتج ' + product.name"
+                    >
+                      <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                  </div>
+
+                  <div
+                    class="wz-prod-card__image-counter"
+                    *ngIf="productImageUrls(product).length > 1"
+                  >
+                    {{ currentProductImageIndex(product) + 1 }} /
+                    {{ productImageUrls(product).length }}
+                  </div>
+
+                  <div class="wz-prod-card__dots" *ngIf="productImageUrls(product).length > 1">
+                    <button
+                      type="button"
+                      class="wz-prod-card__dot"
+                      *ngFor="let imageUrl of productImageUrls(product); let imageIndex = index"
+                      [class.is-active]="imageIndex === currentProductImageIndex(product)"
+                      (click)="goToProductImage(product, imageIndex)"
+                      [attr.aria-label]="'عرض صورة رقم ' + (imageIndex + 1)"
+                    ></button>
+                  </div>
+                </div>
+
+                <ng-template #productNoImageState>
+                  <div class="wz-prod-card__media wz-prod-card__media--empty">
+                    <span class="material-symbols-outlined">image_not_supported</span>
+                    <p>لا توجد صور مرفوعة لهذا المنتج</p>
+                  </div>
+                </ng-template>
+
+                <div class="wz-prod-card__info">
+                  <div class="wz-prod-card__info-cell">
+                    <span>SKU</span>
+                    <strong>{{ product.sku }}</strong>
+                  </div>
+                  <div class="wz-prod-card__info-cell">
+                    <span>التقسيم</span>
+                    <strong>{{ formatProductDivision(product) }}</strong>
+                  </div>
+                  <div class="wz-prod-card__info-cell">
+                    <span>السعر</span>
+                    <strong>{{ formatPrice(product.price) }} ج.م</strong>
+                  </div>
+                  <div class="wz-prod-card__info-cell">
+                    <span>المخزن</span>
+                    <strong>{{ product.stockQuantity }}</strong>
+                  </div>
+                </div>
+
+                <div
+                  class="wz-prod-card__specs"
+                  *ngIf="product.varieties.length > 0 || product.packagingOptions.length > 0"
+                >
+                  <div class="wz-prod-card__spec" *ngIf="product.varieties.length > 0">
+                    <span>الأصناف:</span> {{ formatArrayPreview(product.varieties) }}
+                  </div>
+                  <div class="wz-prod-card__spec" *ngIf="product.packagingOptions.length > 0">
+                    <span>التعبئة:</span> {{ formatArrayPreview(product.packagingOptions) }}
+                  </div>
+                  <div class="wz-prod-card__spec" *ngIf="product.weightOptions.length > 0">
+                    <span>الأوزان:</span> {{ formatArrayPreview(product.weightOptions) }}
+                  </div>
+                </div>
+              </article>
+            </div>
           </div>
-        </article>
+        </div>
       </section>
 
       <section class="contacts-grid" *ngIf="!isLoading && activeSection === 'contacts'">
@@ -313,7 +1116,12 @@
               طلبات التواصل
             </h3>
             <div class="contacts-actions">
-              <button type="button" class="refresh-btn" (click)="refreshContacts()" [disabled]="isContactsLoading">
+              <button
+                type="button"
+                class="refresh-btn"
+                (click)="refreshContacts()"
+                [disabled]="isContactsLoading"
+              >
                 تحديث
               </button>
               <div class="view-switch" aria-label="عرض البيانات">
@@ -321,7 +1129,8 @@
                   type="button"
                   class="view-btn"
                   [class.is-active]="contactsView === 'rows'"
-                  (click)="setContactsView('rows')">
+                  (click)="setContactsView('rows')"
+                >
                   <span class="material-symbols-outlined" aria-hidden="true">table_rows</span>
                   <span>صفوف</span>
                 </button>
@@ -329,7 +1138,8 @@
                   type="button"
                   class="view-btn"
                   [class.is-active]="contactsView === 'cards'"
-                  (click)="setContactsView('cards')">
+                  (click)="setContactsView('cards')"
+                >
                   <span class="material-symbols-outlined" aria-hidden="true">view_module</span>
                   <span>بطاقات</span>
                 </button>
@@ -338,15 +1148,26 @@
           </header>
 
           <div class="contacts-status" *ngIf="isContactsLoading">جاري تحميل جهات التواصل...</div>
-          <div class="contacts-status contacts-status--error" *ngIf="!isContactsLoading && contactsLoadError">
+          <div
+            class="contacts-status contacts-status--error"
+            *ngIf="!isContactsLoading && contactsLoadError"
+          >
             {{ contactsLoadError }}
           </div>
 
-          <div class="contacts-empty" *ngIf="!isContactsLoading && !contactsLoadError && !hasContacts">
+          <div
+            class="contacts-empty"
+            *ngIf="!isContactsLoading && !contactsLoadError && !hasContacts"
+          >
             لا توجد طلبات تواصل حالياً.
           </div>
 
-          <div class="table-wrap" *ngIf="!isContactsLoading && !contactsLoadError && hasContacts && contactsView === 'rows'">
+          <div
+            class="table-wrap"
+            *ngIf="
+              !isContactsLoading && !contactsLoadError && hasContacts && contactsView === 'rows'
+            "
+          >
             <table>
               <thead>
                 <tr>
@@ -378,8 +1199,11 @@
                       [ngClass]="statusSelectClass(contact)"
                       [value]="statusValue(contact)"
                       [disabled]="isStatusUpdating(contact.id) || isContactDeleting(contact.id)"
-                      (change)="onContactStatusChange(contact, $any($event.target).value)">
-                      <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+                      (change)="onContactStatusChange(contact, $any($event.target).value)"
+                    >
+                      <option *ngFor="let option of statusOptions" [value]="option.value">
+                        {{ option.label }}
+                      </option>
                     </select>
                   </td>
                   <td class="table-action-cell">
@@ -387,7 +1211,8 @@
                       type="button"
                       class="delete-contact-btn"
                       [disabled]="isContactDeleting(contact.id) || isStatusUpdating(contact.id)"
-                      (click)="onDeleteContact(contact)">
+                      (click)="onDeleteContact(contact)"
+                    >
                       <span class="material-symbols-outlined" aria-hidden="true">delete</span>
                       <span>حذف</span>
                     </button>
@@ -397,8 +1222,16 @@
             </table>
           </div>
 
-          <div class="contact-cards" *ngIf="!isContactsLoading && !contactsLoadError && hasContacts && contactsView === 'cards'">
-            <article class="contact-card" *ngFor="let contact of contacts; trackBy: trackByContactId">
+          <div
+            class="contact-cards"
+            *ngIf="
+              !isContactsLoading && !contactsLoadError && hasContacts && contactsView === 'cards'
+            "
+          >
+            <article
+              class="contact-card"
+              *ngFor="let contact of contacts; trackBy: trackByContactId"
+            >
               <header class="contact-card__head">
                 <h4>{{ contact.fullName }}</h4>
                 <span [class]="statusBadgeClass(contact)">{{ statusLabel(contact) }}</span>
@@ -437,8 +1270,11 @@
                   [ngClass]="statusSelectClass(contact)"
                   [value]="statusValue(contact)"
                   [disabled]="isStatusUpdating(contact.id) || isContactDeleting(contact.id)"
-                  (change)="onContactStatusChange(contact, $any($event.target).value)">
-                  <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+                  (change)="onContactStatusChange(contact, $any($event.target).value)"
+                >
+                  <option *ngFor="let option of statusOptions" [value]="option.value">
+                    {{ option.label }}
+                  </option>
                 </select>
               </label>
 
@@ -447,7 +1283,8 @@
                   type="button"
                   class="delete-contact-btn"
                   [disabled]="isContactDeleting(contact.id) || isStatusUpdating(contact.id)"
-                  (click)="onDeleteContact(contact)">
+                  (click)="onDeleteContact(contact)"
+                >
                   <span class="material-symbols-outlined" aria-hidden="true">delete</span>
                   <span>حذف جهة التواصل</span>
                 </button>
@@ -456,10 +1293,17 @@
           </div>
 
           <footer class="pagination" *ngIf="!isContactsLoading && hasContacts">
-            <button type="button" class="page-btn" [disabled]="!canGoPrevious" (click)="loadPreviousPage()">
+            <button
+              type="button"
+              class="page-btn"
+              [disabled]="!canGoPrevious"
+              (click)="loadPreviousPage()"
+            >
               السابق
             </button>
-            <p class="page-info">صفحة {{ currentPage }} من {{ totalPages || 1 }} - إجمالي {{ totalCount }} طلب</p>
+            <p class="page-info">
+              صفحة {{ currentPage }} من {{ totalPages || 1 }} - إجمالي {{ totalCount }} طلب
+            </p>
             <button type="button" class="page-btn" [disabled]="!canGoNext" (click)="loadNextPage()">
               التالي
             </button>
