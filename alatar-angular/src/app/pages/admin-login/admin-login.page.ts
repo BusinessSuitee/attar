@@ -11,7 +11,7 @@ import { AuthService } from '../../core/auth/auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './admin-login.page.html',
-  styleUrl: './admin-login.page.css'
+  styleUrl: './admin-login.page.css',
 })
 export class AdminLoginPageComponent {
   private readonly formBuilder = inject(FormBuilder);
@@ -22,7 +22,7 @@ export class AdminLoginPageComponent {
 
   readonly loginForm = this.formBuilder.nonNullable.group({
     email: ['admin@attar-eg.com', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(12)]]
+    password: ['', [Validators.required, Validators.minLength(11)]],
   });
 
   isSubmitting = false;
@@ -45,7 +45,7 @@ export class AdminLoginPageComponent {
         finalize(() => {
           this.isSubmitting = false;
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
@@ -61,7 +61,7 @@ export class AdminLoginPageComponent {
           }
 
           this.errorMessage = 'تعذر تسجيل الدخول حاليا. حاول لاحقا.';
-        }
+        },
       });
   }
 }

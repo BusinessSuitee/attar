@@ -17,7 +17,10 @@
         />
       </label>
 
-      <p class="field-error" *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+      <p
+        class="field-error"
+        *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid"
+      >
         أدخل بريد إلكتروني صالح.
       </p>
 
@@ -31,8 +34,11 @@
         />
       </label>
 
-      <p class="field-error" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
-        كلمة المرور يجب أن تكون 12 حرفا على الأقل.
+      <p
+        class="field-error"
+        *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"
+      >
+        كلمة المرور يجب أن تكون 11 حرفا على الأقل.
       </p>
 
       <p class="request-error" *ngIf="errorMessage">{{ errorMessage }}</p>
