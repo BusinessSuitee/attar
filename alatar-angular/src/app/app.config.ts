@@ -3,9 +3,14 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
-  isDevMode
+  isDevMode,
 } from '@angular/core';
-import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import {
+  provideRouter,
+  withEnabledBlockingInitialNavigation,
+  withInMemoryScrolling,
+  withViewTransitions,
+} from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from './transloco-loader';
@@ -21,7 +26,8 @@ function resolveApiBaseUrl(): string {
     return productionApiBaseUrl;
   }
 
-  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const isLocalHost =
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
   if (isLocalHost) {
     if (window.location.protocol === 'https:') {
@@ -42,7 +48,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withEnabledBlockingInitialNavigation(),
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
-      withViewTransitions()
+      withViewTransitions(),
     ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
@@ -53,11 +59,11 @@ export const appConfig: ApplicationConfig = {
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
       },
-      loader: TranslocoHttpLoader
+      loader: TranslocoHttpLoader,
     }),
     {
       provide: API_BASE_URL,
-      useFactory: resolveApiBaseUrl
-    }
-  ]
+      useFactory: resolveApiBaseUrl,
+    },
+  ],
 };
