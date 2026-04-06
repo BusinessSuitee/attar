@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Alatar.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+598d4385336f71563b1890a1743aafb1d6b5e555")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e00e32b303d3a394920bf84aef1260d86e577ab0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Alatar.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Alatar.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

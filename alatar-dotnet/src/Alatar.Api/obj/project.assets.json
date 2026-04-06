@@ -1317,23 +1317,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hp\\.nuget\\packages\\": {},
+    "C:\\Users\\FUTURE\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\alatar\\alatar-dotnet\\src\\Alatar.Api\\Alatar.Api.csproj",
+      "projectUniqueName": "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Api\\Alatar.Api.csproj",
       "projectName": "Alatar.Api",
-      "projectPath": "D:\\alatar\\alatar-dotnet\\src\\Alatar.Api\\Alatar.Api.csproj",
-      "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "D:\\alatar\\alatar-dotnet\\src\\Alatar.Api\\obj\\",
+      "projectPath": "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Api\\Alatar.Api.csproj",
+      "packagesPath": "C:\\Users\\FUTURE\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\FUTURE\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1342,18 +1342,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\alatar\\alatar-dotnet\\src\\Alatar.Application\\Alatar.Application.csproj": {
-              "projectPath": "D:\\alatar\\alatar-dotnet\\src\\Alatar.Application\\Alatar.Application.csproj"
+            "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Application\\Alatar.Application.csproj": {
+              "projectPath": "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Application\\Alatar.Application.csproj"
             },
-            "D:\\alatar\\alatar-dotnet\\src\\Alatar.Infrastructure\\Alatar.Infrastructure.csproj": {
-              "projectPath": "D:\\alatar\\alatar-dotnet\\src\\Alatar.Infrastructure\\Alatar.Infrastructure.csproj"
+            "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Infrastructure\\Alatar.Infrastructure.csproj": {
+              "projectPath": "D:\\Projects\\attar\\alatar-dotnet\\src\\Alatar.Infrastructure\\Alatar.Infrastructure.csproj"
             }
           }
         }
@@ -1398,7 +1397,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
