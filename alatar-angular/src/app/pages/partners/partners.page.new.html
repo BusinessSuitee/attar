@@ -1,19 +1,44 @@
 <app-navbar></app-navbar>
 
-<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-arabic" [dir]="(true | transloco: 'direction')" *transloco="let t; read: 'partners'">
+<div
+  class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-arabic"
+  [dir]="true | transloco: 'direction'"
+  *transloco="let t; read: 'partners'"
+>
   <main class="flex-grow">
     <!-- Hero Section -->
     <section class="relative">
-      <div class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center p-4 lg:p-10 text-center relative" style='background-image: linear-gradient(rgba(21, 29, 25, 0.7), rgba(21, 29, 25, 0.8)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYuoR1PANUdy6nH60Hw23L1Sj156Zr-RziKNzquXCCWaBIqk0vP19seGGzVooK7PXdOiuMvHXgVZEI10gqX53H_uUvV5i9KNlMvARlqE5C29xtvok-EAgWRhE_3_qIG7GTlPCQILyWR1KgKxez4hcH8WtkYi6KvxOjdPfURqV3ywTZQkWZhnj-NfvkuRBdCZILpJKs2V4Mg0nuR7Kydhw3If_lOqXLh0eV_HouV5A6k5fQo4wEieWwj-b2GgsgLE-qSrT_u4iyjFw");'>
+      <div
+        class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center p-4 lg:p-10 text-center relative"
+        style="
+          background-image:
+            linear-gradient(rgba(21, 29, 25, 0.7), rgba(21, 29, 25, 0.8)),
+            url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYuoR1PANUdy6nH60Hw23L1Sj156Zr-RziKNzquXCCWaBIqk0vP19seGGzVooK7PXdOiuMvHXgVZEI10gqX53H_uUvV5i9KNlMvARlqE5C29xtvok-EAgWRhE_3_qIG7GTlPCQILyWR1KgKxez4hcH8WtkYi6KvxOjdPfURqV3ywTZQkWZhnj-NfvkuRBdCZILpJKs2V4Mg0nuR7Kydhw3If_lOqXLh0eV_HouV5A6k5fQo4wEieWwj-b2GgsgLE-qSrT_u4iyjFw');
+        "
+      >
         <div class="flex flex-col gap-4 max-w-4xl z-10 animate-fade-in-up">
-          <div class="inline-flex items-center justify-center self-center rounded-full bg-white/20 backdrop-blur-sm px-4 py-1.5 mb-2 border border-white/10">
+          <div
+            class="inline-flex items-center justify-center self-center rounded-full bg-white/20 backdrop-blur-sm px-4 py-1.5 mb-2 border border-white/10"
+          >
             <span class="text-white text-sm font-medium">{{ t('hero.badge') }}</span>
           </div>
-          <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] lg:text-6xl">{{ t('hero.title') }}</h1>
-          <h2 class="text-slate-200 text-lg font-normal leading-relaxed max-w-2xl mx-auto">{{ t('hero.desc') }}</h2>
+          <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] lg:text-6xl">
+            {{ t('hero.title') }}
+          </h1>
+          <h2 class="text-slate-200 text-lg font-normal leading-relaxed max-w-2xl mx-auto">
+            {{ t('hero.desc') }}
+          </h2>
           <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-            <button class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary/90 text-white text-base font-bold transition-all shadow-lg hover:shadow-primary/20">{{ t('hero.btn1') }}</button>
-            <button class="flex items-center justify-center rounded-lg h-12 px-8 bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm text-base font-bold transition-all">{{ t('hero.btn2') }}</button>
+            <button
+              class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary/90 text-white text-base font-bold transition-all shadow-lg hover:shadow-primary/20"
+            >
+              {{ t('hero.btn1') }}
+            </button>
+            <button
+              class="flex items-center justify-center rounded-lg h-12 px-8 bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm text-base font-bold transition-all"
+            >
+              {{ t('hero.btn2') }}
+            </button>
           </div>
         </div>
       </div>
@@ -22,20 +47,50 @@
     <!-- Stats Section -->
     <section class="py-12 -mt-16 relative z-20 px-4 lg:px-10 max-w-7xl mx-auto w-full">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-[#1e2a24] rounded-xl p-8 shadow-xl border-t-4 border-primary flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform duration-300">
-          <div class="bg-primary/10 p-3 rounded-full mb-4 text-primary"><span class="material-symbols-outlined text-4xl">public</span></div>
-          <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider mb-2">{{ t('stats.export_label') }}</p>
-          <p class="text-slate-900 dark:text-white text-4xl font-black">{{ t('stats.export_value') }}</p>
+        <div
+          class="bg-white dark:bg-[#1e2a24] rounded-xl p-8 shadow-xl border-t-4 border-primary flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform duration-300"
+        >
+          <div class="bg-primary/10 p-3 rounded-full mb-4 text-primary">
+            <span class="material-symbols-outlined text-4xl">public</span>
+          </div>
+          <p
+            class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider mb-2"
+          >
+            {{ t('stats.export_label') }}
+          </p>
+          <p class="text-slate-900 dark:text-white text-4xl font-black">
+            {{ t('stats.export_value') }}
+          </p>
         </div>
-        <div class="bg-white dark:bg-[#1e2a24] rounded-xl p-8 shadow-xl border-t-4 border-primary flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform duration-300">
-          <div class="bg-primary/10 p-3 rounded-full mb-4 text-primary"><span class="material-symbols-outlined text-4xl">scale</span></div>
-          <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider mb-2">{{ t('stats.volume_label') }}</p>
-          <p class="text-slate-900 dark:text-white text-4xl font-black">{{ t('stats.volume_value') }}</p>
+        <div
+          class="bg-white dark:bg-[#1e2a24] rounded-xl p-8 shadow-xl border-t-4 border-primary flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform duration-300"
+        >
+          <div class="bg-primary/10 p-3 rounded-full mb-4 text-primary">
+            <span class="material-symbols-outlined text-4xl">scale</span>
+          </div>
+          <p
+            class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider mb-2"
+          >
+            {{ t('stats.volume_label') }}
+          </p>
+          <p class="text-slate-900 dark:text-white text-4xl font-black">
+            {{ t('stats.volume_value') }}
+          </p>
         </div>
-        <div class="bg-white dark:bg-[#1e2a24] rounded-xl p-8 shadow-xl border-t-4 border-primary flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform duration-300">
-          <div class="bg-primary/10 p-3 rounded-full mb-4 text-primary"><span class="material-symbols-outlined text-4xl">verified</span></div>
-          <p class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider mb-2">{{ t('stats.quality_label') }}</p>
-          <p class="text-slate-900 dark:text-white text-4xl font-black">{{ t('stats.quality_value') }}</p>
+        <div
+          class="bg-white dark:bg-[#1e2a24] rounded-xl p-8 shadow-xl border-t-4 border-primary flex flex-col items-center text-center transform hover:-translate-y-1 transition-transform duration-300"
+        >
+          <div class="bg-primary/10 p-3 rounded-full mb-4 text-primary">
+            <span class="material-symbols-outlined text-4xl">verified</span>
+          </div>
+          <p
+            class="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase tracking-wider mb-2"
+          >
+            {{ t('stats.quality_label') }}
+          </p>
+          <p class="text-slate-900 dark:text-white text-4xl font-black">
+            {{ t('stats.quality_value') }}
+          </p>
         </div>
       </div>
     </section>
@@ -45,31 +100,87 @@
       <div class="flex flex-col lg:flex-row gap-12 items-center">
         <div class="w-full lg:w-1/3 flex flex-col gap-6">
           <div>
-            <span class="text-primary font-bold text-sm tracking-wider uppercase mb-2 block">{{ t('map.kicker') }}</span>
-            <h2 class="text-slate-900 dark:text-white text-3xl lg:text-4xl font-bold leading-tight mb-4">{{ t('map.title') }}</h2>
+            <span class="text-primary font-bold text-sm tracking-wider uppercase mb-2 block">{{
+              t('map.kicker')
+            }}</span>
+            <h2
+              class="text-slate-900 dark:text-white text-3xl lg:text-4xl font-bold leading-tight mb-4"
+            >
+              {{ t('map.title') }}
+            </h2>
             <p class="text-slate-600 dark:text-slate-300 leading-relaxed">{{ t('map.desc') }}</p>
           </div>
           <div class="space-y-4">
-            <div class="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-[#1e2a24] shadow-sm border border-slate-100 dark:border-slate-800">
-              <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 p-2 rounded-md"><span class="material-symbols-outlined">euro</span></div>
-              <div><h4 class="font-bold text-slate-900 dark:text-white">{{ t('map.eu_region') }}</h4><p class="text-xs text-slate-500">{{ t('map.eu_products') }}</p></div>
+            <div
+              class="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-[#1e2a24] shadow-sm border border-slate-100 dark:border-slate-800"
+            >
+              <div
+                class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 p-2 rounded-md"
+              >
+                <span class="material-symbols-outlined">euro</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 dark:text-white">{{ t('map.eu_region') }}</h4>
+                <p class="text-xs text-slate-500">{{ t('map.eu_products') }}</p>
+              </div>
             </div>
-            <div class="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-[#1e2a24] shadow-sm border border-slate-100 dark:border-slate-800">
-              <div class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-2 rounded-md"><span class="material-symbols-outlined">severe_cold</span></div>
-              <div><h4 class="font-bold text-slate-900 dark:text-white">{{ t('map.russia_region') }}</h4><p class="text-xs text-slate-500">{{ t('map.russia_products') }}</p></div>
+            <div
+              class="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-[#1e2a24] shadow-sm border border-slate-100 dark:border-slate-800"
+            >
+              <div
+                class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-2 rounded-md"
+              >
+                <span class="material-symbols-outlined">severe_cold</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 dark:text-white">
+                  {{ t('map.russia_region') }}
+                </h4>
+                <p class="text-xs text-slate-500">{{ t('map.russia_products') }}</p>
+              </div>
             </div>
-            <div class="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-[#1e2a24] shadow-sm border border-slate-100 dark:border-slate-800">
-              <div class="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 p-2 rounded-md"><span class="material-symbols-outlined">wb_sunny</span></div>
-              <div><h4 class="font-bold text-slate-900 dark:text-white">{{ t('map.gulf_region') }}</h4><p class="text-xs text-slate-500">{{ t('map.gulf_products') }}</p></div>
+            <div
+              class="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-[#1e2a24] shadow-sm border border-slate-100 dark:border-slate-800"
+            >
+              <div
+                class="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 p-2 rounded-md"
+              >
+                <span class="material-symbols-outlined">wb_sunny</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 dark:text-white">{{ t('map.gulf_region') }}</h4>
+                <p class="text-xs text-slate-500">{{ t('map.gulf_products') }}</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="w-full lg:w-2/3 relative h-[500px] bg-[#eef4f1] dark:bg-[#1a231f] rounded-2xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-800">
-          <div class="absolute inset-0 flex items-center justify-center opacity-30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBBpzniieLREoumqnblY_M4l4S9BpBjRXKvHTogrG56T-pcr2jz9-lRlncnLxgfKpDiU7AEpaXNd0T5rJDT7qtr9T1xn93dqau5N9Fl1DCDsFlaHA84h6UUOMQ34ky6tEas59AIY2PRjQ5fpOnIrVCdqPc73KvBjEZqwYPutiyfM7uh_2aJGjAdyrWxRCY4OOGH8onhzWfU4NnTh6_AaLeCYDDoI0CUlNoS1tHgnZIp21_C9XSrVft6RT-_0SEDBM_hIShAaK_kMck'); background-size: cover; background-position: center;"></div>
-          <div class="absolute top-[42%] left-[54%] transform -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
-            <span class="relative flex h-6 w-6"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-6 w-6 bg-primary border-2 border-white"></span></span>
-            <span class="mt-2 text-primary font-bold text-sm bg-white/90 px-2 py-0.5 rounded shadow-sm">{{ t('map.center') }}</span>
+        <div
+          class="w-full lg:w-2/3 relative h-[500px] bg-[#eef4f1] dark:bg-[#1a231f] rounded-2xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-800"
+        >
+          <div
+            class="absolute inset-0 flex items-center justify-center opacity-30"
+            style="
+              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBBpzniieLREoumqnblY_M4l4S9BpBjRXKvHTogrG56T-pcr2jz9-lRlncnLxgfKpDiU7AEpaXNd0T5rJDT7qtr9T1xn93dqau5N9Fl1DCDsFlaHA84h6UUOMQ34ky6tEas59AIY2PRjQ5fpOnIrVCdqPc73KvBjEZqwYPutiyfM7uh_2aJGjAdyrWxRCY4OOGH8onhzWfU4NnTh6_AaLeCYDDoI0CUlNoS1tHgnZIp21_C9XSrVft6RT-_0SEDBM_hIShAaK_kMck');
+              background-size: cover;
+              background-position: center;
+            "
+          ></div>
+          <div
+            class="absolute top-[42%] left-[54%] transform -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center"
+          >
+            <span class="relative flex h-6 w-6"
+              ><span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"
+              ></span
+              ><span
+                class="relative inline-flex rounded-full h-6 w-6 bg-primary border-2 border-white"
+              ></span
+            ></span>
+            <span
+              class="mt-2 text-primary font-bold text-sm bg-white/90 px-2 py-0.5 rounded shadow-sm"
+              >{{ t('map.center') }}</span
+            >
           </div>
         </div>
       </div>
@@ -79,80 +190,225 @@
     <section class="py-16 bg-white dark:bg-[#1e2a24]">
       <div class="layout-content-container max-w-7xl mx-auto px-4 lg:px-10">
         <div class="text-center mb-12">
-          <span class="text-primary font-bold text-sm tracking-wider uppercase mb-2 block">{{ t('strategic.badge') }}</span>
-          <h2 class="text-slate-900 dark:text-white text-3xl font-bold">{{ t('strategic.title') }}</h2>
+          <span class="text-primary font-bold text-sm tracking-wider uppercase mb-2 block">{{
+            t('strategic.badge')
+          }}</span>
+          <h2 class="text-slate-900 dark:text-white text-3xl font-bold">
+            {{ t('strategic.title') }}
+          </h2>
           <p class="text-slate-500 mt-2 max-w-2xl mx-auto">{{ t('strategic.desc') }}</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           <!-- Partner 1 -->
           <div class="group flex flex-col items-center gap-3">
-            <div class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6">
-              <div class="text-center"><div class="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl">{{ t('strategic.partner1') | slice:0:1 }}</div><span class="text-slate-400 text-xs">Logo</span></div>
+            <div
+              class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl"
+                >
+                  {{ t('strategic.partner1') | slice: 0 : 1 }}
+                </div>
+                <span class="text-slate-400 text-xs">Logo</span>
+              </div>
             </div>
-            <div class="text-center"><h3 class="font-bold text-slate-900 dark:text-white">{{ t('strategic.partner1') }}</h3><p class="text-xs text-slate-500">{{ t('strategic.partner1_sub') }}</p></div>
+            <div class="text-center">
+              <h3 class="font-bold text-slate-900 dark:text-white">
+                {{ t('strategic.partner1') }}
+              </h3>
+              <p class="text-xs text-slate-500">{{ t('strategic.partner1_sub') }}</p>
+            </div>
           </div>
           <!-- Partner 2 -->
           <div class="group flex flex-col items-center gap-3">
-            <div class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6">
-              <div class="text-center"><div class="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl">{{ t('strategic.partner2') | slice:0:1 }}</div><span class="text-slate-400 text-xs">Logo</span></div>
+            <div
+              class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl"
+                >
+                  {{ t('strategic.partner2') | slice: 0 : 1 }}
+                </div>
+                <span class="text-slate-400 text-xs">Logo</span>
+              </div>
             </div>
-            <div class="text-center"><h3 class="font-bold text-slate-900 dark:text-white">{{ t('strategic.partner2') }}</h3><p class="text-xs text-slate-500">{{ t('strategic.partner2_sub') }}</p></div>
+            <div class="text-center">
+              <h3 class="font-bold text-slate-900 dark:text-white">
+                {{ t('strategic.partner2') }}
+              </h3>
+              <p class="text-xs text-slate-500">{{ t('strategic.partner2_sub') }}</p>
+            </div>
           </div>
           <!-- Partner 3 -->
           <div class="group flex flex-col items-center gap-3">
-            <div class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6">
-              <div class="text-center"><div class="w-12 h-12 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl">{{ t('strategic.partner3') | slice:0:1 }}</div><span class="text-slate-400 text-xs">Logo</span></div>
+            <div
+              class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl"
+                >
+                  {{ t('strategic.partner3') | slice: 0 : 1 }}
+                </div>
+                <span class="text-slate-400 text-xs">Logo</span>
+              </div>
             </div>
-            <div class="text-center"><h3 class="font-bold text-slate-900 dark:text-white">{{ t('strategic.partner3') }}</h3><p class="text-xs text-slate-500">{{ t('strategic.partner3_sub') }}</p></div>
+            <div class="text-center">
+              <h3 class="font-bold text-slate-900 dark:text-white">
+                {{ t('strategic.partner3') }}
+              </h3>
+              <p class="text-xs text-slate-500">{{ t('strategic.partner3_sub') }}</p>
+            </div>
           </div>
           <!-- Partner 4 -->
           <div class="group flex flex-col items-center gap-3">
-            <div class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6">
-              <div class="text-center"><div class="w-12 h-12 rounded-full bg-red-100 text-red-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl">{{ t('strategic.partner4') | slice:0:1 }}</div><span class="text-slate-400 text-xs">Logo</span></div>
+            <div
+              class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-red-100 text-red-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl"
+                >
+                  {{ t('strategic.partner4') | slice: 0 : 1 }}
+                </div>
+                <span class="text-slate-400 text-xs">Logo</span>
+              </div>
             </div>
-            <div class="text-center"><h3 class="font-bold text-slate-900 dark:text-white">{{ t('strategic.partner4') }}</h3><p class="text-xs text-slate-500">{{ t('strategic.partner4_sub') }}</p></div>
+            <div class="text-center">
+              <h3 class="font-bold text-slate-900 dark:text-white">
+                {{ t('strategic.partner4') }}
+              </h3>
+              <p class="text-xs text-slate-500">{{ t('strategic.partner4_sub') }}</p>
+            </div>
           </div>
           <!-- Partner 5 -->
           <div class="group flex flex-col items-center gap-3">
-            <div class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6">
-              <div class="text-center"><div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl">{{ t('strategic.partner5') | slice:0:1 }}</div><span class="text-slate-400 text-xs">Logo</span></div>
+            <div
+              class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl"
+                >
+                  {{ t('strategic.partner5') | slice: 0 : 1 }}
+                </div>
+                <span class="text-slate-400 text-xs">Logo</span>
+              </div>
             </div>
-            <div class="text-center"><h3 class="font-bold text-slate-900 dark:text-white">{{ t('strategic.partner5') }}</h3><p class="text-xs text-slate-500">{{ t('strategic.partner5_sub') }}</p></div>
+            <div class="text-center">
+              <h3 class="font-bold text-slate-900 dark:text-white">
+                {{ t('strategic.partner5') }}
+              </h3>
+              <p class="text-xs text-slate-500">{{ t('strategic.partner5_sub') }}</p>
+            </div>
           </div>
           <!-- Partner 6 -->
           <div class="group flex flex-col items-center gap-3">
-            <div class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6">
-              <div class="text-center"><div class="w-12 h-12 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl">{{ t('strategic.partner6') | slice:0:1 }}</div><span class="text-slate-400 text-xs">Logo</span></div>
+            <div
+              class="w-full aspect-square bg-slate-50 dark:bg-background-dark border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center p-6"
+            >
+              <div class="text-center">
+                <div
+                  class="w-12 h-12 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mx-auto mb-2 font-bold text-xl"
+                >
+                  {{ t('strategic.partner6') | slice: 0 : 1 }}
+                </div>
+                <span class="text-slate-400 text-xs">Logo</span>
+              </div>
             </div>
-            <div class="text-center"><h3 class="font-bold text-slate-900 dark:text-white">{{ t('strategic.partner6') }}</h3><p class="text-xs text-slate-500">{{ t('strategic.partner6_sub') }}</p></div>
+            <div class="text-center">
+              <h3 class="font-bold text-slate-900 dark:text-white">
+                {{ t('strategic.partner6') }}
+              </h3>
+              <p class="text-xs text-slate-500">{{ t('strategic.partner6_sub') }}</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Certifications Section -->
-    <section class="py-12 bg-slate-50 dark:bg-background-dark/50 border-t border-b border-slate-100 dark:border-slate-800">
+    <section
+      class="py-12 bg-slate-50 dark:bg-background-dark/50 border-t border-b border-slate-100 dark:border-slate-800"
+    >
       <div class="max-w-7xl mx-auto px-4 lg:px-10 text-center">
-        <h3 class="text-slate-900 dark:text-white text-2xl font-bold mb-8">{{ t('certifications.title') }}</h3>
+        <h3 class="text-slate-900 dark:text-white text-2xl font-bold mb-8">
+          {{ t('certifications.title') }}
+        </h3>
         <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-80">
-          <div class="flex flex-col items-center gap-2"><div class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"><span class="text-slate-800 font-bold text-sm">ISO</span></div><span class="text-xs font-medium text-slate-500">9001:2015</span></div>
-          <div class="flex flex-col items-center gap-2"><div class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"><span class="text-slate-800 font-bold text-sm text-center leading-tight">Global<br />GAP</span></div><span class="text-xs font-medium text-slate-500">{{ t('certifications.gap_label') }}</span></div>
-          <div class="flex flex-col items-center gap-2"><div class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"><span class="text-slate-800 font-bold text-sm">HACCP</span></div><span class="text-xs font-medium text-slate-500">{{ t('certifications.haccp_label') }}</span></div>
-          <div class="flex flex-col items-center gap-2"><div class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"><span class="text-slate-800 font-bold text-sm">BRCGS</span></div><span class="text-xs font-medium text-slate-500">{{ t('certifications.brcgs_label') }}</span></div>
+          <div class="flex flex-col items-center gap-2">
+            <div
+              class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"
+            >
+              <span class="text-slate-800 font-bold text-sm">ISO</span>
+            </div>
+            <span class="text-xs font-medium text-slate-500">9001:2015</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div
+              class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"
+            >
+              <span class="text-slate-800 font-bold text-sm text-center leading-tight"
+                >Global<br />GAP</span
+              >
+            </div>
+            <span class="text-xs font-medium text-slate-500">{{
+              t('certifications.gap_label')
+            }}</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div
+              class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"
+            >
+              <span class="text-slate-800 font-bold text-sm">HACCP</span>
+            </div>
+            <span class="text-xs font-medium text-slate-500">{{
+              t('certifications.haccp_label')
+            }}</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div
+              class="h-20 w-20 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center shadow-sm"
+            >
+              <span class="text-slate-800 font-bold text-sm">BRCGS</span>
+            </div>
+            <span class="text-xs font-medium text-slate-500">{{
+              t('certifications.brcgs_label')
+            }}</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- CTA Section -->
     <section class="py-16 px-4 lg:px-10">
-      <div class="max-w-5xl mx-auto bg-primary rounded-2xl p-8 lg:p-12 text-center relative overflow-hidden shadow-2xl">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
+      <div
+        class="max-w-5xl mx-auto bg-primary rounded-2xl p-8 lg:p-12 text-center relative overflow-hidden shadow-2xl"
+      >
+        <div
+          class="absolute inset-0 opacity-10"
+          style="
+            background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+            background-size: 32px 32px;
+          "
+        ></div>
         <div class="relative z-10 flex flex-col items-center gap-6">
           <h2 class="text-white text-3xl lg:text-4xl font-bold">{{ t('cta.title') }}</h2>
           <p class="text-white/90 text-lg max-w-2xl">{{ t('cta.desc') }}</p>
           <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
-            <a class="bg-white text-primary hover:bg-slate-100 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors min-w-[200px]" routerLink="/" fragment="contact">{{ t('cta.btn1') }}</a>
-            <button class="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-3 px-8 rounded-lg transition-colors min-w-[200px]">{{ t('cta.btn2') }}</button>
+            <a
+              class="bg-white text-primary hover:bg-slate-100 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors min-w-[200px]"
+              routerLink="/"
+              fragment="contact"
+              >{{ t('cta.btn1') }}</a
+            >
+            <button
+              class="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-3 px-8 rounded-lg transition-colors min-w-[200px]"
+            >
+              {{ t('cta.btn2') }}
+            </button>
           </div>
         </div>
       </div>
@@ -160,37 +416,69 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-white dark:bg-[#151d19] border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 px-4 lg:px-10">
+  <footer
+    class="bg-white dark:bg-[#151d19] border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 px-4 lg:px-10"
+  >
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
       <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-2xl">agriculture</span><h3 class="text-lg font-bold text-slate-900 dark:text-white">أولاد العطار</h3></div>
-        <p class="text-slate-500 text-sm leading-relaxed">نحن ملتزمون بتقديم أفضل المحاصيل الزراعية المصرية للعالم، مع الحفاظ على أعلى معايير الجودة والاستدامة.</p>
+        <div class="flex items-center gap-2 text-primary">
+          <span class="material-symbols-outlined text-2xl">agriculture</span>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">أولاد العطار</h3>
+        </div>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          نحن ملتزمون بتقديم أفضل المحاصيل الزراعية المصرية للعالم، مع الحفاظ على أعلى معايير الجودة
+          والاستدامة.
+        </p>
       </div>
       <div>
         <h4 class="text-slate-900 dark:text-white font-bold mb-4">روابط سريعة</h4>
         <ul class="flex flex-col gap-2 text-sm text-slate-500">
           <li><a class="hover:text-primary transition-colors" routerLink="/about">عن الشركة</a></li>
-          <li><a class="hover:text-primary transition-colors" routerLink="/products">منتجاتنا</a></li>
-          <li><a class="hover:text-primary transition-colors" routerLink="/partners">شركاء النجاح</a></li>
-          <li><a class="hover:text-primary transition-colors" routerLink="/" fragment="gallery">الأخبار والفعاليات</a></li>
+          <li>
+            <a class="hover:text-primary transition-colors" routerLink="/products">منتجاتنا</a>
+          </li>
+          <li>
+            <a class="hover:text-primary transition-colors" routerLink="/partners">شركاء النجاح</a>
+          </li>
+          <li>
+            <a class="hover:text-primary transition-colors" routerLink="/" fragment="gallery"
+              >الأخبار والفعاليات</a
+            >
+          </li>
         </ul>
       </div>
       <div>
         <h4 class="text-slate-900 dark:text-white font-bold mb-4">تواصل معنا</h4>
         <ul class="flex flex-col gap-2 text-sm text-slate-500">
-          <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base">location_on</span> مدينة السادات، المنوفية، مصر</li>
-          <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base">mail</span> info@elattar-sons.com</li>
-          <li class="flex items-center gap-2"><span class="material-symbols-outlined text-base">call</span> +20 100 123 4567</li>
+          <li class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-base">location_on</span> مدينة السادات،
+            المنوفية، مصر
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-base">call</span> 01004623085 - 0109 2069059
+          </li>
         </ul>
       </div>
       <div>
         <h4 class="text-slate-900 dark:text-white font-bold mb-4">تابعنا</h4>
         <div class="flex gap-4">
-          <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
-          <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+          <a
+            class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-colors"
+            href="#"
+            ><span class="material-symbols-outlined">public</span></a
+          >
+          <a
+            class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-colors"
+            href="#"
+            ><span class="material-symbols-outlined">share</span></a
+          >
         </div>
       </div>
     </div>
-    <div class="border-t border-slate-100 dark:border-slate-800 pt-8 text-center text-sm text-slate-400">© 2026 أولاد العطار. جميع الحقوق محفوظة.</div>
+    <div
+      class="border-t border-slate-100 dark:border-slate-800 pt-8 text-center text-sm text-slate-400"
+    >
+      © 2026 أولاد العطار. جميع الحقوق محفوظة.
+    </div>
   </footer>
 </div>

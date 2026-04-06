@@ -512,6 +512,46 @@
       "crops_6": {
         "title": "Red Onions",
         "description": "Excellent firmness and storage capacity."
+      },
+      "attar_1": {
+        "title": "Al Attar Station Exterior",
+        "description": "Exterior view of Al Attar station."
+      },
+      "attar_2": {
+        "title": "Al Attar Yard Area",
+        "description": "Outdoor operating yard at Al Attar station."
+      },
+      "attar_3": {
+        "title": "Al Attar Processing Line",
+        "description": "Part of the internal processing line at Al Attar station."
+      },
+      "attar_4": {
+        "title": "Al Attar Preparation Zone",
+        "description": "Sorting and preparation area inside Al Attar station."
+      },
+      "mha_1": {
+        "title": "MHA Station Exterior",
+        "description": "Main entrance and loading zone prepared for export operations."
+      },
+      "mha_2": {
+        "title": "MHA Yard Operations",
+        "description": "Outdoor handling and movement area supporting daily shipment flow."
+      },
+      "mha_3": {
+        "title": "Internal Processing Line",
+        "description": "Integrated inside line for receiving and preparing produce."
+      },
+      "mha_4": {
+        "title": "Sorting & Grading Area",
+        "description": "Controlled sorting workflow aligned with export quality requirements."
+      },
+      "mha_5": {
+        "title": "Packaging Section",
+        "description": "Flexible packaging setup tailored for different market needs."
+      },
+      "mha_6": {
+        "title": "Station Operations",
+        "description": "Daily production and logistics operations inside MHA station."
       }
     },
     "not_found": {

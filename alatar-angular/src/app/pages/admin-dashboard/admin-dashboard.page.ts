@@ -722,7 +722,7 @@ export class AdminDashboardPageComponent {
     }
 
     this.editingProductSignal.set(product);
-    
+
     this.productFormSignal.set({
       name: product.name,
       nameAr: product.nameAr,
@@ -750,11 +750,11 @@ export class AdminDashboardPageComponent {
       id: img.id,
       url: this.resolveImageUrl(img.url)
     }));
-    
+
     this.existingImagePreviewsSignal.set(formattedImages);
     this.imagePreviewsSignal.set([]);
     this.selectedProductImagesSignal.set([]);
-    
+
     this.currentStepSignal.set(1);
     this.productSubmitErrorSignal.set('');
     this.productSubmitSuccessSignal.set('');
@@ -785,12 +785,12 @@ export class AdminDashboardPageComponent {
     }
 
     this.productSubmitErrorSignal.set('');
-    
+
     this.productService.deleteProductImage(product.id, imageId).pipe(
       takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: () => {
-        this.existingImagePreviewsSignal.update(current => 
+        this.existingImagePreviewsSignal.update(current =>
           current.filter(img => img.id !== imageId)
         );
         this.productSubmitSuccessSignal.set('تم حذف الصورة بنجاح.');

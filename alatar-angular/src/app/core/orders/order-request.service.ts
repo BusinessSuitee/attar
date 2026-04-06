@@ -79,7 +79,10 @@ export class OrderRequestService {
       quantityTons: payload.quantityTons,
     };
 
-    return this.httpClient.post<OrderRequestIdResponse>(`${this.apiBaseUrl}/api/order-requests`, request);
+    return this.httpClient.post<OrderRequestIdResponse>(
+      `${this.apiBaseUrl}/api/order-requests`,
+      request,
+    );
   }
 
   getOrderRequests(page = 1, pageSize = 50): Observable<OrderRequestsPageResponse> {

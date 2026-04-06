@@ -112,13 +112,13 @@ export class ProductsPageComponent implements OnInit {
     let list = this.products();
 
     if (catFilter === 'Frozen') {
-      list = list.filter(p => p.productState === 'Frozen');
+      list = list.filter((p) => p.productState === 'Frozen');
     } else if (catFilter !== 'all') {
-      list = list.filter(p => p.productType === catFilter && p.productState === 'Fresh');
+      list = list.filter((p) => p.productType === catFilter && p.productState === 'Fresh');
     }
 
     if (this.showSeasonFilter() && seasonFilter !== 'all') {
-      list = list.filter(p => p.season === seasonFilter);
+      list = list.filter((p) => p.season === seasonFilter);
     }
 
     return list;
@@ -237,9 +237,7 @@ export class ProductsPageComponent implements OnInit {
 
     const detailsSuffix = details.length > 0 ? `\n${details.join('\n')}` : '';
 
-    return encodeURIComponent(
-      `أهلاً، أرغب في الاستفسار عن تفاصيل وأسعار: ${name}${detailsSuffix}`,
-    );
+    return encodeURIComponent(`أهلاً، أرغب في الاستفسار عن تفاصيل وأسعار: ${name}${detailsSuffix}`);
   }
 
   onOrderTextFieldInput(
@@ -310,7 +308,9 @@ export class ProductsPageComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.orderSubmitSuccess.set(this.translocoService.translate('products_page.modal.request_success'));
+          this.orderSubmitSuccess.set(
+            this.translocoService.translate('products_page.modal.request_success'),
+          );
           this.orderSubmitError.set('');
           this.resetOrderRequestForm(product, true);
         },

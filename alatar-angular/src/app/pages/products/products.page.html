@@ -1,42 +1,59 @@
 <app-navbar #nav></app-navbar>
 
-<div class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased">
+<div
+  class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased"
+>
   <main class="flex-grow">
-
     <!-- Hero -->
-    <section class="relative flex min-h-[380px] w-full items-center justify-center overflow-hidden bg-slate-900 py-20">
-      <div class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
-        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8'); filter:blur(4px);">
-      </div>
+    <section
+      class="relative flex min-h-[380px] w-full items-center justify-center overflow-hidden bg-slate-900 py-20"
+    >
+      <div
+        class="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
+        style="
+          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8');
+          filter: blur(4px);
+        "
+      ></div>
       <div class="absolute inset-0 z-0 bg-primary/70 mix-blend-multiply"></div>
       <div class="absolute inset-0 z-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-      <div class="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center">
-        <span class="mb-2 inline-block rounded border border-solid border-accent/40 bg-accent/20 px-3 py-1 text-sm font-bold uppercase tracking-widest text-accent backdrop-blur-sm">
-          {{ 'products_page.hero.badge' | transloco }}
-        </span>
-        <h1 class="text-shadow-lg text-4xl font-black leading-tight tracking-tight text-white md:text-6xl">
+      <div
+        class="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center"
+      >
+        <h1
+          class="text-shadow-lg text-4xl font-black leading-tight tracking-tight text-white md:text-6xl"
+        >
           {{ 'products_page.hero.title' | transloco }}
         </h1>
-        <p class="mx-auto mt-4 max-w-2xl text-lg font-light leading-relaxed text-slate-200 md:text-xl">
+        <p
+          class="mx-auto mt-4 max-w-2xl text-lg font-light leading-relaxed text-slate-200 md:text-xl"
+        >
           {{ 'products_page.hero.desc' | transloco }}
         </p>
       </div>
     </section>
 
     <!-- Sticky Filter Bar -->
-    <div class="sticky z-40 border-b border-solid border-slate-200 bg-white shadow-sm transition-all duration-200"
-      [ngClass]="nav?.topNavVisible?.() ? 'top-[75px] sm:top-20' : 'top-0'">
+    <div
+      class="sticky z-40 border-b border-solid border-slate-200 bg-white shadow-sm transition-all duration-200"
+      [ngClass]="nav?.topNavVisible?.() ? 'top-[75px] sm:top-20' : 'top-0'"
+    >
       <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-
         <!-- Main Category Filter -->
-        <div class="no-scrollbar flex w-full flex-nowrap items-center gap-3 overflow-x-auto py-4 scroll-smooth">
+        <div
+          class="no-scrollbar flex w-full flex-nowrap items-center gap-3 overflow-x-auto py-4 scroll-smooth"
+        >
           @for (filter of filterOptions; track filter.id) {
-            <button type="button"
+            <button
+              type="button"
               class="flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-bold outline-none transition-all border border-solid"
-              [ngClass]="activeFilter() === filter.id
-                ? 'bg-primary text-white shadow-md border-primary'
-                : 'bg-slate-100 text-slate-600 border-transparent hover:bg-slate-200 hover:text-primary'"
-              (click)="setFilter(filter.id)">
+              [ngClass]="
+                activeFilter() === filter.id
+                  ? 'bg-primary text-white shadow-md border-primary'
+                  : 'bg-slate-100 text-slate-600 border-transparent hover:bg-slate-200 hover:text-primary'
+              "
+              (click)="setFilter(filter.id)"
+            >
               <span class="material-symbols-outlined text-lg">{{ filter.icon }}</span>
               {{ filter.labelKey | transloco }}
             </button>
@@ -45,14 +62,20 @@
 
         <!-- Season Sub-Filter -->
         @if (showSeasonFilter()) {
-          <div class="no-scrollbar flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-4 scroll-smooth border-t border-slate-100 border-solid pt-3">
+          <div
+            class="no-scrollbar flex w-full flex-nowrap items-center gap-2 overflow-x-auto pb-4 scroll-smooth border-t border-slate-100 border-solid pt-3"
+          >
             @for (season of seasonOptions; track season.id) {
-              <button type="button"
+              <button
+                type="button"
                 class="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-solid px-4 py-2 text-xs font-bold outline-none transition-all"
-                [ngClass]="activeSeason() === season.id
-                  ? 'bg-accent text-white shadow-sm border-accent'
-                  : 'bg-white text-slate-500 border-slate-200 hover:bg-accent/10 hover:text-accent hover:border-accent/30'"
-                (click)="setSeason(season.id)">
+                [ngClass]="
+                  activeSeason() === season.id
+                    ? 'bg-accent text-white shadow-sm border-accent'
+                    : 'bg-white text-slate-500 border-slate-200 hover:bg-accent/10 hover:text-accent hover:border-accent/30'
+                "
+                (click)="setSeason(season.id)"
+              >
                 <span class="material-symbols-outlined text-sm">{{ season.icon }}</span>
                 {{ season.labelKey | transloco }}
               </button>
@@ -65,11 +88,12 @@
     <!-- Products Grid -->
     <section class="bg-slate-50 py-16">
       <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-
         <!-- Loading -->
         @if (isLoading()) {
           <div class="flex flex-col items-center justify-center gap-4 py-24 text-slate-400">
-            <span class="material-symbols-outlined animate-spin text-5xl text-primary">progress_activity</span>
+            <span class="material-symbols-outlined animate-spin text-5xl text-primary"
+              >progress_activity</span
+            >
             <p class="font-medium">جاري تحميل المنتجات...</p>
           </div>
         }
@@ -91,7 +115,9 @@
               </span>
               <h2 class="text-2xl font-bold text-slate-900 md:text-3xl">
                 {{ 'products_page.list.title' | transloco }}
-                <span class="ms-2 rounded-full bg-primary/10 px-3 py-0.5 text-base font-bold text-primary">
+                <span
+                  class="ms-2 rounded-full bg-primary/10 px-3 py-0.5 text-base font-bold text-primary"
+                >
                   {{ visibleProducts().length }}
                 </span>
               </h2>
@@ -99,10 +125,18 @@
           </div>
 
           @if (visibleProducts().length === 0) {
-            <div class="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
-              <span class="material-symbols-outlined mb-3 block text-5xl text-slate-300">search_off</span>
-              <p class="mb-1 font-bold text-slate-700">{{ 'products_page.list.empty_title' | transloco }}</p>
-              <p class="text-sm text-slate-500">{{ 'products_page.list.empty_desc' | transloco }}</p>
+            <div
+              class="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center"
+            >
+              <span class="material-symbols-outlined mb-3 block text-5xl text-slate-300"
+                >search_off</span
+              >
+              <p class="mb-1 font-bold text-slate-700">
+                {{ 'products_page.list.empty_title' | transloco }}
+              </p>
+              <p class="text-sm text-slate-500">
+                {{ 'products_page.list.empty_desc' | transloco }}
+              </p>
             </div>
           }
 
@@ -110,25 +144,34 @@
             @for (product of visibleProducts(); track product.id) {
               <article
                 (click)="openProduct(product)"
-                class="cursor-pointer group flex flex-col overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-
+                class="cursor-pointer group flex flex-col overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              >
                 <!-- Image -->
-                <div class="relative h-52 overflow-hidden bg-slate-100 shrink-0">
+                <div class="relative h-52 overflow-hidden rounded-t-2xl bg-slate-100 shrink-0">
                   @if (hasImages(product)) {
-                    <img [src]="firstImage(product)" [alt]="product.nameAr"
-                      class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img
+                      [src]="firstImage(product)"
+                      [alt]="product.nameAr"
+                      class="h-full w-full rounded-t-2xl object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
                   } @else {
                     <div class="flex h-full w-full items-center justify-center">
-                      <span class="material-symbols-outlined text-6xl text-slate-300">nutrition</span>
+                      <span class="material-symbols-outlined text-6xl text-slate-300"
+                        >nutrition</span
+                      >
                     </div>
                   }
                   <!-- Category badge -->
-                  <span class="absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-bold text-white shadow"
-                    [ngClass]="categoryBadgeColor(product)">
+                  <span
+                    class="absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-bold text-white shadow"
+                    [ngClass]="categoryBadgeColor(product)"
+                  >
                     {{ categoryLabelKey(product) | transloco }}
                   </span>
                   <!-- Season badge -->
-                  <span class="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                  <span
+                    class="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm"
+                  >
                     <span class="material-symbols-outlined text-sm">calendar_month</span>
                     {{ seasonLabelKey(product.season) | transloco }}
                   </span>
@@ -136,7 +179,9 @@
 
                 <!-- Info -->
                 <div class="flex flex-1 flex-col p-5">
-                  <h3 class="mb-1 text-lg font-black leading-tight text-slate-900">{{ product.nameAr }}</h3>
+                  <h3 class="mb-1 text-lg font-black leading-tight text-slate-900">
+                    {{ product.nameAr }}
+                  </h3>
                   <p class="mb-1 text-xs font-medium text-slate-400">{{ product.name }}</p>
                   @if (product.varieties.length) {
                     <p class="mb-3 text-xs text-slate-500 leading-relaxed line-clamp-2">
@@ -144,11 +189,15 @@
                     </p>
                   }
                   <div class="mt-auto pt-3 border-t border-slate-100 border-solid flex gap-2">
-                    <button type="button"
-                      class="flex-1 rounded-lg border border-solid border-primary bg-white py-2 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-white">
+                    <button
+                      type="button"
+                      class="flex-1 rounded-lg border border-solid border-primary bg-white py-2 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-white"
+                    >
                       {{ 'products_page.list.btn_quote' | transloco }}
                     </button>
-                    <span class="flex items-center justify-center rounded-lg bg-slate-100 px-3 text-slate-500 transition-colors hover:bg-slate-200">
+                    <span
+                      class="flex items-center justify-center rounded-lg bg-slate-100 px-3 text-slate-500 transition-colors hover:bg-slate-200"
+                    >
                       <span class="material-symbols-outlined text-lg">open_in_new</span>
                     </span>
                   </div>
@@ -169,12 +218,25 @@
               <span class="material-symbols-outlined text-3xl text-accent">verified_user</span>
               {{ 'products_page.quality.title' | transloco }}
             </h2>
-            <p class="text-sm leading-relaxed text-slate-200">{{ 'products_page.quality.desc' | transloco }}</p>
+            <p class="text-sm leading-relaxed text-slate-200">
+              {{ 'products_page.quality.desc' | transloco }}
+            </p>
           </div>
           <div class="flex flex-wrap items-center justify-center gap-6">
-            @for (cert of [['GLOBAL\nG.A.P','products_page.quality.cert1'],['HACCP','products_page.quality.cert2'],['ISO\n22000','products_page.quality.cert3']]; track cert[0]) {
+            @for (
+              cert of [
+                ['GLOBAL\nG.A.P', 'products_page.quality.cert1'],
+                ['HACCP', 'products_page.quality.cert2'],
+                ['ISO\n22000', 'products_page.quality.cert3'],
+              ];
+              track cert[0]
+            ) {
               <div class="flex flex-col items-center gap-2">
-                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg whitespace-pre-line">{{ cert[0] }}</div>
+                <div
+                  class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-center text-xs font-black text-primary shadow-lg whitespace-pre-line"
+                >
+                  {{ cert[0] }}
+                </div>
                 <span class="text-xs font-bold text-accent">{{ cert[1] | transloco }}</span>
               </div>
             }
@@ -185,62 +247,91 @@
 
     <!-- CTA -->
     <section class="relative overflow-hidden bg-background-light py-20">
-      <div class="absolute right-0 top-0 h-full w-1/3 origin-top-right skew-x-12 transform bg-accent/5"></div>
+      <div
+        class="absolute right-0 top-0 h-full w-1/3 origin-top-right skew-x-12 transform bg-accent/5"
+      ></div>
       <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <h2 class="mb-6 text-3xl font-black text-slate-900 md:text-5xl">{{ 'products_page.cta.title' | transloco }}</h2>
-        <p class="mx-auto mb-10 max-w-2xl text-lg text-slate-600">{{ 'products_page.cta.desc' | transloco }}</p>
-        <a class="inline-flex items-center gap-3 rounded-xl bg-accent px-10 py-4 text-lg font-bold text-white shadow-xl shadow-accent/20 transition-all hover:-translate-y-1 hover:bg-accent/90" href="/contact">
+        <h2 class="mb-6 text-3xl font-black text-slate-900 md:text-5xl">
+          {{ 'products_page.cta.title' | transloco }}
+        </h2>
+        <p class="mx-auto mb-10 max-w-2xl text-lg text-slate-600">
+          {{ 'products_page.cta.desc' | transloco }}
+        </p>
+        <a
+          class="inline-flex items-center gap-3 rounded-xl bg-accent px-10 py-4 text-lg font-bold text-white shadow-xl shadow-accent/20 transition-all hover:-translate-y-1 hover:bg-accent/90"
+          href="/contact"
+        >
           <span>{{ 'products_page.cta.btn' | transloco }}</span>
           <span class="material-symbols-outlined rtl:rotate-180">arrow_forward</span>
         </a>
       </div>
     </section>
-
   </main>
 
   <!-- ═══════════════════════════════ PRODUCT MODAL ═══════════════════════════════ -->
   @if (selectedProduct(); as product) {
-    <div class="fixed inset-0 z-[100] flex flex-col justify-end sm:items-center sm:justify-center sm:p-6">
-
+    <div
+      class="fixed inset-0 z-[100] flex flex-col justify-end sm:items-center sm:justify-center sm:p-6"
+    >
       <!-- Backdrop -->
       <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" (click)="closeProduct()"></div>
 
       <!-- Sheet -->
-      <div class="relative z-10 flex w-full max-w-5xl flex-col overflow-hidden rounded-t-[2.5rem] bg-white shadow-2xl sm:max-h-[92vh] sm:rounded-3xl">
-
+      <div
+        class="product-modal-sheet relative z-10 flex w-full max-w-5xl flex-col overflow-hidden rounded-t-[2.5rem] bg-white shadow-2xl max-h-[94dvh] sm:max-h-[92vh] sm:rounded-3xl"
+      >
         <!-- Mobile drag handle -->
-        <div class="absolute top-0 left-0 w-full flex justify-center py-3 z-30 sm:hidden" (click)="closeProduct()">
+        <div
+          class="absolute top-0 left-0 w-full flex justify-center py-3 z-30 sm:hidden"
+          (click)="closeProduct()"
+        >
           <div class="w-12 h-1.5 bg-black/20 rounded-full"></div>
         </div>
 
         <!-- Close -->
-        <button (click)="closeProduct()"
-          class="absolute left-4 top-4 sm:left-6 sm:top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 sm:bg-white/90 text-white sm:text-slate-800 shadow-sm backdrop-blur transition-transform hover:scale-110 border-none cursor-pointer">
+        <button
+          (click)="closeProduct()"
+          class="absolute left-4 top-4 sm:left-6 sm:top-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 sm:bg-white/90 text-white sm:text-slate-800 shadow-sm backdrop-blur transition-transform hover:scale-110 border-none cursor-pointer"
+        >
           <span class="material-symbols-outlined">close</span>
         </button>
 
         <!-- Scrollable content -->
-        <div class="flex flex-col lg:flex-row overflow-y-auto no-scrollbar pb-[80px] sm:pb-0 max-h-[92dvh] sm:max-h-none">
-
+        <div
+          class="product-modal-content flex flex-1 min-h-0 flex-col lg:flex-row overflow-y-auto no-scrollbar overscroll-contain pb-[88px] sm:pb-0 max-h-[94dvh] sm:max-h-none"
+        >
           <!-- ── Left: Images ── -->
-          <div class="w-full lg:w-[45%] shrink-0 sm:p-6 sm:bg-slate-50 flex flex-col gap-4">
-            <div class="relative aspect-square sm:aspect-[4/3] sm:rounded-2xl overflow-hidden bg-slate-200">
+          <div
+            class="product-modal-media w-full lg:w-[45%] shrink-0 p-3 pb-2 sm:p-6 sm:bg-slate-50 flex flex-col gap-3 sm:gap-4"
+          >
+            <div
+              class="product-modal-media-frame relative h-[30vh] min-h-[180px] max-h-[260px] rounded-2xl sm:h-auto sm:aspect-[4/3] overflow-hidden bg-slate-200"
+            >
               @if (hasImages(product)) {
-                <img [src]="imageUrl(product.imageUrls![activeImageIndex()])" [alt]="product.nameAr"
-                  class="w-full h-full object-cover transition-opacity duration-300" />
+                <img
+                  [src]="imageUrl(product.imageUrls![activeImageIndex()])"
+                  [alt]="product.nameAr"
+                  class="w-full h-full object-cover transition-opacity duration-300"
+                />
               } @else {
                 <div class="flex h-full w-full items-center justify-center">
                   <span class="material-symbols-outlined text-8xl text-slate-300">nutrition</span>
                 </div>
               }
-              <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/40 to-transparent sm:hidden"></div>
+              <div
+                class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black/40 to-transparent sm:hidden"
+              ></div>
             </div>
             @if ((product.imageUrls?.length ?? 0) > 1) {
-              <div class="flex gap-2 overflow-x-auto px-4 py-2 sm:px-0 sm:py-0 scrollbar-hide snap-x bg-white sm:bg-transparent -mt-4 rounded-t-2xl sm:mt-0 sm:rounded-none relative z-10">
+              <div
+                class="flex gap-2 overflow-x-auto px-1 py-1 sm:px-0 sm:py-0 scrollbar-hide snap-x bg-white sm:bg-transparent mt-0 rounded-xl sm:rounded-none relative z-10"
+              >
                 @for (img of product.imageUrls!; track img; let i = $index) {
-                  <button (click)="setActiveImage(i)"
+                  <button
+                    (click)="setActiveImage(i)"
                     class="relative h-16 w-20 flex-shrink-0 snap-center overflow-hidden rounded-xl border border-slate-200 bg-white ring-primary transition-all hover:opacity-90 outline-none cursor-pointer shadow-sm"
-                    [class.ring-2]="activeImageIndex() === i">
+                    [class.ring-2]="activeImageIndex() === i"
+                  >
                     <img [src]="imageUrl(img)" class="h-full w-full object-cover" />
                     @if (activeImageIndex() !== i) {
                       <div class="absolute inset-0 bg-white/40"></div>
@@ -252,20 +343,27 @@
           </div>
 
           <!-- ── Right: Details ── -->
-          <div class="w-full lg:w-[55%] px-5 py-6 sm:p-8 flex flex-col bg-white overflow-y-auto">
-
+          <div
+            class="product-modal-details w-full lg:w-[55%] min-h-0 px-5 py-6 sm:p-8 flex flex-col bg-white"
+          >
             <!-- Badges -->
             <div class="mb-4 flex flex-wrap items-center gap-2">
-              <span class="rounded-full px-3 py-1.5 text-xs font-bold text-white shadow-sm"
-                [ngClass]="categoryBadgeColor(product)">
+              <span
+                class="rounded-full px-3 py-1.5 text-xs font-bold text-white shadow-sm"
+                [ngClass]="categoryBadgeColor(product)"
+              >
                 {{ categoryLabelKey(product) | transloco }}
               </span>
-              <span class="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">
+              <span
+                class="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600"
+              >
                 <span class="material-symbols-outlined text-sm">calendar_month</span>
                 {{ seasonLabelKey(product.season) | transloco }}
               </span>
               @if (product.productState === 'Frozen') {
-                <span class="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1.5 text-xs font-bold text-teal-700">
+                <span
+                  class="flex items-center gap-1 rounded-full bg-teal-50 px-3 py-1.5 text-xs font-bold text-teal-700"
+                >
                   <span class="material-symbols-outlined text-sm">severe_cold</span>
                   مجمد
                 </span>
@@ -273,93 +371,18 @@
             </div>
 
             <!-- Name -->
-            <h2 class="mb-1 text-3xl font-black text-slate-900 leading-tight">{{ product.nameAr }}</h2>
+            <h2 class="mb-1 text-3xl font-black text-slate-900 leading-tight">
+              {{ product.nameAr }}
+            </h2>
             <p class="mb-4 text-sm font-medium text-slate-400">{{ product.name }}</p>
 
             <!-- Description -->
             <p class="mb-6 text-base leading-relaxed text-slate-600">{{ product.descriptionAr }}</p>
 
-            <!-- Specs Grid -->
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-
-              @if (product.varieties.length) {
-                <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
-                  <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
-                    <span class="material-symbols-outlined text-accent text-lg">category</span>
-                    الأصناف المتوفرة
-                  </h4>
-                  <ul class="space-y-1">
-                    @for (v of product.varieties; track v) {
-                      <li class="flex items-center gap-2 text-sm text-slate-600">
-                        <span class="h-1.5 w-1.5 rounded-full bg-accent shrink-0"></span>{{ v }}
-                      </li>
-                    }
-                  </ul>
-                </div>
-              }
-
-              @if (product.packagingOptions.length) {
-                <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
-                  <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
-                    <span class="material-symbols-outlined text-accent text-lg">inventory_2</span>
-                    خيارات التعبئة
-                  </h4>
-                  <ul class="space-y-1">
-                    @for (p of product.packagingOptions; track p) {
-                      <li class="flex items-center gap-2 text-sm text-slate-600">
-                        <span class="h-1.5 w-1.5 rounded-full bg-accent shrink-0"></span>{{ p }}
-                      </li>
-                    }
-                  </ul>
-                </div>
-              }
-
-              @if (product.weightOptions.length) {
-                <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
-                  <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
-                    <span class="material-symbols-outlined text-accent text-lg">scale</span>
-                    الأوزان المتاحة
-                  </h4>
-                  <div class="flex flex-wrap gap-2">
-                    @for (w of product.weightOptions; track w) {
-                      <span class="rounded-full bg-white border border-slate-200 border-solid px-3 py-1 text-xs font-semibold text-slate-700">{{ w }}</span>
-                    }
-                  </div>
-                </div>
-              }
-
-              @if (product.sizeOptions.length) {
-                <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
-                  <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
-                    <span class="material-symbols-outlined text-accent text-lg">straighten</span>
-                    المقاسات (Size)
-                  </h4>
-                  <div class="flex flex-wrap gap-2">
-                    @for (s of product.sizeOptions; track s) {
-                      <span class="rounded-full bg-white border border-slate-200 border-solid px-3 py-1 text-xs font-semibold text-slate-700">{{ s }}</span>
-                    }
-                  </div>
-                </div>
-              }
-
-              @if (product.gradeOptions.length) {
-                <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4 sm:col-span-2">
-                  <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
-                    <span class="material-symbols-outlined text-accent text-lg">grade</span>
-                    الدرجات (Grades)
-                  </h4>
-                  <div class="flex flex-wrap gap-2">
-                    @for (g of product.gradeOptions; track g) {
-                      <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">{{ g }}</span>
-                    }
-                  </div>
-                </div>
-              }
-
-            </div>
-
             <!-- Quick request form -->
-            <div class="mt-7 rounded-2xl border border-solid border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+            <div
+              class="mt-7 rounded-2xl border border-solid border-slate-200 bg-slate-50/70 p-4 sm:p-5"
+            >
               <div class="mb-4">
                 <h3 class="mb-1 text-lg font-black text-slate-900">
                   {{ 'products_page.modal.request_title' | transloco }}
@@ -380,16 +403,21 @@
                         <button
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
-                          [ngClass]="isOrderOptionSelected('selectedVariety', variety)
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
-                          (click)="setOrderOption('selectedVariety', variety)">
+                          [ngClass]="
+                            isOrderOptionSelected('selectedVariety', variety)
+                              ? 'border-primary bg-primary text-white'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
+                          "
+                          (click)="setOrderOption('selectedVariety', variety)"
+                        >
                           {{ variety }}
                         </button>
                       }
                     </div>
                   } @else {
-                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                    <p class="m-0 text-xs text-slate-400">
+                      {{ 'products_page.modal.not_available' | transloco }}
+                    </p>
                   }
                 </div>
 
@@ -403,16 +431,21 @@
                         <button
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
-                          [ngClass]="isOrderOptionSelected('selectedPackaging', packaging)
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
-                          (click)="setOrderOption('selectedPackaging', packaging)">
+                          [ngClass]="
+                            isOrderOptionSelected('selectedPackaging', packaging)
+                              ? 'border-primary bg-primary text-white'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
+                          "
+                          (click)="setOrderOption('selectedPackaging', packaging)"
+                        >
                           {{ packaging }}
                         </button>
                       }
                     </div>
                   } @else {
-                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                    <p class="m-0 text-xs text-slate-400">
+                      {{ 'products_page.modal.not_available' | transloco }}
+                    </p>
                   }
                 </div>
 
@@ -426,16 +459,21 @@
                         <button
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
-                          [ngClass]="isOrderOptionSelected('selectedWeight', weight)
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
-                          (click)="setOrderOption('selectedWeight', weight)">
+                          [ngClass]="
+                            isOrderOptionSelected('selectedWeight', weight)
+                              ? 'border-primary bg-primary text-white'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
+                          "
+                          (click)="setOrderOption('selectedWeight', weight)"
+                        >
                           {{ weight }}
                         </button>
                       }
                     </div>
                   } @else {
-                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                    <p class="m-0 text-xs text-slate-400">
+                      {{ 'products_page.modal.not_available' | transloco }}
+                    </p>
                   }
                 </div>
 
@@ -449,20 +487,27 @@
                         <button
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
-                          [ngClass]="isOrderOptionSelected('selectedSize', size)
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
-                          (click)="setOrderOption('selectedSize', size)">
+                          [ngClass]="
+                            isOrderOptionSelected('selectedSize', size)
+                              ? 'border-primary bg-primary text-white'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
+                          "
+                          (click)="setOrderOption('selectedSize', size)"
+                        >
                           {{ size }}
                         </button>
                       }
                     </div>
                   } @else {
-                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                    <p class="m-0 text-xs text-slate-400">
+                      {{ 'products_page.modal.not_available' | transloco }}
+                    </p>
                   }
                 </div>
 
-                <div class="rounded-xl border border-solid border-slate-200 bg-white p-3 sm:col-span-2">
+                <div
+                  class="rounded-xl border border-solid border-slate-200 bg-white p-3 sm:col-span-2"
+                >
                   <p class="mb-2 text-xs font-bold text-slate-600">
                     {{ 'products_page.modal.grade_label' | transloco }}
                   </p>
@@ -472,16 +517,21 @@
                         <button
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
-                          [ngClass]="isOrderOptionSelected('selectedGrade', grade)
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'"
-                          (click)="setOrderOption('selectedGrade', grade)">
+                          [ngClass]="
+                            isOrderOptionSelected('selectedGrade', grade)
+                              ? 'border-primary bg-primary text-white'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
+                          "
+                          (click)="setOrderOption('selectedGrade', grade)"
+                        >
                           {{ grade }}
                         </button>
                       }
                     </div>
                   } @else {
-                    <p class="m-0 text-xs text-slate-400">{{ 'products_page.modal.not_available' | transloco }}</p>
+                    <p class="m-0 text-xs text-slate-400">
+                      {{ 'products_page.modal.not_available' | transloco }}
+                    </p>
                   }
                 </div>
               </div>
@@ -496,7 +546,8 @@
                     class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
                     [placeholder]="'products_page.modal.requester_name_placeholder' | transloco"
                     [value]="orderRequestForm().requesterName"
-                    (input)="onOrderTextFieldInput('requesterName', $any($event.target).value)" />
+                    (input)="onOrderTextFieldInput('requesterName', $any($event.target).value)"
+                  />
                 </label>
 
                 <label class="block">
@@ -510,7 +561,8 @@
                     class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
                     [placeholder]="'products_page.modal.phone_placeholder' | transloco"
                     [value]="orderRequestForm().phoneNumber"
-                    (input)="onOrderTextFieldInput('phoneNumber', $any($event.target).value)" />
+                    (input)="onOrderTextFieldInput('phoneNumber', $any($event.target).value)"
+                  />
                 </label>
 
                 <label class="block sm:col-span-2">
@@ -526,18 +578,23 @@
                     class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
                     [placeholder]="'products_page.modal.quantity_placeholder' | transloco"
                     [value]="orderRequestForm().quantityTons"
-                    (input)="onOrderTextFieldInput('quantityTons', $any($event.target).value)" />
+                    (input)="onOrderTextFieldInput('quantityTons', $any($event.target).value)"
+                  />
                 </label>
               </div>
 
               @if (orderSubmitError()) {
-                <div class="mt-3 rounded-xl border border-solid border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600">
+                <div
+                  class="mt-3 rounded-xl border border-solid border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600"
+                >
                   {{ orderSubmitError() }}
                 </div>
               }
 
               @if (!orderSubmitError() && orderSubmitSuccess()) {
-                <div class="mt-3 rounded-xl border border-solid border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-700">
+                <div
+                  class="mt-3 rounded-xl border border-solid border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-700"
+                >
                   {{ orderSubmitSuccess() }}
                 </div>
               }
@@ -546,7 +603,8 @@
                 type="button"
                 class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border-none bg-primary px-4 py-3 text-sm font-bold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
                 [disabled]="isSubmittingOrderRequest()"
-                (click)="submitOrderRequest()">
+                (click)="submitOrderRequest()"
+              >
                 <span class="material-symbols-outlined text-lg">send</span>
                 @if (isSubmittingOrderRequest()) {
                   {{ 'products_page.modal.submit_loading' | transloco }}
@@ -558,14 +616,18 @@
 
             <!-- Quality badges -->
             <div class="mt-6 grid grid-cols-2 gap-3">
-              <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-100 border-solid">
+              <div
+                class="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-100 border-solid"
+              >
                 <span class="material-symbols-outlined text-primary text-xl">verified</span>
                 <div>
                   <p class="text-xs font-bold text-slate-400">الجودة</p>
                   <p class="text-sm font-bold text-slate-800">تصدير درجة أولى</p>
                 </div>
               </div>
-              <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-100 border-solid">
+              <div
+                class="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 border border-slate-100 border-solid"
+              >
                 <span class="material-symbols-outlined text-accent text-xl">local_shipping</span>
                 <div>
                   <p class="text-xs font-bold text-slate-400">التوصيل</p>
@@ -575,11 +637,16 @@
             </div>
 
             <!-- Desktop CTA -->
-            <a [href]="'https://wa.me/201000000000?text=' + encodeWhatsAppMessage(product)"
-              target="_blank" rel="noopener noreferrer"
-              class="mt-6 hidden sm:flex w-full items-center justify-center gap-3 rounded-xl bg-[#25D366] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#25D366]/30 transition-all hover:-translate-y-1 hover:bg-green-500 no-underline">
+            <a
+              [href]="'https://wa.me/201004623085?text=' + encodeWhatsAppMessage(product)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 hidden sm:flex w-full items-center justify-center gap-3 rounded-xl bg-[#25D366] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#25D366]/30 transition-all hover:-translate-y-1 hover:bg-green-500 no-underline"
+            >
               <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                <path d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+                <path
+                  d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"
+                />
               </svg>
               {{ 'products_page.whatsapp_btn' | transloco }}
             </a>
@@ -587,17 +654,23 @@
         </div>
 
         <!-- Mobile sticky CTA -->
-        <div class="absolute bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-slate-100 border-solid p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] sm:hidden z-20">
-          <a [href]="'https://wa.me/201000000000?text=' + encodeWhatsAppMessage(product)"
-            target="_blank" rel="noopener noreferrer"
-            class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-base font-bold text-white shadow-lg no-underline active:scale-95 transition-transform">
+        <div
+          class="absolute bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-slate-100 border-solid p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] sm:hidden z-20"
+        >
+          <a
+            [href]="'https://wa.me/201004623085?text=' + encodeWhatsAppMessage(product)"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-base font-bold text-white shadow-lg no-underline active:scale-95 transition-transform"
+          >
             <svg class="h-[22px] w-[22px] fill-current" viewBox="0 0 24 24">
-              <path d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+              <path
+                d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"
+              />
             </svg>
             {{ 'products_page.whatsapp_btn' | transloco }}
           </a>
         </div>
-
       </div>
     </div>
   }
@@ -611,42 +684,97 @@
             <span class="material-symbols-outlined text-3xl">agriculture</span>
             <span class="text-xl font-bold text-slate-900">أولاد العطار</span>
           </div>
-          <p class="text-sm leading-relaxed text-slate-500">{{ 'products_page.footer.about' | transloco }}</p>
+          <p class="text-sm leading-relaxed text-slate-500">
+            {{ 'products_page.footer.about' | transloco }}
+          </p>
         </div>
         <div>
-          <h4 class="mb-4 font-bold text-slate-900">{{ 'products_page.footer.company' | transloco }}</h4>
+          <h4 class="mb-4 font-bold text-slate-900">
+            {{ 'products_page.footer.company' | transloco }}
+          </h4>
           <ul class="flex flex-col gap-2 text-sm text-slate-500">
-            <li><a class="transition-colors hover:text-primary" routerLink="/" fragment="about">{{ 'products_page.footer.about_group' | transloco }}</a></li>
-            <li><a class="transition-colors hover:text-primary" routerLink="/" fragment="about">{{ 'products_page.footer.our_story' | transloco }}</a></li>
-            <li><a class="transition-colors hover:text-primary" routerLink="/" fragment="partners">{{ 'products_page.footer.sustainability' | transloco }}</a></li>
-            <li><a class="transition-colors hover:text-primary" routerLink="/" fragment="contact">{{ 'products_page.footer.careers' | transloco }}</a></li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="about">{{
+                'products_page.footer.about_group' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="about">{{
+                'products_page.footer.our_story' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="partners">{{
+                'products_page.footer.sustainability' | transloco
+              }}</a>
+            </li>
+            <li>
+              <a class="transition-colors hover:text-primary" routerLink="/" fragment="contact">{{
+                'products_page.footer.careers' | transloco
+              }}</a>
+            </li>
           </ul>
         </div>
         <div>
-          <h4 class="mb-4 font-bold text-slate-900">{{ 'products_page.footer.main_crops' | transloco }}</h4>
+          <h4 class="mb-4 font-bold text-slate-900">
+            {{ 'products_page.footer.main_crops' | transloco }}
+          </h4>
           <ul class="space-y-2 text-sm text-slate-500">
-            <li><a class="transition-colors hover:text-primary" routerLink="/products" (click)="setFilter('Fruit'); setSeason('Winter')">{{ 'products_page.footer.citrus' | transloco }}</a></li>
-            <li><a class="transition-colors hover:text-primary" routerLink="/products" (click)="setFilter('Vegetable')">{{ 'products_page.footer.onions' | transloco }}</a></li>
-            <li><a class="transition-colors hover:text-primary" routerLink="/products" (click)="setFilter('Fruit'); setSeason('Summer')">{{ 'products_page.footer.grapes' | transloco }}</a></li>
+            <li>
+              <a
+                class="transition-colors hover:text-primary"
+                routerLink="/products"
+                (click)="setFilter('Fruit'); setSeason('Winter')"
+                >{{ 'products_page.footer.citrus' | transloco }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors hover:text-primary"
+                routerLink="/products"
+                (click)="setFilter('Vegetable')"
+                >{{ 'products_page.footer.onions' | transloco }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="transition-colors hover:text-primary"
+                routerLink="/products"
+                (click)="setFilter('Fruit'); setSeason('Summer')"
+                >{{ 'products_page.footer.grapes' | transloco }}</a
+              >
+            </li>
           </ul>
         </div>
         <div>
-          <h4 class="mb-4 font-bold text-slate-900">{{ 'products_page.footer.contact_us' | transloco }}</h4>
+          <h4 class="mb-4 font-bold text-slate-900">
+            {{ 'products_page.footer.contact_us' | transloco }}
+          </h4>
           <ul class="flex flex-col gap-2 text-sm text-slate-500">
-            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-accent">location_on</span>{{ 'products_page.footer.address' | transloco }}</li>
-            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-accent">mail</span>export@awlad-elattar.com</li>
-            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-accent">call</span>+20 123 456 7890</li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-xs text-accent">location_on</span
+              >{{ 'products_page.footer.address' | transloco }}
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-xs text-accent">call</span>01004623085 -
+              0109 2069059
+            </li>
           </ul>
         </div>
       </div>
-      <div class="mt-16 flex flex-col items-center justify-between border-t border-slate-100 pt-8 text-sm text-slate-400 md:flex-row-reverse border-solid">
+      <div
+        class="mt-16 flex flex-col items-center justify-between border-t border-slate-100 pt-8 text-sm text-slate-400 md:flex-row-reverse border-solid"
+      >
         <p>{{ 'products_page.footer.copyright' | transloco }}</p>
         <div class="mt-4 flex gap-6 md:mt-0">
-          <a class="hover:text-slate-600" routerLink="/">{{ 'products_page.footer.privacy' | transloco }}</a>
-          <a class="hover:text-slate-600" routerLink="/">{{ 'products_page.footer.terms' | transloco }}</a>
+          <a class="hover:text-slate-600" routerLink="/">{{
+            'products_page.footer.privacy' | transloco
+          }}</a>
+          <a class="hover:text-slate-600" routerLink="/">{{
+            'products_page.footer.terms' | transloco
+          }}</a>
         </div>
       </div>
     </div>
   </footer>
-
 </div>

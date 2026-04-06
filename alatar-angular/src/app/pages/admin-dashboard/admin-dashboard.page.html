@@ -58,17 +58,16 @@
         <div class="status error" *ngIf="!isLoading && loadError">{{ loadError }}</div>
       </section>
 
-      <section
-        class="content-grid"
-        *ngIf="!isLoading && activeSection === 'overview'"
-      >
+      <section class="content-grid" *ngIf="!isLoading && activeSection === 'overview'">
         <article class="panel orders-panel">
           <header class="panel-head">
             <h3>
               <span class="material-symbols-outlined" aria-hidden="true">receipt_long</span>
               أحدث الطلبات
             </h3>
-            <button type="button" class="panel-link-btn" (click)="selectSection('orders')">عرض الكل</button>
+            <button type="button" class="panel-link-btn" (click)="selectSection('orders')">
+              عرض الكل
+            </button>
           </header>
           <div class="table-wrap">
             <table>
@@ -203,19 +202,34 @@
                   </td>
                   <td>
                     <div class="orders-options-list">
-                      <span class="orders-option-chip" *ngIf="orderRequest.selectedVariety as selectedVariety">
+                      <span
+                        class="orders-option-chip"
+                        *ngIf="orderRequest.selectedVariety as selectedVariety"
+                      >
                         صنف: {{ selectedVariety }}
                       </span>
-                      <span class="orders-option-chip" *ngIf="orderRequest.selectedPackaging as selectedPackaging">
+                      <span
+                        class="orders-option-chip"
+                        *ngIf="orderRequest.selectedPackaging as selectedPackaging"
+                      >
                         تعبئة: {{ selectedPackaging }}
                       </span>
-                      <span class="orders-option-chip" *ngIf="orderRequest.selectedWeight as selectedWeight">
+                      <span
+                        class="orders-option-chip"
+                        *ngIf="orderRequest.selectedWeight as selectedWeight"
+                      >
                         وزن: {{ selectedWeight }}
                       </span>
-                      <span class="orders-option-chip" *ngIf="orderRequest.selectedSize as selectedSize">
+                      <span
+                        class="orders-option-chip"
+                        *ngIf="orderRequest.selectedSize as selectedSize"
+                      >
                         مقاس: {{ selectedSize }}
                       </span>
-                      <span class="orders-option-chip" *ngIf="orderRequest.selectedGrade as selectedGrade">
+                      <span
+                        class="orders-option-chip"
+                        *ngIf="orderRequest.selectedGrade as selectedGrade"
+                      >
                         درجة: {{ selectedGrade }}
                       </span>
                       <span
@@ -233,7 +247,9 @@
                     </div>
                   </td>
                   <td>{{ quantityLabel(orderRequest.quantityTons) }}</td>
-                  <td class="orders-created-at">{{ formatOrderCreatedAt(orderRequest.createdAtUtc) }}</td>
+                  <td class="orders-created-at">
+                    {{ formatOrderCreatedAt(orderRequest.createdAtUtc) }}
+                  </td>
                   <td>
                     <select
                       class="status-select"
@@ -284,12 +300,20 @@
           <header class="wizard-header">
             <div class="wizard-header__title-row">
               <div class="wizard-header__icon-wrap">
-                <span class="material-symbols-outlined">{{ editingProduct ? 'edit' : 'add_box' }}</span>
+                <span class="material-symbols-outlined">{{
+                  editingProduct ? 'edit' : 'add_box'
+                }}</span>
               </div>
               <div>
-                <h2 class="wizard-header__title">{{ editingProduct ? 'تعديل المنتج' : 'إضافة منتج جديد' }}</h2>
+                <h2 class="wizard-header__title">
+                  {{ editingProduct ? 'تعديل المنتج' : 'إضافة منتج جديد' }}
+                </h2>
                 <p class="wizard-header__subtitle">
-                  {{ editingProduct ? 'قم بتحديث بيانات المنتج' : 'أكمل الخطوات التالية لإضافة المنتج إلى الكتالوج' }}
+                  {{
+                    editingProduct
+                      ? 'قم بتحديث بيانات المنتج'
+                      : 'أكمل الخطوات التالية لإضافة المنتج إلى الكتالوج'
+                  }}
                 </p>
               </div>
             </div>
@@ -1031,7 +1055,9 @@
                   *ngIf="currentStep === 4"
                   [disabled]="isCreatingProduct || isUpdatingProduct"
                 >
-                  <span class="material-symbols-outlined">{{ editingProduct ? 'save' : 'rocket_launch' }}</span>
+                  <span class="material-symbols-outlined">{{
+                    editingProduct ? 'save' : 'rocket_launch'
+                  }}</span>
                   <ng-container *ngIf="editingProduct">
                     {{ isUpdatingProduct ? 'جاري الحفظ...' : 'تحديث المنتج' }}
                   </ng-container>
@@ -1054,11 +1080,18 @@
                   <div class="wizard-preview__image-area">
                     <img
                       *ngIf="imagePreviews.length > 0 || existingImagePreviews.length > 0"
-                      [src]="imagePreviews.length > 0 ? imagePreviews[0].url : existingImagePreviews[0].url"
+                      [src]="
+                        imagePreviews.length > 0
+                          ? imagePreviews[0].url
+                          : existingImagePreviews[0].url
+                      "
                       alt="معاينة"
                       class="wizard-preview__img"
                     />
-                    <div class="wizard-preview__no-img" *ngIf="imagePreviews.length === 0 && existingImagePreviews.length === 0">
+                    <div
+                      class="wizard-preview__no-img"
+                      *ngIf="imagePreviews.length === 0 && existingImagePreviews.length === 0"
+                    >
                       <span class="material-symbols-outlined">image</span>
                       <span>لا توجد صورة</span>
                     </div>
