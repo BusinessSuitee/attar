@@ -152,12 +152,12 @@
           <header class="wizard-header">
             <div class="wizard-header__title-row">
               <div class="wizard-header__icon-wrap">
-                <span class="material-symbols-outlined">add_box</span>
+                <span class="material-symbols-outlined">{{ editingProduct ? 'edit' : 'add_box' }}</span>
               </div>
               <div>
-                <h2 class="wizard-header__title">إضافة منتج جديد</h2>
+                <h2 class="wizard-header__title">{{ editingProduct ? 'تعديل المنتج' : 'إضافة منتج جديد' }}</h2>
                 <p class="wizard-header__subtitle">
-                  أكمل الخطوات التالية لإضافة المنتج إلى الكتالوج
+                  {{ editingProduct ? 'قم بتحديث بيانات المنتج' : 'أكمل الخطوات التالية لإضافة المنتج إلى الكتالوج' }}
                 </p>
               </div>
             </div>
@@ -230,7 +230,7 @@
           <!-- Wizard Body -->
           <div class="wizard-body">
             <!-- Main Form Area -->
-            <form id="add-product-form" class="wizard-form" (submit)="onCreateProduct($event)">
+            <form id="add-product-form" class="wizard-form" (submit)="onSubmitProduct($event)">
               <!-- ── STEP 1: Basic Info ── -->
               <div class="wizard-step" *ngIf="currentStep === 1">
                 <div class="step-card">
@@ -292,6 +292,7 @@
                             placeholder="مثال: ORANGE-VALENCIA-01"
                             required
                             [value]="productForm.sku"
+                            [disabled]="editingProduct !== null"
                             (input)="onProductFieldInput('sku', $any($event.target).value)"
                           />
                         </div>
@@ -713,11 +714,39 @@
                       </div>
                     </div>
 
-                    <!-- Image Gallery Preview -->
+                    <!-- Existing Images Preview (Edit mode only) -->
+                    <div class="wz-gallery" *ngIf="existingImagePreviews.length > 0">
+                      <h4 class="wz-gallery__title">
+                        <span class="material-symbols-outlined">image</span>
+                        الصور الحالية ({{ existingImagePreviews.length }})
+                      </h4>
+                      <div class="wz-gallery__grid">
+                        <div
+                          class="wz-gallery__item wz-gallery__item--existing"
+                          *ngFor="let preview of existingImagePreviews"
+                        >
+                          <img [src]="preview.url" alt="صورة للمنتج" class="wz-gallery__img" />
+                          <div class="wz-gallery__overlay">
+                            <button
+                              type="button"
+                              class="wz-gallery__remove"
+                              (click)="deleteExistingImage(preview.id)"
+                            >
+                              <span class="material-symbols-outlined">delete_forever</span>
+                            </button>
+                          </div>
+                          <div class="wz-gallery__meta wz-gallery__meta--compact">
+                            <span class="wz-gallery__name">صورة مسجلة</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Image Gallery Preview (New Uploads) -->
                     <div class="wz-gallery" *ngIf="imagePreviews.length > 0">
                       <h4 class="wz-gallery__title">
                         <span class="material-symbols-outlined">collections</span>
-                        الصور المختارة ({{ imagePreviews.length }})
+                        الصور الجديدة المختارة ({{ imagePreviews.length }})
                       </h4>
                       <div class="wz-gallery__grid">
                         <div
@@ -798,10 +827,18 @@
                       </div>
                       <div
                         class="wz-review-item wz-review-item--wide"
-                        *ngIf="imagePreviews.length > 0"
+                        *ngIf="imagePreviews.length > 0 || existingImagePreviews.length > 0"
                       >
                         <span class="wz-review-item__label">الصور</span>
-                        <span class="wz-review-item__value">{{ imagePreviews.length }} صورة</span>
+                        <span class="wz-review-item__value">
+                          <ng-container *ngIf="existingImagePreviews.length > 0">
+                            {{ existingImagePreviews.length }} صور حالية
+                            <span *ngIf="imagePreviews.length > 0">، و </span>
+                          </ng-container>
+                          <ng-container *ngIf="imagePreviews.length > 0">
+                            {{ imagePreviews.length }} صور جديدة
+                          </ng-container>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -834,7 +871,16 @@
                   <span class="material-symbols-outlined">arrow_forward</span>
                   السابق
                 </button>
-                <div class="wizard-nav__spacer" *ngIf="currentStep === 1"></div>
+                <div class="wizard-nav__spacer" *ngIf="currentStep === 1">
+                  <button
+                    type="button"
+                    class="wizard-nav__btn wizard-nav__btn--cancel"
+                    *ngIf="editingProduct !== null"
+                    (click)="cancelEdit()"
+                  >
+                    إلغاء التعديل
+                  </button>
+                </div>
 
                 <button
                   type="button"
@@ -851,10 +897,15 @@
                   type="submit"
                   class="wizard-nav__btn wizard-nav__btn--submit"
                   *ngIf="currentStep === 4"
-                  [disabled]="isCreatingProduct"
+                  [disabled]="isCreatingProduct || isUpdatingProduct"
                 >
-                  <span class="material-symbols-outlined">rocket_launch</span>
-                  {{ isCreatingProduct ? 'جاري الحفظ...' : 'حفظ المنتج' }}
+                  <span class="material-symbols-outlined">{{ editingProduct ? 'save' : 'rocket_launch' }}</span>
+                  <ng-container *ngIf="editingProduct">
+                    {{ isUpdatingProduct ? 'جاري الحفظ...' : 'تحديث المنتج' }}
+                  </ng-container>
+                  <ng-container *ngIf="!editingProduct">
+                    {{ isCreatingProduct ? 'جاري الحفظ...' : 'حفظ المنتج' }}
+                  </ng-container>
                 </button>
               </div>
             </form>
@@ -868,15 +919,14 @@
                 </div>
 
                 <div class="wizard-preview__body">
-                  <!-- Product Image Preview -->
                   <div class="wizard-preview__image-area">
                     <img
-                      *ngIf="imagePreviews.length > 0"
-                      [src]="imagePreviews[0].url"
+                      *ngIf="imagePreviews.length > 0 || existingImagePreviews.length > 0"
+                      [src]="imagePreviews.length > 0 ? imagePreviews[0].url : existingImagePreviews[0].url"
                       alt="معاينة"
                       class="wizard-preview__img"
                     />
-                    <div class="wizard-preview__no-img" *ngIf="imagePreviews.length === 0">
+                    <div class="wizard-preview__no-img" *ngIf="imagePreviews.length === 0 && existingImagePreviews.length === 0">
                       <span class="material-symbols-outlined">image</span>
                       <span>لا توجد صورة</span>
                     </div>
@@ -999,13 +1049,23 @@
                     <h4 class="wz-prod-card__name">{{ product.name }}</h4>
                     <p class="wz-prod-card__name-ar">{{ product.nameAr || '-' }}</p>
                   </div>
-                  <span
-                    class="wz-prod-card__badge"
-                    [class.wz-prod-card__badge--active]="product.status === 'Active'"
-                    [class.wz-prod-card__badge--review]="product.status !== 'Active'"
-                  >
-                    {{ product.status === 'Active' ? 'نشط' : product.status }}
-                  </span>
+                  <div class="wz-prod-card__actions">
+                    <button
+                      type="button"
+                      class="wz-prod-card__action-btn wz-prod-card__action-btn--edit"
+                      (click)="startEditProduct(product)"
+                      title="تعديل المنتج"
+                    >
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <span
+                      class="wz-prod-card__badge"
+                      [class.wz-prod-card__badge--active]="product.status === 'Active'"
+                      [class.wz-prod-card__badge--review]="product.status !== 'Active'"
+                    >
+                      {{ product.status === 'Active' ? 'نشط' : product.status }}
+                    </span>
+                  </div>
                 </div>
 
                 <div

@@ -23,6 +23,7 @@ public static class DependencyInjection
 
         services.AddScoped<ICategoryRepository, SqlCategoryRepository>();
         services.AddScoped<IContactRepository, SqlContactRepository>();
+        services.AddScoped<IOrderRequestRepository, SqlOrderRequestRepository>();
         services.AddScoped<IProductRepository, SqlProductRepository>();
 
         return services;

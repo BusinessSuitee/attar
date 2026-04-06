@@ -1,6 +1,7 @@
 using Alatar.Application.Abstractions.Persistence;
 using Alatar.Domain.Categories;
 using Alatar.Domain.Contacts;
+using Alatar.Domain.OrderRequests;
 using Alatar.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 {
     public IQueryable<Category> Categories => Set<Category>();
     public IQueryable<ContactLead> Contacts => Set<ContactLead>();
+    public IQueryable<OrderRequest> OrderRequests => Set<OrderRequest>();
     public IQueryable<Product> Products => Set<Product>();
     public IQueryable<ProductImage> ProductImages => Set<ProductImage>();
 
@@ -22,6 +24,11 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
     public async Task AddContactAsync(ContactLead contactLead, CancellationToken cancellationToken)
     {
         await Set<ContactLead>().AddAsync(contactLead, cancellationToken);
+    }
+
+    public async Task AddOrderRequestAsync(OrderRequest orderRequest, CancellationToken cancellationToken)
+    {
+        await Set<OrderRequest>().AddAsync(orderRequest, cancellationToken);
     }
 
     public async Task AddProductAsync(Product product, CancellationToken cancellationToken)
@@ -37,6 +44,11 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
     public void RemoveContact(ContactLead contactLead)
     {
         Set<ContactLead>().Remove(contactLead);
+    }
+
+    public void RemoveOrderRequest(OrderRequest orderRequest)
+    {
+        Set<OrderRequest>().Remove(orderRequest);
     }
 
     public void RemoveCategory(Category category)
@@ -134,6 +146,68 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 
         contact.Property(x => x.CreatedAtUtc)
             .IsRequired();
+
+        var orderRequest = modelBuilder.Entity<OrderRequest>();
+
+        orderRequest.ToTable("OrderRequests");
+        orderRequest.HasKey(x => x.Id);
+
+        orderRequest.Property(x => x.Id)
+            .ValueGeneratedNever();
+
+        orderRequest.Property(x => x.ProductId)
+            .IsRequired();
+
+        orderRequest.Property(x => x.ProductNameSnapshot)
+            .HasMaxLength(220)
+            .IsRequired();
+
+        orderRequest.Property(x => x.RequesterName)
+            .HasMaxLength(200)
+            .IsRequired();
+
+        orderRequest.Property(x => x.PhoneNumber)
+            .HasMaxLength(64)
+            .IsRequired();
+
+        orderRequest.Property(x => x.QuantityTons)
+            .HasPrecision(18, 2)
+            .IsRequired();
+
+        orderRequest.Property(x => x.SelectedVariety)
+            .HasMaxLength(120);
+
+        orderRequest.Property(x => x.SelectedPackaging)
+            .HasMaxLength(120);
+
+        orderRequest.Property(x => x.SelectedWeight)
+            .HasMaxLength(120);
+
+        orderRequest.Property(x => x.SelectedSize)
+            .HasMaxLength(120);
+
+        orderRequest.Property(x => x.SelectedGrade)
+            .HasMaxLength(120);
+
+        orderRequest.Property(x => x.Status)
+            .HasConversion<string>()
+            .HasMaxLength(32)
+            .IsRequired();
+
+        orderRequest.Property(x => x.CreatedAtUtc)
+            .IsRequired();
+
+        orderRequest.Property(x => x.UpdatedAtUtc)
+            .IsRequired();
+
+        orderRequest.HasIndex(x => x.ProductId);
+        orderRequest.HasIndex(x => x.Status);
+        orderRequest.HasIndex(x => x.CreatedAtUtc);
+
+        orderRequest.HasOne<Product>()
+            .WithMany()
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         var product = modelBuilder.Entity<Product>();
 
