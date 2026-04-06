@@ -267,6 +267,92 @@
   gap: 1.08rem;
 }
 
+.orders-grid {
+  display: grid;
+  gap: 1.08rem;
+}
+
+.orders-api-panel .table-wrap {
+  margin-top: 0.25rem;
+}
+
+.orders-table {
+  min-width: 1080px;
+}
+
+.orders-customer-cell strong {
+  color: #102a20;
+  font-size: 0.9rem;
+}
+
+.orders-product-name {
+  color: #0f5238;
+  font-weight: 800;
+}
+
+.orders-options-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+  max-width: 30rem;
+}
+
+.orders-option-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.22rem 0.54rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 82, 56, 0.2);
+  background: rgba(15, 82, 56, 0.07);
+  color: #0f5238;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.orders-option-chip--empty {
+  border-color: rgba(112, 121, 115, 0.24);
+  background: #f8f5ee;
+  color: #6a726d;
+}
+
+.orders-created-at {
+  color: #4f584f;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.order-status-select--new {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.order-status-select--in-review {
+  background: #eef2ff;
+  border-color: #a5b4fc;
+  color: #4338ca;
+}
+
+.order-status-select--contacted {
+  background: #fff7ed;
+  border-color: #fdba74;
+  color: #c2410c;
+}
+
+.order-status-select--confirmed {
+  background: #ecfdf3;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.order-status-select--closed {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #4b5563;
+}
+
 .panel {
   border-radius: 1.25rem;
   border: 1px solid rgba(112, 121, 115, 0.16);

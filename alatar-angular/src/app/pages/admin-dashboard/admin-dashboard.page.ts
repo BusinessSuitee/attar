@@ -12,6 +12,11 @@ import {
 } from '../../core/contacts/contact.service';
 import { API_BASE_URL } from '../../core/config/api-base-url.token';
 import {
+  OrderRequestListItem,
+  OrderRequestService,
+  OrderRequestStatus,
+} from '../../core/orders/order-request.service';
+import {
   CreateProductPayload,
   ProductListItem,
   ProductSeason,
@@ -41,6 +46,11 @@ type ContactsView = 'rows' | 'cards';
 
 type ContactStatusOption = {
   value: ContactStatus;
+  label: string;
+};
+
+type OrderStatusOption = {
+  value: OrderRequestStatus;
   label: string;
 };
 
@@ -91,6 +101,7 @@ type ProductWithCategories = ProductListItem & {
 export class AdminDashboardPageComponent {
   private readonly authService = inject(AuthService);
   private readonly contactService = inject(ContactService);
+  private readonly orderRequestService = inject(OrderRequestService);
   private readonly productService = inject(ProductService);
   private readonly apiBaseUrl = inject(API_BASE_URL);
   private readonly router = inject(Router);
@@ -117,6 +128,13 @@ export class AdminDashboardPageComponent {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  private readonly dateTimeFormatter = new Intl.DateTimeFormat('ar-EG', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   private readonly defaultCategories: CategoryItem[] = [
     { id: 'citrus', name: 'موالح', colorClass: 'category-pill--green' },
@@ -125,10 +143,12 @@ export class AdminDashboardPageComponent {
   ];
 
   private contactsLoadedOnce = false;
+  private ordersLoadedOnce = false;
   private productsLoadedOnce = false;
 
   private readonly profileSignal = signal<AuthenticatedAdmin | null>(null);
   private readonly contactsSignal = signal<ContactListItem[]>([]);
+  private readonly orderRequestsSignal = signal<OrderRequestListItem[]>([]);
   private readonly productsSignal = signal<ProductListItem[]>([]);
   private readonly productFormSignal = signal<ProductFormState>({
     name: '',
@@ -167,6 +187,7 @@ export class AdminDashboardPageComponent {
   private readonly newCategoryNameSignal = signal('');
   private readonly isLoadingSignal = signal(false);
   private readonly isContactsLoadingSignal = signal(false);
+  private readonly isOrdersLoadingSignal = signal(false);
   private readonly isProductsLoadingSignal = signal(false);
   private readonly isCreatingProductSignal = signal(false);
   private readonly isUpdatingProductSignal = signal(false);
@@ -174,6 +195,7 @@ export class AdminDashboardPageComponent {
   private readonly existingImagePreviewsSignal = signal<Array<{ id: string; url: string }>>([]);
   private readonly loadErrorSignal = signal('');
   private readonly contactsLoadErrorSignal = signal('');
+  private readonly ordersLoadErrorSignal = signal('');
   private readonly productsLoadErrorSignal = signal('');
   private readonly productSubmitErrorSignal = signal('');
   private readonly productSubmitSuccessSignal = signal('');
@@ -184,8 +206,12 @@ export class AdminDashboardPageComponent {
   private readonly currentPageSignal = signal(1);
   private readonly totalPagesSignal = signal(0);
   private readonly totalCountSignal = signal(0);
+  private readonly ordersCurrentPageSignal = signal(1);
+  private readonly ordersTotalPagesSignal = signal(0);
+  private readonly ordersTotalCountSignal = signal(0);
   private readonly activeSectionSignal = signal<DashboardSectionKey>('overview');
   private readonly updatingStatusIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
+  private readonly updatingOrderStatusIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
   private readonly deletingContactIdsSignal = signal<ReadonlySet<string>>(new Set<string>());
 
   private readonly productsWithCategoriesSignal = computed<ProductWithCategories[]>(() => {
@@ -211,6 +237,14 @@ export class AdminDashboardPageComponent {
     { value: 'in_progress', label: 'جاري التواصل' },
     { value: 'contacted', label: 'تم التواصل' },
     { value: 'sale_confirmed', label: 'تم تأكيد البيع' },
+  ];
+
+  readonly orderStatusOptions: OrderStatusOption[] = [
+    { value: 'new', label: 'جديد' },
+    { value: 'in_review', label: 'قيد المراجعة' },
+    { value: 'contacted', label: 'تم التواصل' },
+    { value: 'confirmed', label: 'تم التأكيد' },
+    { value: 'closed', label: 'مغلق' },
   ];
 
   readonly productTypeOptions: Array<{ value: ProductType; label: string }> = [
@@ -243,6 +277,10 @@ export class AdminDashboardPageComponent {
 
   get contacts(): ContactListItem[] {
     return this.contactsSignal();
+  }
+
+  get orderRequests(): OrderRequestListItem[] {
+    return this.orderRequestsSignal();
   }
 
   get productsWithCategories(): ProductWithCategories[] {
@@ -297,6 +335,10 @@ export class AdminDashboardPageComponent {
     return this.isContactsLoadingSignal();
   }
 
+  get isOrdersLoading(): boolean {
+    return this.isOrdersLoadingSignal();
+  }
+
   get isProductsLoading(): boolean {
     return this.isProductsLoadingSignal();
   }
@@ -319,6 +361,10 @@ export class AdminDashboardPageComponent {
 
   get contactsLoadError(): string {
     return this.contactsLoadErrorSignal();
+  }
+
+  get ordersLoadError(): string {
+    return this.ordersLoadErrorSignal();
   }
 
   get productsLoadError(): string {
@@ -353,12 +399,28 @@ export class AdminDashboardPageComponent {
     return this.totalCountSignal();
   }
 
+  get ordersCurrentPage(): number {
+    return this.ordersCurrentPageSignal();
+  }
+
+  get ordersTotalPages(): number {
+    return this.ordersTotalPagesSignal();
+  }
+
+  get ordersTotalCount(): number {
+    return this.ordersTotalCountSignal();
+  }
+
   get activeSection(): DashboardSectionKey {
     return this.activeSectionSignal();
   }
 
   get hasContacts(): boolean {
     return this.contacts.length > 0;
+  }
+
+  get hasOrderRequests(): boolean {
+    return this.orderRequests.length > 0;
   }
 
   get hasProducts(): boolean {
@@ -394,6 +456,14 @@ export class AdminDashboardPageComponent {
 
   get canGoNext(): boolean {
     return this.totalPages > 0 && this.currentPage < this.totalPages;
+  }
+
+  get canGoPreviousOrders(): boolean {
+    return this.ordersCurrentPage > 1;
+  }
+
+  get canGoNextOrders(): boolean {
+    return this.ordersTotalPages > 0 && this.ordersCurrentPage < this.ordersTotalPages;
   }
 
   constructor() {
@@ -475,6 +545,43 @@ export class AdminDashboardPageComponent {
       });
   }
 
+  loadOrderRequests(page = this.ordersCurrentPage, forceRefresh = false): void {
+    const normalizedPage = page < 1 ? 1 : page;
+
+    if (!forceRefresh && this.ordersLoadedOnce && normalizedPage === this.ordersCurrentPage) {
+      return;
+    }
+
+    this.isOrdersLoadingSignal.set(true);
+    this.ordersLoadErrorSignal.set('');
+
+    this.orderRequestService
+      .getOrderRequests(normalizedPage, this.pageSize)
+      .pipe(
+        finalize(() => {
+          this.isOrdersLoadingSignal.set(false);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (response) => {
+          this.orderRequestsSignal.set(response.items);
+          this.ordersTotalCountSignal.set(response.totalCount);
+          this.ordersCurrentPageSignal.set(response.page);
+          this.ordersTotalPagesSignal.set(response.totalPages);
+          this.ordersLoadedOnce = true;
+        },
+        error: () => {
+          this.orderRequestsSignal.set([]);
+          this.ordersTotalCountSignal.set(0);
+          this.ordersCurrentPageSignal.set(1);
+          this.ordersTotalPagesSignal.set(0);
+          this.ordersLoadedOnce = false;
+          this.ordersLoadErrorSignal.set('تعذر تحميل طلبات المنتجات.');
+        },
+      });
+  }
+
   loadProducts(forceRefresh = false): void {
     if (!forceRefresh && this.productsLoadedOnce) {
       return;
@@ -526,8 +633,28 @@ export class AdminDashboardPageComponent {
     this.loadContacts(this.currentPage, true);
   }
 
+  refreshOrderRequests(): void {
+    this.loadOrderRequests(this.ordersCurrentPage, true);
+  }
+
   refreshProducts(): void {
     this.loadProducts(true);
+  }
+
+  loadNextOrdersPage(): void {
+    if (!this.canGoNextOrders) {
+      return;
+    }
+
+    this.loadOrderRequests(this.ordersCurrentPage + 1, true);
+  }
+
+  loadPreviousOrdersPage(): void {
+    if (!this.canGoPreviousOrders) {
+      return;
+    }
+
+    this.loadOrderRequests(this.ordersCurrentPage - 1, true);
   }
 
   logout(): void {
@@ -538,7 +665,9 @@ export class AdminDashboardPageComponent {
   selectSection(sectionKey: DashboardSectionKey): void {
     this.activeSectionSignal.set(sectionKey);
 
-    if (sectionKey === 'contacts') {
+    if (sectionKey === 'orders') {
+      this.loadOrderRequests(1, !this.ordersLoadedOnce);
+    } else if (sectionKey === 'contacts') {
       this.loadContacts(1, !this.contactsLoadedOnce);
     } else if (sectionKey === 'products') {
       this.loadProducts(!this.productsLoadedOnce);
@@ -964,8 +1093,54 @@ export class AdminDashboardPageComponent {
       });
   }
 
+  onOrderStatusChange(orderRequest: OrderRequestListItem, rawValue: string): void {
+    const nextStatus = rawValue as OrderRequestStatus;
+    const currentStatus = this.orderStatusValue(orderRequest);
+
+    if (nextStatus === currentStatus || this.isOrderStatusUpdating(orderRequest.id)) {
+      return;
+    }
+
+    this.updatingOrderStatusIdsSignal.update((current) => {
+      const next = new Set(current);
+      next.add(orderRequest.id);
+      return next;
+    });
+    this.ordersLoadErrorSignal.set('');
+
+    this.orderRequestService
+      .updateOrderRequestStatus(orderRequest.id, nextStatus)
+      .pipe(
+        finalize(() => {
+          this.updatingOrderStatusIdsSignal.update((current) => {
+            const next = new Set(current);
+            next.delete(orderRequest.id);
+            return next;
+          });
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          const backendStatus = this.toBackendOrderStatus(nextStatus);
+          this.orderRequestsSignal.update((items) =>
+            items.map((item) =>
+              item.id === orderRequest.id ? { ...item, status: backendStatus } : item,
+            ),
+          );
+        },
+        error: () => {
+          this.ordersLoadErrorSignal.set('تعذر تحديث حالة الطلب.');
+        },
+      });
+  }
+
   isStatusUpdating(contactId: string): boolean {
     return this.updatingStatusIdsSignal().has(contactId);
+  }
+
+  isOrderStatusUpdating(orderRequestId: string): boolean {
+    return this.updatingOrderStatusIdsSignal().has(orderRequestId);
   }
 
   onDeleteContact(contact: ContactListItem): void {
@@ -1066,6 +1241,10 @@ export class AdminDashboardPageComponent {
     return contact.id;
   }
 
+  trackByOrderRequestId(_: number, orderRequest: OrderRequestListItem): string {
+    return orderRequest.id;
+  }
+
   trackByProductId(_: number, product: ProductWithCategories): string {
     return product.id;
   }
@@ -1089,6 +1268,37 @@ export class AdminDashboardPageComponent {
 
   quantityLabel(quantityTons: number | null): string {
     return quantityTons === null ? '-' : `${quantityTons} طن`;
+  }
+
+  orderStatusValue(orderRequest: OrderRequestListItem): OrderRequestStatus {
+    return this.orderRequestService.normalizeStatus(orderRequest.status);
+  }
+
+  orderStatusSelectClass(orderRequest: OrderRequestListItem): string {
+    const status = this.orderStatusValue(orderRequest);
+
+    switch (status) {
+      case 'in_review':
+        return 'order-status-select--in-review';
+      case 'contacted':
+        return 'order-status-select--contacted';
+      case 'confirmed':
+        return 'order-status-select--confirmed';
+      case 'closed':
+        return 'order-status-select--closed';
+      default:
+        return 'order-status-select--new';
+    }
+  }
+
+  formatOrderCreatedAt(value: string): string {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return '-';
+    }
+
+    return this.dateTimeFormatter.format(date);
   }
 
   formatPrice(price: number): string {
@@ -1408,6 +1618,10 @@ export class AdminDashboardPageComponent {
       this.activeSectionSignal.set(nextSection);
     }
 
+    if (nextSection === 'orders' && !this.ordersLoadedOnce) {
+      this.loadOrderRequests(1, true);
+    }
+
     if (nextSection === 'contacts' && !this.contactsLoadedOnce) {
       this.loadContacts(1, true);
     }
@@ -1449,6 +1663,21 @@ export class AdminDashboardPageComponent {
         return 'SaleConfirmed';
       default:
         return 'InProgress';
+    }
+  }
+
+  private toBackendOrderStatus(status: OrderRequestStatus): string {
+    switch (status) {
+      case 'in_review':
+        return 'InReview';
+      case 'contacted':
+        return 'Contacted';
+      case 'confirmed':
+        return 'Confirmed';
+      case 'closed':
+        return 'Closed';
+      default:
+        return 'New';
     }
   }
 
