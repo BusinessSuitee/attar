@@ -16,6 +16,7 @@ public static class DatabaseInitializer
         await EnsureCategoriesTableExistsAsync(dbContext);
         await EnsureContactsTableExistsAsync(dbContext);
         await EnsureProductsTableExistsAsync(dbContext);
+        await EnsureOrderRequestsTableExistsAsync(dbContext);
         await EnsureProductImagesTableExistsAsync(dbContext);
         await SeedDefaultCategoriesAsync(dbContext);
         await SeedDefaultProductsAsync(dbContext);
@@ -116,6 +117,155 @@ public static class DatabaseInitializer
                            BEGIN
                                ALTER TABLE [dbo].[Contacts]
                                ADD [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_Contacts_Status] DEFAULT N'InProgress';
+                           END
+                           """;
+
+        return dbContext.Database.ExecuteSqlRawAsync(sql);
+    }
+
+    private static Task EnsureOrderRequestsTableExistsAsync(AlatarDbContext dbContext)
+    {
+        const string sql = """
+                           IF OBJECT_ID(N'[dbo].[OrderRequests]', N'U') IS NULL
+                           BEGIN
+                               CREATE TABLE [dbo].[OrderRequests]
+                               (
+                                   [Id] UNIQUEIDENTIFIER NOT NULL,
+                                   [ProductId] UNIQUEIDENTIFIER NOT NULL,
+                                   [ProductNameSnapshot] NVARCHAR(220) NOT NULL,
+                                   [RequesterName] NVARCHAR(200) NOT NULL,
+                                   [PhoneNumber] NVARCHAR(64) NOT NULL,
+                                   [QuantityTons] DECIMAL(18,2) NOT NULL,
+                                   [SelectedVariety] NVARCHAR(120) NULL,
+                                   [SelectedPackaging] NVARCHAR(120) NULL,
+                                   [SelectedWeight] NVARCHAR(120) NULL,
+                                   [SelectedSize] NVARCHAR(120) NULL,
+                                   [SelectedGrade] NVARCHAR(120) NULL,
+                                   [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_OrderRequests_Status] DEFAULT N'New',
+                                   [CreatedAtUtc] DATETIME2 NOT NULL,
+                                   [UpdatedAtUtc] DATETIME2 NOT NULL,
+                                   CONSTRAINT [PK_OrderRequests] PRIMARY KEY ([Id]),
+                                   CONSTRAINT [FK_OrderRequests_Products_ProductId]
+                                       FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id])
+                               );
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'ProductNameSnapshot') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [ProductNameSnapshot] NVARCHAR(220) NOT NULL CONSTRAINT [DF_OrderRequests_ProductNameSnapshot] DEFAULT N'';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'RequesterName') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [RequesterName] NVARCHAR(200) NOT NULL CONSTRAINT [DF_OrderRequests_RequesterName] DEFAULT N'';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'PhoneNumber') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [PhoneNumber] NVARCHAR(64) NOT NULL CONSTRAINT [DF_OrderRequests_PhoneNumber] DEFAULT N'';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'QuantityTons') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [QuantityTons] DECIMAL(18,2) NOT NULL CONSTRAINT [DF_OrderRequests_QuantityTons] DEFAULT 0;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedVariety') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [SelectedVariety] NVARCHAR(120) NULL;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedPackaging') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [SelectedPackaging] NVARCHAR(120) NULL;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedWeight') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [SelectedWeight] NVARCHAR(120) NULL;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedSize') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [SelectedSize] NVARCHAR(120) NULL;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedGrade') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [SelectedGrade] NVARCHAR(120) NULL;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'Status') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_OrderRequests_Status] DEFAULT N'New';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'CreatedAtUtc') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [CreatedAtUtc] DATETIME2 NOT NULL CONSTRAINT [DF_OrderRequests_CreatedAtUtc] DEFAULT SYSUTCDATETIME();
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'UpdatedAtUtc') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [UpdatedAtUtc] DATETIME2 NOT NULL CONSTRAINT [DF_OrderRequests_UpdatedAtUtc] DEFAULT SYSUTCDATETIME();
+                           END
+
+                           IF NOT EXISTS (
+                               SELECT 1
+                               FROM sys.indexes
+                               WHERE name = N'IX_OrderRequests_ProductId'
+                                   AND object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                           )
+                           BEGIN
+                               CREATE INDEX [IX_OrderRequests_ProductId]
+                                   ON [dbo].[OrderRequests]([ProductId]);
+                           END
+
+                           IF NOT EXISTS (
+                               SELECT 1
+                               FROM sys.indexes
+                               WHERE name = N'IX_OrderRequests_Status'
+                                   AND object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                           )
+                           BEGIN
+                               CREATE INDEX [IX_OrderRequests_Status]
+                                   ON [dbo].[OrderRequests]([Status]);
+                           END
+
+                           IF NOT EXISTS (
+                               SELECT 1
+                               FROM sys.indexes
+                               WHERE name = N'IX_OrderRequests_CreatedAtUtc'
+                                   AND object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                           )
+                           BEGIN
+                               CREATE INDEX [IX_OrderRequests_CreatedAtUtc]
+                                   ON [dbo].[OrderRequests]([CreatedAtUtc]);
+                           END
+
+                           IF OBJECT_ID(N'[dbo].[Products]', N'U') IS NOT NULL
+                               AND NOT EXISTS (
+                                   SELECT 1
+                                   FROM sys.foreign_keys
+                                   WHERE name = N'FK_OrderRequests_Products_ProductId'
+                               )
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               WITH CHECK
+                               ADD CONSTRAINT [FK_OrderRequests_Products_ProductId]
+                                   FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id]);
                            END
                            """;
 
