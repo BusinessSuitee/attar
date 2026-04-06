@@ -44,7 +44,11 @@
 
 html.reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translate3d(var(--reveal-translate-x), var(--reveal-translate-y), 0)
+  transform: translate3d(
+      var(--reveal-translate-x),
+      var(--reveal-translate-y),
+      0
+    )
     scale(var(--reveal-scale));
   filter: blur(var(--reveal-blur));
   transition:

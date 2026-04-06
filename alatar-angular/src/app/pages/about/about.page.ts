@@ -10,6 +10,6 @@ import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.dir
   imports: [RouterModule, NavbarComponent, TranslocoModule, ScrollRevealDirective],
   templateUrl: './about.page.html',
   styleUrl: './about.page.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutPageComponent {}

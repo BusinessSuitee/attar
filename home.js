@@ -5,19 +5,26 @@
   const aboutSection = document.getElementById("about-founder");
   const langButtons = document.querySelectorAll(".lang-btn");
   const supportedLanguages = ["AR", "EN", "RU"];
-  const preferredLanguage = (window.localStorage.getItem("awlad_elattar_lang") || "AR").toUpperCase();
+  const preferredLanguage = (
+    window.localStorage.getItem("awlad_elattar_lang") || "AR"
+  ).toUpperCase();
 
   function getCurrentLanguage() {
-    const saved = (window.localStorage.getItem("awlad_elattar_lang") || "AR").toUpperCase();
+    const saved = (
+      window.localStorage.getItem("awlad_elattar_lang") || "AR"
+    ).toUpperCase();
     return supportedLanguages.includes(saved) ? saved : "AR";
   }
 
   function setActiveLanguage(langCode, shouldPersist = true) {
     const normalizedLanguage = (langCode || "AR").toUpperCase();
-    const safeLanguage = supportedLanguages.includes(normalizedLanguage) ? normalizedLanguage : "AR";
+    const safeLanguage = supportedLanguages.includes(normalizedLanguage)
+      ? normalizedLanguage
+      : "AR";
 
     langButtons.forEach((button) => {
-      const isActive = (button.dataset.lang || "").toUpperCase() === safeLanguage;
+      const isActive =
+        (button.dataset.lang || "").toUpperCase() === safeLanguage;
 
       button.classList.toggle("active", isActive);
       button.classList.toggle("font-bold", isActive);
@@ -37,7 +44,7 @@
     window.dispatchEvent(
       new CustomEvent("awlad:lang-change", {
         detail: { language: safeLanguage },
-      })
+      }),
     );
   }
 
@@ -65,7 +72,9 @@
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const staggerGroups = Array.from(document.querySelectorAll("[data-reveal-stagger]"));
+    const staggerGroups = Array.from(
+      document.querySelectorAll("[data-reveal-stagger]"),
+    );
     staggerGroups.forEach((group) => {
       const staggerStep = parseAttributeNumber(group.dataset.revealStagger, 90);
       if (!Number.isFinite(staggerStep) || staggerStep < 0) {
@@ -73,7 +82,8 @@
       }
 
       const revealChildren = Array.from(group.children).filter(
-        (child) => child instanceof HTMLElement && child.hasAttribute("data-reveal")
+        (child) =>
+          child instanceof HTMLElement && child.hasAttribute("data-reveal"),
       );
 
       revealChildren.forEach((child, index) => {
@@ -122,7 +132,8 @@
       (entries) => {
         entries.forEach((entry) => {
           const node = entry.target;
-          const once = (node.dataset.revealOnce || "true").toLowerCase() !== "false";
+          const once =
+            (node.dataset.revealOnce || "true").toLowerCase() !== "false";
 
           if (entry.isIntersecting) {
             node.classList.add("reveal-visible");
@@ -140,7 +151,7 @@
       {
         threshold: 0.16,
         rootMargin: "0px 0px -12% 0px",
-      }
+      },
     );
 
     revealNodes.forEach((node) => {

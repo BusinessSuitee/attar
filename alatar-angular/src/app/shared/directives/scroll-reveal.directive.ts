@@ -110,9 +110,7 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
     const safeValue = (value ?? '').toLowerCase();
     const supported: RevealDirection[] = ['up', 'down', 'left', 'right', 'zoom', 'blur'];
 
-    return supported.includes(safeValue as RevealDirection)
-      ? (safeValue as RevealDirection)
-      : 'up';
+    return supported.includes(safeValue as RevealDirection) ? (safeValue as RevealDirection) : 'up';
   }
 
   private applyDistance(direction: RevealDirection, distance: number): void {
