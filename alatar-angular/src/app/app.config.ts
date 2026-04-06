@@ -15,8 +15,10 @@ import { API_BASE_URL } from './core/config/api-base-url.token';
 import { routes } from './app.routes';
 
 function resolveApiBaseUrl(): string {
+  const productionApiBaseUrl = 'https://attar.runasp.net';
+
   if (typeof window === 'undefined') {
-    return 'http://127.0.0.1:5070';
+    return productionApiBaseUrl;
   }
 
   const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -29,7 +31,7 @@ function resolveApiBaseUrl(): string {
     return 'http://127.0.0.1:5070';
   }
 
-  return window.location.origin;
+  return productionApiBaseUrl;
 }
 
 export const appConfig: ApplicationConfig = {
