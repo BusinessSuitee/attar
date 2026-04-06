@@ -1,0 +1,70 @@
+:root {
+  --reveal-default-duration: 820ms;
+  --reveal-default-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-default-distance: 32px;
+}
+
+[data-reveal] {
+  --reveal-duration: var(--reveal-default-duration);
+  --reveal-delay: 0ms;
+  --reveal-ease: var(--reveal-default-ease);
+  --reveal-translate-x: 0px;
+  --reveal-translate-y: var(--reveal-default-distance);
+  --reveal-scale: 1;
+  --reveal-blur: 0px;
+}
+
+[data-reveal="up"] {
+  --reveal-translate-y: 34px;
+}
+
+[data-reveal="down"] {
+  --reveal-translate-y: -34px;
+}
+
+[data-reveal="left"] {
+  --reveal-translate-x: 34px;
+  --reveal-translate-y: 0px;
+}
+
+[data-reveal="right"] {
+  --reveal-translate-x: -34px;
+  --reveal-translate-y: 0px;
+}
+
+[data-reveal="zoom"] {
+  --reveal-translate-y: 12px;
+  --reveal-scale: 0.92;
+}
+
+[data-reveal="blur"] {
+  --reveal-translate-y: 14px;
+  --reveal-blur: 8px;
+}
+
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translate3d(var(--reveal-translate-x), var(--reveal-translate-y), 0)
+    scale(var(--reveal-scale));
+  filter: blur(var(--reveal-blur));
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    transform var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
+    filter var(--reveal-duration) ease-out var(--reveal-delay);
+  will-change: opacity, transform, filter;
+}
+
+html.reveal-ready [data-reveal].reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.reveal-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

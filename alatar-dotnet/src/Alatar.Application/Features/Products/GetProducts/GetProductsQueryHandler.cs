@@ -1,7 +1,7 @@
 using Alatar.Application.Abstractions.Persistence;
 using Alatar.Application.Common.Results;
+using Alatar.Domain.Products;
 using MediatR;
-using System.Text.Json;
 
 namespace Alatar.Application.Features.Products.GetProducts;
 
@@ -32,45 +32,59 @@ public sealed class GetProductsQueryHandler(IProductRepository productRepository
         }
 
         IReadOnlyCollection<ProductListItemResponse> response = products
-            .Select(product => new ProductListItemResponse(
-                product.Id,
-                product.Name,
-                product.NameAr,
-                product.Sku,
-                product.Price,
-                product.StockQuantity,
-                product.Status.ToString(),
-                product.DescriptionEn,
-                product.DescriptionAr,
-                product.ProductType.ToString(),
-                product.ProductState.ToString(),
-                product.Season.ToString(),
-                DeserializeJsonArray(product.VarietiesJson),
-                DeserializeJsonArray(product.PackagingOptionsJson),
-                DeserializeJsonArray(product.WeightOptionsJson),
-                DeserializeJsonArray(product.SizeOptionsJson),
-                DeserializeJsonArray(product.GradeOptionsJson),
-                imageUrlsByProductId.GetValueOrDefault(product.Id, []),
-                imagesByProductId.GetValueOrDefault(product.Id, [])))
+            .Select(product =>
+            {
+                var varieties = ResolveOptions(product.VarietiesJson, product.VarietiesLocalizedJson);
+                var packaging = ResolveOptions(product.PackagingOptionsJson, product.PackagingOptionsLocalizedJson);
+                var weight = ResolveOptions(product.WeightOptionsJson, product.WeightOptionsLocalizedJson);
+                var size = ResolveOptions(product.SizeOptionsJson, product.SizeOptionsLocalizedJson);
+                var grade = ResolveOptions(product.GradeOptionsJson, product.GradeOptionsLocalizedJson);
+
+                return new ProductListItemResponse(
+                    product.Id,
+                    product.Name,
+                    product.NameAr,
+                    product.Sku,
+                    product.Price,
+                    product.StockQuantity,
+                    product.Status.ToString(),
+                    product.DescriptionEn,
+                    product.DescriptionAr,
+                    product.ProductType.ToString(),
+                    product.ProductState.ToString(),
+                    product.Season.ToString(),
+                    varieties.Legacy,
+                    varieties.Localized,
+                    packaging.Legacy,
+                    packaging.Localized,
+                    weight.Legacy,
+                    weight.Localized,
+                    size.Legacy,
+                    size.Localized,
+                    grade.Legacy,
+                    grade.Localized,
+                    imageUrlsByProductId.GetValueOrDefault(product.Id, []),
+                    imagesByProductId.GetValueOrDefault(product.Id, []));
+            })
             .ToArray();
 
         return Result.Success(response);
     }
 
-    private static IReadOnlyCollection<string> DeserializeJsonArray(string? value)
+    private static (IReadOnlyCollection<string> Legacy, IReadOnlyCollection<LocalizedProductOptionResponse> Localized)
+        ResolveOptions(string? legacyJson, string? localizedJson)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return [];
-        }
+        var legacy = ProductOptionJson.DeserializeLegacy(legacyJson);
+        var normalizedLocalized = ProductOptionJson.Normalize(
+            ProductOptionJson.DeserializeLocalized(localizedJson),
+            legacy,
+            appendLegacyWhenLocalizedExists: false);
 
-        try
-        {
-            return JsonSerializer.Deserialize<string[]>(value) ?? [];
-        }
-        catch
-        {
-            return [];
-        }
+        var normalizedLegacy = ProductOptionJson.ToLegacyValues(normalizedLocalized);
+        var localized = normalizedLocalized
+            .Select(option => new LocalizedProductOptionResponse(option.Key, option.LabelEn, option.LabelAr))
+            .ToArray();
+
+        return (normalizedLegacy, localized);
     }
 }

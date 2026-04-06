@@ -32,7 +32,12 @@ public sealed class UpdateProductCommandHandler(IProductRepository productReposi
             command.PackagingOptions,
             command.WeightOptions,
             command.SizeOptions,
-            command.GradeOptions);
+            command.GradeOptions,
+            command.VarietiesLocalized,
+            command.PackagingOptionsLocalized,
+            command.WeightOptionsLocalized,
+            command.SizeOptionsLocalized,
+            command.GradeOptionsLocalized);
 
         await productRepository.UpdateAsync(product, cancellationToken);
 

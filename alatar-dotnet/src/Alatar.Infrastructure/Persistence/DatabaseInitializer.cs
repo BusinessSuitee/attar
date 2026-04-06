@@ -18,6 +18,7 @@ public static class DatabaseInitializer
         await EnsureProductsTableExistsAsync(dbContext);
         await EnsureOrderRequestsTableExistsAsync(dbContext);
         await EnsureProductImagesTableExistsAsync(dbContext);
+        await MigrateAndNormalizeProductOptionsAsync(dbContext);
         await SeedDefaultCategoriesAsync(dbContext);
         await SeedDefaultProductsAsync(dbContext);
     }
@@ -320,6 +321,11 @@ public static class DatabaseInitializer
                                    [WeightOptionsJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_WeightOptionsJson] DEFAULT N'[]',
                                    [SizeOptionsJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_SizeOptionsJson] DEFAULT N'[]',
                                    [GradeOptionsJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_GradeOptionsJson] DEFAULT N'[]',
+                                   [VarietiesLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_VarietiesLocalizedJson] DEFAULT N'[]',
+                                   [PackagingOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_PackagingOptionsLocalizedJson] DEFAULT N'[]',
+                                   [WeightOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_WeightOptionsLocalizedJson] DEFAULT N'[]',
+                                   [SizeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_SizeOptionsLocalizedJson] DEFAULT N'[]',
+                                   [GradeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_GradeOptionsLocalizedJson] DEFAULT N'[]',
                                    [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_Products_Status] DEFAULT N'Active',
                                    [CreatedAtUtc] DATETIME2 NOT NULL,
                                    [UpdatedAtUtc] DATETIME2 NOT NULL,
@@ -402,6 +408,36 @@ public static class DatabaseInitializer
                            BEGIN
                                ALTER TABLE [dbo].[Products]
                                ADD [GradeOptionsJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_GradeOptionsJson] DEFAULT N'[]';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[Products]', N'VarietiesLocalizedJson') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[Products]
+                               ADD [VarietiesLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_VarietiesLocalizedJson] DEFAULT N'[]';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[Products]', N'PackagingOptionsLocalizedJson') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[Products]
+                               ADD [PackagingOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_PackagingOptionsLocalizedJson] DEFAULT N'[]';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[Products]', N'WeightOptionsLocalizedJson') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[Products]
+                               ADD [WeightOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_WeightOptionsLocalizedJson] DEFAULT N'[]';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[Products]', N'SizeOptionsLocalizedJson') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[Products]
+                               ADD [SizeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_SizeOptionsLocalizedJson] DEFAULT N'[]';
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[Products]', N'GradeOptionsLocalizedJson') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[Products]
+                               ADD [GradeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_GradeOptionsLocalizedJson] DEFAULT N'[]';
                            END
                            """;
 
@@ -802,6 +838,98 @@ public static class DatabaseInitializer
         }
 
         await dbContext.SaveChangesAsync(CancellationToken.None);
+    }
+
+    private static async Task MigrateAndNormalizeProductOptionsAsync(AlatarDbContext dbContext)
+    {
+        var products = await dbContext.Products.ToListAsync();
+        if (products.Count == 0)
+        {
+            return;
+        }
+
+        var hasChanges = false;
+
+        foreach (var product in products)
+        {
+            var normalizedVarieties = ProductOptionJson.Normalize(
+                ProductOptionJson.DeserializeLocalized(product.VarietiesLocalizedJson),
+                ProductOptionJson.DeserializeLegacy(product.VarietiesJson),
+                appendLegacyWhenLocalizedExists: false);
+            var normalizedPackaging = ProductOptionJson.Normalize(
+                ProductOptionJson.DeserializeLocalized(product.PackagingOptionsLocalizedJson),
+                ProductOptionJson.DeserializeLegacy(product.PackagingOptionsJson),
+                appendLegacyWhenLocalizedExists: false);
+            var normalizedWeight = ProductOptionJson.Normalize(
+                ProductOptionJson.DeserializeLocalized(product.WeightOptionsLocalizedJson),
+                ProductOptionJson.DeserializeLegacy(product.WeightOptionsJson),
+                appendLegacyWhenLocalizedExists: false);
+            var normalizedSize = ProductOptionJson.Normalize(
+                ProductOptionJson.DeserializeLocalized(product.SizeOptionsLocalizedJson),
+                ProductOptionJson.DeserializeLegacy(product.SizeOptionsJson),
+                appendLegacyWhenLocalizedExists: false);
+            var normalizedGrade = ProductOptionJson.Normalize(
+                ProductOptionJson.DeserializeLocalized(product.GradeOptionsLocalizedJson),
+                ProductOptionJson.DeserializeLegacy(product.GradeOptionsJson),
+                appendLegacyWhenLocalizedExists: false);
+
+            var normalizedVarietiesLegacy = ProductOptionJson.ToLegacyValues(normalizedVarieties);
+            var normalizedPackagingLegacy = ProductOptionJson.ToLegacyValues(normalizedPackaging);
+            var normalizedWeightLegacy = ProductOptionJson.ToLegacyValues(normalizedWeight);
+            var normalizedSizeLegacy = ProductOptionJson.ToLegacyValues(normalizedSize);
+            var normalizedGradeLegacy = ProductOptionJson.ToLegacyValues(normalizedGrade);
+
+            var hasOptionPayloadChanges =
+                IsJsonDifferent(product.VarietiesJson, ProductOptionJson.SerializeLegacy(normalizedVarietiesLegacy))
+                || IsJsonDifferent(product.PackagingOptionsJson, ProductOptionJson.SerializeLegacy(normalizedPackagingLegacy))
+                || IsJsonDifferent(product.WeightOptionsJson, ProductOptionJson.SerializeLegacy(normalizedWeightLegacy))
+                || IsJsonDifferent(product.SizeOptionsJson, ProductOptionJson.SerializeLegacy(normalizedSizeLegacy))
+                || IsJsonDifferent(product.GradeOptionsJson, ProductOptionJson.SerializeLegacy(normalizedGradeLegacy))
+                || IsJsonDifferent(product.VarietiesLocalizedJson, ProductOptionJson.SerializeLocalized(normalizedVarieties))
+                || IsJsonDifferent(product.PackagingOptionsLocalizedJson, ProductOptionJson.SerializeLocalized(normalizedPackaging))
+                || IsJsonDifferent(product.WeightOptionsLocalizedJson, ProductOptionJson.SerializeLocalized(normalizedWeight))
+                || IsJsonDifferent(product.SizeOptionsLocalizedJson, ProductOptionJson.SerializeLocalized(normalizedSize))
+                || IsJsonDifferent(product.GradeOptionsLocalizedJson, ProductOptionJson.SerializeLocalized(normalizedGrade));
+
+            if (!hasOptionPayloadChanges)
+            {
+                continue;
+            }
+
+            product.Update(
+                product.Name,
+                product.NameAr,
+                product.Price,
+                product.StockQuantity,
+                product.DescriptionEn,
+                product.DescriptionAr,
+                product.ProductType,
+                product.ProductState,
+                product.Season,
+                normalizedVarietiesLegacy,
+                normalizedPackagingLegacy,
+                normalizedWeightLegacy,
+                normalizedSizeLegacy,
+                normalizedGradeLegacy,
+                normalizedVarieties,
+                normalizedPackaging,
+                normalizedWeight,
+                normalizedSize,
+                normalizedGrade);
+
+            hasChanges = true;
+        }
+
+        if (hasChanges)
+        {
+            await dbContext.SaveChangesAsync(CancellationToken.None);
+        }
+    }
+
+    private static bool IsJsonDifferent(string? current, string normalized)
+    {
+        var existing = string.IsNullOrWhiteSpace(current) ? "[]" : current.Trim();
+        return !string.Equals(existing, normalized, StringComparison.Ordinal);
     }
 
     private static Task EnsureProductImagesTableExistsAsync(AlatarDbContext dbContext)

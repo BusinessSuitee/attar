@@ -38,10 +38,15 @@ public sealed class ProductsController(
             request.ProductState,
             request.Season,
             request.Varieties ?? [],
+            MapLocalizedOptions(request.VarietiesLocalized),
             request.PackagingOptions ?? [],
+            MapLocalizedOptions(request.PackagingOptionsLocalized),
             request.WeightOptions ?? [],
+            MapLocalizedOptions(request.WeightOptionsLocalized),
             request.SizeOptions ?? [],
-            request.GradeOptions ?? []);
+            MapLocalizedOptions(request.SizeOptionsLocalized),
+            request.GradeOptions ?? [],
+            MapLocalizedOptions(request.GradeOptionsLocalized));
 
         var result = await sender.Send(command, cancellationToken);
 
@@ -68,10 +73,15 @@ public sealed class ProductsController(
             request.ProductState,
             request.Season,
             request.Varieties ?? [],
+            MapLocalizedOptions(request.VarietiesLocalized),
             request.PackagingOptions ?? [],
+            MapLocalizedOptions(request.PackagingOptionsLocalized),
             request.WeightOptions ?? [],
+            MapLocalizedOptions(request.WeightOptionsLocalized),
             request.SizeOptions ?? [],
-            request.GradeOptions ?? []);
+            MapLocalizedOptions(request.SizeOptionsLocalized),
+            request.GradeOptions ?? [],
+            MapLocalizedOptions(request.GradeOptionsLocalized));
 
         var result = await sender.Send(command, cancellationToken);
 
@@ -159,5 +169,21 @@ public sealed class ProductsController(
         await productRepository.RemoveImageAsync(image, cancellationToken);
 
         return NoContent();
+    }
+
+    private static IReadOnlyCollection<LocalizedProductOption> MapLocalizedOptions(
+        IReadOnlyCollection<LocalizedProductOptionRequest>? options)
+    {
+        if (options is null || options.Count == 0)
+        {
+            return [];
+        }
+
+        return options
+            .Select(option => new LocalizedProductOption(
+                option.Key,
+                option.LabelEn,
+                option.LabelAr))
+            .ToArray();
     }
 }

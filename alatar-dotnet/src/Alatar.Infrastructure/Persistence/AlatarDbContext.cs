@@ -285,6 +285,26 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
             .HasColumnType("nvarchar(max)")
             .IsRequired();
 
+        product.Property(x => x.VarietiesLocalizedJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.PackagingOptionsLocalizedJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.WeightOptionsLocalizedJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.SizeOptionsLocalizedJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
+        product.Property(x => x.GradeOptionsLocalizedJson)
+            .HasColumnType("nvarchar(max)")
+            .IsRequired();
+
         product.Property(x => x.Status)
             .HasConversion<string>()
             .HasMaxLength(32)

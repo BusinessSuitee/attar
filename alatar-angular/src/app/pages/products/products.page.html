@@ -151,7 +151,7 @@
                   @if (hasImages(product)) {
                     <img
                       [src]="firstImage(product)"
-                      [alt]="product.nameAr"
+                      [alt]="displayPrimaryName(product)"
                       class="h-full w-full rounded-t-2xl object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   } @else {
@@ -180,9 +180,19 @@
                 <!-- Info -->
                 <div class="flex flex-1 flex-col p-5">
                   <h3 class="mb-1 text-lg font-black leading-tight text-slate-900">
-                    {{ product.nameAr }}
+                    {{ displayPrimaryName(product) }}
                   </h3>
-                  <p class="mb-1 text-xs font-medium text-slate-400">{{ product.name }}</p>
+                  @if (displaySecondaryName(product); as secondaryName) {
+                    <p class="mb-1 text-xs font-medium text-slate-400">{{ secondaryName }}</p>
+                  }
+                  <p class="mb-2 text-xs leading-relaxed text-slate-500 line-clamp-2">
+                    {{ displayPrimaryDescription(product) }}
+                  </p>
+                  @if (displaySecondaryDescription(product); as secondaryDescription) {
+                    <p class="mb-2 text-[11px] leading-relaxed text-slate-400 line-clamp-1">
+                      {{ secondaryDescription }}
+                    </p>
+                  }
                   @if (product.varieties.length) {
                     <p class="mb-3 text-xs text-slate-500 leading-relaxed line-clamp-2">
                       {{ product.varieties.join(' · ') }}
@@ -310,7 +320,7 @@
               @if (hasImages(product)) {
                 <img
                   [src]="imageUrl(product.imageUrls![activeImageIndex()])"
-                  [alt]="product.nameAr"
+                  [alt]="displayPrimaryName(product)"
                   class="w-full h-full object-cover transition-opacity duration-300"
                 />
               } @else {
@@ -372,12 +382,23 @@
 
             <!-- Name -->
             <h2 class="mb-1 text-3xl font-black text-slate-900 leading-tight">
-              {{ product.nameAr }}
+              {{ displayPrimaryName(product) }}
             </h2>
-            <p class="mb-4 text-sm font-medium text-slate-400">{{ product.name }}</p>
+            @if (displaySecondaryName(product); as secondaryName) {
+              <p class="mb-4 text-sm font-medium text-slate-400">{{ secondaryName }}</p>
+            }
 
             <!-- Description -->
-            <p class="mb-6 text-base leading-relaxed text-slate-600">{{ product.descriptionAr }}</p>
+            <p class="mb-4 text-base leading-relaxed text-slate-600">
+              {{ displayPrimaryDescription(product) }}
+            </p>
+            @if (displaySecondaryDescription(product); as secondaryDescription) {
+              <p
+                class="mb-6 border-t border-solid border-slate-100 pt-3 text-sm leading-relaxed text-slate-500"
+              >
+                {{ secondaryDescription }}
+              </p>
+            }
 
             <!-- Quick request form -->
             <div

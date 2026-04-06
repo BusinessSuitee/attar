@@ -15,7 +15,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ProductListItem, ProductService } from '../../core/products/product.service';
 import { API_BASE_URL } from '../../core/config/api-base-url.token';
 import { OrderRequestService } from '../../core/orders/order-request.service';
-import { finalize } from 'rxjs';
+import { finalize, retry, throwError, timer } from 'rxjs';
 
 type CategoryFilter = 'all' | 'Fruit' | 'Vegetable' | 'Frozen';
 type SeasonFilter = 'all' | 'Summer' | 'Winter' | 'AllYear';
@@ -65,6 +65,8 @@ export class ProductsPageComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly translocoService = inject(TranslocoService);
   readonly isBrowser = typeof window !== 'undefined';
+  readonly currentLanguage = signal<'ar' | 'en' | 'ru'>('ar');
+  readonly isArabicUi = computed(() => this.currentLanguage() === 'ar');
 
   readonly activeFilter = signal<CategoryFilter>('all');
   readonly activeSeason = signal<SeasonFilter>('all');
@@ -125,16 +127,15 @@ export class ProductsPageComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe({
-      next: (products) => {
-        this.products.set(products);
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.loadError.set('تعذر تحميل المنتجات، حاول مرة أخرى.');
-        this.isLoading.set(false);
-      },
-    });
+    this.currentLanguage.set(this.normalizeLanguage(this.translocoService.getActiveLang()));
+
+    this.translocoService.langChanges$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((lang) => {
+        this.currentLanguage.set(this.normalizeLanguage(lang));
+      });
+
+    this.loadProducts();
   }
 
   setFilter(filter: CategoryFilter): void {
@@ -199,7 +200,7 @@ export class ProductsPageComponent implements OnInit {
   }
 
   encodeWhatsAppMessage(product: ProductListItem): string {
-    const name = product.nameAr || product.name;
+    const name = this.displayPrimaryName(product);
     const form = this.orderRequestForm();
     const details: string[] = [];
 
@@ -373,6 +374,46 @@ export class ProductsPageComponent implements OnInit {
     return null;
   }
 
+  displayPrimaryName(product: ProductListItem): string {
+    if (this.isArabicUi()) {
+      return (product.nameAr || product.name).trim();
+    }
+
+    return (product.name || product.nameAr).trim();
+  }
+
+  displaySecondaryName(product: ProductListItem): string | null {
+    if (!this.isArabicUi()) {
+      return null;
+    }
+
+    const secondary = (product.name || '').trim();
+    const primary = this.displayPrimaryName(product);
+
+    return secondary && !this.sameText(secondary, primary) ? secondary : null;
+  }
+
+  displayPrimaryDescription(product: ProductListItem): string {
+    if (this.isArabicUi()) {
+      const arabic = (product.descriptionAr || '').trim();
+      return arabic || (product.descriptionEn || '').trim();
+    }
+
+    const english = (product.descriptionEn || '').trim();
+    return english || (product.descriptionAr || '').trim();
+  }
+
+  displaySecondaryDescription(product: ProductListItem): string | null {
+    if (!this.isArabicUi()) {
+      return null;
+    }
+
+    const secondary = (product.descriptionEn || '').trim();
+    const primary = this.displayPrimaryDescription(product);
+
+    return secondary && !this.sameText(secondary, primary) ? secondary : null;
+  }
+
   private resetOrderRequestForm(product: ProductListItem | null, preserveSuccess = false): void {
     this.orderRequestForm.set({
       selectedVariety: this.defaultSelection(product?.varieties),
@@ -410,6 +451,74 @@ export class ProductsPageComponent implements OnInit {
     }
 
     return this.translocoService.translate('products_page.modal.request_error');
+  }
+
+  private loadProducts(): void {
+    this.isLoading.set(true);
+    this.loadError.set('');
+
+    this.productService
+      .getProducts()
+      .pipe(
+        retry({
+          count: 2,
+          delay: (error, retryIndex) => {
+            if (!this.shouldRetryProductsLoad(error)) {
+              return throwError(() => error);
+            }
+
+            return timer(800 * retryIndex);
+          },
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (products) => {
+          this.products.set(products);
+          this.isLoading.set(false);
+        },
+        error: () => {
+          this.loadError.set(this.productsLoadErrorMessage());
+          this.isLoading.set(false);
+        },
+      });
+  }
+
+  private shouldRetryProductsLoad(error: unknown): boolean {
+    if (!(error instanceof HttpErrorResponse)) {
+      return true;
+    }
+
+    return [0, 408, 425, 429, 500, 502, 503, 504].includes(error.status);
+  }
+
+  private productsLoadErrorMessage(): string {
+    switch (this.currentLanguage()) {
+      case 'en':
+        return 'Unable to load products. Please try again.';
+      case 'ru':
+        return 'Не удалось загрузить продукты. Пожалуйста, попробуйте снова.';
+      default:
+        return 'تعذر تحميل المنتجات، حاول مرة أخرى.';
+    }
+  }
+
+  private normalizeLanguage(language: string | null | undefined): 'ar' | 'en' | 'ru' {
+    const normalized = (language || 'ar').toLowerCase();
+
+    if (normalized.startsWith('en')) {
+      return 'en';
+    }
+
+    if (normalized.startsWith('ru')) {
+      return 'ru';
+    }
+
+    return 'ar';
+  }
+
+  private sameText(left: string, right: string): boolean {
+    return left.trim().toLowerCase() === right.trim().toLowerCase();
   }
 
   private extractProblemDetail(errorBody: unknown): string | null {

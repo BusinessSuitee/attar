@@ -68,9 +68,13 @@ public static class ServiceCollectionExtensions
             {
                 policy.AllowAnyHeader().AllowAnyMethod();
 
+                var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+
                 if (environment.IsDevelopment())
                 {
-                    policy.SetIsOriginAllowed(static origin =>
+                    var allowedOriginSet = new HashSet<string>(allowedOrigins, StringComparer.OrdinalIgnoreCase);
+
+                    policy.SetIsOriginAllowed(origin =>
                     {
                         if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
                         {
@@ -82,13 +86,16 @@ public static class ServiceCollectionExtensions
                             return false;
                         }
 
-                        return uri.Host is "localhost" or "127.0.0.1";
+                        if (uri.Host is "localhost" or "127.0.0.1")
+                        {
+                            return true;
+                        }
+
+                        return allowedOriginSet.Contains(origin);
                     });
 
                     return;
                 }
-
-                var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
 
                 if (allowedOrigins.Length == 0)
                 {

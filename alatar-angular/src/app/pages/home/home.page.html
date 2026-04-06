@@ -8,7 +8,7 @@
 
     <div class="founder-shell">
       <div class="founder-grid">
-        <div class="founder-media-wrap">
+        <div class="founder-media-wrap" appScrollReveal="right" revealDistance="44">
           <figure class="founder-media" [attr.aria-label]="t('founder.name')">
             <img src="assets/Images/alattar.jpeg" [alt]="t('founder.name')" loading="lazy" />
             <figcaption>
@@ -20,7 +20,7 @@
           <span class="founder-frame founder-frame--accent" aria-hidden="true"></span>
         </div>
 
-        <article class="founder-content">
+        <article class="founder-content" appScrollReveal="left" revealDelay="120">
           <span class="founder-tag">{{ t('founder.tag') }}</span>
           <h2>{{ t('founder.name') }}</h2>
 
@@ -42,7 +42,7 @@
 
   <section id="partners" class="partners-section">
     <div class="partners-shell">
-      <header class="partners-head">
+      <header class="partners-head" appScrollReveal="up">
         <span class="partners-kicker">{{ t('partners.kicker') }}</span>
         <h2>{{ t('partners.title') }}</h2>
         <p>
@@ -51,7 +51,7 @@
       </header>
 
       <div class="partners-grid" role="list">
-        <article class="partner-card partner-card--local" role="listitem">
+        <article class="partner-card partner-card--local" role="listitem" appScrollReveal="up">
           <span class="partner-orb partner-orb--top" aria-hidden="true"></span>
 
           <div class="partner-card__head">
@@ -79,7 +79,12 @@
           </div>
         </article>
 
-        <article class="partner-card partner-card--global" role="listitem">
+        <article
+          class="partner-card partner-card--global"
+          role="listitem"
+          appScrollReveal="up"
+          revealDelay="130"
+        >
           <span class="partner-orb partner-orb--bottom" aria-hidden="true"></span>
 
           <div class="partner-card__head">
@@ -116,7 +121,7 @@
 
   <section id="products" class="products-section">
     <div class="products-shell">
-      <header class="products-head">
+      <header class="products-head" appScrollReveal="up">
         <div>
           <span class="products-kicker">{{ t('products.kicker') }}</span>
           <h2>{{ t('products.title') }}</h2>
@@ -129,7 +134,12 @@
       </header>
 
       <div class="products-grid" role="list">
-        <article class="product-card cursor-pointer" role="listitem" routerLink="/products">
+        <article
+          class="product-card cursor-pointer"
+          role="listitem"
+          routerLink="/products"
+          appScrollReveal="up"
+        >
           <img
             class="product-card__image"
             src="https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=1200&q=80"
@@ -162,7 +172,13 @@
           </div>
         </article>
 
-        <article class="product-card cursor-pointer" role="listitem" routerLink="/products">
+        <article
+          class="product-card cursor-pointer"
+          role="listitem"
+          routerLink="/products"
+          appScrollReveal="up"
+          revealDelay="130"
+        >
           <img
             class="product-card__image"
             src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=1200&q=80"
@@ -202,7 +218,7 @@
     <div class="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/5 blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl"></div>
     <div class="mx-auto max-w-[1440px] px-6 lg:px-10 relative z-10">
-      <div class="mb-14 text-center">
+      <div class="mb-14 text-center" appScrollReveal="up">
         <span
           class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary"
         >
@@ -220,6 +236,7 @@
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
         <article
           class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+          appScrollReveal="up"
         >
           <div class="relative h-56 overflow-hidden">
             <img
@@ -255,6 +272,8 @@
 
         <article
           class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+          appScrollReveal="up"
+          revealDelay="110"
         >
           <div class="relative h-56 overflow-hidden">
             <img
@@ -290,6 +309,8 @@
 
         <article
           class="group overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+          appScrollReveal="up"
+          revealDelay="220"
         >
           <div class="relative h-56 overflow-hidden">
             <img
@@ -344,7 +365,10 @@
         background-size: 24px 24px;
       "
     ></div>
-    <div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center px-6">
+    <div
+      class="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center px-6"
+      appScrollReveal="zoom"
+    >
       <h2 class="text-3xl font-bold text-white md:text-5xl mb-6">{{ t('cta.title') }}</h2>
       <p class="max-w-2xl text-lg text-white/90 leading-relaxed mb-10">
         {{ t('cta.desc') }}

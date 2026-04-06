@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Alatar.Domain.Categories;
 
 namespace Alatar.Domain.Products;
@@ -25,7 +24,12 @@ public sealed class Product
         string packagingOptionsJson,
         string weightOptionsJson,
         string sizeOptionsJson,
-        string gradeOptionsJson)
+        string gradeOptionsJson,
+        string varietiesLocalizedJson,
+        string packagingOptionsLocalizedJson,
+        string weightOptionsLocalizedJson,
+        string sizeOptionsLocalizedJson,
+        string gradeOptionsLocalizedJson)
     {
         Id = id;
         Name = name;
@@ -43,6 +47,11 @@ public sealed class Product
         WeightOptionsJson = weightOptionsJson;
         SizeOptionsJson = sizeOptionsJson;
         GradeOptionsJson = gradeOptionsJson;
+        VarietiesLocalizedJson = varietiesLocalizedJson;
+        PackagingOptionsLocalizedJson = packagingOptionsLocalizedJson;
+        WeightOptionsLocalizedJson = weightOptionsLocalizedJson;
+        SizeOptionsLocalizedJson = sizeOptionsLocalizedJson;
+        GradeOptionsLocalizedJson = gradeOptionsLocalizedJson;
         Status = ProductStatus.Active;
         CreatedAtUtc = DateTime.UtcNow;
         UpdatedAtUtc = DateTime.UtcNow;
@@ -64,6 +73,11 @@ public sealed class Product
     public string WeightOptionsJson { get; private set; } = "[]";
     public string SizeOptionsJson { get; private set; } = "[]";
     public string GradeOptionsJson { get; private set; } = "[]";
+    public string VarietiesLocalizedJson { get; private set; } = "[]";
+    public string PackagingOptionsLocalizedJson { get; private set; } = "[]";
+    public string WeightOptionsLocalizedJson { get; private set; } = "[]";
+    public string SizeOptionsLocalizedJson { get; private set; } = "[]";
+    public string GradeOptionsLocalizedJson { get; private set; } = "[]";
     public ProductStatus Status { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
     public DateTime UpdatedAtUtc { get; private set; }
@@ -103,12 +117,23 @@ public sealed class Product
         IReadOnlyCollection<string> packagingOptions,
         IReadOnlyCollection<string> weightOptions,
         IReadOnlyCollection<string> sizeOptions,
-        IReadOnlyCollection<string> gradeOptions)
+        IReadOnlyCollection<string> gradeOptions,
+        IReadOnlyCollection<LocalizedProductOption>? varietiesLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? packagingOptionsLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? weightOptionsLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? sizeOptionsLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? gradeOptionsLocalized = null)
     {
         EnsureName(name);
         EnsureSku(sku);
         EnsurePrice(price);
         EnsureStock(openingStock);
+
+        var normalizedVarietiesLocalized = ProductOptionJson.Normalize(varietiesLocalized, varieties, appendLegacyWhenLocalizedExists: false);
+        var normalizedPackagingLocalized = ProductOptionJson.Normalize(packagingOptionsLocalized, packagingOptions, appendLegacyWhenLocalizedExists: false);
+        var normalizedWeightLocalized = ProductOptionJson.Normalize(weightOptionsLocalized, weightOptions, appendLegacyWhenLocalizedExists: false);
+        var normalizedSizeLocalized = ProductOptionJson.Normalize(sizeOptionsLocalized, sizeOptions, appendLegacyWhenLocalizedExists: false);
+        var normalizedGradeLocalized = ProductOptionJson.Normalize(gradeOptionsLocalized, gradeOptions, appendLegacyWhenLocalizedExists: false);
 
         return new Product(
             Guid.NewGuid(),
@@ -122,11 +147,16 @@ public sealed class Product
             productType,
             productState,
             season,
-            ToJsonArray(varieties),
-            ToJsonArray(packagingOptions),
-            ToJsonArray(weightOptions),
-            ToJsonArray(sizeOptions),
-            ToJsonArray(gradeOptions));
+            ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedVarietiesLocalized)),
+            ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedPackagingLocalized)),
+            ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedWeightLocalized)),
+            ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedSizeLocalized)),
+            ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedGradeLocalized)),
+            ProductOptionJson.SerializeLocalized(normalizedVarietiesLocalized),
+            ProductOptionJson.SerializeLocalized(normalizedPackagingLocalized),
+            ProductOptionJson.SerializeLocalized(normalizedWeightLocalized),
+            ProductOptionJson.SerializeLocalized(normalizedSizeLocalized),
+            ProductOptionJson.SerializeLocalized(normalizedGradeLocalized));
     }
 
     public void Update(
@@ -143,11 +173,22 @@ public sealed class Product
         IReadOnlyCollection<string> packagingOptions,
         IReadOnlyCollection<string> weightOptions,
         IReadOnlyCollection<string> sizeOptions,
-        IReadOnlyCollection<string> gradeOptions)
+        IReadOnlyCollection<string> gradeOptions,
+        IReadOnlyCollection<LocalizedProductOption>? varietiesLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? packagingOptionsLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? weightOptionsLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? sizeOptionsLocalized = null,
+        IReadOnlyCollection<LocalizedProductOption>? gradeOptionsLocalized = null)
     {
         EnsureName(name);
         EnsurePrice(price);
         EnsureStock(stockQuantity);
+
+        var normalizedVarietiesLocalized = ProductOptionJson.Normalize(varietiesLocalized, varieties, appendLegacyWhenLocalizedExists: false);
+        var normalizedPackagingLocalized = ProductOptionJson.Normalize(packagingOptionsLocalized, packagingOptions, appendLegacyWhenLocalizedExists: false);
+        var normalizedWeightLocalized = ProductOptionJson.Normalize(weightOptionsLocalized, weightOptions, appendLegacyWhenLocalizedExists: false);
+        var normalizedSizeLocalized = ProductOptionJson.Normalize(sizeOptionsLocalized, sizeOptions, appendLegacyWhenLocalizedExists: false);
+        var normalizedGradeLocalized = ProductOptionJson.Normalize(gradeOptionsLocalized, gradeOptions, appendLegacyWhenLocalizedExists: false);
 
         Name = name.Trim();
         NameAr = nameAr.Trim();
@@ -158,11 +199,16 @@ public sealed class Product
         ProductType = productType;
         ProductState = productState;
         Season = season;
-        VarietiesJson = ToJsonArray(varieties);
-        PackagingOptionsJson = ToJsonArray(packagingOptions);
-        WeightOptionsJson = ToJsonArray(weightOptions);
-        SizeOptionsJson = ToJsonArray(sizeOptions);
-        GradeOptionsJson = ToJsonArray(gradeOptions);
+        VarietiesJson = ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedVarietiesLocalized));
+        PackagingOptionsJson = ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedPackagingLocalized));
+        WeightOptionsJson = ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedWeightLocalized));
+        SizeOptionsJson = ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedSizeLocalized));
+        GradeOptionsJson = ProductOptionJson.SerializeLegacy(ProductOptionJson.ToLegacyValues(normalizedGradeLocalized));
+        VarietiesLocalizedJson = ProductOptionJson.SerializeLocalized(normalizedVarietiesLocalized);
+        PackagingOptionsLocalizedJson = ProductOptionJson.SerializeLocalized(normalizedPackagingLocalized);
+        WeightOptionsLocalizedJson = ProductOptionJson.SerializeLocalized(normalizedWeightLocalized);
+        SizeOptionsLocalizedJson = ProductOptionJson.SerializeLocalized(normalizedSizeLocalized);
+        GradeOptionsLocalizedJson = ProductOptionJson.SerializeLocalized(normalizedGradeLocalized);
         Touch();
     }
 
@@ -259,22 +305,6 @@ public sealed class Product
         {
             throw new ArgumentOutOfRangeException(nameof(stock), "Stock cannot be negative.");
         }
-    }
-
-    private static string ToJsonArray(IReadOnlyCollection<string> values)
-    {
-        if (values.Count == 0)
-        {
-            return "[]";
-        }
-
-        var normalized = values
-            .Select(value => value.Trim())
-            .Where(value => !string.IsNullOrWhiteSpace(value))
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToArray();
-
-        return JsonSerializer.Serialize(normalized);
     }
 
     private void Touch()

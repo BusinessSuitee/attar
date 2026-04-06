@@ -15,7 +15,7 @@
             class="absolute top-0 right-0 w-1/3 h-full bg-primary/5 dark:bg-primary/10 rounded-bl-[100px] -z-10"
           ></div>
           <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6 animate-fade-in-up">
+            <div class="space-y-6" appScrollReveal="up" revealDuration="1320">
               <div
                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold"
               >
@@ -44,7 +44,7 @@
                 </button>
               </div>
             </div>
-            <div class="relative group">
+            <div class="relative group" appScrollReveal="left" revealDelay="140">
               <div
                 class="absolute -inset-4 bg-accent-gold/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition duration-500"
               ></div>
@@ -71,22 +71,22 @@
             <div
               class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20 divide-x-reverse"
             >
-              <div class="space-y-2">
+              <div class="space-y-2" appScrollReveal="up">
                 <span class="material-symbols-outlined text-4xl opacity-80">calendar_month</span>
                 <h3 class="text-4xl font-black">+45</h3>
                 <p class="text-white/80 font-medium">{{ t('hero.statYears') }}</p>
               </div>
-              <div class="space-y-2">
+              <div class="space-y-2" appScrollReveal="up" revealDelay="90">
                 <span class="material-symbols-outlined text-4xl opacity-80">agriculture</span>
                 <h3 class="text-4xl font-black">+50k</h3>
                 <p class="text-white/80 font-medium">{{ t('stats.stat2Text') }}</p>
               </div>
-              <div class="space-y-2">
+              <div class="space-y-2" appScrollReveal="up" revealDelay="180">
                 <span class="material-symbols-outlined text-4xl opacity-80">groups</span>
                 <h3 class="text-4xl font-black">+500</h3>
                 <p class="text-white/80 font-medium">{{ t('stats.stat3Text') }}</p>
               </div>
-              <div class="space-y-2">
+              <div class="space-y-2" appScrollReveal="up" revealDelay="270">
                 <span class="material-symbols-outlined text-4xl opacity-80">public</span>
                 <h3 class="text-4xl font-black">12</h3>
                 <p class="text-white/80 font-medium">{{ t('stats.stat4Text') }}</p>
@@ -97,7 +97,7 @@
         <!-- Founder Bio Section -->
         <section class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark">
           <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col gap-4 text-center mb-16">
+            <div class="flex flex-col gap-4 text-center mb-16" appScrollReveal="up">
               <h2 class="text-accent-gold font-bold tracking-widest uppercase text-sm">
                 {{ t('founder.badge') }}
               </h2>
@@ -114,6 +114,7 @@
               <!-- Value Card 1 -->
               <div
                 class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group"
+                appScrollReveal="up"
               >
                 <div
                   class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors"
@@ -130,6 +131,8 @@
               <!-- Value Card 2 -->
               <div
                 class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group"
+                appScrollReveal="up"
+                revealDelay="100"
               >
                 <div
                   class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors"
@@ -146,6 +149,8 @@
               <!-- Value Card 3 -->
               <div
                 class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group"
+                appScrollReveal="up"
+                revealDelay="200"
               >
                 <div
                   class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors"
@@ -165,7 +170,7 @@
         <!-- Timeline Section -->
         <section class="py-20 px-6 lg:px-20 bg-white dark:bg-slate-900 overflow-hidden">
           <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16" appScrollReveal="up">
               <h2 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-4">
                 {{ t('timeline.title') }}
               </h2>
@@ -175,7 +180,7 @@
               class="relative border-r-4 border-slate-100 dark:border-slate-800 mr-4 md:mr-0 md:mx-auto md:border-r-0 md:before:absolute md:before:left-1/2 md:before:w-1 md:before:h-full md:before:bg-slate-100 dark:md:before:bg-slate-800 md:before:-ml-0.5"
             >
               <!-- Timeline Item 1 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" appScrollReveal="right">
                 <div class="md:flex items-center justify-between w-full">
                   <div class="hidden md:block md:w-5/12 text-left pl-8">
                     <span
@@ -212,7 +217,7 @@
                 </div>
               </div>
               <!-- Timeline Item 2 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" appScrollReveal="left">
                 <div class="md:flex items-center justify-between w-full flex-row-reverse">
                   <div class="hidden md:block md:w-5/12 text-right pr-8">
                     <span
@@ -251,7 +256,7 @@
                 </div>
               </div>
               <!-- Timeline Item 3 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" appScrollReveal="right">
                 <div class="md:flex items-center justify-between w-full">
                   <div class="hidden md:block md:w-5/12 text-left pl-8">
                     <span
@@ -289,7 +294,7 @@
                 </div>
               </div>
               <!-- Timeline Item 4 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" appScrollReveal="left">
                 <div class="md:flex items-center justify-between w-full flex-row-reverse">
                   <div class="hidden md:block md:w-5/12 text-right pr-8">
                     <span
@@ -326,7 +331,7 @@
                 </div>
               </div>
               <!-- Timeline Item 5 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" appScrollReveal="right">
                 <div class="md:flex items-center justify-between w-full">
                   <div class="hidden md:block md:w-5/12 text-left pl-8">
                     <span
@@ -363,7 +368,7 @@
                 </div>
               </div>
               <!-- Timeline Item 6 (Today) -->
-              <div class="relative">
+              <div class="relative" appScrollReveal="zoom">
                 <div class="md:flex items-center justify-between w-full flex-row-reverse">
                   <div class="hidden md:block md:w-5/12 text-right pr-8">
                     <span
@@ -402,7 +407,7 @@
           ></div>
           <div class="max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
+              <div appScrollReveal="right">
                 <h2 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-6">
                   {{ t('visionValues.title') }}
                 </h2>
@@ -442,7 +447,7 @@
                   </div>
                 </div>
               </div>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-4" appScrollReveal="left" revealDelay="140">
                 <div class="space-y-4 mt-8">
                   <div
                     class="bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-lg"
@@ -467,7 +472,7 @@
         <section
           class="py-16 px-6 lg:px-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800"
         >
-          <div class="max-w-4xl mx-auto text-center">
+          <div class="max-w-4xl mx-auto text-center" appScrollReveal="zoom">
             <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">
               {{ t('cta.title') }}
             </h2>

@@ -17,7 +17,12 @@ public sealed record AddProductCommand(
     ProductState ProductState,
     Season Season,
     IReadOnlyCollection<string> Varieties,
+    IReadOnlyCollection<LocalizedProductOption> VarietiesLocalized,
     IReadOnlyCollection<string> PackagingOptions,
+    IReadOnlyCollection<LocalizedProductOption> PackagingOptionsLocalized,
     IReadOnlyCollection<string> WeightOptions,
+    IReadOnlyCollection<LocalizedProductOption> WeightOptionsLocalized,
     IReadOnlyCollection<string> SizeOptions,
-    IReadOnlyCollection<string> GradeOptions) : IRequest<Result<Guid>>;
+    IReadOnlyCollection<LocalizedProductOption> SizeOptionsLocalized,
+    IReadOnlyCollection<string> GradeOptions,
+    IReadOnlyCollection<LocalizedProductOption> GradeOptionsLocalized) : IRequest<Result<Guid>>;

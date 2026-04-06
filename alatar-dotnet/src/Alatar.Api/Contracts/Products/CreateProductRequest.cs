@@ -15,7 +15,12 @@ public sealed record CreateProductRequest(
     ProductState ProductState,
     Season Season,
     IReadOnlyCollection<string>? Varieties,
+    IReadOnlyCollection<LocalizedProductOptionRequest>? VarietiesLocalized,
     IReadOnlyCollection<string>? PackagingOptions,
+    IReadOnlyCollection<LocalizedProductOptionRequest>? PackagingOptionsLocalized,
     IReadOnlyCollection<string>? WeightOptions,
+    IReadOnlyCollection<LocalizedProductOptionRequest>? WeightOptionsLocalized,
     IReadOnlyCollection<string>? SizeOptions,
-    IReadOnlyCollection<string>? GradeOptions);
+    IReadOnlyCollection<LocalizedProductOptionRequest>? SizeOptionsLocalized,
+    IReadOnlyCollection<string>? GradeOptions,
+    IReadOnlyCollection<LocalizedProductOptionRequest>? GradeOptionsLocalized);

@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="scroll-reveal.css" />
     <script>
       tailwind.config = {
         darkMode: "class",
@@ -39,22 +40,6 @@
         },
       };
     </script>
-    <style>
-      .animate-fade-in-up {
-        animation: fadeInUp 0.9s ease-out both;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
   </head>
   <body
     class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200"
@@ -208,7 +193,11 @@
           <div
             class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center"
           >
-            <div class="space-y-6 animate-fade-in-up">
+            <div
+              class="space-y-6"
+              data-reveal="up"
+              data-reveal-duration="960"
+            >
               <div
                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold"
               >
@@ -242,7 +231,7 @@
                 </button>
               </div>
             </div>
-            <div class="relative group">
+            <div class="relative group" data-reveal="left" data-reveal-delay="140">
               <div
                 class="absolute -inset-4 bg-accent-gold/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition duration-500"
               ></div>
@@ -270,29 +259,30 @@
           <div class="max-w-7xl mx-auto px-6 lg:px-20">
             <div
               class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20 divide-x-reverse"
+              data-reveal-stagger="100"
             >
-              <div class="space-y-2">
+              <div class="space-y-2" data-reveal="up">
                 <span class="material-symbols-outlined text-4xl opacity-80"
                   >calendar_month</span
                 >
                 <h3 class="text-4xl font-black">+45</h3>
                 <p class="text-white/80 font-medium">عاماً من الخبرة</p>
               </div>
-              <div class="space-y-2">
+              <div class="space-y-2" data-reveal="up">
                 <span class="material-symbols-outlined text-4xl opacity-80"
                   >agriculture</span
                 >
                 <h3 class="text-4xl font-black">+50k</h3>
                 <p class="text-white/80 font-medium">طن إنتاج سنوي</p>
               </div>
-              <div class="space-y-2">
+              <div class="space-y-2" data-reveal="up">
                 <span class="material-symbols-outlined text-4xl opacity-80"
                   >groups</span
                 >
                 <h3 class="text-4xl font-black">+500</h3>
                 <p class="text-white/80 font-medium">شريك وعميل</p>
               </div>
-              <div class="space-y-2">
+              <div class="space-y-2" data-reveal="up">
                 <span class="material-symbols-outlined text-4xl opacity-80"
                   >public</span
                 >
@@ -307,7 +297,7 @@
           class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark"
         >
           <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col gap-4 text-center mb-16">
+            <div class="flex flex-col gap-4 text-center mb-16" data-reveal="up">
               <h2
                 class="text-accent-gold font-bold tracking-widest uppercase text-sm"
               >
@@ -331,6 +321,7 @@
               <!-- Value Card 1 -->
               <div
                 class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group"
+                data-reveal="up"
               >
                 <div
                   class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors"
@@ -352,6 +343,8 @@
               <!-- Value Card 2 -->
               <div
                 class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group"
+                data-reveal="up"
+                data-reveal-delay="100"
               >
                 <div
                   class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors"
@@ -373,6 +366,8 @@
               <!-- Value Card 3 -->
               <div
                 class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 group"
+                data-reveal="up"
+                data-reveal-delay="200"
               >
                 <div
                   class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors"
@@ -399,7 +394,7 @@
           class="py-20 px-6 lg:px-20 bg-white dark:bg-slate-900 overflow-hidden"
         >
           <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16" data-reveal="up">
               <h2
                 class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-4"
               >
@@ -411,7 +406,7 @@
               class="relative border-r-4 border-slate-100 dark:border-slate-800 mr-4 md:mr-0 md:mx-auto md:border-r-0 md:before:absolute md:before:left-1/2 md:before:w-1 md:before:h-full md:before:bg-slate-100 dark:md:before:bg-slate-800 md:before:-ml-0.5"
             >
               <!-- Timeline Item 1 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" data-reveal="right">
                 <div class="md:flex items-center justify-between w-full">
                   <div class="hidden md:block md:w-5/12 text-left pl-8">
                     <span
@@ -453,7 +448,7 @@
                 </div>
               </div>
               <!-- Timeline Item 2 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" data-reveal="left">
                 <div
                   class="md:flex items-center justify-between w-full flex-row-reverse"
                 >
@@ -496,7 +491,7 @@
                 </div>
               </div>
               <!-- Timeline Item 3 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" data-reveal="right">
                 <div class="md:flex items-center justify-between w-full">
                   <div class="hidden md:block md:w-5/12 text-left pl-8">
                     <span
@@ -537,7 +532,7 @@
                 </div>
               </div>
               <!-- Timeline Item 4 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" data-reveal="left">
                 <div
                   class="md:flex items-center justify-between w-full flex-row-reverse"
                 >
@@ -580,7 +575,7 @@
                 </div>
               </div>
               <!-- Timeline Item 5 -->
-              <div class="relative mb-12 md:mb-24">
+              <div class="relative mb-12 md:mb-24" data-reveal="right">
                 <div class="md:flex items-center justify-between w-full">
                   <div class="hidden md:block md:w-5/12 text-left pl-8">
                     <span
@@ -621,7 +616,7 @@
                 </div>
               </div>
               <!-- Timeline Item 6 (Today) -->
-              <div class="relative">
+              <div class="relative" data-reveal="zoom">
                 <div
                   class="md:flex items-center justify-between w-full flex-row-reverse"
                 >
@@ -671,7 +666,7 @@
           ></div>
           <div class="max-w-7xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-              <div>
+              <div data-reveal="right">
                 <h2
                   class="text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-6"
                 >
@@ -728,7 +723,7 @@
                   </div>
                 </div>
               </div>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-4" data-reveal="left" data-reveal-delay="140">
                 <div class="space-y-4 mt-8">
                   <div
                     class="bg-gray-200 rounded-2xl overflow-hidden aspect-[3/4] shadow-lg"
@@ -753,7 +748,7 @@
         <section
           class="py-16 px-6 lg:px-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800"
         >
-          <div class="max-w-4xl mx-auto text-center">
+          <div class="max-w-4xl mx-auto text-center" data-reveal="zoom">
             <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">
               هل تبحث عن شريك زراعي موثوق؟
             </h2>

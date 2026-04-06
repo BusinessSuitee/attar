@@ -1,15 +1,18 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
+  PLATFORM_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
   isDevMode,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
+  PreloadAllModules,
   provideRouter,
   withEnabledBlockingInitialNavigation,
   withInMemoryScrolling,
-  withViewTransitions,
+  withPreloading,
 } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideTransloco } from '@jsverse/transloco';
@@ -19,10 +22,10 @@ import { authInterceptor } from './core/auth/auth.interceptor';
 import { API_BASE_URL } from './core/config/api-base-url.token';
 import { routes } from './app.routes';
 
-function resolveApiBaseUrl(): string {
+function resolveApiBaseUrl(platformId: object): string {
   const productionApiBaseUrl = 'https://attar.runasp.net';
 
-  if (typeof window === 'undefined') {
+  if (!isPlatformBrowser(platformId)) {
     return productionApiBaseUrl;
   }
 
@@ -48,10 +51,10 @@ export const appConfig: ApplicationConfig = {
       routes,
       withEnabledBlockingInitialNavigation(),
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
-      withViewTransitions(),
+      withPreloading(PreloadAllModules),
     ),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([authInterceptor, authErrorInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor, authErrorInterceptor])),
     provideTransloco({
       config: {
         availableLangs: ['ar', 'en', 'ru'],
@@ -64,6 +67,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: API_BASE_URL,
       useFactory: resolveApiBaseUrl,
+      deps: [PLATFORM_ID],
     },
   ],
 };

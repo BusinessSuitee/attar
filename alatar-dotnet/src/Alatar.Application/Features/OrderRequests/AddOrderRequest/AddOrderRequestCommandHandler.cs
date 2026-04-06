@@ -1,7 +1,7 @@
-using System.Text.Json;
 using Alatar.Application.Abstractions.Persistence;
 using Alatar.Application.Common.Results;
 using Alatar.Domain.OrderRequests;
+using Alatar.Domain.Products;
 using MediatR;
 
 namespace Alatar.Application.Features.OrderRequests.AddOrderRequest;
@@ -21,11 +21,11 @@ public sealed class AddOrderRequestCommandHandler(
                 $"Product with id '{command.ProductId}' was not found."));
         }
 
-        var varieties = DeserializeJsonArray(product.VarietiesJson);
-        var packagingOptions = DeserializeJsonArray(product.PackagingOptionsJson);
-        var weightOptions = DeserializeJsonArray(product.WeightOptionsJson);
-        var sizeOptions = DeserializeJsonArray(product.SizeOptionsJson);
-        var gradeOptions = DeserializeJsonArray(product.GradeOptionsJson);
+        var varieties = ResolveAvailableOptions(product.VarietiesJson, product.VarietiesLocalizedJson);
+        var packagingOptions = ResolveAvailableOptions(product.PackagingOptionsJson, product.PackagingOptionsLocalizedJson);
+        var weightOptions = ResolveAvailableOptions(product.WeightOptionsJson, product.WeightOptionsLocalizedJson);
+        var sizeOptions = ResolveAvailableOptions(product.SizeOptionsJson, product.SizeOptionsLocalizedJson);
+        var gradeOptions = ResolveAvailableOptions(product.GradeOptionsJson, product.GradeOptionsLocalizedJson);
 
         var varietyValidation = ValidateSelectedOption(command.SelectedVariety, varieties, "variety");
         if (varietyValidation != Error.None)
@@ -78,30 +78,20 @@ public sealed class AddOrderRequestCommandHandler(
         return Result.Success(orderRequest.Id);
     }
 
-    private static IReadOnlyCollection<string> DeserializeJsonArray(string? value)
+    private static IReadOnlyCollection<LocalizedProductOption> ResolveAvailableOptions(
+        string? legacyJson,
+        string? localizedJson)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return [];
-        }
-
-        try
-        {
-            return (JsonSerializer.Deserialize<string[]>(value) ?? [])
-                .Select(item => item.Trim())
-                .Where(item => !string.IsNullOrWhiteSpace(item))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .ToArray();
-        }
-        catch
-        {
-            return [];
-        }
+        var legacy = ProductOptionJson.DeserializeLegacy(legacyJson);
+        return ProductOptionJson.Normalize(
+            ProductOptionJson.DeserializeLocalized(localizedJson),
+            legacy,
+            appendLegacyWhenLocalizedExists: false);
     }
 
     private static Error ValidateSelectedOption(
         string? selectedValue,
-        IReadOnlyCollection<string> availableOptions,
+        IReadOnlyCollection<LocalizedProductOption> availableOptions,
         string optionName)
     {
         if (availableOptions.Count == 0)
@@ -123,9 +113,7 @@ public sealed class AddOrderRequestCommandHandler(
                 $"{optionName} selection is required.");
         }
 
-        var normalized = selectedValue.Trim();
-
-        if (!availableOptions.Any(item => string.Equals(item, normalized, StringComparison.OrdinalIgnoreCase)))
+        if (FindOption(selectedValue, availableOptions) is null)
         {
             return Error.Validation(
                 "OrderRequests.InvalidSelection",
@@ -137,16 +125,32 @@ public sealed class AddOrderRequestCommandHandler(
 
     private static string? ResolveSelectedOption(
         string? selectedValue,
-        IReadOnlyCollection<string> availableOptions)
+        IReadOnlyCollection<LocalizedProductOption> availableOptions)
     {
         if (availableOptions.Count == 0 || string.IsNullOrWhiteSpace(selectedValue))
         {
             return null;
         }
 
+        var option = FindOption(selectedValue, availableOptions);
+        if (option is null)
+        {
+            return selectedValue.Trim();
+        }
+
+        return string.IsNullOrWhiteSpace(option.LabelEn)
+            ? option.LabelAr
+            : option.LabelEn;
+    }
+
+    private static LocalizedProductOption? FindOption(
+        string selectedValue,
+        IReadOnlyCollection<LocalizedProductOption> availableOptions)
+    {
         var normalized = selectedValue.Trim();
         return availableOptions.FirstOrDefault(item =>
-                   string.Equals(item, normalized, StringComparison.OrdinalIgnoreCase))
-               ?? normalized;
+            string.Equals(item.Key, normalized, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(item.LabelEn, normalized, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(item.LabelAr, normalized, StringComparison.OrdinalIgnoreCase));
     }
 }

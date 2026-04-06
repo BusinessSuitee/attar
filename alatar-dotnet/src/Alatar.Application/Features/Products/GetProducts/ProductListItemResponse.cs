@@ -2,6 +2,8 @@ namespace Alatar.Application.Features.Products.GetProducts;
 
 public sealed record ProductImageItem(Guid Id, string Url);
 
+public sealed record LocalizedProductOptionResponse(string Key, string LabelEn, string LabelAr);
+
 public sealed record ProductListItemResponse(
     Guid Id,
     string Name,
@@ -16,10 +18,15 @@ public sealed record ProductListItemResponse(
     string ProductState,
     string Season,
     IReadOnlyCollection<string> Varieties,
+    IReadOnlyCollection<LocalizedProductOptionResponse> VarietiesLocalized,
     IReadOnlyCollection<string> PackagingOptions,
+    IReadOnlyCollection<LocalizedProductOptionResponse> PackagingOptionsLocalized,
     IReadOnlyCollection<string> WeightOptions,
+    IReadOnlyCollection<LocalizedProductOptionResponse> WeightOptionsLocalized,
     IReadOnlyCollection<string> SizeOptions,
+    IReadOnlyCollection<LocalizedProductOptionResponse> SizeOptionsLocalized,
     IReadOnlyCollection<string> GradeOptions,
+    IReadOnlyCollection<LocalizedProductOptionResponse> GradeOptionsLocalized,
     IReadOnlyCollection<string> ImageUrls,
     IReadOnlyCollection<ProductImageItem> Images);
 

@@ -79,7 +79,7 @@
 
 <aside class="mobile-sheet" [class.is-open]="menuOpen()" aria-label="Mobile menu">
   <div class="mobile-sheet__header">
-    <p>باقي الأقسام</p>
+    <p>{{ 'nav.more' | transloco }}</p>
     <button
       type="button"
       class="mobile-sheet__close material-symbols-outlined"
@@ -101,7 +101,7 @@
         (click)="onNavSelect(item.id)"
       >
         <span class="material-symbols-outlined">{{ iconForItem(item.id) }}</span>
-        <span>{{ item.label }}</span>
+        <span>{{ item.translocoKey | transloco }}</span>
       </a>
     }
   </nav>
@@ -118,7 +118,7 @@
         (click)="onDockSelect(item)"
       >
         <span class="material-symbols-outlined">{{ item.icon }}</span>
-        <span>{{ item.label }}</span>
+        <span>{{ 'nav.' + item.id | transloco }}</span>
       </a>
     } @else {
       <button
@@ -128,7 +128,7 @@
         (click)="onDockSelect(item)"
       >
         <span class="material-symbols-outlined">{{ item.icon }}</span>
-        <span>{{ item.label }}</span>
+        <span>{{ 'nav.' + item.id | transloco }}</span>
       </button>
     }
   }

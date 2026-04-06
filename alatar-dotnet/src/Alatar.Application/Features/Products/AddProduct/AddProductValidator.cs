@@ -37,20 +37,100 @@ public sealed class AddProductValidator : AbstractValidator<AddProductCommand>
             .NotEmpty()
             .MaximumLength(100);
 
+        RuleForEach(command => command.VarietiesLocalized)
+            .ChildRules(option =>
+            {
+                option.RuleFor(item => item.Key)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelEn)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelAr)
+                    .NotEmpty()
+                    .MaximumLength(120);
+            });
+
         RuleForEach(command => command.PackagingOptions)
             .NotEmpty()
             .MaximumLength(120);
+
+        RuleForEach(command => command.PackagingOptionsLocalized)
+            .ChildRules(option =>
+            {
+                option.RuleFor(item => item.Key)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelEn)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelAr)
+                    .NotEmpty()
+                    .MaximumLength(120);
+            });
 
         RuleForEach(command => command.WeightOptions)
             .NotEmpty()
             .MaximumLength(80);
 
+        RuleForEach(command => command.WeightOptionsLocalized)
+            .ChildRules(option =>
+            {
+                option.RuleFor(item => item.Key)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelEn)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelAr)
+                    .NotEmpty()
+                    .MaximumLength(120);
+            });
+
         RuleForEach(command => command.SizeOptions)
             .NotEmpty()
             .MaximumLength(80);
 
+        RuleForEach(command => command.SizeOptionsLocalized)
+            .ChildRules(option =>
+            {
+                option.RuleFor(item => item.Key)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelEn)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelAr)
+                    .NotEmpty()
+                    .MaximumLength(120);
+            });
+
         RuleForEach(command => command.GradeOptions)
             .NotEmpty()
             .MaximumLength(80);
+
+        RuleForEach(command => command.GradeOptionsLocalized)
+            .ChildRules(option =>
+            {
+                option.RuleFor(item => item.Key)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelEn)
+                    .NotEmpty()
+                    .MaximumLength(120);
+
+                option.RuleFor(item => item.LabelAr)
+                    .NotEmpty()
+                    .MaximumLength(120);
+            });
     }
 }
