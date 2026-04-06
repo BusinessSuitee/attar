@@ -138,7 +138,7 @@
                 <div class="flex flex-1 flex-col p-5">
                   <h3 class="mb-1 text-lg font-black leading-tight text-slate-900">{{ product.nameAr }}</h3>
                   <p class="mb-1 text-xs font-medium text-slate-400">{{ product.name }}</p>
-                  @if (product.varieties?.length) {
+                  @if (product.varieties.length) {
                     <p class="mb-3 text-xs text-slate-500 leading-relaxed line-clamp-2">
                       {{ product.varieties.join(' · ') }}
                     </p>
@@ -282,7 +282,7 @@
             <!-- Specs Grid -->
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-              @if (product.varieties?.length) {
+              @if (product.varieties.length) {
                 <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
                   <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
                     <span class="material-symbols-outlined text-accent text-lg">category</span>
@@ -298,7 +298,7 @@
                 </div>
               }
 
-              @if (product.packagingOptions?.length) {
+              @if (product.packagingOptions.length) {
                 <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
                   <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
                     <span class="material-symbols-outlined text-accent text-lg">inventory_2</span>
@@ -314,7 +314,7 @@
                 </div>
               }
 
-              @if (product.weightOptions?.length) {
+              @if (product.weightOptions.length) {
                 <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
                   <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
                     <span class="material-symbols-outlined text-accent text-lg">scale</span>
@@ -328,7 +328,7 @@
                 </div>
               }
 
-              @if (product.sizeOptions?.length) {
+              @if (product.sizeOptions.length) {
                 <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4">
                   <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
                     <span class="material-symbols-outlined text-accent text-lg">straighten</span>
@@ -342,7 +342,7 @@
                 </div>
               }
 
-              @if (product.gradeOptions?.length) {
+              @if (product.gradeOptions.length) {
                 <div class="rounded-xl border border-slate-100 border-solid bg-slate-50 p-4 sm:col-span-2">
                   <h4 class="mb-2 flex items-center gap-2 text-sm font-bold text-primary">
                     <span class="material-symbols-outlined text-accent text-lg">grade</span>
