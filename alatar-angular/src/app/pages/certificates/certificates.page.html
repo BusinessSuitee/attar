@@ -11,7 +11,7 @@
       <div class="absolute inset-0 z-0 bg-gradient-to-br from-slate-900 via-primary/30 to-slate-900"></div>
       <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
 
-      <div class="relative z-10 mx-auto max-w-5xl px-6 text-center" appScrollReveal="up">
+      <div class="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-accent/20 px-5 py-2 text-sm font-bold text-accent">
           <span class="material-symbols-outlined text-lg">workspace_premium</span>
           {{ t('hero_badge') }}
@@ -41,7 +41,7 @@
           </div>
           <div appScrollReveal="up" revealDelay="80">
             <span class="material-symbols-outlined mb-2 text-3xl opacity-80">calendar_month</span>
-            <h3 class="text-3xl font-black">+45</h3>
+            <h3 class="text-3xl font-black">+50</h3>
             <p class="text-sm font-medium text-white/80">{{ t('stats.years') }}</p>
           </div>
           <div appScrollReveal="up" revealDelay="160">
@@ -245,12 +245,27 @@ G.A.P
       >
         <span class="material-symbols-outlined text-2xl">close</span>
       </button>
-      <img
-        [src]="certificates[selectedCertIndex()!].src"
-        [alt]="t(certificates[selectedCertIndex()!].nameKey)"
-        class="max-h-[90vh] max-w-[90vw] rounded-xl object-contain shadow-2xl"
-        (click)="$event.stopPropagation()"
-      />
+      <ng-container *ngIf="certificates[selectedCertIndex()!].type === 'image'; else pdfPreview">
+        <img
+          [src]="certificates[selectedCertIndex()!].src"
+          [alt]="t(certificates[selectedCertIndex()!].nameKey)"
+          class="max-h-[90vh] max-w-[90vw] rounded-xl object-contain shadow-2xl"
+          (click)="$event.stopPropagation()"
+        />
+      </ng-container>
+
+      <ng-template #pdfPreview>
+        <div
+          class="h-[90vh] w-[92vw] max-w-6xl overflow-hidden rounded-xl bg-white shadow-2xl"
+          (click)="$event.stopPropagation()"
+        >
+          <iframe
+            [src]="certificates[selectedCertIndex()!].src"
+            class="h-full w-full border-0"
+            [title]="t(certificates[selectedCertIndex()!].nameKey)"
+          ></iframe>
+        </div>
+      </ng-template>
     </div>
   </ng-container>
 </div>

@@ -86,11 +86,6 @@ export class CertificatesPageComponent {
   ];
 
   openCert(index: number): void {
-    const cert = this.certificates[index];
-    if (cert.type === 'pdf') {
-      window.open(cert.src, '_blank');
-      return;
-    }
     this.selectedCertIndex.set(index);
     document.body.style.overflow = 'hidden';
   }
