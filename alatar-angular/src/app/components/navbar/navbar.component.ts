@@ -100,6 +100,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       fragment: undefined,
     },
     {
+      id: 'certificates',
+      translocoKey: 'nav.certificates',
+      label: 'الشهادات',
+      route: '/certificates',
+      fragment: undefined,
+    },
+    {
       id: 'gallery',
       translocoKey: 'nav.gallery',
       label: 'المعرض',
@@ -258,6 +265,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       partners: 'handshake',
       products: 'agriculture',
       stations: 'factory',
+      certificates: 'verified',
       gallery: 'photo_library',
       contact: 'call',
     };

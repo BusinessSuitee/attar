@@ -5,6 +5,7 @@
     "partners": "Partners",
     "products": "Products",
     "stations": "Stations & Lands",
+    "certificates": "Certificates",
     "gallery": "Gallery",
     "contact": "Contact Us",
     "more": "More"
@@ -509,6 +510,74 @@
       "privacy": "Privacy Policy",
       "terms": "Terms & Conditions"
     }
+  },
+  "certificates_page": {
+    "hero_badge": "Quality & Trust",
+    "hero_title": "Our International Certificates & Accreditations",
+    "hero_subtitle": "Over 45 years of commitment to the highest global quality standards in Egyptian agricultural exports.",
+    "stats": {
+      "certs": "International Certificates",
+      "years": "Years of Experience",
+      "markets": "Global Markets",
+      "audits_num": "Annual",
+      "audits": "Audits & Reviews"
+    },
+    "section_badge": "Our Certificates",
+    "section_title": "Accredited Certificates",
+    "section_desc": "Every certificate is a testament to our commitment to the highest quality and food safety standards at every stage of production and export.",
+    "view_pdf": "View Certificate",
+    "view_full": "View Full Size",
+    "cert_1": {
+      "name": "ISO 9001:2015",
+      "issuer": "LQSA Middle East",
+      "scope": "Quality Management System for sorting, grading, packing and exporting agricultural crops — M.H.A for Agricultural Development Station.",
+      "date": "Currently Valid"
+    },
+    "cert_2": {
+      "name": "ISO 9001:2015",
+      "issuer": "HRDAS Corp",
+      "scope": "Quality Management System for sorting, washing and packing vegetables and fruits — M.H.A for Agricultural Development Station.",
+      "date": "Currently Valid"
+    },
+    "cert_3": {
+      "name": "GLOBALG.A.P (GGN)",
+      "issuer": "GLOBALG.A.P",
+      "scope": "Global Good Agricultural Practices certification — M.H.A for Agricultural Development Station, GGN: 4063061770325.",
+      "date": "Issued 2024"
+    },
+    "cert_4": {
+      "name": "GRASP v2",
+      "issuer": "GLOBALG.A.P - GRASP",
+      "scope": "Social Risk Assessment on Good Agricultural Practices (GRASP v2) Conformance Letter — M.H.A Station.",
+      "date": "February 2025"
+    },
+    "cert_5": {
+      "name": "GLOBALG.A.P Database",
+      "issuer": "GLOBALG.A.P.org",
+      "scope": "Official registration document in the GLOBALG.A.P global database — confirming accreditation status.",
+      "date": "Up to date"
+    },
+    "badges_title": "Global Quality Standards We Adhere To",
+    "badge_gap": {
+      "name": "GLOBALG.A.P",
+      "desc": "Global standard for good agricultural practices ensuring safe and sustainable production."
+    },
+    "badge_haccp": {
+      "name": "HACCP",
+      "desc": "Hazard Analysis and Critical Control Points system for ensuring food safety."
+    },
+    "badge_iso": {
+      "name": "ISO 22000",
+      "desc": "International standard for food safety management systems across the supply chain."
+    },
+    "badge_brcgs": {
+      "name": "BRCGS",
+      "desc": "Global food safety standard recognized by the Global Food Safety Initiative."
+    },
+    "cta_title": "Our Quality Speaks for Itself",
+    "cta_desc": "Discover our Egyptian agricultural products exported to the highest global quality standards, or contact us for a price quote.",
+    "cta_products": "Explore Our Products",
+    "cta_contact": "Contact Us"
   },
   "gallery_page": {
     "hero": {
