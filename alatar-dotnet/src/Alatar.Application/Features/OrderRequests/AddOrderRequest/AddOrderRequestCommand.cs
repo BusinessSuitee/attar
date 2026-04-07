@@ -5,11 +5,12 @@ namespace Alatar.Application.Features.OrderRequests.AddOrderRequest;
 
 public sealed record AddOrderRequestCommand(
     Guid ProductId,
-    string? SelectedVariety,
-    string? SelectedPackaging,
-    string? SelectedWeight,
-    string? SelectedSize,
-    string? SelectedGrade,
+    IReadOnlyCollection<string>? SelectedVarieties,
+    IReadOnlyCollection<string>? SelectedPackagingOptions,
+    IReadOnlyCollection<string>? SelectedWeightOptions,
+    IReadOnlyCollection<string>? SelectedSizeOptions,
+    IReadOnlyCollection<string>? SelectedGradeOptions,
+    string? SpecialSpecification,
     string RequesterName,
     string PhoneNumber,
     decimal QuantityTons) : IRequest<Result<Guid>>;

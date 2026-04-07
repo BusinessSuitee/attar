@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace Alatar.Domain.OrderRequests;
 
 public sealed class OrderRequest
@@ -13,11 +15,12 @@ public sealed class OrderRequest
         string requesterName,
         string phoneNumber,
         decimal quantityTons,
-        string? selectedVariety,
-        string? selectedPackaging,
-        string? selectedWeight,
-        string? selectedSize,
-        string? selectedGrade)
+        IReadOnlyCollection<string> selectedVarieties,
+        IReadOnlyCollection<string> selectedPackagingOptions,
+        IReadOnlyCollection<string> selectedWeightOptions,
+        IReadOnlyCollection<string> selectedSizeOptions,
+        IReadOnlyCollection<string> selectedGradeOptions,
+        string? specialSpecification)
     {
         Id = id;
         ProductId = productId;
@@ -25,11 +28,12 @@ public sealed class OrderRequest
         RequesterName = requesterName;
         PhoneNumber = phoneNumber;
         QuantityTons = quantityTons;
-        SelectedVariety = selectedVariety;
-        SelectedPackaging = selectedPackaging;
-        SelectedWeight = selectedWeight;
-        SelectedSize = selectedSize;
-        SelectedGrade = selectedGrade;
+        SelectedVariety = SerializeSelections(selectedVarieties);
+        SelectedPackaging = SerializeSelections(selectedPackagingOptions);
+        SelectedWeight = SerializeSelections(selectedWeightOptions);
+        SelectedSize = SerializeSelections(selectedSizeOptions);
+        SelectedGrade = SerializeSelections(selectedGradeOptions);
+        SpecialSpecification = Normalize(specialSpecification);
         Status = OrderRequestStatus.New;
         IsDeleted = false;
         DeletedAtUtc = null;
@@ -48,6 +52,7 @@ public sealed class OrderRequest
     public string? SelectedWeight { get; private set; }
     public string? SelectedSize { get; private set; }
     public string? SelectedGrade { get; private set; }
+    public string? SpecialSpecification { get; private set; }
     public OrderRequestStatus Status { get; private set; }
     public bool IsDeleted { get; private set; }
     public DateTime? DeletedAtUtc { get; private set; }
@@ -60,11 +65,12 @@ public sealed class OrderRequest
         string requesterName,
         string phoneNumber,
         decimal quantityTons,
-        string? selectedVariety,
-        string? selectedPackaging,
-        string? selectedWeight,
-        string? selectedSize,
-        string? selectedGrade)
+        IReadOnlyCollection<string> selectedVarieties,
+        IReadOnlyCollection<string> selectedPackagingOptions,
+        IReadOnlyCollection<string> selectedWeightOptions,
+        IReadOnlyCollection<string> selectedSizeOptions,
+        IReadOnlyCollection<string> selectedGradeOptions,
+        string? specialSpecification)
     {
         EnsureProduct(productId, productNameSnapshot);
         EnsureRequesterName(requesterName);
@@ -78,11 +84,37 @@ public sealed class OrderRequest
             requesterName.Trim(),
             phoneNumber.Trim(),
             decimal.Round(quantityTons, 2, MidpointRounding.AwayFromZero),
-            Normalize(selectedVariety),
-            Normalize(selectedPackaging),
-            Normalize(selectedWeight),
-            Normalize(selectedSize),
-            Normalize(selectedGrade));
+            NormalizeSelections(selectedVarieties),
+            NormalizeSelections(selectedPackagingOptions),
+            NormalizeSelections(selectedWeightOptions),
+            NormalizeSelections(selectedSizeOptions),
+            NormalizeSelections(selectedGradeOptions),
+            specialSpecification);
+    }
+
+    public IReadOnlyCollection<string> GetSelectedVarieties()
+    {
+        return DeserializeSelections(SelectedVariety);
+    }
+
+    public IReadOnlyCollection<string> GetSelectedPackagingOptions()
+    {
+        return DeserializeSelections(SelectedPackaging);
+    }
+
+    public IReadOnlyCollection<string> GetSelectedWeightOptions()
+    {
+        return DeserializeSelections(SelectedWeight);
+    }
+
+    public IReadOnlyCollection<string> GetSelectedSizeOptions()
+    {
+        return DeserializeSelections(SelectedSize);
+    }
+
+    public IReadOnlyCollection<string> GetSelectedGradeOptions()
+    {
+        return DeserializeSelections(SelectedGrade);
     }
 
     public void SetStatus(OrderRequestStatus status)
@@ -111,6 +143,71 @@ public sealed class OrderRequest
     private static string? Normalize(string? value)
     {
         return string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+    }
+
+    private static IReadOnlyCollection<string> NormalizeSelections(IReadOnlyCollection<string>? values)
+    {
+        if (values is null || values.Count == 0)
+        {
+            return [];
+        }
+
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var normalized = new List<string>();
+
+        foreach (var rawValue in values)
+        {
+            var value = Normalize(rawValue);
+
+            if (value is null)
+            {
+                continue;
+            }
+
+            if (seen.Add(value))
+            {
+                normalized.Add(value);
+            }
+        }
+
+        return normalized;
+    }
+
+    private static string? SerializeSelections(IReadOnlyCollection<string>? values)
+    {
+        var normalized = NormalizeSelections(values);
+
+        if (normalized.Count == 0)
+        {
+            return null;
+        }
+
+        return JsonSerializer.Serialize(normalized);
+    }
+
+    private static IReadOnlyCollection<string> DeserializeSelections(string? serializedValue)
+    {
+        if (string.IsNullOrWhiteSpace(serializedValue))
+        {
+            return [];
+        }
+
+        var normalized = serializedValue.Trim();
+
+        if (normalized.StartsWith('['))
+        {
+            try
+            {
+                var parsed = JsonSerializer.Deserialize<string[]>(normalized);
+                return NormalizeSelections(parsed ?? []);
+            }
+            catch
+            {
+                // Fallback to legacy plain string value
+            }
+        }
+
+        return [normalized];
     }
 
     private static void EnsureProduct(Guid productId, string productNameSnapshot)

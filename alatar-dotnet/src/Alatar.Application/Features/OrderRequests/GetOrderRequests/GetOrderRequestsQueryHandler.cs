@@ -32,11 +32,12 @@ public sealed class GetOrderRequestsQueryHandler(IOrderRequestRepository orderRe
                 orderRequest.RequesterName,
                 orderRequest.PhoneNumber,
                 orderRequest.QuantityTons,
-                orderRequest.SelectedVariety,
-                orderRequest.SelectedPackaging,
-                orderRequest.SelectedWeight,
-                orderRequest.SelectedSize,
-                orderRequest.SelectedGrade,
+                orderRequest.GetSelectedVarieties(),
+                orderRequest.GetSelectedPackagingOptions(),
+                orderRequest.GetSelectedWeightOptions(),
+                orderRequest.GetSelectedSizeOptions(),
+                orderRequest.GetSelectedGradeOptions(),
+                orderRequest.SpecialSpecification,
                 orderRequest.Status.ToString(),
                 orderRequest.CreatedAtUtc))
             .ToArray();

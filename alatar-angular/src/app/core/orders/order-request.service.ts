@@ -7,11 +7,12 @@ export type OrderRequestStatus = 'new' | 'in_review' | 'contacted' | 'confirmed'
 
 export interface CreateOrderRequestPayload {
   productId: string;
-  selectedVariety: string | null;
-  selectedPackaging: string | null;
-  selectedWeight: string | null;
-  selectedSize: string | null;
-  selectedGrade: string | null;
+  selectedVarieties: string[];
+  selectedPackagingOptions: string[];
+  selectedWeightOptions: string[];
+  selectedSizeOptions: string[];
+  selectedGradeOptions: string[];
+  specialSpecification: string | null;
   requesterName: string;
   phoneNumber: string;
   quantityTons: number;
@@ -24,11 +25,12 @@ export interface OrderRequestListItem {
   requesterName: string;
   phoneNumber: string;
   quantityTons: number;
-  selectedVariety: string | null;
-  selectedPackaging: string | null;
-  selectedWeight: string | null;
-  selectedSize: string | null;
-  selectedGrade: string | null;
+  selectedVarieties: string[];
+  selectedPackagingOptions: string[];
+  selectedWeightOptions: string[];
+  selectedSizeOptions: string[];
+  selectedGradeOptions: string[];
+  specialSpecification: string | null;
   status: string;
   createdAtUtc: string;
 }
@@ -43,11 +45,12 @@ export interface OrderRequestsPageResponse {
 
 interface CreateOrderRequestBody {
   productId: string;
-  selectedVariety: string | null;
-  selectedPackaging: string | null;
-  selectedWeight: string | null;
-  selectedSize: string | null;
-  selectedGrade: string | null;
+  selectedVarieties: string[];
+  selectedPackagingOptions: string[];
+  selectedWeightOptions: string[];
+  selectedSizeOptions: string[];
+  selectedGradeOptions: string[];
+  specialSpecification: string | null;
   requesterName: string;
   phoneNumber: string;
   quantityTons: number;
@@ -69,11 +72,12 @@ export class OrderRequestService {
   createOrderRequest(payload: CreateOrderRequestPayload): Observable<OrderRequestIdResponse> {
     const request: CreateOrderRequestBody = {
       productId: payload.productId,
-      selectedVariety: payload.selectedVariety,
-      selectedPackaging: payload.selectedPackaging,
-      selectedWeight: payload.selectedWeight,
-      selectedSize: payload.selectedSize,
-      selectedGrade: payload.selectedGrade,
+      selectedVarieties: this.sanitizeSelections(payload.selectedVarieties),
+      selectedPackagingOptions: this.sanitizeSelections(payload.selectedPackagingOptions),
+      selectedWeightOptions: this.sanitizeSelections(payload.selectedWeightOptions),
+      selectedSizeOptions: this.sanitizeSelections(payload.selectedSizeOptions),
+      selectedGradeOptions: this.sanitizeSelections(payload.selectedGradeOptions),
+      specialSpecification: this.normalizeOptionalText(payload.specialSpecification),
       requesterName: payload.requesterName.trim(),
       phoneNumber: payload.phoneNumber.trim(),
       quantityTons: payload.quantityTons,
@@ -134,5 +138,38 @@ export class OrderRequestService {
       default:
         return 0;
     }
+  }
+
+  private sanitizeSelections(values: readonly string[] | null | undefined): string[] {
+    if (!Array.isArray(values) || values.length === 0) {
+      return [];
+    }
+
+    const seen = new Set<string>();
+    const normalized: string[] = [];
+
+    for (const rawValue of values) {
+      const value = (rawValue ?? '').trim();
+
+      if (!value) {
+        continue;
+      }
+
+      const key = value.toLowerCase();
+
+      if (seen.has(key)) {
+        continue;
+      }
+
+      seen.add(key);
+      normalized.push(value);
+    }
+
+    return normalized;
+  }
+
+  private normalizeOptionalText(value: string | null | undefined): string | null {
+    const normalized = (value ?? '').trim();
+    return normalized === '' ? null : normalized;
   }
 }

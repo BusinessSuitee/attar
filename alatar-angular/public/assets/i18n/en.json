@@ -416,6 +416,9 @@
     "modal": {
       "request_title": "Request this product now",
       "request_desc": "Choose your preferred specifications and submit your request directly to our sales team.",
+      "multi_select_hint": "You can select more than one option",
+      "contact_alternative": "You can also send your request through our",
+      "contact_alternative_link": "Contact Us form",
       "variety_label": "Variety",
       "packaging_label": "Packaging",
       "weight_label": "Weight",
@@ -428,6 +431,8 @@
       "phone_placeholder": "e.g. +201001234567",
       "quantity_label": "Required Quantity (tons)",
       "quantity_placeholder": "e.g. 12.5",
+      "special_spec_label": "Special specification",
+      "special_spec_placeholder": "Add any custom specification for your order",
       "submit_request": "Send product request",
       "submit_loading": "Sending request...",
       "request_success": "Your request has been sent successfully. Our team will contact you soon.",

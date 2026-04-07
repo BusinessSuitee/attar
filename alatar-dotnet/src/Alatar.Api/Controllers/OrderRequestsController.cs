@@ -24,11 +24,12 @@ public sealed class OrderRequestsController(ISender sender) : ControllerBase
     {
         var command = new AddOrderRequestCommand(
             request.ProductId,
-            request.SelectedVariety,
-            request.SelectedPackaging,
-            request.SelectedWeight,
-            request.SelectedSize,
-            request.SelectedGrade,
+            request.SelectedVarieties,
+            request.SelectedPackagingOptions,
+            request.SelectedWeightOptions,
+            request.SelectedSizeOptions,
+            request.SelectedGradeOptions,
+            request.SpecialSpecification,
             request.RequesterName,
             request.PhoneNumber,
             request.QuantityTons);

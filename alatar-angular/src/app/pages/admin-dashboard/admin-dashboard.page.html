@@ -206,44 +206,39 @@
                   </td>
                   <td>
                     <div class="orders-options-list">
-                      <span
-                        class="orders-option-chip"
-                        *ngIf="orderRequest.selectedVariety as selectedVariety"
-                      >
+                      <span class="orders-option-chip" *ngFor="let selectedVariety of orderRequest.selectedVarieties">
                         صنف: {{ selectedVariety }}
                       </span>
                       <span
                         class="orders-option-chip"
-                        *ngIf="orderRequest.selectedPackaging as selectedPackaging"
+                        *ngFor="let selectedPackaging of orderRequest.selectedPackagingOptions"
                       >
                         تعبئة: {{ selectedPackaging }}
                       </span>
-                      <span
-                        class="orders-option-chip"
-                        *ngIf="orderRequest.selectedWeight as selectedWeight"
-                      >
+                      <span class="orders-option-chip" *ngFor="let selectedWeight of orderRequest.selectedWeightOptions">
                         وزن: {{ selectedWeight }}
                       </span>
-                      <span
-                        class="orders-option-chip"
-                        *ngIf="orderRequest.selectedSize as selectedSize"
-                      >
+                      <span class="orders-option-chip" *ngFor="let selectedSize of orderRequest.selectedSizeOptions">
                         مقاس: {{ selectedSize }}
+                      </span>
+                      <span class="orders-option-chip" *ngFor="let selectedGrade of orderRequest.selectedGradeOptions">
+                        درجة: {{ selectedGrade }}
                       </span>
                       <span
                         class="orders-option-chip"
-                        *ngIf="orderRequest.selectedGrade as selectedGrade"
+                        *ngIf="orderRequest.specialSpecification as specialSpecification"
                       >
-                        درجة: {{ selectedGrade }}
+                        مواصفة خاصة: {{ specialSpecification }}
                       </span>
                       <span
                         class="orders-option-chip orders-option-chip--empty"
                         *ngIf="
-                          !orderRequest.selectedVariety &&
-                          !orderRequest.selectedPackaging &&
-                          !orderRequest.selectedWeight &&
-                          !orderRequest.selectedSize &&
-                          !orderRequest.selectedGrade
+                          orderRequest.selectedVarieties.length === 0 &&
+                          orderRequest.selectedPackagingOptions.length === 0 &&
+                          orderRequest.selectedWeightOptions.length === 0 &&
+                          orderRequest.selectedSizeOptions.length === 0 &&
+                          orderRequest.selectedGradeOptions.length === 0 &&
+                          !orderRequest.specialSpecification
                         "
                       >
                         لا توجد تفاصيل إضافية
@@ -335,41 +330,39 @@
               </div>
 
               <div class="orders-options-list">
-                <span
-                  class="orders-option-chip"
-                  *ngIf="orderRequest.selectedVariety as selectedVariety"
-                >
+                <span class="orders-option-chip" *ngFor="let selectedVariety of orderRequest.selectedVarieties">
                   صنف: {{ selectedVariety }}
                 </span>
                 <span
                   class="orders-option-chip"
-                  *ngIf="orderRequest.selectedPackaging as selectedPackaging"
+                  *ngFor="let selectedPackaging of orderRequest.selectedPackagingOptions"
                 >
                   تعبئة: {{ selectedPackaging }}
                 </span>
-                <span
-                  class="orders-option-chip"
-                  *ngIf="orderRequest.selectedWeight as selectedWeight"
-                >
+                <span class="orders-option-chip" *ngFor="let selectedWeight of orderRequest.selectedWeightOptions">
                   وزن: {{ selectedWeight }}
                 </span>
-                <span class="orders-option-chip" *ngIf="orderRequest.selectedSize as selectedSize">
+                <span class="orders-option-chip" *ngFor="let selectedSize of orderRequest.selectedSizeOptions">
                   مقاس: {{ selectedSize }}
+                </span>
+                <span class="orders-option-chip" *ngFor="let selectedGrade of orderRequest.selectedGradeOptions">
+                  درجة: {{ selectedGrade }}
                 </span>
                 <span
                   class="orders-option-chip"
-                  *ngIf="orderRequest.selectedGrade as selectedGrade"
+                  *ngIf="orderRequest.specialSpecification as specialSpecification"
                 >
-                  درجة: {{ selectedGrade }}
+                  مواصفة خاصة: {{ specialSpecification }}
                 </span>
                 <span
                   class="orders-option-chip orders-option-chip--empty"
                   *ngIf="
-                    !orderRequest.selectedVariety &&
-                    !orderRequest.selectedPackaging &&
-                    !orderRequest.selectedWeight &&
-                    !orderRequest.selectedSize &&
-                    !orderRequest.selectedGrade
+                    orderRequest.selectedVarieties.length === 0 &&
+                    orderRequest.selectedPackagingOptions.length === 0 &&
+                    orderRequest.selectedWeightOptions.length === 0 &&
+                    orderRequest.selectedSizeOptions.length === 0 &&
+                    orderRequest.selectedGradeOptions.length === 0 &&
+                    !orderRequest.specialSpecification
                   "
                 >
                   لا توجد تفاصيل إضافية

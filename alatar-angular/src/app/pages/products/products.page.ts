@@ -33,18 +33,19 @@ interface SeasonOption {
 }
 
 type OrderSelectionField =
-  | 'selectedVariety'
-  | 'selectedPackaging'
-  | 'selectedWeight'
-  | 'selectedSize'
-  | 'selectedGrade';
+  | 'selectedVarieties'
+  | 'selectedPackagingOptions'
+  | 'selectedWeightOptions'
+  | 'selectedSizeOptions'
+  | 'selectedGradeOptions';
 
 interface OrderRequestFormState {
-  selectedVariety: string | null;
-  selectedPackaging: string | null;
-  selectedWeight: string | null;
-  selectedSize: string | null;
-  selectedGrade: string | null;
+  selectedVarieties: string[];
+  selectedPackagingOptions: string[];
+  selectedWeightOptions: string[];
+  selectedSizeOptions: string[];
+  selectedGradeOptions: string[];
+  specialSpecification: string;
   requesterName: string;
   phoneNumber: string;
   quantityTons: string;
@@ -76,11 +77,12 @@ export class ProductsPageComponent implements OnInit {
   readonly isLoading = signal(true);
   readonly loadError = signal('');
   readonly orderRequestForm = signal<OrderRequestFormState>({
-    selectedVariety: null,
-    selectedPackaging: null,
-    selectedWeight: null,
-    selectedSize: null,
-    selectedGrade: null,
+    selectedVarieties: [],
+    selectedPackagingOptions: [],
+    selectedWeightOptions: [],
+    selectedSizeOptions: [],
+    selectedGradeOptions: [],
+    specialSpecification: '',
     requesterName: '',
     phoneNumber: '',
     quantityTons: '1',
@@ -204,24 +206,28 @@ export class ProductsPageComponent implements OnInit {
     const form = this.orderRequestForm();
     const details: string[] = [];
 
-    if (form.selectedVariety) {
-      details.push(`الصنف: ${form.selectedVariety}`);
+    if (form.selectedVarieties.length > 0) {
+      details.push(`الصنف: ${form.selectedVarieties.join('، ')}`);
     }
 
-    if (form.selectedPackaging) {
-      details.push(`التعبئة: ${form.selectedPackaging}`);
+    if (form.selectedPackagingOptions.length > 0) {
+      details.push(`التعبئة: ${form.selectedPackagingOptions.join('، ')}`);
     }
 
-    if (form.selectedWeight) {
-      details.push(`الوزن: ${form.selectedWeight}`);
+    if (form.selectedWeightOptions.length > 0) {
+      details.push(`الوزن: ${form.selectedWeightOptions.join('، ')}`);
     }
 
-    if (form.selectedSize) {
-      details.push(`المقاس: ${form.selectedSize}`);
+    if (form.selectedSizeOptions.length > 0) {
+      details.push(`المقاس: ${form.selectedSizeOptions.join('، ')}`);
     }
 
-    if (form.selectedGrade) {
-      details.push(`الدرجة: ${form.selectedGrade}`);
+    if (form.selectedGradeOptions.length > 0) {
+      details.push(`الدرجة: ${form.selectedGradeOptions.join('، ')}`);
+    }
+
+    if (form.specialSpecification.trim()) {
+      details.push(`مواصفة خاصة: ${form.specialSpecification.trim()}`);
     }
 
     if (form.quantityTons.trim()) {
@@ -242,7 +248,7 @@ export class ProductsPageComponent implements OnInit {
   }
 
   onOrderTextFieldInput(
-    field: 'requesterName' | 'phoneNumber' | 'quantityTons',
+    field: 'requesterName' | 'phoneNumber' | 'quantityTons' | 'specialSpecification',
     value: string,
   ): void {
     this.orderRequestForm.update((current) => ({
@@ -254,9 +260,17 @@ export class ProductsPageComponent implements OnInit {
   }
 
   setOrderOption(field: OrderSelectionField, value: string): void {
+    const normalizedValue = value.trim();
+
+    if (!normalizedValue) {
+      return;
+    }
+
     this.orderRequestForm.update((current) => ({
       ...current,
-      [field]: current[field] === value ? null : value,
+      [field]: current[field].some((item) => this.sameText(item, normalizedValue))
+        ? current[field].filter((item) => !this.sameText(item, normalizedValue))
+        : [...current[field], normalizedValue],
     }));
 
     this.orderSubmitError.set('');
@@ -264,7 +278,7 @@ export class ProductsPageComponent implements OnInit {
   }
 
   isOrderOptionSelected(field: OrderSelectionField, value: string): boolean {
-    return this.orderRequestForm()[field] === value;
+    return this.orderRequestForm()[field].some((item) => this.sameText(item, value));
   }
 
   submitOrderRequest(): void {
@@ -292,11 +306,12 @@ export class ProductsPageComponent implements OnInit {
     this.orderRequestService
       .createOrderRequest({
         productId: product.id,
-        selectedVariety: form.selectedVariety,
-        selectedPackaging: form.selectedPackaging,
-        selectedWeight: form.selectedWeight,
-        selectedSize: form.selectedSize,
-        selectedGrade: form.selectedGrade,
+        selectedVarieties: [...form.selectedVarieties],
+        selectedPackagingOptions: [...form.selectedPackagingOptions],
+        selectedWeightOptions: [...form.selectedWeightOptions],
+        selectedSizeOptions: [...form.selectedSizeOptions],
+        selectedGradeOptions: [...form.selectedGradeOptions],
+        specialSpecification: this.normalizeOptionalValue(form.specialSpecification),
         requesterName: form.requesterName,
         phoneNumber: form.phoneNumber,
         quantityTons,
@@ -351,23 +366,23 @@ export class ProductsPageComponent implements OnInit {
       return this.translocoService.translate('products_page.modal.validation.quantity_invalid');
     }
 
-    if (product.varieties.length > 0 && !form.selectedVariety) {
+    if (product.varieties.length > 0 && form.selectedVarieties.length === 0) {
       return this.translocoService.translate('products_page.modal.validation.variety_required');
     }
 
-    if (product.packagingOptions.length > 0 && !form.selectedPackaging) {
+    if (product.packagingOptions.length > 0 && form.selectedPackagingOptions.length === 0) {
       return this.translocoService.translate('products_page.modal.validation.packaging_required');
     }
 
-    if (product.weightOptions.length > 0 && !form.selectedWeight) {
+    if (product.weightOptions.length > 0 && form.selectedWeightOptions.length === 0) {
       return this.translocoService.translate('products_page.modal.validation.weight_required');
     }
 
-    if (product.sizeOptions.length > 0 && !form.selectedSize) {
+    if (product.sizeOptions.length > 0 && form.selectedSizeOptions.length === 0) {
       return this.translocoService.translate('products_page.modal.validation.size_required');
     }
 
-    if (product.gradeOptions.length > 0 && !form.selectedGrade) {
+    if (product.gradeOptions.length > 0 && form.selectedGradeOptions.length === 0) {
       return this.translocoService.translate('products_page.modal.validation.grade_required');
     }
 
@@ -416,11 +431,12 @@ export class ProductsPageComponent implements OnInit {
 
   private resetOrderRequestForm(product: ProductListItem | null, preserveSuccess = false): void {
     this.orderRequestForm.set({
-      selectedVariety: this.defaultSelection(product?.varieties),
-      selectedPackaging: this.defaultSelection(product?.packagingOptions),
-      selectedWeight: this.defaultSelection(product?.weightOptions),
-      selectedSize: this.defaultSelection(product?.sizeOptions),
-      selectedGrade: this.defaultSelection(product?.gradeOptions),
+      selectedVarieties: this.defaultSelections(product?.varieties),
+      selectedPackagingOptions: this.defaultSelections(product?.packagingOptions),
+      selectedWeightOptions: this.defaultSelections(product?.weightOptions),
+      selectedSizeOptions: this.defaultSelections(product?.sizeOptions),
+      selectedGradeOptions: this.defaultSelections(product?.gradeOptions),
+      specialSpecification: '',
       requesterName: '',
       phoneNumber: '',
       quantityTons: '1',
@@ -433,12 +449,17 @@ export class ProductsPageComponent implements OnInit {
     }
   }
 
-  private defaultSelection(values: string[] | undefined): string | null {
+  private defaultSelections(values: string[] | undefined): string[] {
     if (!values || values.length !== 1) {
-      return null;
+      return [];
     }
 
-    return values[0] ?? null;
+    return values[0] ? [values[0]] : [];
+  }
+
+  private normalizeOptionalValue(value: string): string | null {
+    const normalized = value.trim();
+    return normalized === '' ? null : normalized;
   }
 
   private resolveOrderRequestError(error: unknown): string {

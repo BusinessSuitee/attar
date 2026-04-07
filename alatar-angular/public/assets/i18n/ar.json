@@ -416,6 +416,9 @@
     "modal": {
       "request_title": "اطلب هذا المنتج الآن",
       "request_desc": "اختر المواصفات المناسبة لك وأرسل طلبك مباشرة إلى فريق المبيعات.",
+      "multi_select_hint": "يمكنك اختيار أكثر من خيار",
+      "contact_alternative": "يمكنك أيضاً إرسال طلبك من خلال",
+      "contact_alternative_link": "نموذج تواصل معنا",
       "variety_label": "الصنف",
       "packaging_label": "التعبئة",
       "weight_label": "الوزن",
@@ -428,6 +431,8 @@
       "phone_placeholder": "مثال: +201001234567",
       "quantity_label": "الكمية المطلوبة (طن)",
       "quantity_placeholder": "مثال: 12.5",
+      "special_spec_label": "مواصفة خاصة",
+      "special_spec_placeholder": "اكتب أي مواصفات إضافية خاصة بالطلب",
       "submit_request": "إرسال طلب المنتج",
       "submit_loading": "جاري إرسال الطلب...",
       "request_success": "تم إرسال طلبك بنجاح. سيتواصل فريقنا معك قريباً.",

@@ -137,11 +137,12 @@ public static class DatabaseInitializer
                                    [RequesterName] NVARCHAR(200) NOT NULL,
                                    [PhoneNumber] NVARCHAR(64) NOT NULL,
                                    [QuantityTons] DECIMAL(18,2) NOT NULL,
-                                   [SelectedVariety] NVARCHAR(120) NULL,
-                                   [SelectedPackaging] NVARCHAR(120) NULL,
-                                   [SelectedWeight] NVARCHAR(120) NULL,
-                                   [SelectedSize] NVARCHAR(120) NULL,
-                                   [SelectedGrade] NVARCHAR(120) NULL,
+                                   [SelectedVariety] NVARCHAR(MAX) NULL,
+                                   [SelectedPackaging] NVARCHAR(MAX) NULL,
+                                   [SelectedWeight] NVARCHAR(MAX) NULL,
+                                   [SelectedSize] NVARCHAR(MAX) NULL,
+                                   [SelectedGrade] NVARCHAR(MAX) NULL,
+                                   [SpecialSpecification] NVARCHAR(2000) NULL,
                                    [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_OrderRequests_Status] DEFAULT N'New',
                                    [IsDeleted] BIT NOT NULL CONSTRAINT [DF_OrderRequests_IsDeleted] DEFAULT 0,
                                    [DeletedAtUtc] DATETIME2 NULL,
@@ -180,31 +181,97 @@ public static class DatabaseInitializer
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedVariety') IS NULL
                            BEGIN
                                ALTER TABLE [dbo].[OrderRequests]
-                               ADD [SelectedVariety] NVARCHAR(120) NULL;
+                               ADD [SelectedVariety] NVARCHAR(MAX) NULL;
                            END
 
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedPackaging') IS NULL
                            BEGIN
                                ALTER TABLE [dbo].[OrderRequests]
-                               ADD [SelectedPackaging] NVARCHAR(120) NULL;
+                               ADD [SelectedPackaging] NVARCHAR(MAX) NULL;
                            END
 
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedWeight') IS NULL
                            BEGIN
                                ALTER TABLE [dbo].[OrderRequests]
-                               ADD [SelectedWeight] NVARCHAR(120) NULL;
+                               ADD [SelectedWeight] NVARCHAR(MAX) NULL;
                            END
 
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedSize') IS NULL
                            BEGIN
                                ALTER TABLE [dbo].[OrderRequests]
-                               ADD [SelectedSize] NVARCHAR(120) NULL;
+                               ADD [SelectedSize] NVARCHAR(MAX) NULL;
                            END
 
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SelectedGrade') IS NULL
                            BEGIN
                                ALTER TABLE [dbo].[OrderRequests]
-                               ADD [SelectedGrade] NVARCHAR(120) NULL;
+                               ADD [SelectedGrade] NVARCHAR(MAX) NULL;
+                           END
+
+                           IF COL_LENGTH(N'[dbo].[OrderRequests]', N'SpecialSpecification') IS NULL
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ADD [SpecialSpecification] NVARCHAR(2000) NULL;
+                           END
+
+                           IF EXISTS (
+                               SELECT 1
+                               FROM sys.columns
+                               WHERE object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                                   AND name = N'SelectedVariety'
+                                   AND max_length <> -1
+                           )
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ALTER COLUMN [SelectedVariety] NVARCHAR(MAX) NULL;
+                           END
+
+                           IF EXISTS (
+                               SELECT 1
+                               FROM sys.columns
+                               WHERE object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                                   AND name = N'SelectedPackaging'
+                                   AND max_length <> -1
+                           )
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ALTER COLUMN [SelectedPackaging] NVARCHAR(MAX) NULL;
+                           END
+
+                           IF EXISTS (
+                               SELECT 1
+                               FROM sys.columns
+                               WHERE object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                                   AND name = N'SelectedWeight'
+                                   AND max_length <> -1
+                           )
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ALTER COLUMN [SelectedWeight] NVARCHAR(MAX) NULL;
+                           END
+
+                           IF EXISTS (
+                               SELECT 1
+                               FROM sys.columns
+                               WHERE object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                                   AND name = N'SelectedSize'
+                                   AND max_length <> -1
+                           )
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ALTER COLUMN [SelectedSize] NVARCHAR(MAX) NULL;
+                           END
+
+                           IF EXISTS (
+                               SELECT 1
+                               FROM sys.columns
+                               WHERE object_id = OBJECT_ID(N'[dbo].[OrderRequests]')
+                                   AND name = N'SelectedGrade'
+                                   AND max_length <> -1
+                           )
+                           BEGIN
+                               ALTER TABLE [dbo].[OrderRequests]
+                               ALTER COLUMN [SelectedGrade] NVARCHAR(MAX) NULL;
                            END
 
                            IF COL_LENGTH(N'[dbo].[OrderRequests]', N'Status') IS NULL

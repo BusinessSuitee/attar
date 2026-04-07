@@ -415,9 +415,16 @@
 
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
-                  <p class="mb-2 text-xs font-bold text-slate-600">
-                    {{ 'products_page.modal.variety_label' | transloco }}
-                  </p>
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <p class="m-0 text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.variety_label' | transloco }}
+                    </p>
+                    @if (product.varieties.length > 1) {
+                      <span class="text-[10px] font-medium text-primary/70">
+                        {{ 'products_page.modal.multi_select_hint' | transloco }}
+                      </span>
+                    }
+                  </div>
                   @if (product.varieties.length > 0) {
                     <div class="flex flex-wrap gap-2">
                       @for (variety of product.varieties; track variety) {
@@ -425,11 +432,11 @@
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
                           [ngClass]="
-                            isOrderOptionSelected('selectedVariety', variety)
+                            isOrderOptionSelected('selectedVarieties', variety)
                               ? 'border-primary bg-primary text-white'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
                           "
-                          (click)="setOrderOption('selectedVariety', variety)"
+                          (click)="setOrderOption('selectedVarieties', variety)"
                         >
                           {{ variety }}
                         </button>
@@ -443,9 +450,16 @@
                 </div>
 
                 <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
-                  <p class="mb-2 text-xs font-bold text-slate-600">
-                    {{ 'products_page.modal.packaging_label' | transloco }}
-                  </p>
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <p class="m-0 text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.packaging_label' | transloco }}
+                    </p>
+                    @if (product.packagingOptions.length > 1) {
+                      <span class="text-[10px] font-medium text-primary/70">
+                        {{ 'products_page.modal.multi_select_hint' | transloco }}
+                      </span>
+                    }
+                  </div>
                   @if (product.packagingOptions.length > 0) {
                     <div class="flex flex-wrap gap-2">
                       @for (packaging of product.packagingOptions; track packaging) {
@@ -453,11 +467,11 @@
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
                           [ngClass]="
-                            isOrderOptionSelected('selectedPackaging', packaging)
+                            isOrderOptionSelected('selectedPackagingOptions', packaging)
                               ? 'border-primary bg-primary text-white'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
                           "
-                          (click)="setOrderOption('selectedPackaging', packaging)"
+                          (click)="setOrderOption('selectedPackagingOptions', packaging)"
                         >
                           {{ packaging }}
                         </button>
@@ -471,9 +485,16 @@
                 </div>
 
                 <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
-                  <p class="mb-2 text-xs font-bold text-slate-600">
-                    {{ 'products_page.modal.weight_label' | transloco }}
-                  </p>
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <p class="m-0 text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.weight_label' | transloco }}
+                    </p>
+                    @if (product.weightOptions.length > 1) {
+                      <span class="text-[10px] font-medium text-primary/70">
+                        {{ 'products_page.modal.multi_select_hint' | transloco }}
+                      </span>
+                    }
+                  </div>
                   @if (product.weightOptions.length > 0) {
                     <div class="flex flex-wrap gap-2">
                       @for (weight of product.weightOptions; track weight) {
@@ -481,11 +502,11 @@
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
                           [ngClass]="
-                            isOrderOptionSelected('selectedWeight', weight)
+                            isOrderOptionSelected('selectedWeightOptions', weight)
                               ? 'border-primary bg-primary text-white'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
                           "
-                          (click)="setOrderOption('selectedWeight', weight)"
+                          (click)="setOrderOption('selectedWeightOptions', weight)"
                         >
                           {{ weight }}
                         </button>
@@ -499,9 +520,16 @@
                 </div>
 
                 <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
-                  <p class="mb-2 text-xs font-bold text-slate-600">
-                    {{ 'products_page.modal.size_label' | transloco }}
-                  </p>
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <p class="m-0 text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.size_label' | transloco }}
+                    </p>
+                    @if (product.sizeOptions.length > 1) {
+                      <span class="text-[10px] font-medium text-primary/70">
+                        {{ 'products_page.modal.multi_select_hint' | transloco }}
+                      </span>
+                    }
+                  </div>
                   @if (product.sizeOptions.length > 0) {
                     <div class="flex flex-wrap gap-2">
                       @for (size of product.sizeOptions; track size) {
@@ -509,11 +537,11 @@
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
                           [ngClass]="
-                            isOrderOptionSelected('selectedSize', size)
+                            isOrderOptionSelected('selectedSizeOptions', size)
                               ? 'border-primary bg-primary text-white'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
                           "
-                          (click)="setOrderOption('selectedSize', size)"
+                          (click)="setOrderOption('selectedSizeOptions', size)"
                         >
                           {{ size }}
                         </button>
@@ -529,9 +557,16 @@
                 <div
                   class="rounded-xl border border-solid border-slate-200 bg-white p-3 sm:col-span-2"
                 >
-                  <p class="mb-2 text-xs font-bold text-slate-600">
-                    {{ 'products_page.modal.grade_label' | transloco }}
-                  </p>
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <p class="m-0 text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.grade_label' | transloco }}
+                    </p>
+                    @if (product.gradeOptions.length > 1) {
+                      <span class="text-[10px] font-medium text-primary/70">
+                        {{ 'products_page.modal.multi_select_hint' | transloco }}
+                      </span>
+                    }
+                  </div>
                   @if (product.gradeOptions.length > 0) {
                     <div class="flex flex-wrap gap-2">
                       @for (grade of product.gradeOptions; track grade) {
@@ -539,11 +574,11 @@
                           type="button"
                           class="rounded-full border border-solid px-3 py-1 text-xs font-semibold transition-colors"
                           [ngClass]="
-                            isOrderOptionSelected('selectedGrade', grade)
+                            isOrderOptionSelected('selectedGradeOptions', grade)
                               ? 'border-primary bg-primary text-white'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-primary/40'
                           "
-                          (click)="setOrderOption('selectedGrade', grade)"
+                          (click)="setOrderOption('selectedGradeOptions', grade)"
                         >
                           {{ grade }}
                         </button>
@@ -602,6 +637,19 @@
                     (input)="onOrderTextFieldInput('quantityTons', $any($event.target).value)"
                   />
                 </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="mb-1 block text-xs font-bold text-slate-600">
+                    {{ 'products_page.modal.special_spec_label' | transloco }}
+                  </span>
+                  <textarea
+                    rows="3"
+                    class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                    [placeholder]="'products_page.modal.special_spec_placeholder' | transloco"
+                    [value]="orderRequestForm().specialSpecification"
+                    (input)="onOrderTextFieldInput('specialSpecification', $any($event.target).value)"
+                  ></textarea>
+                </label>
               </div>
 
               @if (orderSubmitError()) {
@@ -633,6 +681,19 @@
                   {{ 'products_page.modal.submit_request' | transloco }}
                 }
               </button>
+
+              <!-- Contact Us Alternative -->
+              <div class="mt-4 flex items-center justify-center gap-1.5 text-center">
+                <span class="material-symbols-outlined text-sm text-slate-400">alternate_email</span>
+                <p class="m-0 text-xs text-slate-500">
+                  {{ 'products_page.modal.contact_alternative' | transloco }}
+                  <a
+                    href="/contact"
+                    class="font-bold text-accent hover:underline"
+                    (click)="closeProduct()"
+                  >{{ 'products_page.modal.contact_alternative_link' | transloco }}</a>
+                </p>
+              </div>
             </div>
 
             <!-- Quality badges -->

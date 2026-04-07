@@ -175,19 +175,22 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
             .IsRequired();
 
         orderRequest.Property(x => x.SelectedVariety)
-            .HasMaxLength(120);
+            .HasColumnType("nvarchar(max)");
 
         orderRequest.Property(x => x.SelectedPackaging)
-            .HasMaxLength(120);
+            .HasColumnType("nvarchar(max)");
 
         orderRequest.Property(x => x.SelectedWeight)
-            .HasMaxLength(120);
+            .HasColumnType("nvarchar(max)");
 
         orderRequest.Property(x => x.SelectedSize)
-            .HasMaxLength(120);
+            .HasColumnType("nvarchar(max)");
 
         orderRequest.Property(x => x.SelectedGrade)
-            .HasMaxLength(120);
+            .HasColumnType("nvarchar(max)");
+
+        orderRequest.Property(x => x.SpecialSpecification)
+            .HasMaxLength(2000);
 
         orderRequest.Property(x => x.Status)
             .HasConversion<string>()
