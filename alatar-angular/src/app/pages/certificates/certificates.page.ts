@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
@@ -26,6 +27,18 @@ interface CertificateItem {
 })
 export class CertificatesPageComponent {
   readonly selectedCertIndex = signal<number | null>(null);
+  readonly selectedCertificate = computed(() => {
+    const index = this.selectedCertIndex();
+    return index === null ? null : (this.certificates[index] ?? null);
+  });
+  readonly selectedPdfSrc = computed<SafeResourceUrl | null>(() => {
+    const cert = this.selectedCertificate();
+    if (!cert || cert.type !== 'pdf') return null;
+
+    return this.buildSafePdfUrl(cert.src);
+  });
+
+  constructor(private readonly sanitizer: DomSanitizer) {}
 
   readonly certificates: CertificateItem[] = [
     {
@@ -96,5 +109,12 @@ export class CertificatesPageComponent {
     if (event.key === 'Escape') {
       this.closeCert();
     }
+  }
+
+  private buildSafePdfUrl(src: string): SafeResourceUrl {
+    const encodedSrc = encodeURI(src);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      `${encodedSrc}#toolbar=1&navpanes=0&view=FitH`,
+    );
   }
 }

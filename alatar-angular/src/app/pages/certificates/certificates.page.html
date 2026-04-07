@@ -267,7 +267,7 @@
   </main>
 
   <!-- ═══════════ LIGHTBOX ═══════════ -->
-  <ng-container *ngIf="selectedCertIndex() !== null">
+  <ng-container *ngIf="selectedCertificate() as selectedCert">
     <div
       class="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
       (click)="closeCert()"
@@ -278,10 +278,10 @@
       >
         <span class="material-symbols-outlined text-2xl">close</span>
       </button>
-      <ng-container *ngIf="certificates[selectedCertIndex()!].type === 'image'; else pdfPreview">
+      <ng-container *ngIf="selectedCert.type === 'image'; else pdfPreview">
         <img
-          [src]="certificates[selectedCertIndex()!].src"
-          [alt]="t(certificates[selectedCertIndex()!].nameKey)"
+          [src]="selectedCert.src"
+          [alt]="t(selectedCert.nameKey)"
           class="max-h-[90vh] max-w-[90vw] rounded-xl object-contain shadow-2xl"
           (click)="$event.stopPropagation()"
         />
@@ -292,11 +292,31 @@
           class="h-[90vh] w-[92vw] max-w-6xl overflow-hidden rounded-xl bg-white shadow-2xl"
           (click)="$event.stopPropagation()"
         >
-          <iframe
-            [src]="certificates[selectedCertIndex()!].src"
-            class="h-full w-full border-0"
-            [title]="t(certificates[selectedCertIndex()!].nameKey)"
-          ></iframe>
+          <ng-container *ngIf="selectedPdfSrc() as pdfSrc; else pdfFallback">
+            <iframe
+              [src]="pdfSrc"
+              class="h-full w-full border-0"
+              [title]="t(selectedCert.nameKey)"
+            ></iframe>
+          </ng-container>
+
+          <ng-template #pdfFallback>
+            <div
+              class="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center"
+            >
+              <span class="material-symbols-outlined text-5xl text-primary">picture_as_pdf</span>
+              <p class="text-slate-600">{{ t('view_pdf') }}</p>
+              <a
+                [href]="selectedCert.src"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white no-underline"
+              >
+                <span class="material-symbols-outlined text-lg">open_in_new</span>
+                {{ t('view_full') }}
+              </a>
+            </div>
+          </ng-template>
         </div>
       </ng-template>
     </div>
