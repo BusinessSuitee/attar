@@ -8,11 +8,20 @@
     <!-- ═══════════ HERO ═══════════ -->
     <section class="relative overflow-hidden bg-slate-900 py-20 lg:py-28">
       <!-- Decorative bg -->
-      <div class="absolute inset-0 z-0 bg-gradient-to-br from-slate-900 via-primary/30 to-slate-900"></div>
-      <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+      <div
+        class="absolute inset-0 z-0 bg-gradient-to-br from-slate-900 via-primary/30 to-slate-900"
+      ></div>
+      <div
+        class="absolute inset-0 z-0 opacity-10"
+        style="
+          background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+        "
+      ></div>
 
       <div class="relative z-10 mx-auto max-w-5xl px-6 text-center">
-        <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-accent/20 px-5 py-2 text-sm font-bold text-accent">
+        <div
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-accent/20 px-5 py-2 text-sm font-bold text-accent"
+        >
           <span class="material-symbols-outlined text-lg">workspace_premium</span>
           {{ t('hero_badge') }}
         </div>
@@ -33,7 +42,9 @@
     <!-- ═══════════ STATS STRIP ═══════════ -->
     <section class="bg-primary py-10 text-white">
       <div class="mx-auto max-w-6xl px-6">
-        <div class="grid grid-cols-2 gap-8 text-center md:grid-cols-4 divide-x divide-white/20 divide-x-reverse">
+        <div
+          class="grid grid-cols-2 gap-8 text-center md:grid-cols-4 divide-x divide-white/20 divide-x-reverse"
+        >
           <div appScrollReveal="up">
             <span class="material-symbols-outlined mb-2 text-3xl opacity-80">verified</span>
             <h3 class="text-3xl font-black">5+</h3>
@@ -62,7 +73,9 @@
     <section class="bg-slate-50 py-16 lg:py-24">
       <div class="mx-auto max-w-6xl px-6">
         <div class="mb-12 text-center" appScrollReveal="up">
-          <span class="mb-3 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
+          <span
+            class="mb-3 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary"
+          >
             {{ t('section_badge') }}
           </span>
           <h2 class="text-3xl font-black text-slate-900 md:text-4xl">
@@ -92,8 +105,12 @@
                     [alt]="t(cert.nameKey)"
                     class="h-full w-auto max-w-full rounded-lg object-contain shadow-lg transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div class="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/20 group-hover:opacity-100">
-                    <span class="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-lg">
+                  <div
+                    class="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/20 group-hover:opacity-100"
+                  >
+                    <span
+                      class="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-lg"
+                    >
                       <span class="material-symbols-outlined text-lg">zoom_in</span>
                       {{ t('view_full') }}
                     </span>
@@ -102,10 +119,14 @@
 
                 <ng-container *ngIf="cert.type === 'pdf'">
                   <div class="flex flex-col items-center gap-4 text-center">
-                    <div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                    <div
+                      class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white"
+                    >
                       <span class="material-symbols-outlined text-4xl">{{ cert.icon }}</span>
                     </div>
-                    <span class="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                    <span
+                      class="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-white"
+                    >
                       <span class="material-symbols-outlined text-lg">open_in_new</span>
                       {{ t('view_pdf') }}
                     </span>
@@ -115,7 +136,9 @@
                 <!-- Type Badge -->
                 <span
                   class="absolute left-3 top-3 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider shadow"
-                  [ngClass]="cert.type === 'image' ? 'bg-primary text-white' : 'bg-accent text-white'"
+                  [ngClass]="
+                    cert.type === 'image' ? 'bg-primary text-white' : 'bg-accent text-white'
+                  "
                 >
                   {{ cert.type === 'image' ? 'IMAGE' : 'PDF' }}
                 </span>
@@ -124,12 +147,16 @@
               <!-- Info -->
               <div class="flex flex-1 flex-col p-5">
                 <div class="mb-2 flex items-center gap-2">
-                  <span class="material-symbols-outlined text-xl text-primary">{{ cert.icon }}</span>
+                  <span class="material-symbols-outlined text-xl text-primary">{{
+                    cert.icon
+                  }}</span>
                   <h3 class="text-lg font-black text-slate-900">{{ t(cert.nameKey) }}</h3>
                 </div>
                 <p class="mb-1 text-sm font-semibold text-slate-500">{{ t(cert.issuerKey) }}</p>
                 <p class="mb-3 text-xs leading-relaxed text-slate-400">{{ t(cert.scopeKey) }}</p>
-                <div class="mt-auto flex items-center gap-1.5 border-t border-slate-100 pt-3 text-xs font-medium text-slate-400">
+                <div
+                  class="mt-auto flex items-center gap-1.5 border-t border-slate-100 pt-3 text-xs font-medium text-slate-400"
+                >
                   <span class="material-symbols-outlined text-sm">event</span>
                   {{ t(cert.dateKey) }}
                 </div>
@@ -154,9 +181,10 @@
             class="group flex flex-col items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-6 text-center transition-all hover:border-primary/30 hover:shadow-md"
             appScrollReveal="up"
           >
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-xs font-black text-white shadow-lg whitespace-pre-line group-hover:scale-110 transition-transform">
-              GLOBAL
-G.A.P
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-xs font-black text-white shadow-lg whitespace-pre-line group-hover:scale-110 transition-transform"
+            >
+              GLOBAL G.A.P
             </div>
             <h4 class="text-sm font-black text-slate-900">{{ t('badge_gap.name') }}</h4>
             <p class="text-xs leading-relaxed text-slate-500">{{ t('badge_gap.desc') }}</p>
@@ -167,7 +195,9 @@ G.A.P
             appScrollReveal="up"
             revealDelay="80"
           >
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-sm font-black text-white shadow-lg group-hover:scale-110 transition-transform">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-sm font-black text-white shadow-lg group-hover:scale-110 transition-transform"
+            >
               HACCP
             </div>
             <h4 class="text-sm font-black text-slate-900">{{ t('badge_haccp.name') }}</h4>
@@ -179,9 +209,10 @@ G.A.P
             appScrollReveal="up"
             revealDelay="160"
           >
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-xs font-black text-white shadow-lg whitespace-pre-line group-hover:scale-110 transition-transform">
-              ISO
-22000
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-xs font-black text-white shadow-lg whitespace-pre-line group-hover:scale-110 transition-transform"
+            >
+              ISO 22000
             </div>
             <h4 class="text-sm font-black text-slate-900">{{ t('badge_iso.name') }}</h4>
             <p class="text-xs leading-relaxed text-slate-500">{{ t('badge_iso.desc') }}</p>
@@ -192,7 +223,9 @@ G.A.P
             appScrollReveal="up"
             revealDelay="240"
           >
-            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-sm font-black text-white shadow-lg group-hover:scale-110 transition-transform">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-center text-sm font-black text-white shadow-lg group-hover:scale-110 transition-transform"
+            >
               BRCGS
             </div>
             <h4 class="text-sm font-black text-slate-900">{{ t('badge_brcgs.name') }}</h4>
