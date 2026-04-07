@@ -15,6 +15,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ProductListItem, ProductService } from '../../core/products/product.service';
 import { API_BASE_URL } from '../../core/config/api-base-url.token';
 import { OrderRequestService } from '../../core/orders/order-request.service';
+import { ContactService, ContactUiServiceType } from '../../core/contacts/contact.service';
 import { finalize, retry, throwError, timer } from 'rxjs';
 
 type CategoryFilter = 'all' | 'Fruit' | 'Vegetable' | 'Frozen';
@@ -51,6 +52,20 @@ interface OrderRequestFormState {
   quantityTons: string;
 }
 
+type ModalFormTab = 'product_request' | 'contact_us';
+
+interface ContactFormState {
+  fullName: string;
+  phoneNumber: string;
+  companyName: string;
+  serviceType: ContactUiServiceType;
+  country: string;
+  crop: string;
+  quantityTons: string;
+  deliveryWindow: string;
+  notes: string;
+}
+
 @Component({
   selector: 'app-products-page',
   standalone: true,
@@ -62,6 +77,7 @@ interface OrderRequestFormState {
 export class ProductsPageComponent implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly orderRequestService = inject(OrderRequestService);
+  private readonly contactService = inject(ContactService);
   private readonly apiBaseUrl = inject(API_BASE_URL);
   private readonly destroyRef = inject(DestroyRef);
   private readonly translocoService = inject(TranslocoService);
@@ -90,6 +106,25 @@ export class ProductsPageComponent implements OnInit {
   readonly isSubmittingOrderRequest = signal(false);
   readonly orderSubmitError = signal('');
   readonly orderSubmitSuccess = signal('');
+
+  readonly activeModalTab = signal<ModalFormTab>('product_request');
+  readonly contactForm = signal<ContactFormState>({
+    fullName: '',
+    phoneNumber: '',
+    companyName: '',
+    serviceType: 'local',
+    country: '',
+    crop: '',
+    quantityTons: '',
+    deliveryWindow: '',
+    notes: '',
+  });
+  readonly isSubmittingContact = signal(false);
+  readonly contactSubmitError = signal('');
+  readonly contactSubmitSuccess = signal('');
+
+  readonly countries = ['egypt', 'saudi', 'uae', 'kuwait', 'russia', 'eu'];
+  readonly crops = ['oranges', 'grapes', 'mangoes', 'strawberries', 'potatoes', 'onions', 'pomegranates'];
 
   readonly filterOptions: FilterOption[] = [
     { id: 'all', labelKey: 'products_page.filters.all', icon: 'apps' },
@@ -152,13 +187,17 @@ export class ProductsPageComponent implements OnInit {
   openProduct(product: ProductListItem): void {
     this.selectedProduct.set(product);
     this.activeImageIndex.set(0);
+    this.activeModalTab.set('product_request');
     this.resetOrderRequestForm(product);
+    this.resetContactForm(product);
     if (this.isBrowser) document.body.style.overflow = 'hidden';
   }
 
   closeProduct(): void {
     this.selectedProduct.set(null);
+    this.activeModalTab.set('product_request');
     this.resetOrderRequestForm(null);
+    this.resetContactForm(null);
     if (this.isBrowser) document.body.style.overflow = '';
   }
 
@@ -555,5 +594,113 @@ export class ProductsPageComponent implements OnInit {
 
     const normalized = detail.trim();
     return normalized === '' ? null : normalized;
+  }
+
+  setModalTab(tab: ModalFormTab): void {
+    this.activeModalTab.set(tab);
+  }
+
+  onContactFieldInput(field: keyof ContactFormState, value: string): void {
+    this.contactForm.update((current) => ({ ...current, [field]: value }));
+    this.contactSubmitError.set('');
+    this.contactSubmitSuccess.set('');
+  }
+
+  submitContactRequest(): void {
+    if (this.isSubmittingContact()) return;
+
+    const form = this.contactForm();
+    const product = this.selectedProduct();
+    const validationMessage = this.validateContactForm(form);
+
+    if (validationMessage) {
+      this.contactSubmitError.set(validationMessage);
+      this.contactSubmitSuccess.set('');
+      return;
+    }
+
+    const quantityRaw = form.quantityTons.trim();
+    const quantityTons = quantityRaw ? Number.parseFloat(quantityRaw) : null;
+
+    this.isSubmittingContact.set(true);
+    this.contactSubmitError.set('');
+    this.contactSubmitSuccess.set('');
+
+    this.contactService
+      .createContact({
+        fullName: form.fullName.trim(),
+        phoneNumber: form.phoneNumber.trim(),
+        serviceType: form.serviceType,
+        companyName: this.normalizeOptionalValue(form.companyName),
+        country: this.normalizeOptionalValue(form.country),
+        crop: this.normalizeOptionalValue(form.crop),
+        quantityTons,
+        deliveryWindow: this.normalizeOptionalValue(form.deliveryWindow),
+        notes: this.normalizeOptionalValue(form.notes),
+      })
+      .pipe(
+        finalize(() => this.isSubmittingContact.set(false)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          this.contactSubmitSuccess.set(
+            this.translocoService.translate('products_page.modal.contact_success'),
+          );
+          this.contactSubmitError.set('');
+          this.resetContactForm(product, true);
+        },
+        error: () => {
+          this.contactSubmitError.set(
+            this.translocoService.translate('products_page.modal.contact_error'),
+          );
+          this.contactSubmitSuccess.set('');
+        },
+      });
+  }
+
+  private validateContactForm(form: ContactFormState): string | null {
+    const fullName = form.fullName.trim();
+    const phoneNumber = form.phoneNumber.trim();
+
+    if (!fullName) {
+      return this.translocoService.translate('products_page.modal.contact_validation.name_required');
+    }
+    if (fullName.length < 3) {
+      return this.translocoService.translate('products_page.modal.contact_validation.name_min');
+    }
+    if (!phoneNumber) {
+      return this.translocoService.translate('products_page.modal.contact_validation.phone_required');
+    }
+    if (phoneNumber.length < 7) {
+      return this.translocoService.translate('products_page.modal.contact_validation.phone_min');
+    }
+    if (form.serviceType === 'export' && !form.country.trim()) {
+      return this.translocoService.translate('products_page.modal.contact_validation.country_required');
+    }
+    const quantityRaw = form.quantityTons.trim();
+    if (quantityRaw && Number.isNaN(Number.parseFloat(quantityRaw))) {
+      return this.translocoService.translate('products_page.modal.contact_validation.quantity_invalid');
+    }
+    return null;
+  }
+
+  private resetContactForm(product: ProductListItem | null, preserveSuccess = false): void {
+    const productName = product ? this.displayPrimaryName(product) : '';
+    this.contactForm.set({
+      fullName: '',
+      phoneNumber: '',
+      companyName: '',
+      serviceType: 'local',
+      country: '',
+      crop: productName,
+      quantityTons: '',
+      deliveryWindow: '',
+      notes: '',
+    });
+    this.contactSubmitError.set('');
+    if (!preserveSuccess) {
+      this.contactSubmitSuccess.set('');
+    }
   }
 }

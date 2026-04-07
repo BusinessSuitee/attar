@@ -404,14 +404,47 @@
             <div
               class="mt-7 rounded-2xl border border-solid border-slate-200 bg-slate-50/70 p-4 sm:p-5"
             >
-              <div class="mb-4">
-                <h3 class="mb-1 text-lg font-black text-slate-900">
-                  {{ 'products_page.modal.request_title' | transloco }}
-                </h3>
-                <p class="m-0 text-sm text-slate-600">
-                  {{ 'products_page.modal.request_desc' | transloco }}
-                </p>
+              <!-- Tab Bar -->
+              <div class="mb-4 flex rounded-xl bg-slate-200 p-1 gap-1">
+                <button
+                  type="button"
+                  class="flex-1 rounded-lg py-2 text-xs font-bold transition-all"
+                  [ngClass]="
+                    activeModalTab() === 'product_request'
+                      ? 'bg-white text-primary shadow-sm'
+                      : 'text-slate-500 hover:text-slate-700'
+                  "
+                  (click)="setModalTab('product_request')"
+                >
+                  <span class="flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">inventory_2</span>
+                    {{ 'products_page.modal.tab_product_request' | transloco }}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  class="flex-1 rounded-lg py-2 text-xs font-bold transition-all"
+                  [ngClass]="
+                    activeModalTab() === 'contact_us'
+                      ? 'bg-white text-primary shadow-sm'
+                      : 'text-slate-500 hover:text-slate-700'
+                  "
+                  (click)="setModalTab('contact_us')"
+                >
+                  <span class="flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">contact_mail</span>
+                    {{ 'products_page.modal.tab_contact_us' | transloco }}
+                  </span>
+                </button>
               </div>
+
+              <!-- ── Tab: Product Request ── -->
+              @if (activeModalTab() === 'product_request') {
+                <div class="mb-3">
+                  <p class="m-0 text-sm text-slate-600">
+                    {{ 'products_page.modal.request_desc' | transloco }}
+                  </p>
+                </div>
 
               <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div class="rounded-xl border border-solid border-slate-200 bg-white p-3">
@@ -684,21 +717,201 @@
                 }
               </button>
 
-              <!-- Contact Us Alternative -->
-              <div class="mt-4 flex items-center justify-center gap-1.5 text-center">
-                <span class="material-symbols-outlined text-sm text-slate-400"
-                  >alternate_email</span
-                >
-                <p class="m-0 text-xs text-slate-500">
-                  {{ 'products_page.modal.contact_alternative' | transloco }}
-                  <a
-                    href="/contact"
-                    class="font-bold text-accent hover:underline"
-                    (click)="closeProduct()"
-                    >{{ 'products_page.modal.contact_alternative_link' | transloco }}</a
+              } <!-- end @if product_request -->
+
+              <!-- ── Tab: Contact Us ── -->
+              @if (activeModalTab() === 'contact_us') {
+                <div class="mb-3">
+                  <p class="m-0 text-sm text-slate-600">
+                    {{ 'products_page.modal.contact_form_desc' | transloco }}
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <label class="block">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_full_name' | transloco }}
+                      <span class="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.contact_full_name_ph' | transloco"
+                      [value]="contactForm().fullName"
+                      (input)="onContactFieldInput('fullName', $any($event.target).value)"
+                    />
+                  </label>
+
+                  <label class="block">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_phone' | transloco }}
+                      <span class="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="tel"
+                      dir="ltr"
+                      inputmode="tel"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.phone_placeholder' | transloco"
+                      [value]="contactForm().phoneNumber"
+                      (input)="onContactFieldInput('phoneNumber', $any($event.target).value)"
+                    />
+                  </label>
+
+                  <label class="block sm:col-span-2">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_company' | transloco }}
+                    </span>
+                    <input
+                      type="text"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.contact_company_ph' | transloco"
+                      [value]="contactForm().companyName"
+                      (input)="onContactFieldInput('companyName', $any($event.target).value)"
+                    />
+                  </label>
+
+                  <div class="block sm:col-span-2">
+                    <span class="mb-2 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_service_type' | transloco }}
+                    </span>
+                    <div class="flex gap-4">
+                      <label class="flex cursor-pointer items-center gap-2">
+                        <input
+                          type="radio"
+                          name="contact-service-type"
+                          value="local"
+                          class="accent-primary"
+                          [checked]="contactForm().serviceType === 'local'"
+                          (change)="onContactFieldInput('serviceType', 'local')"
+                        />
+                        <span class="text-sm font-medium text-slate-700">
+                          {{ 'products_page.modal.contact_service_local' | transloco }}
+                        </span>
+                      </label>
+                      <label class="flex cursor-pointer items-center gap-2">
+                        <input
+                          type="radio"
+                          name="contact-service-type"
+                          value="export"
+                          class="accent-primary"
+                          [checked]="contactForm().serviceType === 'export'"
+                          (change)="onContactFieldInput('serviceType', 'export')"
+                        />
+                        <span class="text-sm font-medium text-slate-700">
+                          {{ 'products_page.modal.contact_service_export' | transloco }}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  @if (contactForm().serviceType === 'export') {
+                    <label class="block sm:col-span-2">
+                      <span class="mb-1 block text-xs font-bold text-slate-600">
+                        {{ 'products_page.modal.contact_country' | transloco }}
+                        <span class="text-red-500">*</span>
+                      </span>
+                      <select
+                        class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                        [value]="contactForm().country"
+                        (change)="onContactFieldInput('country', $any($event.target).value)"
+                      >
+                        <option value="">{{ 'products_page.modal.contact_country_ph' | transloco }}</option>
+                        @for (c of countries; track c) {
+                          <option [value]="c">{{ 'contact_page.countries.' + c | transloco }}</option>
+                        }
+                      </select>
+                    </label>
+                  }
+
+                  <label class="block">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_crop' | transloco }}
+                    </span>
+                    <input
+                      type="text"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.contact_crop_ph' | transloco"
+                      [value]="contactForm().crop"
+                      (input)="onContactFieldInput('crop', $any($event.target).value)"
+                    />
+                  </label>
+
+                  <label class="block">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_quantity' | transloco }}
+                    </span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      dir="ltr"
+                      inputmode="decimal"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.contact_quantity_ph' | transloco"
+                      [value]="contactForm().quantityTons"
+                      (input)="onContactFieldInput('quantityTons', $any($event.target).value)"
+                    />
+                  </label>
+
+                  <label class="block sm:col-span-2">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_delivery_window' | transloco }}
+                    </span>
+                    <input
+                      type="text"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.contact_delivery_window_ph' | transloco"
+                      [value]="contactForm().deliveryWindow"
+                      (input)="onContactFieldInput('deliveryWindow', $any($event.target).value)"
+                    />
+                  </label>
+
+                  <label class="block sm:col-span-2">
+                    <span class="mb-1 block text-xs font-bold text-slate-600">
+                      {{ 'products_page.modal.contact_notes' | transloco }}
+                    </span>
+                    <textarea
+                      rows="3"
+                      class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
+                      [placeholder]="'products_page.modal.contact_notes_ph' | transloco"
+                      [value]="contactForm().notes"
+                      (input)="onContactFieldInput('notes', $any($event.target).value)"
+                    ></textarea>
+                  </label>
+                </div>
+
+                @if (contactSubmitError()) {
+                  <div
+                    class="mt-3 rounded-xl border border-solid border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600"
                   >
-                </p>
-              </div>
+                    {{ contactSubmitError() }}
+                  </div>
+                }
+
+                @if (!contactSubmitError() && contactSubmitSuccess()) {
+                  <div
+                    class="mt-3 rounded-xl border border-solid border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-700"
+                  >
+                    {{ contactSubmitSuccess() }}
+                  </div>
+                }
+
+                <button
+                  type="button"
+                  class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border-none bg-primary px-4 py-3 text-sm font-bold text-white shadow transition-all hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                  [disabled]="isSubmittingContact()"
+                  (click)="submitContactRequest()"
+                >
+                  <span class="material-symbols-outlined text-lg">contact_mail</span>
+                  @if (isSubmittingContact()) {
+                    {{ 'products_page.modal.contact_submit_loading' | transloco }}
+                  } @else {
+                    {{ 'products_page.modal.contact_submit' | transloco }}
+                  }
+                </button>
+              } <!-- end @if contact_us -->
+
             </div>
 
             <!-- Quality badges -->
