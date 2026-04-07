@@ -312,7 +312,9 @@
           class="flex h-[96dvh] w-[98vw] max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
           (click)="$event.stopPropagation()"
         >
-          <div class="flex flex-1 items-center justify-center overflow-hidden bg-slate-100 p-2 sm:p-4">
+          <div
+            class="flex flex-1 items-center justify-center overflow-hidden bg-slate-100 p-2 sm:p-4"
+          >
             <ng-container *ngIf="selectedPdfPreview() as preview; else pdfFallback">
               <img
                 [src]="preview"
