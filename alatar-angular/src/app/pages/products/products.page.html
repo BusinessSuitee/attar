@@ -647,7 +647,9 @@
                     class="w-full rounded-xl border border-solid border-slate-300 px-3 py-2 text-sm text-slate-900 outline-none transition-colors focus:border-primary"
                     [placeholder]="'products_page.modal.special_spec_placeholder' | transloco"
                     [value]="orderRequestForm().specialSpecification"
-                    (input)="onOrderTextFieldInput('specialSpecification', $any($event.target).value)"
+                    (input)="
+                      onOrderTextFieldInput('specialSpecification', $any($event.target).value)
+                    "
                   ></textarea>
                 </label>
               </div>
@@ -684,14 +686,17 @@
 
               <!-- Contact Us Alternative -->
               <div class="mt-4 flex items-center justify-center gap-1.5 text-center">
-                <span class="material-symbols-outlined text-sm text-slate-400">alternate_email</span>
+                <span class="material-symbols-outlined text-sm text-slate-400"
+                  >alternate_email</span
+                >
                 <p class="m-0 text-xs text-slate-500">
                   {{ 'products_page.modal.contact_alternative' | transloco }}
                   <a
                     href="/contact"
                     class="font-bold text-accent hover:underline"
                     (click)="closeProduct()"
-                  >{{ 'products_page.modal.contact_alternative_link' | transloco }}</a>
+                    >{{ 'products_page.modal.contact_alternative_link' | transloco }}</a
+                  >
                 </p>
               </div>
             </div>

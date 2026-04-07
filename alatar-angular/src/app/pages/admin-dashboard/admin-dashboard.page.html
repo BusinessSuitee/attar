@@ -206,7 +206,10 @@
                   </td>
                   <td>
                     <div class="orders-options-list">
-                      <span class="orders-option-chip" *ngFor="let selectedVariety of orderRequest.selectedVarieties">
+                      <span
+                        class="orders-option-chip"
+                        *ngFor="let selectedVariety of orderRequest.selectedVarieties"
+                      >
                         صنف: {{ selectedVariety }}
                       </span>
                       <span
@@ -215,13 +218,22 @@
                       >
                         تعبئة: {{ selectedPackaging }}
                       </span>
-                      <span class="orders-option-chip" *ngFor="let selectedWeight of orderRequest.selectedWeightOptions">
+                      <span
+                        class="orders-option-chip"
+                        *ngFor="let selectedWeight of orderRequest.selectedWeightOptions"
+                      >
                         وزن: {{ selectedWeight }}
                       </span>
-                      <span class="orders-option-chip" *ngFor="let selectedSize of orderRequest.selectedSizeOptions">
+                      <span
+                        class="orders-option-chip"
+                        *ngFor="let selectedSize of orderRequest.selectedSizeOptions"
+                      >
                         مقاس: {{ selectedSize }}
                       </span>
-                      <span class="orders-option-chip" *ngFor="let selectedGrade of orderRequest.selectedGradeOptions">
+                      <span
+                        class="orders-option-chip"
+                        *ngFor="let selectedGrade of orderRequest.selectedGradeOptions"
+                      >
                         درجة: {{ selectedGrade }}
                       </span>
                       <span
@@ -330,7 +342,10 @@
               </div>
 
               <div class="orders-options-list">
-                <span class="orders-option-chip" *ngFor="let selectedVariety of orderRequest.selectedVarieties">
+                <span
+                  class="orders-option-chip"
+                  *ngFor="let selectedVariety of orderRequest.selectedVarieties"
+                >
                   صنف: {{ selectedVariety }}
                 </span>
                 <span
@@ -339,13 +354,22 @@
                 >
                   تعبئة: {{ selectedPackaging }}
                 </span>
-                <span class="orders-option-chip" *ngFor="let selectedWeight of orderRequest.selectedWeightOptions">
+                <span
+                  class="orders-option-chip"
+                  *ngFor="let selectedWeight of orderRequest.selectedWeightOptions"
+                >
                   وزن: {{ selectedWeight }}
                 </span>
-                <span class="orders-option-chip" *ngFor="let selectedSize of orderRequest.selectedSizeOptions">
+                <span
+                  class="orders-option-chip"
+                  *ngFor="let selectedSize of orderRequest.selectedSizeOptions"
+                >
                   مقاس: {{ selectedSize }}
                 </span>
-                <span class="orders-option-chip" *ngFor="let selectedGrade of orderRequest.selectedGradeOptions">
+                <span
+                  class="orders-option-chip"
+                  *ngFor="let selectedGrade of orderRequest.selectedGradeOptions"
+                >
                   درجة: {{ selectedGrade }}
                 </span>
                 <span
