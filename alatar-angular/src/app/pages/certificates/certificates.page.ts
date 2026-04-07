@@ -148,7 +148,7 @@ export class CertificatesPageComponent {
       pdfjs = await import('pdfjs-dist');
       pdfjs.GlobalWorkerOptions.workerSrc = new URL(
         'pdfjs-dist/build/pdf.worker.min.mjs',
-        import.meta.url,
+        document.baseURI,
       ).toString();
     } catch (error) {
       console.error('Failed to initialize PDF preview library.', error);
