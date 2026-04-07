@@ -309,15 +309,15 @@
 
       <ng-template #pdfPreview>
         <div
-          class="flex h-[90vh] w-[92vw] max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
+          class="flex h-[96dvh] w-[98vw] max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
           (click)="$event.stopPropagation()"
         >
-          <div class="flex-1 overflow-auto bg-slate-100 p-3 sm:p-6">
+          <div class="flex flex-1 items-center justify-center overflow-hidden bg-slate-100 p-2 sm:p-4">
             <ng-container *ngIf="selectedPdfPreview() as preview; else pdfFallback">
               <img
                 [src]="preview"
                 [alt]="t(selectedCert.nameKey)"
-                class="mx-auto h-auto w-full max-w-3xl rounded-lg border border-slate-200 bg-white object-contain shadow-xl"
+                class="h-full w-full rounded-lg border border-slate-200 bg-white object-contain shadow-xl"
               />
             </ng-container>
 
