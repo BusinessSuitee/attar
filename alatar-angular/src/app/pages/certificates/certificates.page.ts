@@ -1,10 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, computed, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  PLATFORM_ID,
+  computed,
+  signal,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
+
+type PdfJsModule = typeof import('pdfjs-dist');
 
 interface CertificateItem {
   id: number;
@@ -27,18 +37,28 @@ interface CertificateItem {
 })
 export class CertificatesPageComponent {
   readonly selectedCertIndex = signal<number | null>(null);
+  readonly pdfPreviewBySrc = signal<Record<string, string | null>>({});
   readonly selectedCertificate = computed(() => {
     const index = this.selectedCertIndex();
     return index === null ? null : (this.certificates[index] ?? null);
   });
-  readonly selectedPdfSrc = computed<SafeResourceUrl | null>(() => {
+  readonly selectedPdfPreview = computed<string | null>(() => {
     const cert = this.selectedCertificate();
     if (!cert || cert.type !== 'pdf') return null;
 
-    return this.buildSafePdfUrl(cert.src);
+    return this.pdfPreviewBySrc()[cert.src] ?? null;
   });
 
-  constructor(private readonly sanitizer: DomSanitizer) {}
+  private readonly isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  ngOnInit(): void {
+    if (!this.isBrowser) return;
+    void this.generatePdfPreviews();
+  }
 
   readonly certificates: CertificateItem[] = [
     {
@@ -103,6 +123,14 @@ export class CertificatesPageComponent {
     document.body.style.overflow = '';
   }
 
+  pdfPreviewFor(src: string): string | null {
+    return this.pdfPreviewBySrc()[src] ?? null;
+  }
+
+  pdfAssetUrl(src: string): string {
+    return encodeURI(src);
+  }
+
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent): void {
     if (this.selectedCertIndex() === null) return;
@@ -111,10 +139,54 @@ export class CertificatesPageComponent {
     }
   }
 
-  private buildSafePdfUrl(src: string): SafeResourceUrl {
-    const encodedSrc = encodeURI(src);
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `${encodedSrc}#toolbar=1&navpanes=0&view=FitH`,
-    );
+  private async generatePdfPreviews(): Promise<void> {
+    const pdfCertificates = this.certificates.filter((cert) => cert.type === 'pdf');
+    if (!pdfCertificates.length) return;
+
+    let pdfjs: PdfJsModule;
+    try {
+      pdfjs = await import('pdfjs-dist');
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+        'pdfjs-dist/build/pdf.worker.min.mjs',
+        import.meta.url,
+      ).toString();
+    } catch (error) {
+      console.error('Failed to initialize PDF preview library.', error);
+      return;
+    }
+
+    for (const cert of pdfCertificates) {
+      const preview = await this.renderFirstPdfPage(cert.src, pdfjs);
+      this.pdfPreviewBySrc.update((map) => ({ ...map, [cert.src]: preview }));
+    }
+  }
+
+  private async renderFirstPdfPage(src: string, pdfjs: PdfJsModule): Promise<string | null> {
+    try {
+      const loadingTask = pdfjs.getDocument({ url: encodeURI(src) });
+      const pdf = await loadingTask.promise;
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 1.25 });
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      if (!context) {
+        await pdf.destroy();
+        return null;
+      }
+
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+
+      await page.render({ canvas, canvasContext: context, viewport }).promise;
+
+      const previewDataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      page.cleanup();
+      await pdf.destroy();
+      return previewDataUrl;
+    } catch (error) {
+      console.error(`Failed to render PDF preview for "${src}".`, error);
+      return null;
+    }
   }
 }

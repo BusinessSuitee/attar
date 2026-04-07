@@ -97,7 +97,7 @@
               <!-- Image Preview -->
               <div
                 class="relative flex h-64 items-center justify-center overflow-hidden bg-slate-100 cursor-pointer"
-                [ngClass]="cert.type === 'image' ? 'p-4' : 'p-8'"
+                [ngClass]="cert.type === 'image' ? 'p-4' : 'p-2'"
               >
                 <ng-container *ngIf="cert.type === 'image'">
                   <img
@@ -118,19 +118,39 @@
                 </ng-container>
 
                 <ng-container *ngIf="cert.type === 'pdf'">
-                  <div class="flex flex-col items-center gap-4 text-center">
+                  <ng-container *ngIf="pdfPreviewFor(cert.src) as preview; else pdfCardFallback">
+                    <img
+                      [src]="preview"
+                      [alt]="t(cert.nameKey)"
+                      class="h-full w-full rounded-lg border border-slate-200 bg-white object-cover shadow-sm"
+                    />
                     <div
-                      class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white"
+                      class="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/25 group-hover:opacity-100"
                     >
-                      <span class="material-symbols-outlined text-4xl">{{ cert.icon }}</span>
+                      <span
+                        class="flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-lg"
+                      >
+                        <span class="material-symbols-outlined text-lg">visibility</span>
+                        {{ t('view_pdf') }}
+                      </span>
                     </div>
-                    <span
-                      class="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-white"
-                    >
-                      <span class="material-symbols-outlined text-lg">open_in_new</span>
-                      {{ t('view_pdf') }}
-                    </span>
-                  </div>
+                  </ng-container>
+
+                  <ng-template #pdfCardFallback>
+                    <div class="flex flex-col items-center gap-4 text-center">
+                      <div
+                        class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white"
+                      >
+                        <span class="material-symbols-outlined text-4xl">picture_as_pdf</span>
+                      </div>
+                      <span
+                        class="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-white"
+                      >
+                        <span class="material-symbols-outlined text-lg">preview</span>
+                        {{ t('view_pdf') }}
+                      </span>
+                    </div>
+                  </ng-template>
                 </ng-container>
 
                 <!-- Type Badge -->
@@ -289,34 +309,39 @@
 
       <ng-template #pdfPreview>
         <div
-          class="h-[90vh] w-[92vw] max-w-6xl overflow-hidden rounded-xl bg-white shadow-2xl"
+          class="flex h-[90vh] w-[92vw] max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
           (click)="$event.stopPropagation()"
         >
-          <ng-container *ngIf="selectedPdfSrc() as pdfSrc; else pdfFallback">
-            <iframe
-              [src]="pdfSrc"
-              class="h-full w-full border-0"
-              [title]="t(selectedCert.nameKey)"
-            ></iframe>
-          </ng-container>
+          <div class="flex-1 overflow-auto bg-slate-100 p-3 sm:p-6">
+            <ng-container *ngIf="selectedPdfPreview() as preview; else pdfFallback">
+              <img
+                [src]="preview"
+                [alt]="t(selectedCert.nameKey)"
+                class="mx-auto h-auto w-full max-w-3xl rounded-lg border border-slate-200 bg-white object-contain shadow-xl"
+              />
+            </ng-container>
 
-          <ng-template #pdfFallback>
-            <div
-              class="flex h-full w-full flex-col items-center justify-center gap-4 p-8 text-center"
-            >
-              <span class="material-symbols-outlined text-5xl text-primary">picture_as_pdf</span>
-              <p class="text-slate-600">{{ t('view_pdf') }}</p>
-              <a
-                [href]="selectedCert.src"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white no-underline"
+            <ng-template #pdfFallback>
+              <div
+                class="flex h-full min-h-[260px] w-full flex-col items-center justify-center gap-4 p-6 text-center"
               >
-                <span class="material-symbols-outlined text-lg">open_in_new</span>
-                {{ t('view_full') }}
-              </a>
-            </div>
-          </ng-template>
+                <span class="material-symbols-outlined text-5xl text-primary">picture_as_pdf</span>
+                <p class="text-slate-600">{{ t('view_pdf') }}</p>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="flex items-center justify-center border-t border-slate-200 bg-white p-4">
+            <a
+              [href]="pdfAssetUrl(selectedCert.src)"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white no-underline"
+            >
+              <span class="material-symbols-outlined text-lg">open_in_new</span>
+              {{ t('view_full') }}
+            </a>
+          </div>
         </div>
       </ng-template>
     </div>
