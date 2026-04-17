@@ -16,7 +16,6 @@ const repl = 'readonly filterOptions: FilterOption[] = [\n' +
     '    { id: 2, category: "crops", src: "assets/Images/1.jpeg", alt: "Grapes", titleKey: "crops_2", descKey: "crops_2" },\n' +
     '    { id: 3, category: "crops", src: "assets/Images/3.jpeg", alt: "Grapes", titleKey: "crops_3", descKey: "crops_3" },\n' +
     '    { id: 4, category: "crops", src: "assets/Images/4.jpeg", alt: "Mango", titleKey: "crops_4", descKey: "crops_4" },\n' +
-    '    { id: 5, category: "crops", src: "assets/Images/7.jpeg", alt: "Strawberry", titleKey: "crops_5", descKey: "crops_5" },\n' +
     '    { id: 6, category: "crops", src: "assets/Images/8.jpeg", alt: "Onion", titleKey: "crops_6", descKey: "crops_6" },\n' +
     '  ];';
 

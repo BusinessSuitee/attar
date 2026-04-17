@@ -74,14 +74,6 @@ export class GalleryPageComponent {
       descKey: 'crops_4',
     },
     {
-      id: 5,
-      category: 'crops',
-      src: 'assets/Images/7.jpeg',
-      alt: 'Strawberry',
-      titleKey: 'crops_5',
-      descKey: 'crops_5',
-    },
-    {
       id: 6,
       category: 'crops',
       src: 'assets/Images/8.jpeg',
