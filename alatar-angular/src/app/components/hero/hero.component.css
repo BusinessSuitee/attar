@@ -184,11 +184,11 @@ swiper-slide {
 .swiper-slide-active .slide__content > *:not(.slide__title--typed) {
   animation: content-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-.swiper-slide-active .slide__content > *:nth-child(1) { animation-delay: 900ms; }
-.swiper-slide-active .slide__content > *:nth-child(2) { animation-delay: 1050ms; }
-.swiper-slide-active .slide__content > *:nth-child(3) { animation-delay: 1200ms; }
-.swiper-slide-active .slide__content > *:nth-child(4) { animation-delay: 1350ms; }
-.swiper-slide-active .slide__content > *:nth-child(5) { animation-delay: 1500ms; }
+.swiper-slide-active .slide__content > *:nth-child(1) { animation-delay: 200ms; }
+.swiper-slide-active .slide__content > *:nth-child(2) { animation-delay: 300ms; }
+.swiper-slide-active .slide__content > *:nth-child(3) { animation-delay: 400ms; }
+.swiper-slide-active .slide__content > *:nth-child(4) { animation-delay: 500ms; }
+.swiper-slide-active .slide__content > *:nth-child(5) { animation-delay: 600ms; }
 
 @keyframes content-in {
   from {
@@ -229,7 +229,7 @@ swiper-slide {
 
 .swiper-slide-active .slide__title--typed .char:not(.char--space) {
   animation: char-drop 780ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(1000ms + (var(--i, 0) * 32ms));
+  animation-delay: calc(300ms + (var(--i, 0) * 32ms));
 }
 
 @keyframes char-drop {
@@ -295,12 +295,7 @@ html[lang='ar'] .slide__tag {
   line-height: 1.05;
 }
 
-.slide__title--mega {
-  font-size: clamp(2.8rem, 8.5vw, 7rem);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-}
+.slide__title--mega { font-size: clamp(2.8rem, 8.5vw, 7rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; white-space: nowrap; }
 
 .slide__sub {
   margin: 0;
@@ -420,7 +415,7 @@ html[lang='ar'] .slide__stat-label {
   transition:
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 220ms ease,
-    background-color 220ms ease,
+    background 220ms ease,
     border-color 220ms ease,
     color 220ms ease;
   will-change: transform;
@@ -781,6 +776,13 @@ html[lang='ar'] .scroll-hint__label {
     animation: none;
   }
 }
+
+
+
+
+
+[dir='rtl'] .slide__title--mega { font-size: clamp(2rem, 7vw, 5rem) !important; white-space: nowrap; }
+
 
 
 
