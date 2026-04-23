@@ -1,56 +1,231 @@
-<section id="home" class="hero" aria-labelledby="hero-title" *transloco="let t; read: 'home.hero'">
-  <div class="hero__media" aria-hidden="true">
-    <div class="hero__image hero__image--left"></div>
-    <div class="hero__image hero__image--right"></div>
-    <div class="hero__seam"></div>
-  </div>
-
-  <div class="hero__shade hero__shade--base"></div>
-  <div class="hero__shade hero__shade--tone"></div>
-
-  <div class="hero__content">
-    <div class="hero__chip">
-      <span class="material-symbols-outlined">verified</span>
-      <span>{{ t('badge') }}</span>
-    </div>
-
-    <h1 id="hero-title">
-      <span>{{ t('title1') }}</span>
-      <strong>{{ t('title2') }}</strong>
-    </h1>
-
-    <p>
-      {{ t('desc') }}
-    </p>
-
-    <div class="hero__actions">
-      <a class="hero-btn hero-btn--solid" routerLink="/products">{{ t('btn_products') }}</a>
-      <a class="hero-btn hero-btn--ghost" routerLink="/contact">{{ t('btn_contact') }}</a>
-    </div>
-  </div>
-
-  <a
-    class="hero__down material-symbols-outlined"
-    routerLink="/"
-    fragment="about"
-    aria-label="الانتقال للأسفل"
+<section id="home" class="hero-carousel" aria-labelledby="hero-title" *transloco="let t; read: 'home.hero'" [attr.dir]="dir()">
+  <swiper-container
+    #swiperEl
+    class="hero-swiper"
+    [attr.dir]="dir()"
+    effect="fade"
+    fade-effect-cross-fade="true"
+    [attr.speed]="transitionSpeed"
+    loop="true"
+    [attr.autoplay-delay]="autoplayDelay"
+    autoplay-disable-on-interaction="false"
+    autoplay-pause-on-mouse-enter="true"
+    pagination="true"
+    pagination-clickable="true"
+    keyboard="true"
+    a11y="true"
+    allow-touch-move="false"
+    simulate-touch="false"
   >
-    keyboard_arrow_down
-  </a>
-</section>
+    <!-- Slide 1 — Heritage / Opening -->
+    <swiper-slide>
+      <div class="slide__bg slide__bg--1"></div>
+      <div class="slide__vignette"></div>
+      <div class="slide__gradient"></div>
+      <div class="slide__content slide__content--center">
+        <span class="slide__tag">{{ t('slide1_tag') }}</span>
+        <h1
+          id="hero-title"
+          class="slide__title slide__title--display slide__title--typed"
+          [attr.aria-label]="t('slide1_title')"
+        >
+          @for (c of splitChars(t('slide1_title')); track $index) {
+            <span
+              class="char"
+              [class.char--space]="c.isSpace"
+              [style.--i]="c.index"
+              aria-hidden="true"
+              >{{ c.content }}</span>
+          }
+        </h1>
+        <p class="slide__sub">{{ t('slide1_sub') }}</p>
+        <div class="slide__cta">
+          <a class="btn btn--primary" routerLink="/products">
+            <span>{{ t('ctaPrimary') }}</span>
+            <svg viewBox="0 0 24 24" class="btn__icon" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" routerLink="/contact">
+            <span>{{ t('ctaSecondary') }}</span>
+          </a>
+        </div>
+      </div>
+    </swiper-slide>
 
-<section
-  class="hero-strip"
-  dir="ltr"
-  aria-label="مؤشرات سريعة"
-  *transloco="let t; read: 'home.hero'"
->
-  <div class="hero-strip__track">
-    @for (item of stripItems; track trackByLabelKey($index, item)) {
-      <span class="hero-strip__item">
-        <span class="material-symbols-outlined">{{ item.icon }}</span>
-        <span>{{ t(item.labelKey) }}</span>
-      </span>
-    }
+    <!-- Slide 2 — Partnerships -->
+    <swiper-slide>
+      <div class="slide__bg slide__bg--2"></div>
+      <div class="slide__vignette"></div>
+      <div class="slide__gradient"></div>
+      <div class="slide__content slide__content--center">
+        <span class="slide__tag">{{ t('slide2_tag') }}</span>
+        <h2
+          class="slide__title slide__title--hero slide__title--typed"
+          [attr.aria-label]="t('slide2_title')"
+        >
+          @for (c of splitChars(t('slide2_title')); track $index) {
+            <span
+              class="char"
+              [class.char--space]="c.isSpace"
+              [style.--i]="c.index"
+              aria-hidden="true"
+              >{{ c.content }}</span>
+          }
+        </h2>
+        <p class="slide__desc">{{ t('slide2_desc') }}</p>
+        <div class="slide__cta">
+          <a class="btn btn--primary" routerLink="/partners">
+            <span>{{ t('ctaPartners') }}</span>
+            <svg viewBox="0 0 24 24" class="btn__icon" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" routerLink="/contact">
+            <span>{{ t('ctaSecondary') }}</span>
+          </a>
+        </div>
+      </div>
+    </swiper-slide>
+
+    <!-- Slide 3 — Egypt / Origin Pride -->
+    <swiper-slide>
+      <div class="slide__bg slide__bg--3"></div>
+      <div class="slide__vignette"></div>
+      <div class="slide__gradient slide__gradient--light"></div>
+      <div class="slide__content slide__content--center">
+        <span class="slide__tag">{{ t('slide3_tag') }}</span>
+        <h2
+          class="slide__title slide__title--mega slide__title--typed"
+          [attr.aria-label]="t('slide3_line1')"
+        >
+          @for (c of splitChars(t('slide3_line1')); track $index) {
+            <span
+              class="char"
+              [class.char--space]="c.isSpace"
+              [style.--i]="c.index"
+              aria-hidden="true"
+              >{{ c.content }}</span>
+          }
+        </h2>
+        <p class="slide__country-line">{{ t('slide3_line2') }}</p>
+        <strong
+          class="slide__country slide__title--typed"
+          [attr.aria-label]="t('slide3_country')"
+        >
+          @for (c of splitChars(t('slide3_country')); track $index) {
+            <span
+              class="char"
+              [class.char--space]="c.isSpace"
+              [style.--i]="c.index"
+              aria-hidden="true"
+              >{{ c.content }}</span>
+          }
+        </strong>
+        <div class="slide__cta">
+          <a class="btn btn--primary" routerLink="/products">
+            <span>{{ t('ctaPrimary') }}</span>
+            <svg viewBox="0 0 24 24" class="btn__icon" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </swiper-slide>
+
+    <!-- Slide 4 — Certified Quality + Stat -->
+    <swiper-slide>
+      <div class="slide__bg slide__bg--4"></div>
+      <div class="slide__vignette"></div>
+      <div class="slide__gradient"></div>
+      <div class="slide__content slide__content--center">
+        <span class="slide__tag">{{ t('slide4_tag') }}</span>
+        <h2
+          class="slide__title slide__title--hero slide__title--typed"
+          [attr.aria-label]="t('slide4_title')"
+        >
+          @for (c of splitChars(t('slide4_title')); track $index) {
+            <span
+              class="char"
+              [class.char--space]="c.isSpace"
+              [style.--i]="c.index"
+              aria-hidden="true"
+              >{{ c.content }}</span>
+          }
+        </h2>
+        <p class="slide__desc">{{ t('slide4_desc') }}</p>
+
+        <div class="slide__stat">
+          <span class="slide__stat-num">+50,000</span>
+          <span class="slide__stat-label">{{ t('slide4_stat') }}</span>
+        </div>
+
+        <div class="slide__cta">
+          <a class="btn btn--primary" routerLink="/certificates">
+            <span>{{ t('ctaCertificates') }}</span>
+            <svg viewBox="0 0 24 24" class="btn__icon" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </swiper-slide>
+
+    <!-- Slide 5 — Expertise -->
+    <swiper-slide>
+      <div class="slide__bg slide__bg--5"></div>
+      <div class="slide__vignette"></div>
+      <div class="slide__gradient"></div>
+      <div class="slide__content slide__content--center">
+        <span class="slide__tag">{{ t('slide5_tag') }}</span>
+        <h2
+          class="slide__title slide__title--hero slide__title--typed"
+          [attr.aria-label]="t('slide5_title')"
+        >
+          @for (c of splitChars(t('slide5_title')); track $index) {
+            <span
+              class="char"
+              [class.char--space]="c.isSpace"
+              [style.--i]="c.index"
+              aria-hidden="true"
+              >{{ c.content }}</span>
+          }
+        </h2>
+        <p class="slide__sub">{{ t('slide5_subtitle') }}</p>
+        <div class="slide__cta">
+          <a class="btn btn--primary" routerLink="/products">
+            <span>{{ t('ctaPrimary') }}</span>
+            <svg viewBox="0 0 24 24" class="btn__icon" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" routerLink="/contact">
+            <span>{{ t('ctaSecondary') }}</span>
+          </a>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+
+  <!-- Custom navigation (kept outside the web component for clean RTL handling) -->
+  <button
+    type="button"
+    class="ctrl ctrl--prev"
+    (click)="prev()"
+    [attr.aria-label]="t('prev')"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="ctrl ctrl--next"
+    (click)="next()"
+    [attr.aria-label]="t('next')"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Heritage signature (fixed, always visible) -->
+  <div class="hero-signature" aria-hidden="true">
+    <span class="hero-signature__line"></span>
+    <span class="hero-signature__text">{{ t('heritage') }}</span>
+    <span class="hero-signature__line"></span>
   </div>
 </section>
+
+
+

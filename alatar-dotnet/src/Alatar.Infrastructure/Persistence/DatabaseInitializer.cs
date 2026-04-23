@@ -18,9 +18,86 @@ public static class DatabaseInitializer
         await EnsureProductsTableExistsAsync(dbContext);
         await EnsureOrderRequestsTableExistsAsync(dbContext);
         await EnsureProductImagesTableExistsAsync(dbContext);
+        await EnsureSocialLinksTableExistsAsync(dbContext);
         await MigrateAndNormalizeProductOptionsAsync(dbContext);
         await SeedDefaultCategoriesAsync(dbContext);
         await SeedDefaultProductsAsync(dbContext);
+        await SeedDefaultSocialLinksAsync(dbContext);
+    }
+
+    private static async Task SeedDefaultSocialLinksAsync(AlatarDbContext dbContext)
+    {
+        var hasSocialLinks = await dbContext.SocialLinks.AnyAsync();
+        if (hasSocialLinks)
+        {
+            return;
+        }
+
+        var now = DateTime.UtcNow;
+        const string seedSql = """
+                               INSERT INTO [dbo].[SocialLinks]
+                                   ([Id], [Platform], [Url], [Label], [IconKey], [CustomIconPath], [ColorHex], [DisplayOrder], [IsEnabled], [OpensInNewTab], [CreatedAtUtc], [UpdatedAtUtc])
+                               VALUES
+                                   (NEWID(), N'WhatsApp',  N'https://wa.me/201004623085',             N'WhatsApp',    NULL, NULL, NULL, 0, 1, 1, @p0, @p0),
+                                   (NEWID(), N'Phone',     N'tel:+201004623085',                      N'اتصل بنا',    NULL, NULL, NULL, 1, 1, 0, @p0, @p0),
+                                   (NEWID(), N'Email',     N'mailto:info@alatar.com',                 N'البريد',      NULL, NULL, NULL, 2, 1, 0, @p0, @p0),
+                                   (NEWID(), N'Facebook',  N'https://facebook.com/alatar',            N'فيسبوك',      NULL, NULL, NULL, 3, 1, 1, @p0, @p0),
+                                   (NEWID(), N'Instagram', N'https://instagram.com/alatar',           N'إنستجرام',    NULL, NULL, NULL, 4, 1, 1, @p0, @p0),
+                                   (NEWID(), N'LinkedIn',  N'https://linkedin.com/company/alatar',    N'لينكدإن',     NULL, NULL, NULL, 5, 1, 1, @p0, @p0),
+                                   (NEWID(), N'YouTube',   N'https://youtube.com/@alatar',            N'يوتيوب',      NULL, NULL, NULL, 6, 1, 1, @p0, @p0),
+                                   (NEWID(), N'Location',  N'https://maps.google.com/?q=Cairo+Egypt', N'موقعنا',      NULL, NULL, NULL, 7, 1, 1, @p0, @p0);
+                               """;
+
+        await dbContext.Database.ExecuteSqlRawAsync(seedSql, now);
+    }
+
+    private static Task EnsureSocialLinksTableExistsAsync(AlatarDbContext dbContext)
+    {
+        const string sql = """
+                           IF OBJECT_ID(N'[dbo].[SocialLinks]', N'U') IS NULL
+                           BEGIN
+                               CREATE TABLE [dbo].[SocialLinks]
+                               (
+                                   [Id] UNIQUEIDENTIFIER NOT NULL,
+                                   [Platform] NVARCHAR(32) NOT NULL,
+                                   [Url] NVARCHAR(500) NOT NULL,
+                                   [Label] NVARCHAR(80) NOT NULL,
+                                   [IconKey] NVARCHAR(60) NULL,
+                                   [CustomIconPath] NVARCHAR(500) NULL,
+                                   [ColorHex] NVARCHAR(9) NULL,
+                                   [DisplayOrder] INT NOT NULL CONSTRAINT [DF_SocialLinks_DisplayOrder] DEFAULT 0,
+                                   [IsEnabled] BIT NOT NULL CONSTRAINT [DF_SocialLinks_IsEnabled] DEFAULT 1,
+                                   [OpensInNewTab] BIT NOT NULL CONSTRAINT [DF_SocialLinks_OpensInNewTab] DEFAULT 1,
+                                   [CreatedAtUtc] DATETIME2 NOT NULL,
+                                   [UpdatedAtUtc] DATETIME2 NOT NULL,
+                                   CONSTRAINT [PK_SocialLinks] PRIMARY KEY ([Id])
+                               );
+                           END
+
+                           IF NOT EXISTS (
+                               SELECT 1
+                               FROM sys.indexes
+                               WHERE name = N'IX_SocialLinks_DisplayOrder'
+                                   AND object_id = OBJECT_ID(N'[dbo].[SocialLinks]')
+                           )
+                           BEGIN
+                               CREATE INDEX [IX_SocialLinks_DisplayOrder]
+                                   ON [dbo].[SocialLinks]([DisplayOrder]);
+                           END
+
+                           IF NOT EXISTS (
+                               SELECT 1
+                               FROM sys.indexes
+                               WHERE name = N'IX_SocialLinks_IsEnabled'
+                                   AND object_id = OBJECT_ID(N'[dbo].[SocialLinks]')
+                           )
+                           BEGIN
+                               CREATE INDEX [IX_SocialLinks_IsEnabled]
+                                   ON [dbo].[SocialLinks]([IsEnabled]);
+                           END
+                           """;
+
+        return dbContext.Database.ExecuteSqlRawAsync(sql);
     }
 
     private static async Task EnsureCategoriesTableExistsAsync(AlatarDbContext dbContext)

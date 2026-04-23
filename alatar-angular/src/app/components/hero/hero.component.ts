@@ -1,30 +1,104 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
-import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  inject,
+  PLATFORM_ID,
+  viewChild,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-interface HeroStripItem {
-  icon: string;
-  labelKey: string;
+interface TextChunk {
+  content: string;
+  isSpace: boolean;
+  index: number;
 }
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [RouterLink, TranslocoModule, CommonModule],
+  imports: [TranslocoModule, CommonModule, RouterModule],
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class HeroComponent {
-  readonly stripItems: HeroStripItem[] = [
-    { icon: 'public', labelKey: 'strip_hub' },
-    { icon: 'local_shipping', labelKey: 'strip_capacity' },
-    { icon: 'history', labelKey: 'strip_history' },
-    { icon: 'verified', labelKey: 'strip_quality' },
-  ];
+export class HeroComponent implements AfterViewInit {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly transloco = inject(TranslocoService);
 
-  trackByLabelKey(_: number, item: HeroStripItem): string {
-    return item.labelKey;
+  readonly autoplayDelay = 1500;
+  readonly transitionSpeed = 800;
+  
+
+  readonly swiperEl = viewChild<ElementRef<HTMLElement>>('swiperEl');
+
+  private readonly activeLang = toSignal(this.transloco.langChanges$, {
+    initialValue: this.transloco.getActiveLang(),
+  });
+  readonly dir = computed(() => (this.activeLang() === 'ar' ? 'rtl' : 'ltr'));
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    void import('swiper/element/bundle').then(({ register }) => register());
+  }
+
+  prev(): void {
+    const swiperInstance = (this.swiperEl()?.nativeElement as unknown as {
+      swiper?: { slidePrev: () => void };
+    } | undefined)?.swiper;
+    swiperInstance?.slidePrev();
+  }
+
+  next(): void {
+    const swiperInstance = (this.swiperEl()?.nativeElement as unknown as {
+      swiper?: { slideNext: () => void };
+    } | undefined)?.swiper;
+    swiperInstance?.slideNext();
+  }
+
+  /**
+   * Splits text for per-char animation. Arabic splits by word to preserve
+   * cursive glyph shaping (isolating chars would break the word visually).
+   * Latin scripts split by character for the classic typewriter effect.
+   */
+  splitChars(text: string | null | undefined): TextChunk[] {
+    if (!text) {
+      return [];
+    }
+
+    const hasArabic = /[؀-ۿ]/.test(text);
+    if (hasArabic) {
+      const parts = text.split(/(\s+)/).filter((p) => p.length > 0);
+      let idx = 0;
+      return parts.map<TextChunk>((p) => {
+        const isSpace = /^\s+$/.test(p);
+        return {
+          content: p.replace(/\s/g, ' '),
+          isSpace,
+          index: isSpace ? -1 : idx++,
+        };
+      });
+    }
+
+    let idx = 0;
+    return Array.from(text).map<TextChunk>((c) => {
+      const isSpace = c === ' ';
+      return {
+        content: isSpace ? ' ' : c,
+        isSpace,
+        index: isSpace ? -1 : idx++,
+      };
+    });
   }
 }
+

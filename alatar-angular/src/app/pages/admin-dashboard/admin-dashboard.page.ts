@@ -24,8 +24,9 @@ import {
   ProductState,
   ProductType,
 } from '../../core/products/product.service';
+import { AdminSocialLinksComponent } from './admin-social-links/admin-social-links.component';
 
-type DashboardSectionKey = 'overview' | 'orders' | 'products' | 'contacts' | 'settings';
+type DashboardSectionKey = 'overview' | 'orders' | 'products' | 'contacts' | 'social' | 'settings';
 
 type ProductFormStep = 1 | 2 | 3 | 4;
 
@@ -94,7 +95,7 @@ type ProductWithCategories = ProductListItem & {
 @Component({
   selector: 'app-admin-dashboard-page',
   standalone: true,
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, NavbarComponent, AdminSocialLinksComponent],
   templateUrl: './admin-dashboard.page.html',
   styleUrl: './admin-dashboard.page.css',
 })
@@ -115,6 +116,7 @@ export class AdminDashboardPageComponent {
     orders: '/admin/orders',
     products: '/admin/products',
     contacts: '/admin/contacts',
+    social: '/admin/social',
     settings: '/admin/settings',
   };
 
@@ -268,6 +270,7 @@ export class AdminDashboardPageComponent {
     { key: 'orders', label: 'لوحة التحكم', icon: 'dashboard' },
     { key: 'products', label: 'إضافة منتج', icon: 'add_box' },
     { key: 'contacts', label: 'التواصل', icon: 'contact_phone' },
+    { key: 'social', label: 'روابط السوشيال', icon: 'share' },
     { key: 'settings', label: 'الإعدادات', icon: 'settings' },
   ];
 
@@ -1731,6 +1734,8 @@ export class AdminDashboardPageComponent {
         return 'products';
       case '/admin/contacts':
         return 'contacts';
+      case '/admin/social':
+        return 'social';
       case '/admin/settings':
         return 'settings';
       default:

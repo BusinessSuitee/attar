@@ -99,6 +99,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'admin/social',
+    canActivate: [adminAuthGuard],
+    loadComponent: () =>
+      import('./pages/admin-dashboard/admin-dashboard.page').then(
+        (module) => module.AdminDashboardPageComponent,
+      ),
+  },
+  {
     path: 'admin/contact',
     redirectTo: 'admin/contacts',
     pathMatch: 'full',

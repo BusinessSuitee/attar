@@ -8,7 +8,8 @@
     "certificates": "Certificates",
     "gallery": "Gallery",
     "contact": "Contact Us",
-    "more": "More"
+    "more": "More",
+    "cta_contact": "Contact Us"
   },
   "brand": {
     "name": "Alatar Sons",
@@ -21,7 +22,18 @@
       "quote": "\"Trade built on ethics and keeping promises... from our farms to the world with full honesty\"",
       "p1": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar, known as Obada Al-Attar, grew up embracing the Holy Quran and authentic morals, which formed the foundation of the \"Al-Attar Sons\" empire. He was not just a trader, but an advisor, a peacemaker, and a pioneer who laid the first stone for modern export agriculture in Egypt.",
       "p2": "What began as a passion for the land transformed, through his vision and wisdom, into a deep-rooted institution lasting over half a century, preserving the covenant and passing the trust from generation to generation.",
-      "role": "Group Founder"
+      "role": "Group Founder",
+      "headline_prefix": "A story of legacy, told since",
+      "cta": "Discover the Full Story",
+      "pillars_title": "Pillars of Our Legacy",
+      "established": "Established",
+      "cite": "— Obada Al-Attar",
+      "pillar1_title": "Quranic Upbringing",
+      "pillar1_desc": "A faith-rooted education planted the values of honesty and hard work — the foundation of every decision.",
+      "pillar2_title": "Trust in Every Deal",
+      "pillar2_desc": "A trusted broker who built a network rooted in mutual respect and the sanctity of the given word.",
+      "pillar3_title": "Market Leadership",
+      "pillar3_desc": "Building a name partners rely on in the hardest times — where a word is a contract, and honor is everything."
     },
     "partners": {
       "kicker": "Supply and Export Power",
@@ -76,16 +88,31 @@
       "catalog": "Download Catalog"
     },
     "hero": {
-      "badge": "Since 1975",
-      "title1": "Alatar Sons",
-      "title2": "50 Years of Trust in Supplying and Exporting the Finest Egyptian Crops",
-      "desc": "Connecting the earths bounty with the world, from our farms to the biggest global and local markets.",
-      "btn_products": "Our Products",
-      "btn_contact": "Contact Us",
-      "strip_hub": "Global Export Hub",
-      "strip_capacity": "+50,000 Tons Annually",
-      "strip_history": "Rich History Since 1975",
-      "strip_quality": "Global Quality Certifications"
+      "slide1_tag": "Alatar Sons — Since 1975",
+      "slide1_title": "From our farms to the world with full honesty",
+      "slide1_sub": "Trade built on ethics and keeping promises, generation after generation",
+      "slide2_tag": "Supply & Export Power",
+      "slide2_title": "Giant Strategic Partnerships",
+      "slide2_desc": "We are the bridge connecting abundant local production with global export standards, handling over 50,000 tons annually.",
+      "slide3_tag": "Pride of Our Production",
+      "slide3_line1": "Egyptian Orange",
+      "slide3_line2": "Our Pride — Produced in",
+      "slide3_country": "EGYPT",
+      "slide4_tag": "Global Export Standards",
+      "slide4_title": "Certified Premium Quality in Every Shipment",
+      "slide4_desc": "Integrated infrastructure ensuring our products reach European and Asian markets perfectly fresh.",
+      "slide4_stat": "Tons Annually",
+      "slide5_tag": "Expertise & Specialization",
+      "slide5_title": "Specialists in Citrus & Grapes",
+      "slide5_subtitle": "Producing since 1975 with the highest quality standards",
+      "ctaPrimary": "Explore Our Crops",
+      "ctaSecondary": "Get in Touch",
+      "ctaPartners": "Our Global Partners",
+      "ctaCertificates": "Our Certifications",
+      "heritage": "Trusted Quality Since 1975",
+      "scrollHint": "Scroll to explore",
+      "prev": "Previous slide",
+      "next": "Next slide"
     }
   },
   "about": {

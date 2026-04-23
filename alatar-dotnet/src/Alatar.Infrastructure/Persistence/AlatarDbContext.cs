@@ -3,6 +3,7 @@ using Alatar.Domain.Categories;
 using Alatar.Domain.Contacts;
 using Alatar.Domain.OrderRequests;
 using Alatar.Domain.Products;
+using Alatar.Domain.SocialLinks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Alatar.Infrastructure.Persistence;
@@ -15,6 +16,7 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
     public IQueryable<OrderRequest> OrderRequests => Set<OrderRequest>();
     public IQueryable<Product> Products => Set<Product>();
     public IQueryable<ProductImage> ProductImages => Set<ProductImage>();
+    public IQueryable<SocialLink> SocialLinks => Set<SocialLink>();
 
     public async Task AddCategoryAsync(Category category, CancellationToken cancellationToken)
     {
@@ -41,6 +43,11 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
         await Set<ProductImage>().AddAsync(image, cancellationToken);
     }
 
+    public async Task AddSocialLinkAsync(SocialLink socialLink, CancellationToken cancellationToken)
+    {
+        await Set<SocialLink>().AddAsync(socialLink, cancellationToken);
+    }
+
     public void RemoveContact(ContactLead contactLead)
     {
         Set<ContactLead>().Remove(contactLead);
@@ -64,6 +71,11 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
     public void RemoveProductImage(ProductImage image)
     {
         Set<ProductImage>().Remove(image);
+    }
+
+    public void RemoveSocialLink(SocialLink socialLink)
+    {
+        Set<SocialLink>().Remove(socialLink);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -349,5 +361,53 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
             .WithMany()
             .HasForeignKey(x => x.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        var socialLink = modelBuilder.Entity<SocialLink>();
+
+        socialLink.ToTable("SocialLinks");
+        socialLink.HasKey(x => x.Id);
+
+        socialLink.Property(x => x.Id)
+            .ValueGeneratedNever();
+
+        socialLink.Property(x => x.Platform)
+            .HasConversion<string>()
+            .HasMaxLength(32)
+            .IsRequired();
+
+        socialLink.Property(x => x.Url)
+            .HasMaxLength(500)
+            .IsRequired();
+
+        socialLink.Property(x => x.Label)
+            .HasMaxLength(80)
+            .IsRequired();
+
+        socialLink.Property(x => x.IconKey)
+            .HasMaxLength(60);
+
+        socialLink.Property(x => x.CustomIconPath)
+            .HasMaxLength(500);
+
+        socialLink.Property(x => x.ColorHex)
+            .HasMaxLength(9);
+
+        socialLink.Property(x => x.DisplayOrder)
+            .IsRequired();
+
+        socialLink.Property(x => x.IsEnabled)
+            .IsRequired();
+
+        socialLink.Property(x => x.OpensInNewTab)
+            .IsRequired();
+
+        socialLink.Property(x => x.CreatedAtUtc)
+            .IsRequired();
+
+        socialLink.Property(x => x.UpdatedAtUtc)
+            .IsRequired();
+
+        socialLink.HasIndex(x => x.DisplayOrder);
+        socialLink.HasIndex(x => x.IsEnabled);
     }
 }

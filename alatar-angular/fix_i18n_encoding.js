@@ -32,7 +32,6 @@ ar.gallery_page = {
     crops_2: { title: 'عنب أبيض بدون بذور', description: 'محصول صيفي طازج.' },
     crops_3: { title: 'عنب أسود فاخر', description: 'محصول صيفي للتصدير المبكر.' },
     crops_4: { title: 'مانجو مصرية', description: 'ثمرات منتقاة وعالية المذاق.' },
-    crops_5: { title: 'فراولة طازجة', description: 'محصول التصدير الأول شتوياً.' },
     crops_6: { title: 'بصل أحمر', description: 'صلابة وقدرة تخزينية ممتازة.' },
   },
   not_found: {
@@ -65,7 +64,6 @@ en.gallery_page = {
     crops_2: { title: 'Seedless White Grapes', description: 'Fresh summer crop.' },
     crops_3: { title: 'Premium Black Grapes', description: 'Summer crop for early export.' },
     crops_4: { title: 'Egyptian Mangoes', description: 'Hand-picked fruits with high flavor.' },
-    crops_5: { title: 'Fresh Strawberries', description: 'The top winter export crop.' },
     crops_6: { title: 'Red Onions', description: 'Excellent firmness and storage capacity.' },
   },
   not_found: {
@@ -101,7 +99,6 @@ ru.gallery_page = {
       description: 'Летний урожай для раннего экспорта.',
     },
     crops_4: { title: 'Египетское манго', description: 'Отборные плоды с отличным вкусом.' },
-    crops_5: { title: 'Свежая клубника', description: 'Главный зимний экспортный урожай.' },
     crops_6: { title: 'Красный лук', description: 'Отличная твердость и срок хранения.' },
   },
   not_found: {

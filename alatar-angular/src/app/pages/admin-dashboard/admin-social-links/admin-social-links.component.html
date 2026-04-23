@@ -1,0 +1,257 @@
+<section class="social-admin">
+  <header class="social-admin__header">
+    <div>
+      <h2>روابط السايدبار الاجتماعية</h2>
+      <p>إدارة الروابط اللي بتظهر في الشريط الجانبي للموقع.</p>
+    </div>
+    <div class="social-admin__header-actions">
+      <button type="button" class="btn btn--ghost" (click)="reload()" [disabled]="loading()">
+        تحديث
+      </button>
+      <button type="button" class="btn btn--primary" (click)="openCreate()">
+        + إضافة رابط
+      </button>
+    </div>
+  </header>
+
+  @if (loadError()) {
+    <div class="social-admin__alert social-admin__alert--error">{{ loadError() }}</div>
+  }
+
+  @if (loading() && rows().length === 0) {
+    <div class="social-admin__empty">جاري التحميل…</div>
+  } @else if (rows().length === 0) {
+    <div class="social-admin__empty">
+      لا توجد روابط بعد. اضغط "إضافة رابط" لبدء.
+    </div>
+  } @else {
+    <div class="social-admin__table">
+      <div class="social-admin__row social-admin__row--head">
+        <span>الأيقونة</span>
+        <span>المنصة</span>
+        <span>Label</span>
+        <span>URL</span>
+        <span>الترتيب</span>
+        <span>تفعيل</span>
+        <span>أيقونة مخصصة</span>
+        <span>إجراءات</span>
+      </div>
+
+      @for (row of rows(); track trackByRow($index, row); let i = $index) {
+        <div class="social-admin__row" [class.is-disabled]="!row.dto.isEnabled">
+          <span class="social-admin__icon-cell">
+            <span
+              class="social-admin__icon"
+              [style.background]="row.color"
+              [style.color]="'#fff'"
+            >
+              @if (row.dto.customIconUrl) {
+                <img [src]="row.dto.customIconUrl" [alt]="row.dto.label" />
+              } @else {
+                <span class="social-admin__icon-svg" [innerHTML]="row.iconSvg"></span>
+              }
+            </span>
+          </span>
+          <span class="social-admin__platform">{{ row.platformLabel }}</span>
+          <span class="social-admin__label-cell">{{ row.dto.label }}</span>
+          <span class="social-admin__url-cell" [title]="row.dto.url">{{ row.dto.url }}</span>
+          <span class="social-admin__order-cell">
+            <button
+              type="button"
+              class="icon-btn"
+              (click)="moveUp(i)"
+              [disabled]="i === 0 || isBusy(row.dto.id)"
+              aria-label="تحريك لأعلى"
+            >▲</button>
+            <span>{{ i + 1 }}</span>
+            <button
+              type="button"
+              class="icon-btn"
+              (click)="moveDown(i)"
+              [disabled]="i === rows().length - 1 || isBusy(row.dto.id)"
+              aria-label="تحريك لأسفل"
+            >▼</button>
+          </span>
+          <span class="social-admin__toggle-cell">
+            <label class="switch">
+              <input
+                type="checkbox"
+                [checked]="row.dto.isEnabled"
+                [disabled]="isBusy(row.dto.id)"
+                (change)="toggle(row)"
+              />
+              <span class="switch__track"><span class="switch__thumb"></span></span>
+            </label>
+          </span>
+          <span class="social-admin__custom-cell">
+            @if (row.dto.customIconUrl) {
+              <button type="button" class="btn btn--ghost btn--sm" (click)="removeCustomIcon(row)" [disabled]="isBusy(row.dto.id)">
+                إزالة
+              </button>
+            } @else {
+              <button type="button" class="btn btn--ghost btn--sm" (click)="triggerIconUpload(row.dto.id)" [disabled]="isBusy(row.dto.id)">
+                رفع أيقونة
+              </button>
+            }
+          </span>
+          <span class="social-admin__actions-cell">
+            <button type="button" class="btn btn--ghost btn--sm" (click)="openEdit(row.dto)" [disabled]="isBusy(row.dto.id)">
+              تعديل
+            </button>
+            <button type="button" class="btn btn--danger btn--sm" (click)="delete(row)" [disabled]="isBusy(row.dto.id)">
+              حذف
+            </button>
+          </span>
+        </div>
+      }
+    </div>
+  }
+
+  <input
+    type="file"
+    accept=".svg,.png,.jpg,.jpeg,.webp,.gif,image/*"
+    #iconFileInput
+    (change)="onIconFileChange($event)"
+    hidden
+  />
+
+  @if (isFormOpen()) {
+    <div class="social-admin__modal-backdrop" (click)="closeForm()"></div>
+    <div class="social-admin__modal" role="dialog" aria-modal="true">
+      <header class="social-admin__modal-head">
+        <h3>{{ isEditing() ? 'تعديل رابط' : 'رابط جديد' }}</h3>
+        <button type="button" class="icon-btn" (click)="closeForm()" aria-label="إغلاق">✕</button>
+      </header>
+
+      <div class="social-admin__modal-body">
+        <div class="field">
+          <label>اختر المنصة / الأيقونة</label>
+          <div class="platform-picker">
+            @for (p of platforms; track trackByPlatform($index, p)) {
+              <button
+                type="button"
+                class="platform-picker__item"
+                [class.is-active]="form().platform === p.key"
+                [style.--pp-color]="p.color"
+                (click)="onPlatformChange(p.key)"
+                [attr.aria-label]="p.label"
+                [attr.title]="p.label"
+              >
+                <span class="platform-picker__swatch"></span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  [attr.viewBox]="p.viewBox ?? '0 0 24 24'"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path [attr.d]="p.svgPath" />
+                </svg>
+                <span>{{ p.label }}</span>
+              </button>
+            }
+          </div>
+          <small class="field__hint">
+            استخدم "Custom" لو هترفع أيقونة مخصصة من جدول الروابط بعد الحفظ.
+          </small>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="sl-label">Label</label>
+            <input
+              id="sl-label"
+              type="text"
+              [ngModel]="form().label"
+              (ngModelChange)="updateField('label', $event)"
+              placeholder="مثلاً: تواصل واتساب"
+              maxlength="80"
+            />
+          </div>
+          <div class="field">
+            <label for="sl-url">URL</label>
+            <input
+              id="sl-url"
+              type="text"
+              [ngModel]="form().url"
+              (ngModelChange)="updateField('url', $event)"
+              [placeholder]="selectedPlatformDefinition().hints ?? 'https://…'"
+              maxlength="500"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label>اللون</label>
+            <div class="color-row">
+              <label class="check">
+                <input
+                  type="checkbox"
+                  [checked]="form().useDefaultColor"
+                  (change)="updateField('useDefaultColor', $any($event.target).checked)"
+                />
+                استخدم اللون الافتراضي للمنصة
+              </label>
+              @if (!form().useDefaultColor) {
+                <input
+                  type="color"
+                  [ngModel]="form().colorHex || '#d4a017'"
+                  (ngModelChange)="updateField('colorHex', $event)"
+                />
+                <input
+                  type="text"
+                  class="color-row__hex"
+                  [ngModel]="form().colorHex"
+                  (ngModelChange)="updateField('colorHex', $event)"
+                  placeholder="#RRGGBB"
+                  maxlength="9"
+                />
+              }
+            </div>
+          </div>
+
+          <div class="field">
+            <label>إعدادات</label>
+            <label class="check">
+              <input
+                type="checkbox"
+                [checked]="form().opensInNewTab"
+                (change)="updateField('opensInNewTab', $any($event.target).checked)"
+              />
+              فتح في تاب جديد
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>معاينة</label>
+          <div class="preview">
+            <span class="preview__tile" [style.background]="previewColor()">
+              <span class="preview__icon" [innerHTML]="previewIcon()"></span>
+            </span>
+            <span class="preview__label">{{ form().label || selectedPlatformDefinition().label }}</span>
+          </div>
+        </div>
+
+        @if (submitError()) {
+          <div class="social-admin__alert social-admin__alert--error">{{ submitError() }}</div>
+        }
+        @if (submitSuccess()) {
+          <div class="social-admin__alert social-admin__alert--success">{{ submitSuccess() }}</div>
+        }
+      </div>
+
+      <footer class="social-admin__modal-foot">
+        <button type="button" class="btn btn--ghost" (click)="closeForm()" [disabled]="submitting()">
+          إلغاء
+        </button>
+        <button type="button" class="btn btn--primary" (click)="submitForm()" [disabled]="submitting()">
+          {{ submitting() ? 'جاري الحفظ…' : (isEditing() ? 'حفظ التغييرات' : 'إضافة') }}
+        </button>
+      </footer>
+    </div>
+  }
+</section>

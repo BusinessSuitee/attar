@@ -2,118 +2,190 @@
 <app-hero></app-hero>
 
 <main class="page-shell" *transloco="let t; read: 'home'">
-  <section id="about" class="founder-section">
-    <span class="founder-glow founder-glow--left" aria-hidden="true"></span>
-    <span class="founder-glow founder-glow--right" aria-hidden="true"></span>
+  <section id="about" class="founder-section" aria-labelledby="founder-title">
+    <div class="founder-section__accent" aria-hidden="true"></div>
+    <div class="founder-section__leaf founder-section__leaf--a" aria-hidden="true"></div>
+    <div class="founder-section__leaf founder-section__leaf--b" aria-hidden="true"></div>
 
     <div class="founder-shell">
+      <header class="founder-header" appScrollReveal="up">
+        <span class="founder-tag">
+          <span class="founder-tag__dot" aria-hidden="true"></span>
+          {{ t('founder.tag') }}
+        </span>
+        <h2 id="founder-title" class="founder-title">
+          {{ t('founder.headline_prefix') }}
+          <span class="founder-title__year">1975</span>
+        </h2>
+      </header>
+
       <div class="founder-grid">
-        <div class="founder-media-wrap" appScrollReveal="right" revealDistance="44">
-          <figure class="founder-media" [attr.aria-label]="t('founder.name')">
+        <figure class="founder-portrait" appScrollReveal="up" revealDelay="120">
+          <div class="founder-portrait__frame">
             <img src="assets/Images/alattar.jpeg" [alt]="t('founder.name')" loading="lazy" />
-            <figcaption>
-              <h3>{{ t('founder.name') }}</h3>
-              <p>{{ t('founder.role') }}</p>
-            </figcaption>
-          </figure>
-          <span class="founder-frame founder-frame--primary" aria-hidden="true"></span>
-          <span class="founder-frame founder-frame--accent" aria-hidden="true"></span>
+          </div>
+          <figcaption class="founder-portrait__caption">
+            <span class="founder-portrait__role">{{ t('founder.role') }}</span>
+            <strong class="founder-portrait__name">{{ t('founder.name') }}</strong>
+          </figcaption>
+        </figure>
+
+        <div class="founder-story" appScrollReveal="up" revealDelay="200">
+          <p class="founder-story__lead">{{ t('founder.p1') }}</p>
+
+          <blockquote class="founder-story__quote">
+            <p>{{ t('founder.quote') }}</p>
+            <cite>{{ t('founder.cite') }}</cite>
+          </blockquote>
+
+          <a routerLink="/about" class="founder-story__cta">
+            {{ t('founder.cta') }}
+          </a>
         </div>
+      </div>
 
-        <article class="founder-content" appScrollReveal="left" revealDelay="120">
-          <span class="founder-tag">{{ t('founder.tag') }}</span>
-          <h2>{{ t('founder.name') }}</h2>
+      <section class="founder-pillars" appScrollReveal="up" revealDelay="280">
+        <h3 class="founder-pillars__title">{{ t('founder.pillars_title') }}</h3>
 
-          <p class="founder-quote">
-            {{ t('founder.quote') }}
-          </p>
+        <div class="founder-pillars__grid">
+          <article class="founder-pillar">
+            <span class="founder-pillar__num">01</span>
+            <h4>{{ t('founder.pillar1_title') }}</h4>
+            <p>{{ t('founder.pillar1_desc') }}</p>
+          </article>
 
-          <p>
-            {{ t('founder.p1') }}
-          </p>
+          <article class="founder-pillar">
+            <span class="founder-pillar__num">02</span>
+            <h4>{{ t('founder.pillar2_title') }}</h4>
+            <p>{{ t('founder.pillar2_desc') }}</p>
+          </article>
 
-          <p>
-            {{ t('founder.p2') }}
-          </p>
+          <article class="founder-pillar">
+            <span class="founder-pillar__num">03</span>
+            <h4>{{ t('founder.pillar3_title') }}</h4>
+            <p>{{ t('founder.pillar3_desc') }}</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="founder-stats" *transloco="let s; read: 'about.stats'" appScrollReveal="up" revealDelay="360">
+        <article class="founder-stat">
+          <strong>{{ s('stat1Num') }}</strong>
+          <span>{{ s('stat1Text') }}</span>
+        </article>
+        <article class="founder-stat">
+          <strong>{{ s('stat2Num') }}</strong>
+          <span>{{ s('stat2Text') }}</span>
+        </article>
+        <article class="founder-stat">
+          <strong>{{ s('stat3Num') }}</strong>
+          <span>{{ s('stat3Text') }}</span>
+        </article>
+        <article class="founder-stat">
+          <strong>{{ s('stat4Num') }}</strong>
+          <span>{{ s('stat4Text') }}</span>
         </article>
       </div>
     </div>
   </section>
 
-  <section id="partners" class="partners-section">
+  <section id="partners" class="partners-section" aria-labelledby="partners-title" *transloco="let map; read: 'partners.map'">
+    <div class="partners-section__grid" aria-hidden="true"></div>
+
     <div class="partners-shell">
-      <header class="partners-head" appScrollReveal="up">
-        <span class="partners-kicker">{{ t('partners.kicker') }}</span>
-        <h2>{{ t('partners.title') }}</h2>
-        <p>
-          {{ t('partners.desc') }}
-        </p>
+      <header class="partners-header" appScrollReveal="up">
+        <span class="partners-kicker">
+          <span class="partners-kicker__dot" aria-hidden="true"></span>
+          {{ t('partners.kicker') }}
+        </span>
+        <h2 id="partners-title" class="partners-title">{{ t('partners.title') }}</h2>
+        <p class="partners-desc">{{ t('partners.desc') }}</p>
       </header>
 
-      <div class="partners-grid" role="list">
-        <article class="partner-card partner-card--local" role="listitem" appScrollReveal="up">
-          <span class="partner-orb partner-orb--top" aria-hidden="true"></span>
-
-          <div class="partner-card__head">
-            <div class="partner-icon" aria-hidden="true">
-              <span class="material-symbols-outlined">warehouse</span>
-            </div>
-            <div class="partner-title-wrap">
-              <h3>{{ t('partners.local_title') }}</h3>
-              <p>{{ t('partners.local_subtitle') }}</p>
-            </div>
+      <div class="partners-layout">
+        <article
+          class="partners-card"
+          appScrollReveal="up"
+          revealDelay="120"
+          *transloco="let strategic; read: 'partners.strategic'"
+        >
+          <div class="partners-card__head">
+            <span class="partners-card__num">01</span>
+            <span class="partners-card__eyebrow">{{ t('partners.local_subtitle') }}</span>
           </div>
 
-          <p class="partner-copy">
-            {{ t('partners.local_desc') }}
-          </p>
+          <h3 class="partners-card__title">{{ t('partners.local_title') }}</h3>
+          <p class="partners-card__copy">{{ t('partners.local_desc') }}</p>
 
-          <div class="partner-panel">
-            <h4>{{ t('partners.local_partners') }}</h4>
-            <div class="partner-chip-list">
-              <span>الوادي (Al-Wadi)</span>
-              <span>نهضة مصر (Nahdet Misr)</span>
-              <span>بيكو (Pico)</span>
-              <span>مغربي (Maghrabi)</span>
+          <div class="partners-card__foot">
+            <span class="partners-card__label">{{ t('partners.local_partners') }}</span>
+            <div class="partners-card__tags">
+              <span>{{ strategic('partner1') }}</span>
+              <span>{{ strategic('partner2') }}</span>
+              <span>{{ strategic('partner4') }}</span>
+              <span>{{ strategic('partner6') }}</span>
             </div>
           </div>
         </article>
 
-        <article
-          class="partner-card partner-card--global"
-          role="listitem"
-          appScrollReveal="up"
-          revealDelay="130"
-        >
-          <span class="partner-orb partner-orb--bottom" aria-hidden="true"></span>
+        <div class="partners-map" appScrollReveal="up" revealDelay="200">
+          <span class="partners-map__kicker">{{ map('kicker') }}</span>
+          <img
+            class="partners-map__img"
+            src="assets/Images/MAP.png"
+            [alt]="map('title')"
+            loading="lazy"
+          />
+          <div class="partners-map__legend" aria-hidden="true">
+            <span class="partners-map__legend-dot"></span>
+            <span class="partners-map__legend-text">CAIRO · EGYPT</span>
+          </div>
+        </div>
 
-          <div class="partner-card__head">
-            <div class="partner-icon" aria-hidden="true">
-              <span class="material-symbols-outlined">public</span>
-            </div>
-            <div class="partner-title-wrap">
-              <h3>{{ t('partners.global_title') }}</h3>
-              <p>{{ t('partners.global_subtitle') }}</p>
-            </div>
+        <article class="partners-card" appScrollReveal="up" revealDelay="280">
+          <div class="partners-card__head">
+            <span class="partners-card__num">02</span>
+            <span class="partners-card__eyebrow">{{ t('partners.global_subtitle') }}</span>
           </div>
 
-          <p class="partner-copy">
-            {{ t('partners.global_desc') }}
-          </p>
+          <h3 class="partners-card__title">{{ t('partners.global_title') }}</h3>
+          <p class="partners-card__copy">{{ t('partners.global_desc') }}</p>
 
-          <div class="partner-panel">
-            <h4>{{ t('partners.global_partners') }}</h4>
-            <div class="partner-signal-list">
-              <div class="partner-signal">
-                <span class="material-symbols-outlined" aria-hidden="true">factory</span>
-                <span>محطة العطار (Al-Attar Station)</span>
-              </div>
-              <div class="partner-signal">
-                <span class="material-symbols-outlined" aria-hidden="true">factory</span>
-                <span>محطة MHA</span>
-              </div>
-            </div>
+          <div class="partners-card__foot">
+            <span class="partners-card__label">{{ t('partners.global_partners') }}</span>
+
+            <ul class="partners-stations" role="list">
+              <li>
+                <span class="partners-stations__dot" aria-hidden="true"></span>
+                <div>
+                  <strong>{{ 'stations.attar.title' | transloco }}</strong>
+                  <span>{{ map('center') }}</span>
+                </div>
+              </li>
+              <li>
+                <span class="partners-stations__dot partners-stations__dot--alt" aria-hidden="true"></span>
+                <div>
+                  <strong>{{ 'stations.mha.title' | transloco }}</strong>
+                  <span>{{ map('gulf_region') }} · {{ map('russia_region') }}</span>
+                </div>
+              </li>
+            </ul>
           </div>
+        </article>
+      </div>
+
+      <div class="partners-stats" appScrollReveal="up" revealDelay="340" *transloco="let stats; read: 'partners.stats'">
+        <article class="partners-stat">
+          <strong>{{ stats('export_value') }}</strong>
+          <span>{{ stats('export_label') }}</span>
+        </article>
+        <article class="partners-stat">
+          <strong>{{ stats('volume_value') }}</strong>
+          <span>{{ stats('volume_label') }}</span>
+        </article>
+        <article class="partners-stat">
+          <strong>{{ stats('quality_value') }}</strong>
+          <span>{{ stats('quality_label') }}</span>
         </article>
       </div>
     </div>

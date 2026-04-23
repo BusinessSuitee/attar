@@ -1,53 +1,125 @@
-<main class="login-page" dir="rtl">
-  <section class="login-card" aria-labelledby="admin-login-title">
-    <header class="login-head">
-      <p class="login-kicker">لوحة التحكم</p>
-      <h1 id="admin-login-title">تسجيل دخول الأدمن</h1>
-      <p class="login-subtitle">استخدم بيانات حساب الإدارة للوصول إلى إدارة المحاصيل والمحتوى.</p>
-    </header>
+<main class="auth-shell" dir="rtl">
+  <!-- Showcase / visual panel -->
+  <aside class="auth-showcase" aria-hidden="true">
+    <div class="showcase-media">
+      <img src="assets/hero/farmfreshtomato.png" alt="" class="showcase-image" />
+    </div>
+    <div class="showcase-veil"></div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
-      <label class="field">
-        <span>البريد الإلكتروني</span>
-        <input
-          type="email"
-          formControlName="email"
-          autocomplete="username"
-          placeholder="اكتب بريدك الإلكتروني"
-        />
-      </label>
+    <div class="showcase-content">
+      <div class="showcase-brand">
+        <span class="brand-dot"></span>
+        <span class="brand-text">ALATAR · أولاد العطار</span>
+      </div>
 
-      <p
-        class="field-error"
-        *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid"
-      >
-        أدخل بريد إلكتروني صالح.
-      </p>
+      <div class="showcase-headline">
+        <h2>من الحقل إلى العالم.</h2>
+        <p>خمسون عاماً من تصدير أجود محاصيل مصر — طماطم، بطاطس، برتقال، بصل.</p>
+      </div>
 
-      <label class="field">
-        <span>كلمة المرور</span>
-        <input
-          type="password"
-          formControlName="password"
-          autocomplete="current-password"
-          placeholder="****************"
-        />
-      </label>
+      <div class="showcase-stats">
+        <div class="stat">
+          <span class="stat-value">50<span class="stat-unit">+</span></span>
+          <span class="stat-label">عاماً من الخبرة</span>
+        </div>
+        <span class="stat-divider"></span>
+        <div class="stat">
+          <span class="stat-value">30<span class="stat-unit">+</span></span>
+          <span class="stat-label">دولة حول العالم</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 
-      <p
-        class="field-error"
-        *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"
-      >
-        كلمة المرور يجب أن تكون 11 حرفا على الأقل.
-      </p>
+  <!-- Form panel -->
+  <section class="auth-panel" aria-labelledby="admin-login-title">
+    <div class="auth-card">
+      <a routerLink="/" class="auth-back" aria-label="العودة إلى الصفحة الرئيسية">
+        <span class="material-symbols-outlined">arrow_forward</span>
+        <span>الرئيسية</span>
+      </a>
 
-      <p class="request-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <div class="auth-header">
+        <div class="auth-mark" aria-hidden="true">
+          <span class="material-symbols-outlined">agriculture</span>
+        </div>
+        <span class="auth-eyebrow">لوحة الإدارة</span>
+        <h1 id="admin-login-title">أهلاً بعودتك</h1>
+        <p class="auth-intro">سجّل الدخول للوصول إلى إدارة المحاصيل، الجاليري، والمحتوى.</p>
+      </div>
 
-      <button type="submit" class="submit-btn" [disabled]="isSubmitting">
-        {{ isSubmitting ? 'جاري التحقق...' : 'تسجيل الدخول' }}
-      </button>
-    </form>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form" novalidate>
+        <div
+          class="auth-field"
+          [class.is-invalid]="loginForm.controls.email.touched && loginForm.controls.email.invalid"
+        >
+          <span class="field-icon material-symbols-outlined" aria-hidden="true">mail</span>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="username"
+            placeholder=" "
+            required
+          />
+          <label for="email">البريد الإلكتروني</label>
+        </div>
+        <p
+          class="auth-hint auth-hint--error"
+          *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid"
+        >
+          <span class="material-symbols-outlined">error</span>
+          أدخل بريدًا إلكترونيًا صالحًا.
+        </p>
 
-    <a routerLink="/" class="back-link">العودة إلى الصفحة الرئيسية</a>
+        <div
+          class="auth-field"
+          [class.is-invalid]="loginForm.controls.password.touched && loginForm.controls.password.invalid"
+        >
+          <span class="field-icon material-symbols-outlined" aria-hidden="true">lock</span>
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            autocomplete="current-password"
+            placeholder=" "
+            required
+          />
+          <label for="password">كلمة المرور</label>
+          <button
+            type="button"
+            class="field-toggle"
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'"
+          >
+            <span class="material-symbols-outlined">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
+          </button>
+        </div>
+        <p
+          class="auth-hint auth-hint--error"
+          *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"
+        >
+          <span class="material-symbols-outlined">error</span>
+          كلمة المرور يجب ألا تقل عن 11 حرفًا.
+        </p>
+
+        <div class="auth-alert" *ngIf="errorMessage" role="alert">
+          <span class="material-symbols-outlined">report</span>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <button type="submit" class="auth-submit" [disabled]="isSubmitting">
+          <span class="submit-label">{{ isSubmitting ? 'جارٍ التحقق...' : 'تسجيل الدخول' }}</span>
+          <span class="submit-icon material-symbols-outlined" *ngIf="!isSubmitting">arrow_back</span>
+          <span class="submit-spinner" *ngIf="isSubmitting" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <footer class="auth-footer">
+        <span>محمية بتشفير SSL</span>
+        <span class="footer-dot"></span>
+        <span>© 2026 Alatar</span>
+      </footer>
+    </div>
   </section>
 </main>

@@ -1,0 +1,33 @@
+@if (!loading() && items().length > 0) {
+  <aside class="social-sidebar" aria-label="Social links sidebar">
+    <ul class="social-sidebar__list" role="list">
+      @for (item of items(); track trackById($index, item)) {
+        <li class="social-sidebar__item">
+          <a
+            class="social-sidebar__link"
+            [href]="item.url"
+            [style.--sl-accent]="item.color"
+            [attr.target]="item.opensInNewTab ? '_blank' : null"
+            [attr.rel]="item.opensInNewTab ? 'noopener noreferrer' : null"
+            [attr.aria-label]="item.label"
+            [attr.title]="item.label"
+          >
+            <span class="social-sidebar__icon" aria-hidden="true">
+              @if (item.customIconUrl) {
+                <img
+                  [src]="item.customIconUrl"
+                  [alt]="item.label"
+                  loading="lazy"
+                  decoding="async"
+                />
+              } @else {
+                <span class="social-sidebar__svg" [innerHTML]="item.iconSvg"></span>
+              }
+            </span>
+            <span class="social-sidebar__label">{{ item.label }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </aside>
+}

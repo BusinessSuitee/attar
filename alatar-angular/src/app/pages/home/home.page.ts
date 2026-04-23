@@ -10,6 +10,10 @@ import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.dir
   standalone: true,
   imports: [NavbarComponent, HeroComponent, TranslocoModule, RouterLink, ScrollRevealDirective],
   templateUrl: './home.page.html',
-  styleUrl: './home.page.css',
+  styleUrls: [
+    './home.page.css',
+    './home.founder.css',
+    './home.partners.css',
+  ],
 })
 export class HomePageComponent {}

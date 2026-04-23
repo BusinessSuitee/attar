@@ -53,6 +53,23 @@
 
   <section class="dashboard-main" aria-label="محتوى لوحة التحكم">
     <div class="dashboard-content">
+      <header class="dashboard-intro" *ngIf="!isLoading">
+        <div class="dashboard-intro__meta" aria-hidden="true">
+          <span class="dashboard-intro__chapter">§</span>
+          <span class="dashboard-intro__rule"></span>
+          <span class="dashboard-intro__coord">30°02′N · 31°13′E · CAIRO</span>
+        </div>
+        <h1 class="dashboard-intro__title">{{
+          activeSection === 'orders' ? 'سجل الطلبات' :
+          activeSection === 'products' ? 'سجل المحاصيل' :
+          activeSection === 'contacts' ? 'قائمة التواصل' :
+          activeSection === 'social' ? 'قنوات البيت' :
+          activeSection === 'settings' ? 'الإعدادات' :
+          'لوحة الإدارة'
+        }}</h1>
+        <p class="dashboard-intro__script">— office of operations, est. MCMLXXV</p>
+      </header>
+
       <section class="status-row" aria-live="polite" *ngIf="isLoading || !!loadError">
         <div class="status loading" *ngIf="isLoading">جاري تحميل بيانات الجلسة...</div>
         <div class="status error" *ngIf="!isLoading && loadError">{{ loadError }}</div>
@@ -1692,6 +1709,10 @@
             </button>
           </footer>
         </article>
+      </section>
+
+      <section class="single-panel-grid" *ngIf="!isLoading && activeSection === 'social'">
+        <app-admin-social-links></app-admin-social-links>
       </section>
 
       <section class="single-panel-grid" *ngIf="!isLoading && activeSection === 'settings'">

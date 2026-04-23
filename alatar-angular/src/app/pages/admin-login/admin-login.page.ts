@@ -27,6 +27,7 @@ export class AdminLoginPageComponent {
 
   isSubmitting = false;
   errorMessage = '';
+  showPassword = false;
 
   onSubmit(): void {
     if (this.loginForm.invalid || this.isSubmitting) {

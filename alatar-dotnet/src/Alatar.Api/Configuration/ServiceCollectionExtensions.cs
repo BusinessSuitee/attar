@@ -108,6 +108,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IProductImageStorage, LocalProductImageStorage>();
+        services.AddScoped<ISocialIconStorage, LocalSocialIconStorage>();
 
         return services;
     }
