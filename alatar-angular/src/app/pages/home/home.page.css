@@ -1166,7 +1166,7 @@ html[lang='ar'] .routes-stat strong {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
   padding: 6rem 0;
-  background: #151d19;
+  background: #1a2e1d;
   color: #ffffff;
 }
 
@@ -1585,5 +1585,161 @@ html[lang='ar'] .routes-stat strong {
     padding: 1rem;
   }
 
+}
+
+/* =====================================================
+   HOME CTA — Earthy deep-green call to action
+   Matches the founder/partners design language:
+   same full-bleed, same leaf shapes, same font stack.
+   ===================================================== */
+.home-cta {
+  --cta-bg:         #1a2e1d;
+  --cta-green-soft: #8fa678;
+  --cta-terracotta: #c47a4f;
+  --cta-white:      #ffffff;
+
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  background: var(--cta-bg);
+  isolation: isolate;
+  text-align: center;
+  font-family: 'Work Sans', 'Cairo', sans-serif;
+}
+
+html[lang='ar'] .home-cta {
+  font-family: 'Cairo', sans-serif;
+}
+
+.home-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-cta__leaf {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50% 0 50% 0;
+  background: var(--cta-green-soft);
+  opacity: 0.07;
+}
+
+.home-cta__leaf--a {
+  width: clamp(16rem, 32vw, 26rem);
+  height: clamp(16rem, 32vw, 26rem);
+  top: -6rem;
+  inset-inline-start: -4rem;
+  transform: rotate(-24deg);
+}
+
+.home-cta__leaf--b {
+  width: clamp(10rem, 20vw, 16rem);
+  height: clamp(10rem, 20vw, 16rem);
+  bottom: -3rem;
+  inset-inline-end: 8%;
+  transform: rotate(18deg);
+  background: var(--cta-terracotta);
+  opacity: 0.09;
+}
+
+.home-cta__shell {
+  position: relative;
+  z-index: 2;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding-inline: clamp(2rem, 5vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.home-cta__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cta-terracotta);
+}
+
+html[lang='ar'] .home-cta__kicker {
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+}
+
+.home-cta__kicker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cta-terracotta);
+  flex-shrink: 0;
+}
+
+.home-cta__title {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cta-white);
+}
+
+html[lang='ar'] .home-cta__title {
+  letter-spacing: 0;
+}
+
+.home-cta__desc {
+  margin: 0;
+  max-width: 600px;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.75;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.home-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: inherit;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c47a4f 0%, #a0522d 100%);
+  box-shadow:
+    0 10px 28px rgba(160, 82, 45, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms ease;
+}
+
+.home-cta__btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 36px rgba(160, 82, 45, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 480px) {
+  .home-cta__btn {
+    width: 100%;
+    max-width: 280px;
+  }
 }
 

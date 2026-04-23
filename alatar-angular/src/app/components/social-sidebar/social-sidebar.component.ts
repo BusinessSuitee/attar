@@ -17,6 +17,46 @@ import {
 } from '../../core/social-links/social-link.service';
 import { PlatformIconDefinition, getPlatformIcon } from './social-icons';
 
+// Remove this once the API is wired and returning real social links.
+const FALLBACK_LINKS: SocialLinkDto[] = [
+  {
+    id: 'fallback-linkedin',
+    platform: 'LinkedIn',
+    url: 'https://linkedin.com/company/alatar-sons',
+    label: 'LinkedIn',
+    iconKey: null,
+    customIconUrl: null,
+    colorHex: null,
+    displayOrder: 1,
+    isEnabled: true,
+    opensInNewTab: true,
+  },
+  {
+    id: 'fallback-whatsapp',
+    platform: 'WhatsApp',
+    url: 'https://wa.me/201004623085',
+    label: 'WhatsApp',
+    iconKey: null,
+    customIconUrl: null,
+    colorHex: null,
+    displayOrder: 2,
+    isEnabled: true,
+    opensInNewTab: true,
+  },
+  {
+    id: 'fallback-facebook',
+    platform: 'Facebook',
+    url: 'https://facebook.com/alatar-sons',
+    label: 'Facebook',
+    iconKey: null,
+    customIconUrl: null,
+    colorHex: null,
+    displayOrder: 3,
+    isEnabled: true,
+    opensInNewTab: true,
+  },
+];
+
 interface RenderableLink {
   id: string;
   url: string;
@@ -59,11 +99,11 @@ export class SocialSidebarComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => {
-          this.links.set(data ?? []);
+          this.links.set(data?.length ? data : FALLBACK_LINKS);
           this.loading.set(false);
         },
         error: () => {
-          this.links.set([]);
+          this.links.set(FALLBACK_LINKS);
           this.loading.set(false);
         },
       });
