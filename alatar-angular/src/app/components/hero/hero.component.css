@@ -55,66 +55,6 @@ swiper-slide {
 .slide__bg--5 { background-image: url('/assets/hero/fundo5.png'); }
 
 /* =====================================================
-   CURTAIN STRIPS — reveal image in horizontal slices.
-   Strips cover the image initially, then slide off in
-   alternating directions with a stagger when the slide
-   becomes active.
-   ===================================================== */
-.slide__curtain {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.curtain-strip {
-  flex: 1;
-  display: block;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 30%),
-    linear-gradient(180deg, #000000 0%, #000000 50%, #000000 100%);
-  transform: translateX(0);
-  will-change: transform;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.curtain-strip:last-child {
-  border-bottom: 0;
-}
-
-/* Default: strips cover the image — animation only when the slide is active. */
-.swiper-slide-active .curtain-strip {
-  animation: curtain-off-start 1150ms cubic-bezier(0.76, 0, 0.24, 1) both;
-  animation-delay: calc(var(--i, 0) * 95ms);
-}
-
-/* Alternate the slide-off direction for a dynamic shutter effect. */
-.swiper-slide-active .curtain-strip:nth-child(even) {
-  animation-name: curtain-off-end;
-}
-
-@keyframes curtain-off-start {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-103%); }
-}
-
-@keyframes curtain-off-end {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(103%); }
-}
-
-/* Flip directions in RTL so the motion still feels natural. */
-[dir='rtl'] .swiper-slide-active .curtain-strip {
-  animation-name: curtain-off-end;
-}
-[dir='rtl'] .swiper-slide-active .curtain-strip:nth-child(even) {
-  animation-name: curtain-off-start;
-}
-
-/* =====================================================
    CINEMATIC OVERLAYS — radial vignette + directional
    ===================================================== */
 .slide__vignette {
@@ -194,12 +134,10 @@ swiper-slide {
   from {
     opacity: 0;
     transform: translateY(28px);
-    filter: blur(6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 
@@ -216,8 +154,7 @@ swiper-slide {
   opacity: 0;
   transform: translateY(-0.55em) rotateX(-75deg);
   transform-origin: 50% 100%;
-  filter: blur(8px);
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .slide__title--typed .char--space {
@@ -232,20 +169,23 @@ swiper-slide {
   animation-delay: calc(300ms + (var(--i, 0) * 32ms));
 }
 
+.hero-carousel--lang-switching .slide__title--typed .char:not(.char--space) {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 @keyframes char-drop {
   0% {
     opacity: 0;
     transform: translateY(-0.55em) rotateX(-75deg);
-    filter: blur(8px);
   }
   60% {
     opacity: 1;
-    filter: blur(0);
   }
   100% {
     opacity: 1;
     transform: translateY(0) rotateX(0);
-    filter: blur(0);
   }
 }
 
@@ -509,75 +449,6 @@ html[lang='ar'] .hero-signature__text {
 }
 
 /* =====================================================
-   SCROLL HINT
-   ===================================================== */
-.scroll-hint {
-  position: absolute;
-  bottom: 4.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.65rem;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  transition: color 200ms ease, transform 200ms ease;
-  animation: scroll-hint-bounce 2600ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-.scroll-hint:hover {
-  color: #fff;
-}
-
-.scroll-hint__label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-}
-
-html[lang='ar'] .scroll-hint__label {
-  letter-spacing: 0.06em;
-  font-size: 0.82rem;
-}
-
-.scroll-hint__mouse {
-  position: relative;
-  width: 22px;
-  height: 34px;
-  border: 1.5px solid rgba(255, 255, 255, 0.75);
-  border-radius: 999px;
-}
-
-.scroll-hint__dot {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  width: 3px;
-  height: 7px;
-  border-radius: 999px;
-  background: #fff;
-  transform: translateX(-50%);
-  animation: scroll-dot 1800ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes scroll-dot {
-  0%   { opacity: 0; transform: translate(-50%, 0); }
-  30%  { opacity: 1; }
-  70%  { opacity: 1; transform: translate(-50%, 12px); }
-  100% { opacity: 0; transform: translate(-50%, 12px); }
-}
-
-@keyframes scroll-hint-bounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50%      { transform: translate(-50%, -6px); }
-}
-
-/* =====================================================
    CUSTOM PREV / NEXT CONTROLS
    Uses logical properties so the start button is always
    on the "reading-start" side, and the arrow icon flips
@@ -724,12 +595,6 @@ html[lang='ar'] .scroll-hint__label {
     font-size: 0.9rem;
   }
 
-  .scroll-hint { bottom: 3.5rem; }
-
-  /* Use 4 strips on smaller screens for better balance */
-  .slide__curtain .curtain-strip:nth-child(n + 5) {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -738,7 +603,6 @@ html[lang='ar'] .scroll-hint__label {
   }
 
   .hero-signature { display: none; }
-  .scroll-hint__label { display: none; }
 
   .slide__cta {
     flex-direction: column;
@@ -759,21 +623,10 @@ html[lang='ar'] .scroll-hint__label {
   }
 
   .swiper-slide-active .slide__content > *,
-  .swiper-slide-active .slide__title--typed .char,
-  .swiper-slide-active .curtain-strip {
+  .swiper-slide-active .slide__title--typed .char {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-    filter: none !important;
-  }
-
-  .curtain-strip {
-    display: none;
-  }
-
-  .scroll-hint,
-  .scroll-hint__dot {
-    animation: none;
   }
 }
 

@@ -1,4 +1,4 @@
-<section id="home" class="hero-carousel" aria-labelledby="hero-title" *transloco="let t; read: 'home.hero'" [attr.dir]="dir()">
+<section id="home" class="hero-carousel" [class.hero-carousel--lang-switching]="langSwitching()" aria-labelledby="hero-title" *transloco="let t; read: 'home.hero'" [attr.dir]="dir()">
   <swiper-container
     #swiperEl
     class="hero-swiper"

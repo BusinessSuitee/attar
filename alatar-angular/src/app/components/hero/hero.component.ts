@@ -4,9 +4,12 @@ import {
   Component,
   computed,
   CUSTOM_ELEMENTS_SCHEMA,
+  effect,
   ElementRef,
   inject,
+  OnDestroy,
   PLATFORM_ID,
+  signal,
   viewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -29,13 +32,12 @@ interface TextChunk {
   changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class HeroComponent implements AfterViewInit {
+export class HeroComponent implements AfterViewInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly transloco = inject(TranslocoService);
 
-  readonly autoplayDelay = 1500;
+  readonly autoplayDelay = 5500;
   readonly transitionSpeed = 800;
-  
 
   readonly swiperEl = viewChild<ElementRef<HTMLElement>>('swiperEl');
 
@@ -43,6 +45,32 @@ export class HeroComponent implements AfterViewInit {
     initialValue: this.transloco.getActiveLang(),
   });
   readonly dir = computed(() => (this.activeLang() === 'ar' ? 'rtl' : 'ltr'));
+
+  readonly langSwitching = signal(false);
+  private langSwitchTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  constructor() {
+    let isFirst = true;
+    effect(() => {
+      const lang = this.activeLang();
+      if (isFirst) { isFirst = false; return; }
+
+      this.langSwitching.set(true);
+
+      const swiper = (this.swiperEl()?.nativeElement as unknown as { swiper?: { changeLanguageDirection: (d: string) => void; update: () => void } })?.swiper;
+      if (swiper) {
+        swiper.changeLanguageDirection(lang === 'ar' ? 'rtl' : 'ltr');
+        swiper.update();
+      }
+
+      if (this.langSwitchTimeout) clearTimeout(this.langSwitchTimeout);
+      this.langSwitchTimeout = setTimeout(() => this.langSwitching.set(false), 500);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.langSwitchTimeout) clearTimeout(this.langSwitchTimeout);
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) {
