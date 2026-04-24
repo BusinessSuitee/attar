@@ -1,2 +1,5 @@
 <router-outlet></router-outlet>
 <app-social-sidebar></app-social-sidebar>
+@if (!isAdminRoute()) {
+  <app-footer></app-footer>
+}

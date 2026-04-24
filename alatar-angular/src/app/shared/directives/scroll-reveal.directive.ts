@@ -85,6 +85,13 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
 
     if (this.destroyed) return;
 
+    // If the element is already in the viewport when GSAP loads (common with SSR +
+    // slow bundle delivery in production), skip the entrance animation entirely.
+    // Without this guard, gsap.from() snaps the element to y:48/opacity:0 while
+    // overflow:hidden ancestors clip it — producing a permanent "half image" cut.
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) return;
+
     if (!gsapReady) {
       gsap.registerPlugin(ScrollTrigger);
       gsapReady = true;

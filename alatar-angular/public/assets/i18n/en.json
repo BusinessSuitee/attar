@@ -689,6 +689,26 @@
       "btn": "Browse Crops"
     }
   },
+  "footer": {
+    "established": "Est. 1975",
+    "brand_name": "Alatar Sons",
+    "brand_desc": "We are committed to delivering Egypt's finest agricultural crops to the world while maintaining the highest standards of quality and sustainability.",
+    "nav_title": "Quick Links",
+    "link_home": "Home",
+    "link_about": "About Us",
+    "link_products": "Products",
+    "link_partners": "Partners",
+    "link_stations": "Stations & Lands",
+    "link_certificates": "Certificates",
+    "link_gallery": "Gallery",
+    "contact_title": "Contact Us",
+    "address_line1": "Alexandria Desert Road, Km 75",
+    "address_line2": "Nubaria, El Beheira, Egypt",
+    "phone": "+20 1004623085",
+    "phone2": "+20 109 2069059",
+    "social_title": "Follow Us",
+    "copyright": "© 2026 Alatar Sons. All rights reserved."
+  },
   "contact_page": {
     "title": "Contact Us & Order Now",
     "subtitle": "Quality and trust guaranteed since 1975. We are your partners in success and providing top agricultural crops.",
