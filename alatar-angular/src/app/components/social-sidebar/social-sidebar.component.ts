@@ -81,8 +81,8 @@ export class SocialSidebarComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
 
-  private readonly links = signal<SocialLinkDto[]>([]);
-  readonly loading = signal(true);
+  private readonly links = signal<SocialLinkDto[]>(FALLBACK_LINKS);
+  readonly loading = signal(false);
 
   readonly items = computed<RenderableLink[]>(() =>
     this.links().map((link) => this.toRenderable(link)),

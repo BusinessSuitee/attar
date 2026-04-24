@@ -1,4 +1,4 @@
-@if (!loading() && items().length > 0) {
+@if (items().length > 0) {
   <aside class="social-sidebar" aria-label="Social links sidebar">
     <ul class="social-sidebar__list" role="list">
       @for (item of items(); track trackById($index, item)) {

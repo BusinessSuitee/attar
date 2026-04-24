@@ -409,6 +409,7 @@ html[lang='ar'] .partners-map__kicker {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 4 / 3;
   max-height: 24rem;
   object-fit: contain;
   margin-top: 1rem;

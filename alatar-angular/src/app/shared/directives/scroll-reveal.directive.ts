@@ -1,14 +1,12 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   Directive,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
-  Renderer2,
   booleanAttribute,
   inject,
   numberAttribute,
@@ -16,138 +14,110 @@ import {
 
 type RevealDirection = 'up' | 'down' | 'left' | 'right' | 'zoom' | 'blur';
 
+const DIRECTION_PROPS: Record<RevealDirection, Record<string, unknown>> = {
+  up:    { y: 48, opacity: 0 },
+  down:  { y: -48, opacity: 0 },
+  left:  { x: 48, opacity: 0 },
+  right: { x: -48, opacity: 0 },
+  zoom:  { scale: 0.88, y: 16, opacity: 0 },
+  blur:  { filter: 'blur(10px)', y: 16, opacity: 0 },
+};
+
+const DIRECTION_EASE: Record<RevealDirection, string> = {
+  up:    'power3.out',
+  down:  'power3.out',
+  left:  'power3.out',
+  right: 'power3.out',
+  zoom:  'back.out(1.4)',
+  blur:  'power2.out',
+};
+
+// Registered once across all directive instances — GSAP registers the plugin globally.
+let gsapReady = false;
+
 @Directive({
   selector: '[appScrollReveal]',
   standalone: true,
 })
 export class ScrollRevealDirective implements OnInit, OnDestroy {
-  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly renderer = inject(Renderer2);
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly document = inject(DOCUMENT);
-
-  private observer: IntersectionObserver | null = null;
-  private hasIntersected = false;
 
   @Input({ alias: 'appScrollReveal' }) revealDirection: RevealDirection = 'up';
   @Input({ transform: numberAttribute }) revealDelay = 0;
-  @Input({ transform: numberAttribute }) revealDuration = 1180;
-  @Input({ transform: numberAttribute }) revealDistance = 34;
+  @Input({ transform: numberAttribute }) revealDuration = 900;
   @Input({ transform: booleanAttribute }) revealOnce = true;
-  @Input({ transform: numberAttribute }) revealThreshold = 0.1;
-  @Input() revealRootMargin = '0px 0px -4% 0px';
 
-  @HostBinding('class.reveal-item') readonly revealClass = true;
-  @HostBinding('class.reveal-visible') visible = false;
+  private destroyed = false;
+  private cleanup: (() => void) | null = null;
 
   ngOnInit(): void {
-    const element = this.elementRef.nativeElement;
-    const direction = this.normalizeDirection(this.revealDirection);
-
-    this.renderer.addClass(element, `reveal-${direction}`);
-    this.setCssVar('--reveal-delay', `${Math.max(0, this.revealDelay)}ms`);
-    this.setCssVar('--reveal-duration', `${Math.max(150, this.revealDuration)}ms`);
-    this.applyDistance(direction, Math.max(8, this.revealDistance));
-
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-
-    this.renderer.addClass(this.document.documentElement, 'reveal-ready');
+    if (!isPlatformBrowser(this.platformId)) return;
 
     const prefersReducedMotion =
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-
-    if (prefersReducedMotion || typeof window.IntersectionObserver === 'undefined') {
-      this.visible = true;
-      return;
-    }
+    if (prefersReducedMotion) return;
 
     this.ngZone.runOutsideAngular(() => {
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.target !== element) {
-              continue;
-            }
-
-            if (entry.isIntersecting) {
-              this.ngZone.run(() => {
-                this.visible = true;
-                this.hasIntersected = true;
-              });
-
-              if (this.revealOnce && this.observer) {
-                this.observer.unobserve(element);
-              }
-              continue;
-            }
-
-            if (!this.revealOnce && this.hasIntersected) {
-              this.ngZone.run(() => {
-                this.visible = false;
-              });
-            }
-          }
-        },
-        {
-          threshold: this.clampThreshold(this.revealThreshold),
-          rootMargin: this.revealRootMargin,
-        },
-      );
-
-      this.observer.observe(element);
+      void this.initGsap();
     });
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
-    this.observer = null;
+    this.destroyed = true;
+    this.cleanup?.();
+    this.cleanup = null;
+  }
+
+  private async initGsap(): Promise<void> {
+    let gsap: (typeof import('gsap'))['gsap'];
+    let ScrollTrigger: (typeof import('gsap/ScrollTrigger'))['ScrollTrigger'];
+
+    try {
+      [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]);
+    } catch {
+      return;
+    }
+
+    if (this.destroyed) return;
+
+    if (!gsapReady) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsapReady = true;
+    }
+
+    const direction = this.normalizeDirection(this.revealDirection);
+    const fromVars = { ...DIRECTION_PROPS[direction] };
+    const duration = Math.max(0.15, this.revealDuration / 1000);
+    const delay = Math.max(0, this.revealDelay / 1000);
+
+    const tween = gsap.from(this.el.nativeElement, {
+      ...fromVars,
+      duration,
+      delay,
+      ease: DIRECTION_EASE[direction],
+      scrollTrigger: {
+        trigger: this.el.nativeElement,
+        start: 'top 88%',
+        once: this.revealOnce,
+        toggleActions: this.revealOnce
+          ? 'play none none none'
+          : 'play none none reverse',
+      },
+    });
+
+    this.cleanup = () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
   }
 
   private normalizeDirection(value: string): RevealDirection {
-    const safeValue = (value ?? '').toLowerCase();
     const supported: RevealDirection[] = ['up', 'down', 'left', 'right', 'zoom', 'blur'];
-
-    return supported.includes(safeValue as RevealDirection) ? (safeValue as RevealDirection) : 'up';
-  }
-
-  private applyDistance(direction: RevealDirection, distance: number): void {
-    if (direction === 'left') {
-      this.setCssVar('--reveal-translate-x', `${distance}px`);
-      this.setCssVar('--reveal-translate-y', '0px');
-      return;
-    }
-
-    if (direction === 'right') {
-      this.setCssVar('--reveal-translate-x', `-${distance}px`);
-      this.setCssVar('--reveal-translate-y', '0px');
-      return;
-    }
-
-    if (direction === 'down') {
-      this.setCssVar('--reveal-translate-y', `-${distance}px`);
-      return;
-    }
-
-    if (direction === 'zoom') {
-      this.setCssVar('--reveal-translate-y', `${Math.round(distance * 0.35)}px`);
-      return;
-    }
-
-    this.setCssVar('--reveal-translate-y', `${distance}px`);
-  }
-
-  private setCssVar(name: string, value: string): void {
-    this.renderer.setStyle(this.elementRef.nativeElement, name, value);
-  }
-
-  private clampThreshold(value: number): number {
-    if (!Number.isFinite(value)) {
-      return 0.16;
-    }
-
-    return Math.max(0, Math.min(1, value));
+    return supported.includes(value as RevealDirection) ? (value as RevealDirection) : 'up';
   }
 }
