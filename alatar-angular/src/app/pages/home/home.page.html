@@ -2,89 +2,97 @@
 <app-hero></app-hero>
 
 <main class="page-shell" *transloco="let t; read: 'home'">
-  <section id="about" class="founder-section" aria-labelledby="founder-title">
-    <div class="founder-section__accent" aria-hidden="true"></div>
-    <div class="founder-section__leaf founder-section__leaf--a" aria-hidden="true"></div>
-    <div class="founder-section__leaf founder-section__leaf--b" aria-hidden="true"></div>
+  <!-- ═══ FOUNDER MONUMENT — iconic portrait, data orbiting ═══ -->
+  <section id="about" class="patron-section" aria-labelledby="patron-heading">
+    <div class="patron-year-ghost" aria-hidden="true">1975</div>
 
-    <div class="founder-shell">
-      <header class="founder-header" appScrollReveal="up">
-        <span class="founder-tag">
-          <span class="founder-tag__dot" aria-hidden="true"></span>
+    <div class="patron-shell">
+
+      <!-- Col 1 · Info -->
+      <div class="patron-info" appScrollReveal="up" revealDelay="0">
+        <span class="patron-kicker">
+          <span class="patron-kicker-dot" aria-hidden="true"></span>
           {{ t('founder.tag') }}
         </span>
-        <h2 id="founder-title" class="founder-title">
+
+        <h2 id="patron-heading" class="patron-heading">
           {{ t('founder.headline_prefix') }}
-          <span class="founder-title__year">1975</span>
+          <span class="patron-heading__year">1975</span>
         </h2>
-      </header>
 
-      <div class="founder-grid">
-        <figure class="founder-portrait" appScrollReveal="up" revealDelay="120">
-          <div class="founder-portrait__frame">
-            <img src="assets/Images/alattar.jpeg" [alt]="t('founder.name')" loading="lazy" />
+        <p class="patron-since">SINCE <span>1975</span></p>
+
+        <div class="patron-side-stats" *transloco="let s; read: 'about.stats'">
+          <div class="patron-side-stat">
+            <strong>{{ s('stat1Num') }}</strong>
+            <span>{{ s('stat1Text') }}</span>
           </div>
-          <figcaption class="founder-portrait__caption">
-            <span class="founder-portrait__role">{{ t('founder.role') }}</span>
-            <strong class="founder-portrait__name">{{ t('founder.name') }}</strong>
-          </figcaption>
-        </figure>
-
-        <div class="founder-story" appScrollReveal="up" revealDelay="200">
-          <p class="founder-story__lead">{{ t('founder.p1') }}</p>
-
-          <blockquote class="founder-story__quote">
-            <p>{{ t('founder.quote') }}</p>
-            <cite>{{ t('founder.cite') }}</cite>
-          </blockquote>
-
-          <a routerLink="/about" class="founder-story__cta">
-            {{ t('founder.cta') }}
-          </a>
+          <div class="patron-side-stat">
+            <strong>{{ s('stat3Num') }}</strong>
+            <span>{{ s('stat3Text') }}</span>
+          </div>
         </div>
       </div>
 
-      <section class="founder-pillars" appScrollReveal="up" revealDelay="280">
-        <h3 class="founder-pillars__title">{{ t('founder.pillars_title') }}</h3>
-
-        <div class="founder-pillars__grid">
-          <article class="founder-pillar">
-            <span class="founder-pillar__num">01</span>
-            <h4>{{ t('founder.pillar1_title') }}</h4>
-            <p>{{ t('founder.pillar1_desc') }}</p>
-          </article>
-
-          <article class="founder-pillar">
-            <span class="founder-pillar__num">02</span>
-            <h4>{{ t('founder.pillar2_title') }}</h4>
-            <p>{{ t('founder.pillar2_desc') }}</p>
-          </article>
-
-          <article class="founder-pillar">
-            <span class="founder-pillar__num">03</span>
-            <h4>{{ t('founder.pillar3_title') }}</h4>
-            <p>{{ t('founder.pillar3_desc') }}</p>
-          </article>
+      <!-- Col 2 · Iconic Portrait -->
+      <figure class="patron-portrait-wrap" appScrollReveal="up" revealDelay="80">
+        <div class="patron-portrait">
+          <img
+            src="assets/Images/alattar.jpeg"
+            [attr.alt]="t('founder.name')"
+            loading="eager"
+          />
         </div>
-      </section>
+        <figcaption class="patron-caption">
+          <strong>{{ t('founder.role') }}</strong>
+          <span>{{ t('founder.name') }}</span>
+        </figcaption>
+      </figure>
 
-      <div class="founder-stats" *transloco="let s; read: 'about.stats'" appScrollReveal="up" revealDelay="360">
-        <article class="founder-stat">
-          <strong>{{ s('stat1Num') }}</strong>
-          <span>{{ s('stat1Text') }}</span>
-        </article>
-        <article class="founder-stat">
-          <strong>{{ s('stat2Num') }}</strong>
-          <span>{{ s('stat2Text') }}</span>
-        </article>
-        <article class="founder-stat">
-          <strong>{{ s('stat3Num') }}</strong>
-          <span>{{ s('stat3Text') }}</span>
-        </article>
-        <article class="founder-stat">
-          <strong>{{ s('stat4Num') }}</strong>
-          <span>{{ s('stat4Text') }}</span>
-        </article>
+      <!-- Col 3 · Story -->
+      <div class="patron-story" appScrollReveal="up" revealDelay="160">
+        <blockquote class="patron-quote">
+          <p>{{ t('founder.quote') }}</p>
+          <cite>{{ t('founder.cite') }}</cite>
+        </blockquote>
+
+        <ul class="patron-values">
+          <li>
+            <span class="patron-value-num">01</span>
+            <span class="patron-value-text">{{ t('founder.pillar1_title') }}</span>
+          </li>
+          <li>
+            <span class="patron-value-num">02</span>
+            <span class="patron-value-text">{{ t('founder.pillar2_title') }}</span>
+          </li>
+          <li>
+            <span class="patron-value-num">03</span>
+            <span class="patron-value-text">{{ t('founder.pillar3_title') }}</span>
+          </li>
+        </ul>
+
+        <a routerLink="/about" class="patron-cta">{{ t('founder.cta') }}</a>
+      </div>
+
+    </div><!-- /patron-shell -->
+
+    <!-- Stats ribbon -->
+    <div class="patron-stats" appScrollReveal="up" revealDelay="200" *transloco="let s; read: 'about.stats'">
+      <div class="patron-stat">
+        <strong>{{ s('stat1Num') }}</strong>
+        <span>{{ s('stat1Text') }}</span>
+      </div>
+      <div class="patron-stat">
+        <strong>{{ s('stat2Num') }}</strong>
+        <span>{{ s('stat2Text') }}</span>
+      </div>
+      <div class="patron-stat">
+        <strong>{{ s('stat3Num') }}</strong>
+        <span>{{ s('stat3Text') }}</span>
+      </div>
+      <div class="patron-stat">
+        <strong>{{ s('stat4Num') }}</strong>
+        <span>{{ s('stat4Text') }}</span>
       </div>
     </div>
   </section>

@@ -13,7 +13,39 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300..700,0..1&display=swap" rel="stylesheet">
 </head>
+<style>
+  #al-pl{position:fixed;inset:0;z-index:99999;background:#0d1a0e;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;transition:opacity .55s cubic-bezier(.4,0,.2,1)}
+  #al-pl.out{opacity:0;pointer-events:none}
+  .al-pl-inner{display:flex;flex-direction:column;align-items:center;gap:.75rem}
+  .al-pl-ar{margin:0;color:#fff;font-family:'Cairo','Noto Sans Arabic',sans-serif;font-size:1.9rem;font-weight:800;letter-spacing:.04em;line-height:1}
+  .al-pl-en{margin:0;color:rgba(255,255,255,.42);font-family:'Work Sans',system-ui,sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase}
+  .al-pl-bar{width:100px;height:1.5px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin-top:.6rem}
+  .al-pl-fill{display:block;height:100%;width:0;background:linear-gradient(90deg,#c47a4f,#d4af37);border-radius:999px;animation:al-fill 1.4s cubic-bezier(.4,0,.2,1) forwards}
+  @keyframes al-fill{0%{width:0}55%{width:68%}80%{width:82%}100%{width:100%}}
+</style>
 <body>
+  <div id="al-pl" role="status" aria-label="جاري التحميل">
+    <div class="al-pl-inner">
+      <p class="al-pl-ar">أولاد العطار</p>
+      <p class="al-pl-en">EST. 1975 · CAIRO</p>
+      <div class="al-pl-bar"><span class="al-pl-fill"></span></div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var start = Date.now(), MIN = 700;
+      function dismiss(){
+        var el = document.getElementById('al-pl');
+        if(!el) return;
+        el.classList.add('out');
+        setTimeout(function(){ el.parentNode && el.parentNode.removeChild(el); }, 600);
+      }
+      window.addEventListener('load', function(){
+        var wait = Math.max(0, MIN - (Date.now() - start));
+        setTimeout(dismiss, wait);
+      });
+    })();
+  </script>
   <app-root></app-root>
 </body>
 </html>
