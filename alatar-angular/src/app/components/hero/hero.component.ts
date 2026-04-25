@@ -69,9 +69,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.langSwitchTimeout) clearTimeout(this.langSwitchTimeout);
-  }
-
+    if (this.langSwitchTimeout) clearTimeout(this.langSwitchTimeo
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;

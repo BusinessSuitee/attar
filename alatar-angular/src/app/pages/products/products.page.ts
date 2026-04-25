@@ -6,17 +6,20 @@ import {
   DestroyRef,
   OnInit,
   computed,
+  effect,
   inject,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { ProductListItem, ProductService } from '../../core/products/product.service';
+import { ProductListItem } from '../../core/products/product.service';
+import { ProductsStore } from '../../core/products/products.store';
 import { API_BASE_URL } from '../../core/config/api-base-url.token';
 import { OrderRequestService } from '../../core/orders/order-request.service';
 import { ContactService, ContactUiServiceType } from '../../core/contacts/contact.service';
-import { finalize, retry, throwError, timer } from 'rxjs';
+import { finalize } from 'rxjs';
 
 type CategoryFilter = 'all' | 'Fruit' | 'Vegetable' | 'Frozen';
 type SeasonFilter = 'all' | 'Summer' | 'Winter' | 'AllYear';
@@ -75,12 +78,14 @@ interface ContactFormState {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsPageComponent implements OnInit {
-  private readonly productService = inject(ProductService);
+  private readonly productsStore = inject(ProductsStore);
   private readonly orderRequestService = inject(OrderRequestService);
   private readonly contactService = inject(ContactService);
   private readonly apiBaseUrl = inject(API_BASE_URL);
   private readonly destroyRef = inject(DestroyRef);
   private readonly translocoService = inject(TranslocoService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   readonly isBrowser = typeof window !== 'undefined';
   readonly currentLanguage = signal<'ar' | 'en' | 'ru'>('ar');
   readonly isArabicUi = computed(() => this.currentLanguage() === 'ar');
@@ -89,9 +94,11 @@ export class ProductsPageComponent implements OnInit {
   readonly activeSeason = signal<SeasonFilter>('all');
   readonly selectedProduct = signal<ProductListItem | null>(null);
   readonly activeImageIndex = signal<number>(0);
-  readonly products = signal<ProductListItem[]>([]);
-  readonly isLoading = signal(true);
-  readonly loadError = signal('');
+  readonly products = this.productsStore.products;
+  readonly isLoading = this.productsStore.isLoading;
+  readonly loadError = computed(() =>
+    this.productsStore.hasError() ? this.productsLoadErrorMessage() : '',
+  );
   readonly orderRequestForm = signal<OrderRequestFormState>({
     selectedVarieties: [],
     selectedPackagingOptions: [],
@@ -163,6 +170,37 @@ export class ProductsPageComponent implements OnInit {
     return list;
   });
 
+  constructor() {
+    effect(() => {
+      const pending = this.productsStore.pendingCategoryFilter();
+      if (!pending) return;
+      this.activeFilter.set(pending);
+      this.activeSeason.set('all');
+      this.productsStore.pendingCategoryFilter.set(null);
+    });
+
+    effect(() => {
+      const cat = this.activeFilter();
+      const season = this.activeSeason();
+      if (!this.isBrowser) return;
+
+      const params = this.route.snapshot.queryParamMap;
+      const targetCat = cat === 'all' ? null : cat;
+      const targetSeason = this.showSeasonFilter() && season !== 'all' ? season : null;
+
+      if (params.get('category') === targetCat && params.get('season') === targetSeason) {
+        return;
+      }
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { category: targetCat, season: targetSeason },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    });
+  }
+
   ngOnInit(): void {
     this.currentLanguage.set(this.normalizeLanguage(this.translocoService.getActiveLang()));
 
@@ -172,7 +210,17 @@ export class ProductsPageComponent implements OnInit {
         this.currentLanguage.set(this.normalizeLanguage(lang));
       });
 
-    this.loadProducts();
+    const initialCategory = this.route.snapshot.queryParamMap.get('category');
+    if (initialCategory === 'Fruit' || initialCategory === 'Vegetable' || initialCategory === 'Frozen') {
+      this.activeFilter.set(initialCategory);
+    }
+
+    const initialSeason = this.route.snapshot.queryParamMap.get('season');
+    if (initialSeason === 'Summer' || initialSeason === 'Winter' || initialSeason === 'AllYear') {
+      this.activeSeason.set(initialSeason);
+    }
+
+    this.productsStore.ensureLoaded();
   }
 
   setFilter(filter: CategoryFilter): void {
@@ -511,45 +559,6 @@ export class ProductsPageComponent implements OnInit {
     }
 
     return this.translocoService.translate('products_page.modal.request_error');
-  }
-
-  private loadProducts(): void {
-    this.isLoading.set(true);
-    this.loadError.set('');
-
-    this.productService
-      .getProducts()
-      .pipe(
-        retry({
-          count: 2,
-          delay: (error, retryIndex) => {
-            if (!this.shouldRetryProductsLoad(error)) {
-              return throwError(() => error);
-            }
-
-            return timer(800 * retryIndex);
-          },
-        }),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe({
-        next: (products) => {
-          this.products.set(products);
-          this.isLoading.set(false);
-        },
-        error: () => {
-          this.loadError.set(this.productsLoadErrorMessage());
-          this.isLoading.set(false);
-        },
-      });
-  }
-
-  private shouldRetryProductsLoad(error: unknown): boolean {
-    if (!(error instanceof HttpErrorResponse)) {
-      return true;
-    }
-
-    return [0, 408, 425, 429, 500, 502, 503, 504].includes(error.status);
   }
 
   private productsLoadErrorMessage(): string {

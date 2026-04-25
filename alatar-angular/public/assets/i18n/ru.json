@@ -9,7 +9,18 @@
     "gallery": "Галерея",
     "contact": "Связаться с нами",
     "more": "Больше",
-    "cta_contact": "Связаться"
+    "cta_contact": "Связаться",
+    "products_menu": {
+      "aria_label": "Категории и список продукции",
+      "categories_heading": "Категории",
+      "seasons_heading": "Сезоны",
+      "view_all": "Показать все",
+      "view_all_in_category": "Показать все:",
+      "loading": "Загрузка продукции...",
+      "load_error": "Не удалось загрузить продукцию.",
+      "empty_category": "В этой категории пока нет продукции.",
+      "retry": "Повторить"
+    }
   },
   "brand": {
     "name": "Сыновья Алатара",
@@ -470,6 +481,18 @@
       "privacy": "Политика конфиденциальности",
       "terms": "Правила и условия"
     }
+  },
+  "product_detail": {
+    "loading": "Загрузка деталей продукта...",
+    "load_error": "Не удалось загрузить детали продукта.",
+    "retry": "Повторить",
+    "not_found": "Этот продукт недоступен",
+    "back_to_products": "Назад к продукции",
+    "image_index": "Изображение",
+    "request_quote": "Запросить цену",
+    "submit_request": "Отправить запрос",
+    "contact_whatsapp": "Связаться через WhatsApp",
+    "related_products": "Похожие продукты"
   },
   "certificates_page": {
     "hero_badge": "Качество и доверие",

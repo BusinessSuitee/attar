@@ -9,7 +9,18 @@
     "gallery": "Gallery",
     "contact": "Contact Us",
     "more": "More",
-    "cta_contact": "Contact Us"
+    "cta_contact": "Contact Us",
+    "products_menu": {
+      "aria_label": "Products categories and list",
+      "categories_heading": "Categories",
+      "seasons_heading": "Seasons",
+      "view_all": "View all products",
+      "view_all_in_category": "View all",
+      "loading": "Loading products...",
+      "load_error": "Could not load products. Please try again.",
+      "empty_category": "No products in this category yet.",
+      "retry": "Retry"
+    }
   },
   "brand": {
     "name": "Alatar Sons",
@@ -538,6 +549,18 @@
       "privacy": "Privacy Policy",
       "terms": "Terms & Conditions"
     }
+  },
+  "product_detail": {
+    "loading": "Loading product details...",
+    "load_error": "Could not load product details.",
+    "retry": "Retry",
+    "not_found": "This product is not available",
+    "back_to_products": "Back to products",
+    "image_index": "Image",
+    "request_quote": "Request a quote",
+    "submit_request": "Submit request",
+    "contact_whatsapp": "Contact via WhatsApp",
+    "related_products": "Related products"
   },
   "certificates_page": {
     "hero_badge": "Quality & Trust",

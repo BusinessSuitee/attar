@@ -1,0 +1,310 @@
+<app-navbar></app-navbar>
+
+<div class="relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased">
+  <main class="flex-grow pb-24 pt-24">
+    @if (storeIsLoading() && !product()) {
+      <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
+        <div class="flex flex-col items-center gap-4 text-slate-400">
+          <span class="material-symbols-outlined animate-spin text-5xl text-primary">progress_activity</span>
+          <p class="font-medium">{{ 'product_detail.loading' | transloco }}</p>
+        </div>
+      </div>
+    }
+
+    @if (storeHasError() && !product()) {
+      <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
+        <div class="flex flex-col items-center gap-4 text-slate-500">
+          <span class="material-symbols-outlined text-5xl text-red-400">error_outline</span>
+          <p class="font-bold text-red-600">{{ 'product_detail.load_error' | transloco }}</p>
+          <button
+            type="button"
+            class="rounded-full bg-primary px-6 py-2 text-sm font-bold text-white transition hover:bg-primary-dark"
+            (click)="reload()"
+          >
+            {{ 'product_detail.retry' | transloco }}
+          </button>
+        </div>
+      </div>
+    }
+
+    @if (notFound()) {
+      <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
+        <div class="flex flex-col items-center gap-4 text-slate-500">
+          <span class="material-symbols-outlined text-5xl text-slate-400">search_off</span>
+          <p class="text-xl font-bold text-slate-700">{{ 'product_detail.not_found' | transloco }}</p>
+          <a
+            routerLink="/products"
+            class="rounded-full bg-primary px-6 py-2 text-sm font-bold text-white transition hover:bg-primary-dark"
+          >
+            {{ 'product_detail.back_to_products' | transloco }}
+          </a>
+        </div>
+      </div>
+    }
+
+    @if (product(); as productItem) {
+      <article class="mx-auto max-w-[1440px] px-6 lg:px-10">
+        <nav class="mb-6 flex items-center gap-2 text-sm text-slate-500" aria-label="breadcrumb">
+          <a routerLink="/" class="hover:text-primary">{{ 'nav.home' | transloco }}</a>
+          <span class="material-symbols-outlined text-base text-slate-300">chevron_left</span>
+          <a routerLink="/products" class="hover:text-primary">{{ 'nav.products' | transloco }}</a>
+          <span class="material-symbols-outlined text-base text-slate-300">chevron_left</span>
+          <span class="font-bold text-slate-700">{{ displayPrimaryName(productItem) }}</span>
+        </nav>
+
+        <div class="grid gap-10 lg:grid-cols-2">
+          <section class="flex flex-col gap-4">
+            <div class="aspect-square w-full overflow-hidden rounded-3xl bg-slate-100 shadow-md">
+              @if (hasImages(productItem)) {
+                <img
+                  [src]="imageUrl(productItem.imageUrls![activeImageIndex()])"
+                  [alt]="displayPrimaryName(productItem)"
+                  class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="eager"
+                  decoding="async"
+                />
+              } @else {
+                <div class="flex h-full w-full items-center justify-center text-slate-300">
+                  <span class="material-symbols-outlined text-8xl">image</span>
+                </div>
+              }
+            </div>
+
+            @if (hasImages(productItem) && productItem.imageUrls!.length > 1) {
+              <div class="grid grid-cols-5 gap-3">
+                @for (img of productItem.imageUrls; track img; let i = $index) {
+                  <button
+                    type="button"
+                    class="aspect-square overflow-hidden rounded-xl border-2 transition"
+                    [class.border-primary]="activeImageIndex() === i"
+                    [class.border-transparent]="activeImageIndex() !== i"
+                    [attr.aria-label]="('product_detail.image_index' | transloco) + ' ' + (i + 1)"
+                    (click)="setActiveImage(i)"
+                  >
+                    <img
+                      [src]="imageUrl(img)"
+                      [alt]="displayPrimaryName(productItem) + ' ' + (i + 1)"
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                }
+              </div>
+            }
+          </section>
+
+          <section class="flex flex-col gap-6">
+            <div class="flex flex-wrap items-center gap-2">
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-white"
+                [class]="categoryBadgeColor(productItem)"
+              >
+                {{ categoryLabelKey(productItem) | transloco }}
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700"
+              >
+                {{ seasonLabelKey(productItem.season) | transloco }}
+              </span>
+            </div>
+
+            <header>
+              <h1 class="text-4xl font-black leading-tight tracking-tight text-slate-900 md:text-5xl">
+                {{ displayPrimaryName(productItem) }}
+              </h1>
+              @if (displaySecondaryName(productItem); as secondary) {
+                <p class="mt-2 text-lg font-medium text-slate-500">{{ secondary }}</p>
+              }
+            </header>
+
+            @if (displayPrimaryDescription(productItem); as desc) {
+              <p class="text-base leading-relaxed text-slate-600">{{ desc }}</p>
+            }
+
+            <div class="rounded-2xl border border-solid border-slate-200 bg-white p-6 shadow-sm">
+              <h2 class="mb-4 text-lg font-bold text-slate-900">
+                {{ 'product_detail.request_quote' | transloco }}
+              </h2>
+
+              <form class="flex flex-col gap-5" (ngSubmit)="submitOrderRequest()">
+                @if (productItem.varieties.length > 0) {
+                  <div>
+                    <label class="mb-2 block text-sm font-bold text-slate-700">
+                      {{ 'products_page.modal.variety_label' | transloco }}
+                    </label>
+                    <div class="flex flex-wrap gap-2">
+                      @for (v of productItem.varieties; track trackChip($index, v)) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1.5 text-xs font-bold transition"
+                          [class.border-primary]="isOrderOptionSelected('selectedVarieties', v)"
+                          [class.bg-primary]="isOrderOptionSelected('selectedVarieties', v)"
+                          [class.text-white]="isOrderOptionSelected('selectedVarieties', v)"
+                          [class.border-slate-300]="!isOrderOptionSelected('selectedVarieties', v)"
+                          [class.text-slate-700]="!isOrderOptionSelected('selectedVarieties', v)"
+                          (click)="setOrderOption('selectedVarieties', v)"
+                        >
+                          {{ v }}
+                        </button>
+                      }
+                    </div>
+                  </div>
+                }
+
+                @if (productItem.packagingOptions.length > 0) {
+                  <div>
+                    <label class="mb-2 block text-sm font-bold text-slate-700">
+                      {{ 'products_page.modal.packaging_label' | transloco }}
+                    </label>
+                    <div class="flex flex-wrap gap-2">
+                      @for (o of productItem.packagingOptions; track trackChip($index, o)) {
+                        <button
+                          type="button"
+                          class="rounded-full border border-solid px-3 py-1.5 text-xs font-bold transition"
+                          [class.border-primary]="isOrderOptionSelected('selectedPackagingOptions', o)"
+                          [class.bg-primary]="isOrderOptionSelected('selectedPackagingOptions', o)"
+                          [class.text-white]="isOrderOptionSelected('selectedPackagingOptions', o)"
+                          [class.border-slate-300]="!isOrderOptionSelected('selectedPackagingOptions', o)"
+                          [class.text-slate-700]="!isOrderOptionSelected('selectedPackagingOptions', o)"
+                          (click)="setOrderOption('selectedPackagingOptions', o)"
+                        >
+                          {{ o }}
+                        </button>
+                      }
+                    </div>
+                  </div>
+                }
+
+                <div class="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-name">
+                      {{ 'products_page.modal.requester_name_label' | transloco }}
+                    </label>
+                    <input
+                      id="pd-name"
+                      type="text"
+                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
+                      [value]="orderRequestForm().requesterName"
+                      (input)="onOrderTextFieldInput('requesterName', $any($event.target).value)"
+                    />
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-phone">
+                      {{ 'products_page.modal.phone_label' | transloco }}
+                    </label>
+                    <input
+                      id="pd-phone"
+                      type="tel"
+                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
+                      [value]="orderRequestForm().phoneNumber"
+                      (input)="onOrderTextFieldInput('phoneNumber', $any($event.target).value)"
+                    />
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-qty">
+                      {{ 'products_page.modal.quantity_label' | transloco }}
+                    </label>
+                    <input
+                      id="pd-qty"
+                      type="number"
+                      min="0"
+                      step="0.5"
+                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
+                      [value]="orderRequestForm().quantityTons"
+                      (input)="onOrderTextFieldInput('quantityTons', $any($event.target).value)"
+                    />
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-spec">
+                      {{ 'products_page.modal.special_spec_label' | transloco }}
+                    </label>
+                    <input
+                      id="pd-spec"
+                      type="text"
+                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
+                      [value]="orderRequestForm().specialSpecification"
+                      (input)="onOrderTextFieldInput('specialSpecification', $any($event.target).value)"
+                    />
+                  </div>
+                </div>
+
+                @if (orderSubmitError()) {
+                  <p class="rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+                    {{ orderSubmitError() }}
+                  </p>
+                }
+                @if (orderSubmitSuccess()) {
+                  <p class="rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700">
+                    {{ orderSubmitSuccess() }}
+                  </p>
+                }
+
+                <div class="flex flex-wrap gap-3">
+                  <button
+                    type="submit"
+                    class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-primary-dark disabled:opacity-60"
+                    [disabled]="isSubmittingOrderRequest()"
+                  >
+                    @if (isSubmittingOrderRequest()) {
+                      <span class="material-symbols-outlined animate-spin text-base">progress_activity</span>
+                    } @else {
+                      <span class="material-symbols-outlined text-base">send</span>
+                    }
+                    {{ 'product_detail.submit_request' | transloco }}
+                  </button>
+
+                  <a
+                    [href]="whatsAppHref(productItem)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 rounded-full border border-solid border-green-600 px-6 py-3 text-sm font-bold text-green-700 transition hover:bg-green-600 hover:text-white"
+                  >
+                    <span class="material-symbols-outlined text-base">chat</span>
+                    {{ 'product_detail.contact_whatsapp' | transloco }}
+                  </a>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+
+        @if (relatedProducts().length > 0) {
+          <section class="mt-16">
+            <h2 class="mb-6 text-2xl font-bold text-slate-900">
+              {{ 'product_detail.related_products' | transloco }}
+            </h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              @for (related of relatedProducts(); track related.id) {
+                <a
+                  [routerLink]="['/products', related.id]"
+                  class="group overflow-hidden rounded-2xl border border-solid border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                >
+                  <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                    @if (hasImages(related)) {
+                      <img
+                        [src]="imageUrl(related.imageUrls![0])"
+                        [alt]="displayPrimaryName(related)"
+                        class="h-full w-full object-cover transition group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    } @else {
+                      <div class="flex h-full w-full items-center justify-center text-slate-300">
+                        <span class="material-symbols-outlined text-5xl">image</span>
+                      </div>
+                    }
+                  </div>
+                  <div class="p-4">
+                    <p class="text-sm font-bold text-slate-900">{{ displayPrimaryName(related) }}</p>
+                    <p class="mt-1 text-xs text-slate-500">
+                      {{ seasonLabelKey(related.season) | transloco }}
+                    </p>
+                  </div>
+                </a>
+              }
+            </div>
+          </section>
+        }
+      </article>
+    }
+  </main>
+</div>

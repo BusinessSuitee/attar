@@ -14,15 +14,62 @@
 
     <nav class="nav-links" aria-label="Main navigation">
       @for (item of navItems; track trackById($index, item)) {
-        <a
-          class="nav-link"
-          [routerLink]="item.route"
-          [fragment]="item.fragment"
-          [class.is-active]="activeItem() === item.id"
-          (click)="onNavSelect(item.id)"
-        >
-          <span>{{ item.translocoKey | transloco }}</span>
-        </a>
+        @if (item.id === 'products') {
+          <span
+            class="nav-link-with-menu"
+            (mouseenter)="onProductsMouseEnter()"
+            (mouseleave)="onProductsMouseLeave()"
+          >
+            <a
+              #productsLink
+              class="nav-link nav-link--has-menu"
+              [class.is-menu-open]="productsMenuOpen()"
+              [routerLink]="item.route"
+              [fragment]="item.fragment"
+              [class.is-active]="activeItem() === item.id"
+              aria-haspopup="true"
+              [attr.aria-expanded]="productsMenuOpen()"
+              aria-controls="products-mega-menu-panel"
+              (click)="onNavSelect(item.id)"
+              (keydown)="onProductsLinkKeydown($event)"
+            >
+              <span>{{ item.translocoKey | transloco }}</span>
+              <svg
+                class="nav-link__caret"
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <app-products-mega-menu
+              [open]="productsMenuOpen()"
+              [openedViaKeyboard]="openedViaKeyboard()"
+              (panelEnter)="onMegaMenuPanelEnter()"
+              (panelLeave)="onMegaMenuPanelLeave()"
+              (close)="onMegaMenuClose()"
+            ></app-products-mega-menu>
+          </span>
+        } @else {
+          <a
+            class="nav-link"
+            [routerLink]="item.route"
+            [fragment]="item.fragment"
+            [class.is-active]="activeItem() === item.id"
+            (click)="onNavSelect(item.id)"
+          >
+            <span>{{ item.translocoKey | transloco }}</span>
+          </a>
+        }
       }
     </nav>
 

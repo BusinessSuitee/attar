@@ -9,7 +9,18 @@
     "gallery": "المعرض",
     "contact": "اتصل بنا",
     "more": "المزيد",
-    "cta_contact": "تواصل معنا"
+    "cta_contact": "تواصل معنا",
+    "products_menu": {
+      "aria_label": "قائمة المحاصيل والأصناف",
+      "categories_heading": "الأقسام",
+      "seasons_heading": "المواسم",
+      "view_all": "عرض كل المحاصيل",
+      "view_all_in_category": "عرض كل",
+      "loading": "جارٍ تحميل المحاصيل...",
+      "load_error": "تعذر تحميل المحاصيل، حاول مرة أخرى.",
+      "empty_category": "لا توجد محاصيل في هذا القسم بعد.",
+      "retry": "إعادة المحاولة"
+    }
   },
   "brand": {
     "name": "أولاد العطار",
@@ -538,6 +549,18 @@
       "privacy": "سياسة الخصوصية",
       "terms": "الشروط والأحكام"
     }
+  },
+  "product_detail": {
+    "loading": "جارٍ تحميل تفاصيل المحصول...",
+    "load_error": "تعذر تحميل تفاصيل المحصول.",
+    "retry": "إعادة المحاولة",
+    "not_found": "هذا المحصول غير متاح",
+    "back_to_products": "العودة إلى المحاصيل",
+    "image_index": "صورة",
+    "request_quote": "طلب عرض سعر",
+    "submit_request": "إرسال الطلب",
+    "contact_whatsapp": "تواصل عبر واتساب",
+    "related_products": "محاصيل ذات صلة"
   },
   "certificates_page": {
     "hero_badge": "الجودة والثقة",

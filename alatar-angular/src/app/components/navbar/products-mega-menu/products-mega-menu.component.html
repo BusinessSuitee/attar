@@ -1,0 +1,143 @@
+@if (open) {
+  <div
+    id="products-mega-menu-panel"
+    class="mega-menu"
+    role="menu"
+    [attr.aria-label]="'nav.products_menu.aria_label' | transloco"
+    (mouseenter)="onPanelMouseEnter()"
+    (mouseleave)="onPanelMouseLeave()"
+  >
+    <div class="mega-menu__inner">
+      <aside class="mega-menu__sidebar" aria-label="{{ 'nav.products_menu.categories_heading' | transloco }}">
+        <p class="mega-menu__heading">{{ 'nav.products_menu.categories_heading' | transloco }}</p>
+        <ul class="mega-menu__categories" role="group">
+          @for (category of categories; track trackCategory($index, category)) {
+            <li>
+              <a
+                [routerLink]="['/products']"
+                [queryParams]="{ category: category.id === 'all' ? null : category.id }"
+                queryParamsHandling="merge"
+                role="menuitem"
+                class="mega-menu__category"
+                [class.is-active]="hoveredCategory() === category.id"
+                (mouseenter)="onCategoryHover(category.id)"
+                (focus)="onCategoryHover(category.id)"
+                (click)="onCategoryClick($event, category.id)"
+              >
+                <span class="material-symbols-outlined mega-menu__category-icon">{{ category.icon }}</span>
+                <span class="mega-menu__category-label">{{ category.labelKey | transloco }}</span>
+                <span class="mega-menu__category-count">{{ productsByCategory()[category.id].length }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      </aside>
+
+      <section class="mega-menu__content">
+        @if (currentCategoryMeta().supportsSeasons) {
+          <div class="mega-menu__seasons" role="group" aria-label="{{ 'nav.products_menu.seasons_heading' | transloco }}">
+            @for (season of seasons; track trackSeason($index, season)) {
+              <button
+                type="button"
+                role="menuitem"
+                class="mega-menu__season"
+                [class.is-active]="activeSeason() === season.id"
+                (click)="onSeasonClick(season.id)"
+              >
+                <span class="material-symbols-outlined">{{ season.icon }}</span>
+                <span>{{ season.labelKey | transloco }}</span>
+              </button>
+            }
+          </div>
+        }
+
+        <div class="mega-menu__products-area">
+          @if (storeIsLoading() && !storeHasLoaded()) {
+            <div class="mega-menu__grid">
+              @for (slot of skeletonSlots; track trackSkeleton($index)) {
+                <div class="mega-menu__product-skeleton" aria-hidden="true">
+                  <div class="mega-menu__skeleton-thumb"></div>
+                  <div class="mega-menu__skeleton-text"></div>
+                </div>
+              }
+            </div>
+          } @else if (storeHasError() && !storeHasLoaded()) {
+            <div class="mega-menu__state">
+              <span class="material-symbols-outlined mega-menu__state-icon">error_outline</span>
+              <p>{{ 'nav.products_menu.load_error' | transloco }}</p>
+              <button type="button" class="mega-menu__retry" (click)="onRetry()">
+                {{ 'nav.products_menu.retry' | transloco }}
+              </button>
+            </div>
+          } @else if (filteredProducts().length === 0) {
+            <div class="mega-menu__state">
+              <span class="material-symbols-outlined mega-menu__state-icon">inventory_2</span>
+              <p>{{ 'nav.products_menu.empty_category' | transloco }}</p>
+            </div>
+          } @else {
+            <ul class="mega-menu__grid" role="group">
+              @for (product of filteredProducts(); track trackProduct($index, product)) {
+                <li>
+                  <a
+                    [routerLink]="['/products', product.id]"
+                    role="menuitem"
+                    class="mega-menu__product"
+                    (click)="onProductClick()"
+                  >
+                    <span class="mega-menu__thumb">
+                      @if (hasImages(product)) {
+                        <img
+                          [src]="imageUrl(product.imageUrls![0])"
+                          [alt]="productDisplayName(product)"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      } @else {
+                        <span class="material-symbols-outlined">image</span>
+                      }
+                    </span>
+                    <span class="mega-menu__product-meta">
+                      <span class="mega-menu__product-name">{{ productDisplayName(product) }}</span>
+                      <span class="mega-menu__product-season">
+                        {{
+                          (product.season === 'Summer'
+                            ? 'products_page.seasons.summer'
+                            : product.season === 'Winter'
+                              ? 'products_page.seasons.winter'
+                              : 'products_page.seasons.all_year') | transloco
+                        }}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        @if (filteredProducts().length > 0) {
+          <a
+            class="mega-menu__view-all"
+            [routerLink]="['/products']"
+            [queryParams]="{
+              category: hoveredCategory() === 'all' ? null : hoveredCategory(),
+              season: currentCategoryMeta().supportsSeasons && activeSeason() !== 'all' ? activeSeason() : null
+            }"
+            queryParamsHandling="merge"
+            (click)="onViewAllClick($event)"
+          >
+            <span>
+              @if (hoveredCategory() === 'all') {
+                {{ 'nav.products_menu.view_all' | transloco }}
+              } @else {
+                {{ 'nav.products_menu.view_all_in_category' | transloco }}
+                {{ currentCategoryMeta().labelKey | transloco }}
+              }
+            </span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+        }
+      </section>
+    </div>
+  </div>
+}

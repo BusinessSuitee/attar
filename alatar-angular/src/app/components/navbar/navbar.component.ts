@@ -3,18 +3,23 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   Input,
   OnDestroy,
   Output,
   OnInit,
+  ViewChild,
   inject,
   signal,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { TranslocoService, TranslocoPipe } from '@jsverse/transloco';
+
+import { ProductsStore } from '../../core/products/products.store';
+import { ProductsMegaMenuComponent } from './products-mega-menu/products-mega-menu.component';
 
 type LanguageCode = 'ar' | 'en' | 'ru';
 
@@ -45,7 +50,7 @@ interface LanguageOption {
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslocoPipe],
+  imports: [CommonModule, RouterModule, TranslocoPipe, ProductsMegaMenuComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,19 +58,29 @@ interface LanguageOption {
 export class NavbarComponent implements OnInit, OnDestroy {
   private readonly doc = inject(DOCUMENT);
   private readonly router = inject(Router);
+  private readonly productsStore = inject(ProductsStore);
   private readonly mobileBreakpoint = 767;
+  private readonly desktopBreakpoint = 992;
   private readonly hideOffset = 72;
+  private readonly hoverOpenDelay = 120;
+  private readonly hoverCloseDelay = 200;
   private lastScrollY = 0;
   private routeEventsSub?: Subscription;
+  private openTimer?: ReturnType<typeof setTimeout>;
+  private closeTimer?: ReturnType<typeof setTimeout>;
 
   @Input() showSidebarToggle = false;
   @Output() sidebarToggle = new EventEmitter<void>();
+
+  @ViewChild('productsLink') productsLinkEl?: ElementRef<HTMLAnchorElement>;
 
   readonly menuOpen = signal(false);
   readonly activeItem = signal('home');
   readonly isScrolled = signal(false);
   readonly topNavVisible = signal(true);
   readonly activeLanguage = signal<LanguageCode>('ar');
+  readonly productsMenuOpen = signal(false);
+  readonly openedViaKeyboard = signal(false);
 
   private translocoService = inject(TranslocoService);
 
@@ -218,6 +233,90 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (window.innerWidth > this.mobileBreakpoint) {
       this.topNavVisible.set(true);
     }
+
+    if (window.innerWidth <= this.desktopBreakpoint && this.productsMenuOpen()) {
+      this.closeProductsMenu();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.productsMenuOpen()) {
+      this.closeProductsMenu();
+      this.productsLinkEl?.nativeElement.focus();
+    }
+  }
+
+  onProductsMouseEnter(): void {
+    if (typeof window === 'undefined' || window.innerWidth <= this.desktopBreakpoint) {
+      return;
+    }
+    this.clearCloseTimer();
+    this.productsStore.ensureLoaded();
+    this.openTimer = setTimeout(() => {
+      this.openedViaKeyboard.set(false);
+      this.productsMenuOpen.set(true);
+    }, this.hoverOpenDelay);
+  }
+
+  onProductsMouseLeave(): void {
+    this.clearOpenTimer();
+    this.closeTimer = setTimeout(() => {
+      this.productsMenuOpen.set(false);
+      this.openedViaKeyboard.set(false);
+    }, this.hoverCloseDelay);
+  }
+
+  onProductsLinkKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'ArrowDown') {
+      return;
+    }
+    if (typeof window === 'undefined' || window.innerWidth <= this.desktopBreakpoint) {
+      return;
+    }
+    event.preventDefault();
+    this.clearOpenTimer();
+    this.clearCloseTimer();
+    this.productsStore.ensureLoaded();
+    this.openedViaKeyboard.set(true);
+    this.productsMenuOpen.set(true);
+  }
+
+  onMegaMenuPanelEnter(): void {
+    this.clearCloseTimer();
+  }
+
+  onMegaMenuPanelLeave(): void {
+    this.clearOpenTimer();
+    this.closeTimer = setTimeout(() => {
+      this.productsMenuOpen.set(false);
+      this.openedViaKeyboard.set(false);
+    }, this.hoverCloseDelay);
+  }
+
+  onMegaMenuClose(): void {
+    this.closeProductsMenu();
+  }
+
+  private closeProductsMenu(): void {
+    this.clearOpenTimer();
+    this.clearCloseTimer();
+    this.productsMenuOpen.set(false);
+    this.openedViaKeyboard.set(false);
+  }
+
+  private clearOpenTimer(): void {
+    if (this.openTimer) {
+      clearTimeout(this.openTimer);
+      this.openTimer = undefined;
+    }
+  }
+
+  private clearCloseTimer(): void {
+    if (this.closeTimer) {
+      clearTimeout(this.closeTimer);
+      this.closeTimer = undefined;
+    }
   }
 
   onNavSelect(itemId: string): void {
@@ -318,6 +417,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
       this.syncActiveItemFromUrl();
       this.topNavVisible.set(true);
+      this.closeProductsMenu();
 
       if (typeof window !== 'undefined') {
         this.lastScrollY = Math.max(window.scrollY, 0);
@@ -327,6 +427,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeEventsSub?.unsubscribe();
+    this.clearOpenTimer();
+    this.clearCloseTimer();
   }
 
   private syncActiveItemFromUrl(): void {
