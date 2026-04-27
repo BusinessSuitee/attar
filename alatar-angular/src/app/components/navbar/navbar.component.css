@@ -553,13 +553,15 @@ html[dir='rtl'] .nav-cta:hover .nav-cta__icon {
     top: 4.85rem;
     right: 0;
     width: 280px;
-    height: calc(100vh - 4.85rem);
-    height: calc(100dvh - 4.85rem);
+    height: calc(100vh - 4.85rem - var(--mobile-dock-height, 5.4rem));
+    height: calc(100dvh - 4.85rem - var(--mobile-dock-height, 5.4rem));
     background: #ffffff;
     border-left: 1px solid rgba(15, 23, 42, 0.05);
     box-shadow: -4px 0 20px rgba(15, 23, 42, 0.05);
     padding: 1.75rem 1.25rem;
+    padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     gap: 0.5rem;
+    overflow-y: auto;
     transform: translateX(100%);
     opacity: 0;
     visibility: hidden;
