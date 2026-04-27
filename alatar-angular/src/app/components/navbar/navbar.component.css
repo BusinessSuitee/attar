@@ -518,8 +518,7 @@ html[dir='rtl'] .nav-cta:hover .nav-cta__icon {
     font-size: 0.82rem;
   }
   .nav-cta {
-    padding: 0.5rem 0.85rem;
-    font-size: 0.8rem;
+    display: none;
   }
   .brand__meta small {
     font-size: 0.55rem;
