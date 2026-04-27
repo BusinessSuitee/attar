@@ -128,13 +128,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       route: '/gallery',
       fragment: undefined,
     },
-    {
-      id: 'contact',
-      translocoKey: 'nav.contact',
-      label: 'اتصل بنا',
-      route: '/contact',
-      fragment: undefined,
-    },
   ];
 
   readonly dockItems: DockItem[] = [

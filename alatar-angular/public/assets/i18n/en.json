@@ -854,5 +854,19 @@
       "title": "Settings",
       "subtitle": "Account and platform preferences"
     }
+  },
+  "common": {
+    "loading": "Loading…",
+    "retry": "Retry",
+    "error": {
+      "generic": "Something went wrong.",
+      "network": "We couldn't reach the server. Please try again."
+    },
+    "noResults": "No results found.",
+    "clearFilters": "Clear filters",
+    "loadMore": "Load more",
+    "language": {
+      "toggle": "Change language"
+    }
   }
 }
