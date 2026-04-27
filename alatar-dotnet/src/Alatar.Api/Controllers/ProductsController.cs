@@ -4,6 +4,7 @@ using Alatar.Api.Security;
 using Alatar.Api.Storage;
 using Alatar.Application.Abstractions.Persistence;
 using Alatar.Application.Features.Products.AddProduct;
+using Alatar.Application.Features.Products.ChangeProductStatus;
 using Alatar.Application.Features.Products.GetProducts;
 using Alatar.Application.Features.Products.UpdateProduct;
 using Alatar.Domain.Products;
@@ -94,6 +95,18 @@ public sealed class ProductsController(
     {
         var result = await sender.Send(new GetProductsQuery(), cancellationToken);
         return this.ToActionResult(result, Ok);
+    }
+
+    [HttpPatch("{productId:guid}/status")]
+    [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
+    public async Task<IActionResult> ChangeStatus(
+        Guid productId,
+        [FromBody] ChangeProductStatusRequest request,
+        CancellationToken cancellationToken)
+    {
+        var command = new ChangeProductStatusCommand(productId, request.Status);
+        var result = await sender.Send(command, cancellationToken);
+        return this.ToActionResult(result, id => Ok(new ProductIdResponse(id)));
     }
 
     [HttpPost("{productId:guid}/images")]

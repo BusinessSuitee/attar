@@ -470,7 +470,7 @@ public static class DatabaseInitializer
                                    [WeightOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_WeightOptionsLocalizedJson] DEFAULT N'[]',
                                    [SizeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_SizeOptionsLocalizedJson] DEFAULT N'[]',
                                    [GradeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_GradeOptionsLocalizedJson] DEFAULT N'[]',
-                                   [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_Products_Status] DEFAULT N'Active',
+                                   [Status] NVARCHAR(32) NOT NULL CONSTRAINT [DF_Products_Status] DEFAULT N'Valid',
                                    [CreatedAtUtc] DATETIME2 NOT NULL,
                                    [UpdatedAtUtc] DATETIME2 NOT NULL,
                                    CONSTRAINT [PK_Products] PRIMARY KEY ([Id])
@@ -582,6 +582,25 @@ public static class DatabaseInitializer
                            BEGIN
                                ALTER TABLE [dbo].[Products]
                                ADD [GradeOptionsLocalizedJson] NVARCHAR(MAX) NOT NULL CONSTRAINT [DF_Products_GradeOptionsLocalizedJson] DEFAULT N'[]';
+                           END
+
+                           UPDATE [dbo].[Products] SET [Status] = N'Valid'   WHERE [Status] = N'Active';
+                           UPDATE [dbo].[Products] SET [Status] = N'Invalid' WHERE [Status] = N'Inactive';
+
+                           IF EXISTS (
+                               SELECT 1
+                               FROM sys.default_constraints dc
+                               INNER JOIN sys.columns c
+                                   ON dc.parent_object_id = c.object_id
+                                   AND dc.parent_column_id = c.column_id
+                               WHERE dc.name = N'DF_Products_Status'
+                                   AND dc.parent_object_id = OBJECT_ID(N'[dbo].[Products]')
+                                   AND dc.[definition] <> N'(N''Valid'')'
+                           )
+                           BEGIN
+                               ALTER TABLE [dbo].[Products] DROP CONSTRAINT [DF_Products_Status];
+                               ALTER TABLE [dbo].[Products]
+                                   ADD CONSTRAINT [DF_Products_Status] DEFAULT N'Valid' FOR [Status];
                            END
                            """;
 

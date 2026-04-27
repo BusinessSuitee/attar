@@ -326,7 +326,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onDockSelect(item: DockItem): void {
     if (item.kind === 'menu') {
-      this.openMenu();
+      this.toggleMenu();
       return;
     }
 

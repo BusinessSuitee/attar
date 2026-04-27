@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased">
-  <main class="flex-grow pb-24 pt-24">
+  <main class="flex-grow pb-mobile-dock pt-mobile-nav md:pt-24 md:pb-10">
     @if (storeIsLoading() && !product()) {
       <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
         <div class="flex flex-col items-center gap-4 text-slate-400">
@@ -57,11 +57,12 @@
             <div class="aspect-square w-full overflow-hidden rounded-3xl bg-slate-100 shadow-md">
               @if (hasImages(productItem)) {
                 <img
-                  [src]="imageUrl(productItem.imageUrls![activeImageIndex()])"
-                  [alt]="displayPrimaryName(productItem)"
+                  [src]="imageUrl(validImageUrls(productItem)[activeImageIndex()])"
+                  alt=""
                   class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                   loading="eager"
                   decoding="async"
+                  (error)="onImageError($event)"
                 />
               } @else {
                 <div class="flex h-full w-full items-center justify-center text-slate-300">
@@ -70,9 +71,9 @@
               }
             </div>
 
-            @if (hasImages(productItem) && productItem.imageUrls!.length > 1) {
+            @if (hasImages(productItem) && validImageUrls(productItem).length > 1) {
               <div class="grid grid-cols-5 gap-3">
-                @for (img of productItem.imageUrls; track img; let i = $index) {
+                @for (img of validImageUrls(productItem); track img; let i = $index) {
                   <button
                     type="button"
                     class="aspect-square overflow-hidden rounded-xl border-2 transition"
@@ -83,9 +84,10 @@
                   >
                     <img
                       [src]="imageUrl(img)"
-                      [alt]="displayPrimaryName(productItem) + ' ' + (i + 1)"
+                      alt=""
                       class="h-full w-full object-cover"
                       loading="lazy"
+                      (error)="onImageError($event)"
                     />
                   </button>
                 }
@@ -273,7 +275,7 @@
             <h2 class="mb-6 text-2xl font-bold text-slate-900">
               {{ 'product_detail.related_products' | transloco }}
             </h2>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               @for (related of relatedProducts(); track related.id) {
                 <a
                   [routerLink]="['/products', related.id]"

@@ -16,6 +16,30 @@
   --color-surface: #ffffff;
   --color-text-main: #111815;
   --color-text-muted: #5f766a;
+
+  --mobile-nav-height: 4.85rem;
+  --mobile-dock-height: calc(5.4rem + env(safe-area-inset-bottom, 0px));
+  --mobile-social-pill-height: 3.5rem;
+}
+
+@media (max-width: 760px) {
+  .pb-mobile-dock {
+    padding-bottom: calc(
+      var(--mobile-dock-height) + var(--mobile-social-pill-height) + 1rem
+    );
+  }
+}
+
+@media (min-width: 761px) and (max-width: 992px) {
+  .pb-mobile-dock {
+    padding-bottom: calc(var(--mobile-dock-height) + 1rem);
+  }
+}
+
+@media (max-width: 992px) {
+  .pt-mobile-nav {
+    padding-top: calc(var(--mobile-nav-height) + 1rem);
+  }
 }
 
 * {

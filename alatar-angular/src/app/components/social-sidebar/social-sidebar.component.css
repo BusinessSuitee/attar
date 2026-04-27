@@ -122,7 +122,7 @@
 @media (max-width: 760px) {
   .social-sidebar {
     top: auto;
-    bottom: 12px;
+    bottom: calc(var(--mobile-dock-height, 5.4rem) + 0.5rem);
     inset-inline-start: 0;
     inset-inline-end: 0;
     transform: none;

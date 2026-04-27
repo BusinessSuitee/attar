@@ -3,7 +3,7 @@
 <div
   class="group/design-root relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased"
 >
-  <main class="flex-grow">
+  <main class="flex-grow pb-mobile-dock">
     <!-- Hero -->
     <section
       class="relative flex min-h-[380px] w-full items-center justify-center overflow-hidden bg-slate-900 py-20"
@@ -144,7 +144,10 @@
             @for (product of visibleProducts(); track product.id) {
               <article
                 (click)="openProduct(product)"
-                class="cursor-pointer group flex flex-col overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                [class.cursor-pointer]="!isComingSoon(product)"
+                [class.cursor-not-allowed]="isComingSoon(product)"
+                [class.opacity-80]="isComingSoon(product)"
+                class="group flex flex-col overflow-hidden rounded-2xl border border-solid border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
                 <!-- Image -->
                 <div class="relative h-52 overflow-hidden rounded-t-2xl bg-slate-100 shrink-0">
@@ -152,6 +155,7 @@
                     <img
                       [src]="firstImage(product)"
                       [alt]="displayPrimaryName(product)"
+                      [class.grayscale]="isComingSoon(product)"
                       class="h-full w-full rounded-t-2xl object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                   } @else {
@@ -159,6 +163,18 @@
                       <span class="material-symbols-outlined text-6xl text-slate-300"
                         >nutrition</span
                       >
+                    </div>
+                  }
+                  <!-- Coming soon overlay badge -->
+                  @if (isComingSoon(product)) {
+                    <div
+                      class="absolute inset-0 flex items-center justify-center bg-slate-900/40 backdrop-blur-[2px]"
+                    >
+                      <span
+                        class="rounded-full bg-amber-500 px-4 py-1.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-lg"
+                      >
+                        {{ 'products_page.status.coming_soon' | transloco }}
+                      </span>
                     </div>
                   }
                   <!-- Category badge -->
@@ -201,9 +217,16 @@
                   <div class="mt-auto pt-3 border-t border-slate-100 border-solid flex gap-2">
                     <button
                       type="button"
+                      [disabled]="isComingSoon(product)"
+                      [class.opacity-60]="isComingSoon(product)"
+                      [class.cursor-not-allowed]="isComingSoon(product)"
                       class="flex-1 rounded-lg border border-solid border-primary bg-white py-2 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-white"
                     >
-                      {{ 'products_page.list.btn_quote' | transloco }}
+                      @if (isComingSoon(product)) {
+                        {{ 'products_page.status.coming_soon' | transloco }}
+                      } @else {
+                        {{ 'products_page.list.btn_quote' | transloco }}
+                      }
                     </button>
                     <span
                       class="flex items-center justify-center rounded-lg bg-slate-100 px-3 text-slate-500 transition-colors hover:bg-slate-200"

@@ -3,7 +3,7 @@ import { DestroyRef, Injectable, computed, inject, signal } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { retry, throwError, timer } from 'rxjs';
 
-import { ProductListItem, ProductService } from './product.service';
+import { ProductListItem, ProductService, ProductStatus } from './product.service';
 
 export type ProductCategoryKey = 'all' | 'Fruit' | 'Vegetable' | 'Frozen';
 
@@ -29,8 +29,24 @@ export class ProductsStore {
     };
   });
 
+  readonly validProductsByCategory = computed<Record<ProductCategoryKey, ProductListItem[]>>(() => {
+    const grouped = this.productsByCategory();
+    return {
+      all: grouped.all.filter((p) => p.status === 'Valid'),
+      Fruit: grouped.Fruit.filter((p) => p.status === 'Valid'),
+      Vegetable: grouped.Vegetable.filter((p) => p.status === 'Valid'),
+      Frozen: grouped.Frozen.filter((p) => p.status === 'Valid'),
+    };
+  });
+
   productById(id: string): ProductListItem | undefined {
     return this.products().find((p) => p.id === id);
+  }
+
+  applyStatusUpdate(productId: string, status: ProductStatus): void {
+    this.products.update((items) =>
+      items.map((p) => (p.id === productId ? { ...p, status } : p)),
+    );
   }
 
   ensureLoaded(): void {

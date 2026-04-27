@@ -1,0 +1,39 @@
+<aside class="admin-sidebar" [attr.data-collapsed]="isCollapsed">
+  <div class="admin-sidebar__brand">
+    <span class="admin-sidebar__brand-mark material-symbols-outlined">storefront</span>
+    @if (!isCollapsed) {
+      <span class="admin-sidebar__brand-text">
+        <span class="admin-sidebar__brand-name">Alatar</span>
+        <span class="admin-sidebar__brand-sub">{{ 'admin.shell.brand_sub' | transloco }}</span>
+      </span>
+    }
+  </div>
+
+  <nav class="admin-sidebar__nav" aria-label="Admin navigation">
+    @for (group of groups(); track trackGroup($index, group)) {
+      <div class="admin-sidebar__group">
+        @if (!isCollapsed) {
+          <p class="admin-sidebar__group-label">{{ group.labelKey | transloco }}</p>
+        }
+        <ul class="admin-sidebar__list">
+          @for (item of group.items; track trackSection($index, item)) {
+            <li>
+              <a
+                class="admin-sidebar__item"
+                [routerLink]="['/admin', item.path]"
+                routerLinkActive="admin-sidebar__item--active"
+                [title]="item.labelKey | transloco"
+                (click)="onItemClick(item)"
+              >
+                <span class="material-symbols-outlined admin-sidebar__icon">{{ item.icon }}</span>
+                @if (!isCollapsed) {
+                  <span class="admin-sidebar__label">{{ item.labelKey | transloco }}</span>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </nav>
+</aside>

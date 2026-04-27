@@ -1,0 +1,25 @@
+<div class="admin-shell" [attr.data-sidebar-state]="sidebarState()" [attr.data-breakpoint]="breakpoint()">
+  <app-admin-topbar
+    class="admin-shell__topbar"
+    (toggleSidebar)="toggleSidebar()"
+  ></app-admin-topbar>
+
+  <app-admin-sidebar
+    class="admin-shell__sidebar"
+    [state]="sidebarState()"
+    (navigate)="closeDrawer()"
+  ></app-admin-sidebar>
+
+  @if (showsBackdrop()) {
+    <button
+      type="button"
+      class="admin-shell__backdrop"
+      aria-label="Close menu"
+      (click)="closeDrawer()"
+    ></button>
+  }
+
+  <main class="admin-shell__main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

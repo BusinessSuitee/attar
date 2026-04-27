@@ -52,7 +52,7 @@ public sealed class Product
         WeightOptionsLocalizedJson = weightOptionsLocalizedJson;
         SizeOptionsLocalizedJson = sizeOptionsLocalizedJson;
         GradeOptionsLocalizedJson = gradeOptionsLocalizedJson;
-        Status = ProductStatus.Active;
+        Status = ProductStatus.Valid;
         CreatedAtUtc = DateTime.UtcNow;
         UpdatedAtUtc = DateTime.UtcNow;
     }
@@ -253,25 +253,19 @@ public sealed class Product
         Touch();
     }
 
-    public void Activate()
+    public void ChangeStatus(ProductStatus next)
     {
-        if (Status == ProductStatus.Active)
+        if (!Enum.IsDefined(typeof(ProductStatus), next))
+        {
+            throw new ArgumentOutOfRangeException(nameof(next), "Unsupported product status.");
+        }
+
+        if (Status == next)
         {
             return;
         }
 
-        Status = ProductStatus.Active;
-        Touch();
-    }
-
-    public void Deactivate()
-    {
-        if (Status == ProductStatus.Inactive)
-        {
-            return;
-        }
-
-        Status = ProductStatus.Inactive;
+        Status = next;
         Touch();
     }
 

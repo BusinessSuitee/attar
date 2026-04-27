@@ -369,6 +369,11 @@
       "winter": "Winter",
       "all_year": "All Year"
     },
+    "status": {
+      "valid": "Available",
+      "invalid": "Unavailable",
+      "coming_soon": "Coming Soon"
+    },
     "featured": {
       "badge": "Pride of Egyptian Agriculture",
       "title": "Egyptian Citrus & Oranges",
@@ -796,6 +801,58 @@
       "potatoes": "Potatoes",
       "onions": "Onions",
       "pomegranates": "Pomegranates"
+    }
+  },
+  "admin": {
+    "shell": {
+      "brand_name": "Admin",
+      "brand_sub": "Console",
+      "toggle_sidebar": "Toggle sidebar",
+      "user_menu": {
+        "label": "Account",
+        "logout": "Sign out"
+      }
+    },
+    "nav": {
+      "groups": {
+        "main": "Main",
+        "commerce": "Commerce",
+        "system": "System"
+      },
+      "overview": "Overview",
+      "products": "Products",
+      "orders": "Orders",
+      "contacts": "Contacts",
+      "social_links": "Social Links",
+      "settings": "Settings"
+    },
+    "placeholder": {
+      "title": "Section under construction",
+      "description": "This section will be activated in upcoming phases of the dashboard rewrite."
+    },
+    "overview": {
+      "title": "Overview",
+      "subtitle": "Platform status and recent activity at a glance"
+    },
+    "products": {
+      "title": "Products",
+      "subtitle": "Manage the crop catalog and statuses"
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "Track quote requests from customers"
+    },
+    "contacts": {
+      "title": "Contacts",
+      "subtitle": "Inbound contact and inquiry messages"
+    },
+    "social_links": {
+      "title": "Social Links",
+      "subtitle": "Manage the social links shown across the site"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Account and platform preferences"
     }
   }
 }

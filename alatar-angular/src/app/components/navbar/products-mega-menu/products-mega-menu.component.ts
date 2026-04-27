@@ -79,7 +79,7 @@ export class ProductsMegaMenuComponent implements OnChanges {
   readonly storeIsLoading = this.productsStore.isLoading;
   readonly storeHasError = this.productsStore.hasError;
   readonly storeHasLoaded = this.productsStore.hasLoaded;
-  readonly productsByCategory = this.productsStore.productsByCategory;
+  readonly productsByCategory = this.productsStore.validProductsByCategory;
 
   readonly currentCategoryMeta = computed<CategoryOption>(() => {
     const id = this.hoveredCategory();
@@ -90,7 +90,7 @@ export class ProductsMegaMenuComponent implements OnChanges {
     const cat = this.hoveredCategory();
     const meta = this.currentCategoryMeta();
     const season = this.activeSeason();
-    const list = this.productsStore.productsByCategory()[cat];
+    const list = this.productsStore.validProductsByCategory()[cat];
 
     if (meta.supportsSeasons && season !== 'all') {
       return list.filter((p) => p.season === season);

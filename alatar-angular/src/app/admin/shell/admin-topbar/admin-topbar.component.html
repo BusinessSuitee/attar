@@ -1,0 +1,17 @@
+<header class="admin-topbar">
+  <div class="admin-topbar__lead">
+    <button
+      type="button"
+      class="admin-topbar__toggle"
+      [attr.aria-label]="'admin.shell.toggle_sidebar' | transloco"
+      (click)="onToggleClick()"
+    >
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <app-admin-breadcrumbs class="admin-topbar__breadcrumbs"></app-admin-breadcrumbs>
+  </div>
+
+  <div class="admin-topbar__actions">
+    <app-admin-user-menu></app-admin-user-menu>
+  </div>
+</header>

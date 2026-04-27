@@ -6,6 +6,7 @@ import { API_BASE_URL } from '../config/api-base-url.token';
 export type ProductType = 'Fruit' | 'Vegetable';
 export type ProductState = 'Fresh' | 'Frozen';
 export type ProductSeason = 'Summer' | 'Winter' | 'AllYear';
+export type ProductStatus = 'Valid' | 'Invalid' | 'ComingSoon';
 
 export interface ProductImageInfo {
   id: string;
@@ -19,7 +20,7 @@ export interface ProductListItem {
   sku: string;
   price: number;
   stockQuantity: number;
-  status: string;
+  status: ProductStatus;
   descriptionEn: string;
   descriptionAr: string;
   productType: ProductType;
@@ -147,6 +148,13 @@ export class ProductService {
   deleteProductImage(productId: string, imageId: string): Observable<void> {
     return this.httpClient.delete<void>(
       `${this.apiBaseUrl}/api/products/${productId}/images/${imageId}`,
+    );
+  }
+
+  changeProductStatus(productId: string, status: ProductStatus): Observable<ProductIdResponse> {
+    return this.httpClient.patch<ProductIdResponse>(
+      `${this.apiBaseUrl}/api/products/${productId}/status`,
+      { status },
     );
   }
 

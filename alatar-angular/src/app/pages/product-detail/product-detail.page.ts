@@ -129,7 +129,24 @@ export class ProductDetailPageComponent implements OnInit {
   }
 
   hasImages(product: ProductListItem): boolean {
-    return (product.imageUrls?.length ?? 0) > 0;
+    return (product.imageUrls?.filter((url) => !!url && url.trim().length > 0).length ?? 0) > 0;
+  }
+
+  validImageUrls(product: ProductListItem): string[] {
+    return (product.imageUrls ?? []).filter((url) => !!url && url.trim().length > 0);
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+    const parent = img.parentElement;
+    if (parent && !parent.querySelector('.image-error-fallback')) {
+      const fallback = document.createElement('div');
+      fallback.className =
+        'image-error-fallback flex h-full w-full items-center justify-center text-slate-300';
+      fallback.innerHTML = '<span class="material-symbols-outlined" style="font-size:96px">image</span>';
+      parent.appendChild(fallback);
+    }
   }
 
   setActiveImage(index: number): void {

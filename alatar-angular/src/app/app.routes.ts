@@ -69,49 +69,8 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [adminAuthGuard],
     loadComponent: () =>
-      import('./pages/admin-dashboard/admin-dashboard.page').then(
-        (module) => module.AdminDashboardPageComponent,
-      ),
-  },
-  {
-    path: 'admin/contacts',
-    canActivate: [adminAuthGuard],
-    loadComponent: () =>
-      import('./pages/admin-dashboard/admin-dashboard.page').then(
-        (module) => module.AdminDashboardPageComponent,
-      ),
-  },
-  {
-    path: 'admin/orders',
-    canActivate: [adminAuthGuard],
-    loadComponent: () =>
-      import('./pages/admin-dashboard/admin-dashboard.page').then(
-        (module) => module.AdminDashboardPageComponent,
-      ),
-  },
-  {
-    path: 'admin/products',
-    canActivate: [adminAuthGuard],
-    loadComponent: () =>
-      import('./pages/admin-dashboard/admin-dashboard.page').then(
-        (module) => module.AdminDashboardPageComponent,
-      ),
-  },
-  {
-    path: 'admin/settings',
-    canActivate: [adminAuthGuard],
-    loadComponent: () =>
-      import('./pages/admin-dashboard/admin-dashboard.page').then(
-        (module) => module.AdminDashboardPageComponent,
-      ),
-  },
-  {
-    path: 'admin/social',
-    canActivate: [adminAuthGuard],
-    loadComponent: () =>
-      import('./pages/admin-dashboard/admin-dashboard.page').then(
-        (module) => module.AdminDashboardPageComponent,
-      ),
+      import('./admin/shell/admin-shell.component').then((m) => m.AdminShellComponent),
+    loadChildren: () => import('./admin/admin.routes').then((m) => m.adminRoutes),
   },
   {
     path: 'admin/contact',

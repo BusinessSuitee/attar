@@ -369,6 +369,11 @@
       "winter": "شتوي",
       "all_year": "طول السنة"
     },
+    "status": {
+      "valid": "متاح",
+      "invalid": "غير متاح",
+      "coming_soon": "قريبًا"
+    },
     "featured": {
       "badge": "فخر الزراعة المصرية",
       "title": "الموالح والبرتقال المصري",
@@ -796,6 +801,58 @@
       "potatoes": "بطاطس",
       "onions": "بصل",
       "pomegranates": "رمان"
+    }
+  },
+  "admin": {
+    "shell": {
+      "brand_name": "لوحة التحكم",
+      "brand_sub": "Admin",
+      "toggle_sidebar": "تبديل القائمة الجانبية",
+      "user_menu": {
+        "label": "حسابي",
+        "logout": "تسجيل الخروج"
+      }
+    },
+    "nav": {
+      "groups": {
+        "main": "الرئيسية",
+        "commerce": "التجارة",
+        "system": "النظام"
+      },
+      "overview": "نظرة عامة",
+      "products": "المنتجات",
+      "orders": "الطلبات",
+      "contacts": "التواصل",
+      "social_links": "روابط السوشيال",
+      "settings": "الإعدادات"
+    },
+    "placeholder": {
+      "title": "هذا القسم قيد الإنشاء",
+      "description": "سيتم تفعيل هذا القسم في المراحل القادمة من تجديد لوحة التحكم."
+    },
+    "overview": {
+      "title": "نظرة عامة",
+      "subtitle": "ملخص حالة المنصة والنشاط الأخير"
+    },
+    "products": {
+      "title": "المنتجات",
+      "subtitle": "إدارة كتالوج المحاصيل والحالات"
+    },
+    "orders": {
+      "title": "الطلبات",
+      "subtitle": "متابعة طلبات العروض من العملاء"
+    },
+    "contacts": {
+      "title": "التواصل",
+      "subtitle": "رسائل وطلبات التواصل الواردة"
+    },
+    "social_links": {
+      "title": "روابط السوشيال ميديا",
+      "subtitle": "إدارة الروابط الظاهرة في الموقع"
+    },
+    "settings": {
+      "title": "الإعدادات",
+      "subtitle": "إعدادات الحساب والمنصة"
     }
   }
 }

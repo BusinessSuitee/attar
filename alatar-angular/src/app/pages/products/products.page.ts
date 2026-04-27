@@ -155,7 +155,7 @@ export class ProductsPageComponent implements OnInit {
   readonly visibleProducts = computed(() => {
     const catFilter = this.activeFilter();
     const seasonFilter = this.activeSeason();
-    let list = this.products();
+    let list = this.products().filter((p) => p.status !== 'Invalid');
 
     if (catFilter === 'Frozen') {
       list = list.filter((p) => p.productState === 'Frozen');
@@ -169,6 +169,10 @@ export class ProductsPageComponent implements OnInit {
 
     return list;
   });
+
+  isComingSoon(product: ProductListItem): boolean {
+    return product.status === 'ComingSoon';
+  }
 
   constructor() {
     effect(() => {
@@ -233,6 +237,9 @@ export class ProductsPageComponent implements OnInit {
   }
 
   openProduct(product: ProductListItem): void {
+    if (this.isComingSoon(product)) {
+      return;
+    }
     this.selectedProduct.set(product);
     this.activeImageIndex.set(0);
     this.activeModalTab.set('product_request');
