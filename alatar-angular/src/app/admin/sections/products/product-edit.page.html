@@ -1,0 +1,554 @@
+﻿<admin-page>
+  <admin-page-header
+    [title]="
+      (mode() === 'new' ? 'admin.products.form.title_new' : 'admin.products.form.title_edit')
+        | transloco
+    "
+    [subtitle]="subtitle()"
+  >
+    <div slot="actions" class="product-edit__header-actions">
+      <button type="button" class="product-edit__btn product-edit__btn--ghost" (click)="cancel()">
+        {{ 'admin.products.form.cancel' | transloco }}
+      </button>
+      @if (mode() === 'edit') {
+        <button
+          type="button"
+          class="product-edit__btn product-edit__btn--danger"
+          [disabled]="store.isDeleting() || store.isSaving()"
+          (click)="askDelete()"
+        >
+          {{ 'admin.products.form.delete' | transloco }}
+        </button>
+      }
+      <button
+        type="button"
+        class="product-edit__btn product-edit__btn--primary"
+        [disabled]="form.invalid || store.isSaving()"
+        (click)="save()"
+      >
+        @if (store.isSaving()) {
+          <span class="material-symbols-outlined product-edit__spin">progress_activity</span>
+          {{ 'admin.products.form.saving' | transloco }}
+        } @else {
+          {{ 'admin.products.form.save' | transloco }}
+        }
+      </button>
+    </div>
+  </admin-page-header>
+
+  @if (store.isLoading()) {
+    <admin-section-card>
+      <p class="product-edit__loading">{{ 'common.loading' | transloco }}</p>
+    </admin-section-card>
+  } @else if (store.hasError()) {
+    <admin-section-card>
+      <div class="product-edit__error" role="alert">
+        <p>{{ store.errorMessage() || ('common.error.generic' | transloco) }}</p>
+        <button type="button" class="product-edit__btn product-edit__btn--ghost" (click)="cancel()">
+          {{ 'admin.products.form.cancel' | transloco }}
+        </button>
+      </div>
+    </admin-section-card>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="save()" class="product-edit__form">
+      <section class="product-edit__hero">
+        <div class="product-edit__hero-main">
+          <div class="product-edit__eyebrow-row">
+            <span class="product-edit__eyebrow">
+              {{
+                (mode() === 'new'
+                  ? 'admin.products.form.summary_mode_new'
+                  : 'admin.products.form.summary_mode_edit'
+                ) | transloco
+              }}
+            </span>
+            @if (hasUnsavedChanges()) {
+              <span class="product-edit__flag product-edit__flag--warning">
+                {{ 'admin.products.form.summary_unsaved' | transloco }}
+              </span>
+            } @else {
+              <span class="product-edit__flag product-edit__flag--success">
+                {{ 'admin.products.form.summary_saved' | transloco }}
+              </span>
+            }
+          </div>
+
+          <h2 class="product-edit__hero-title">
+            {{
+              currentSnapshot().name ||
+                currentSnapshot().nameAr ||
+                subtitle() ||
+                ('admin.products.form.title_new' | transloco)
+            }}
+          </h2>
+
+          <p class="product-edit__hero-copy">
+            {{ 'admin.products.form.overview_desc' | transloco }}
+          </p>
+
+          <div class="product-edit__hero-tags">
+            <span class="product-edit__tag">
+              {{
+                'admin.products.types.' + currentSnapshot().productType.toLowerCase() | transloco
+              }}
+            </span>
+            <span class="product-edit__tag">
+              {{
+                'admin.products.states.' + currentSnapshot().productState.toLowerCase() | transloco
+              }}
+            </span>
+            <span class="product-edit__tag">
+              {{ 'admin.products.seasons.' + seasonKey(currentSnapshot().season) | transloco }}
+            </span>
+          </div>
+        </div>
+
+        <div class="product-edit__hero-stats">
+          <article class="product-edit__stat-card">
+            <span class="product-edit__stat-label">
+              {{ 'admin.products.form.progress_label' | transloco }}
+            </span>
+            <strong class="product-edit__stat-value">{{ completion().percent }}%</strong>
+            <span class="product-edit__stat-meta">
+              {{ completion().complete }}/{{ completion().total }}
+              {{ 'admin.products.form.summary_required' | transloco }}
+            </span>
+          </article>
+
+          <article class="product-edit__stat-card">
+            <span class="product-edit__stat-label">
+              {{ 'admin.products.form.summary_options' | transloco }}
+            </span>
+            <strong class="product-edit__stat-value">{{ optionCount() }}</strong>
+            <span class="product-edit__stat-meta">
+              {{ 'admin.products.form.section_specs' | transloco }}
+            </span>
+          </article>
+
+          <article class="product-edit__stat-card">
+            <span class="product-edit__stat-label">
+              {{ 'admin.products.form.summary_draft' | transloco }}
+            </span>
+            <strong class="product-edit__stat-value product-edit__stat-value--small">
+              @if (draftState() === 'saved' && formattedDraftTime()) {
+                {{
+                  'admin.products.form.local_draft_saved'
+                    | transloco: { time: formattedDraftTime() }
+                }}
+              } @else if (draftState() === 'restored' && formattedDraftTime()) {
+                {{
+                  'admin.products.form.local_draft_restored'
+                    | transloco: { time: formattedDraftTime() }
+                }}
+              } @else if (draftState() === 'error') {
+                {{ 'admin.products.form.local_draft_error' | transloco }}
+              } @else {
+                {{ 'admin.products.form.local_draft_idle' | transloco }}
+              }
+            </strong>
+          </article>
+        </div>
+      </section>
+
+      <div class="product-edit__workspace">
+        <div class="product-edit__main">
+          <admin-section-card
+            [title]="'admin.products.form.section_basic' | transloco"
+            [description]="'admin.products.form.section_basic_desc' | transloco"
+          >
+            <div class="product-edit__grid product-edit__grid--commerce">
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_name_en' | transloco }} *
+                </span>
+                <input
+                  type="text"
+                  class="product-edit__input"
+                  [class.is-invalid]="showError('name', 'required')"
+                  formControlName="name"
+                  [placeholder]="'admin.products.form.field_name_en' | transloco"
+                />
+                @if (showError('name', 'required')) {
+                  <small class="product-edit__error-text">
+                    {{ 'admin.products.form.err_name_required' | transloco }}
+                  </small>
+                }
+              </label>
+
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_name_ar' | transloco }}
+                </span>
+                <input
+                  type="text"
+                  class="product-edit__input"
+                  formControlName="nameAr"
+                  dir="rtl"
+                  [placeholder]="'admin.products.form.field_name_ar' | transloco"
+                />
+              </label>
+
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_sku' | transloco }} *
+                </span>
+                <input
+                  type="text"
+                  class="product-edit__input product-edit__input--mono"
+                  [class.is-invalid]="showError('sku', 'required')"
+                  formControlName="sku"
+                  [readOnly]="mode() === 'edit'"
+                  (blur)="normalizeSku()"
+                  placeholder="SKU-001"
+                />
+                @if (showError('sku', 'required')) {
+                  <small class="product-edit__error-text">
+                    {{ 'admin.products.form.err_sku_required' | transloco }}
+                  </small>
+                }
+              </label>
+
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_price' | transloco }} *
+                </span>
+                <input
+                  type="number"
+                  class="product-edit__input product-edit__input--num"
+                  [class.is-invalid]="showError('price', 'min') || showError('price', 'required')"
+                  formControlName="price"
+                  step="0.01"
+                  min="0"
+                  inputmode="decimal"
+                />
+                @if (showError('price', 'min') || showError('price', 'required')) {
+                  <small class="product-edit__error-text">
+                    {{ 'admin.products.form.err_price_invalid' | transloco }}
+                  </small>
+                }
+              </label>
+
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{
+                    (mode() === 'new'
+                      ? 'admin.products.form.field_opening_stock'
+                      : 'admin.products.form.field_stock'
+                    ) | transloco
+                  }}
+                  *
+                </span>
+                <input
+                  type="number"
+                  class="product-edit__input product-edit__input--num"
+                  [class.is-invalid]="showError('stock', 'min') || showError('stock', 'required')"
+                  formControlName="stock"
+                  step="1"
+                  min="0"
+                  inputmode="numeric"
+                />
+                @if (showError('stock', 'min') || showError('stock', 'required')) {
+                  <small class="product-edit__error-text">
+                    {{ 'admin.products.form.err_stock_invalid' | transloco }}
+                  </small>
+                }
+              </label>
+            </div>
+
+            <div class="product-edit__grid product-edit__grid--two">
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_desc_en' | transloco }}
+                </span>
+                <textarea
+                  class="product-edit__textarea"
+                  formControlName="descriptionEn"
+                  rows="5"
+                  [placeholder]="'admin.products.form.helper_bilingual' | transloco"
+                ></textarea>
+              </label>
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_desc_ar' | transloco }}
+                </span>
+                <textarea
+                  class="product-edit__textarea"
+                  formControlName="descriptionAr"
+                  dir="rtl"
+                  rows="5"
+                  [placeholder]="'admin.products.form.helper_bilingual' | transloco"
+                ></textarea>
+              </label>
+            </div>
+          </admin-section-card>
+
+          <admin-section-card
+            [title]="'admin.products.form.section_classification' | transloco"
+            [description]="'admin.products.form.section_classification_desc' | transloco"
+          >
+            <div class="product-edit__grid">
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_type' | transloco }}
+                </span>
+                <select class="product-edit__input" formControlName="productType">
+                  @for (t of types; track t) {
+                    <option [value]="t">
+                      {{ 'admin.products.types.' + t.toLowerCase() | transloco }}
+                    </option>
+                  }
+                </select>
+              </label>
+
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_state' | transloco }}
+                </span>
+                <select class="product-edit__input" formControlName="productState">
+                  @for (st of states; track st) {
+                    <option [value]="st">
+                      {{ 'admin.products.states.' + st.toLowerCase() | transloco }}
+                    </option>
+                  }
+                </select>
+              </label>
+
+              <label class="product-edit__field">
+                <span class="product-edit__label">
+                  {{ 'admin.products.form.field_season' | transloco }}
+                </span>
+                <select class="product-edit__input" formControlName="season">
+                  @for (s of seasons; track s) {
+                    <option [value]="s">
+                      {{ 'admin.products.seasons.' + seasonKey(s) | transloco }}
+                    </option>
+                  }
+                </select>
+              </label>
+            </div>
+          </admin-section-card>
+
+          <admin-section-card
+            [title]="'admin.products.form.section_specs' | transloco"
+            [description]="'admin.products.form.section_specs_desc' | transloco"
+          >
+            <div class="product-edit__options-grid">
+              <app-options-list-editor
+                [label]="'admin.products.form.field_varieties' | transloco"
+                [items]="varieties()"
+                (itemsChange)="varieties.set($event)"
+              ></app-options-list-editor>
+
+              <app-options-list-editor
+                [label]="'admin.products.form.field_packaging' | transloco"
+                [items]="packagingOptions()"
+                (itemsChange)="packagingOptions.set($event)"
+              ></app-options-list-editor>
+
+              <app-options-list-editor
+                [label]="'admin.products.form.field_weight' | transloco"
+                [items]="weightOptions()"
+                (itemsChange)="weightOptions.set($event)"
+              ></app-options-list-editor>
+
+              <app-options-list-editor
+                [label]="'admin.products.form.field_size' | transloco"
+                [items]="sizeOptions()"
+                (itemsChange)="sizeOptions.set($event)"
+              ></app-options-list-editor>
+
+              <app-options-list-editor
+                [label]="'admin.products.form.field_grade' | transloco"
+                [items]="gradeOptions()"
+                (itemsChange)="gradeOptions.set($event)"
+              ></app-options-list-editor>
+            </div>
+          </admin-section-card>
+
+          <admin-section-card
+            [title]="'admin.products.form.section_images' | transloco"
+            [description]="'admin.products.form.section_images_desc' | transloco"
+          >
+            <app-image-gallery-editor
+              [productId]="productId()"
+              [images]="store.product()?.images ?? []"
+              [isUploading]="store.isUploading()"
+              [deletingImageId]="imageDeletingId()"
+              (upload)="onImageUpload($event)"
+              (delete)="onImageDelete($event)"
+            ></app-image-gallery-editor>
+          </admin-section-card>
+        </div>
+
+        <aside class="product-edit__sidebar">
+          <div class="product-edit__sidebar-stack">
+            <admin-section-card
+              [title]="'admin.products.form.summary_title' | transloco"
+              [description]="'admin.products.form.summary_desc' | transloco"
+            >
+              <div class="product-edit__progress-block">
+                <div class="product-edit__progress-labels">
+                  <span>{{ 'admin.products.form.progress_label' | transloco }}</span>
+                  <strong>{{ completion().percent }}%</strong>
+                </div>
+                <div class="product-edit__progress-track" aria-hidden="true">
+                  <span
+                    class="product-edit__progress-fill"
+                    [style.width.%]="completion().percent"
+                  ></span>
+                </div>
+              </div>
+
+              <dl class="product-edit__summary-list">
+                <div class="product-edit__summary-item">
+                  <dt>{{ 'admin.products.form.summary_mode' | transloco }}</dt>
+                  <dd>
+                    {{
+                      (mode() === 'new'
+                        ? 'admin.products.form.summary_mode_new'
+                        : 'admin.products.form.summary_mode_edit'
+                      ) | transloco
+                    }}
+                  </dd>
+                </div>
+
+                @if (mode() === 'edit') {
+                  <div class="product-edit__summary-item product-edit__summary-item--stacked">
+                    <dt>{{ 'admin.products.form.field_status' | transloco }}</dt>
+                    <dd>
+                      <select
+                        class="product-edit__input"
+                        [value]="status()"
+                        [disabled]="isStatusSaving()"
+                        (change)="onStatusChange($event)"
+                      >
+                        @for (s of statuses; track s) {
+                          <option [value]="s">
+                            {{ 'admin.products.statuses.' + statusKey(s) | transloco }}
+                          </option>
+                        }
+                      </select>
+                    </dd>
+                  </div>
+                }
+
+                <div class="product-edit__summary-item">
+                  <dt>{{ 'admin.products.form.field_sku' | transloco }}</dt>
+                  <dd>{{ currentSnapshot().sku || '---' }}</dd>
+                </div>
+
+                <div class="product-edit__summary-item">
+                  <dt>{{ 'admin.products.form.summary_options' | transloco }}</dt>
+                  <dd>{{ optionCount() }}</dd>
+                </div>
+
+                <div class="product-edit__summary-item">
+                  <dt>{{ 'admin.products.form.summary_images' | transloco }}</dt>
+                  <dd>{{ imageCount() }}</dd>
+                </div>
+
+                <div class="product-edit__summary-item">
+                  <dt>{{ 'admin.products.form.summary_draft' | transloco }}</dt>
+                  <dd>
+                    @if (draftState() === 'saved' && formattedDraftTime()) {
+                      {{
+                        'admin.products.form.local_draft_saved'
+                          | transloco: { time: formattedDraftTime() }
+                      }}
+                    } @else if (draftState() === 'restored' && formattedDraftTime()) {
+                      {{
+                        'admin.products.form.local_draft_restored'
+                          | transloco: { time: formattedDraftTime() }
+                      }}
+                    } @else if (draftState() === 'error') {
+                      {{ 'admin.products.form.local_draft_error' | transloco }}
+                    } @else {
+                      {{ 'admin.products.form.local_draft_idle' | transloco }}
+                    }
+                  </dd>
+                </div>
+              </dl>
+
+              <button
+                type="button"
+                class="product-edit__btn product-edit__btn--ghost product-edit__btn--full"
+                [disabled]="!hasUnsavedChanges()"
+                (click)="discardLocalDraft()"
+              >
+                {{ 'admin.products.form.local_draft_clear' | transloco }}
+              </button>
+            </admin-section-card>
+
+            <admin-section-card
+              [title]="'admin.products.form.checklist_title' | transloco"
+              [description]="'admin.products.form.checklist_desc' | transloco"
+            >
+              @if (missingFieldKeys().length > 0) {
+                <ul class="product-edit__checklist" role="list">
+                  @for (fieldKey of missingFieldKeys(); track fieldKey) {
+                    <li class="product-edit__checklist-item">
+                      <span class="material-symbols-outlined">error</span>
+                      <span>{{ fieldKey | transloco }}</span>
+                    </li>
+                  }
+                </ul>
+              } @else {
+                <p class="product-edit__checklist-empty">
+                  {{ 'admin.products.form.checklist_empty' | transloco }}
+                </p>
+              }
+            </admin-section-card>
+          </div>
+        </aside>
+      </div>
+
+      <div class="product-edit__footer">
+        <div class="product-edit__footer-meta">
+          @if (hasUnsavedChanges()) {
+            <span class="product-edit__footer-note product-edit__footer-note--warning">
+              {{ 'admin.products.form.summary_unsaved' | transloco }}
+            </span>
+          } @else {
+            <span class="product-edit__footer-note product-edit__footer-note--success">
+              {{ 'admin.products.form.summary_saved' | transloco }}
+            </span>
+          }
+        </div>
+
+        <div class="product-edit__footer-actions">
+          <button
+            type="button"
+            class="product-edit__btn product-edit__btn--ghost"
+            (click)="cancel()"
+          >
+            {{ 'admin.products.form.cancel' | transloco }}
+          </button>
+          <button
+            type="submit"
+            class="product-edit__btn product-edit__btn--primary"
+            [disabled]="form.invalid || store.isSaving()"
+          >
+            @if (store.isSaving()) {
+              <span class="material-symbols-outlined product-edit__spin">progress_activity</span>
+              {{ 'admin.products.form.saving' | transloco }}
+            } @else {
+              {{ 'admin.products.form.save' | transloco }}
+            }
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</admin-page>
+
+<admin-confirm-dialog
+  [open]="deleteOpen()"
+  [title]="'admin.products.form.delete_title' | transloco"
+  [description]="'admin.products.form.delete_confirm' | transloco"
+  [confirmLabel]="'admin.products.list.delete_confirm_action' | transloco"
+  [cancelLabel]="'common.actions.cancel' | transloco"
+  tone="danger"
+  [confirmDisabled]="store.isDeleting()"
+  (confirm)="confirmDelete()"
+  (cancel)="deleteOpen.set(false)"
+></admin-confirm-dialog>

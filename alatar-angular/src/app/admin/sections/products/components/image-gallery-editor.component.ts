@@ -1,4 +1,4 @@
-import {
+﻿import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -6,10 +6,11 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 import { ProductImageInfo } from '../../../../core/products/product.service';
 import { ImageWithFallbackComponent } from '../../../../shared/ui/image-with-fallback.component';
@@ -40,7 +41,7 @@ const MAX_BYTES = 5 * 1024 * 1024;
           (drop)="onDrop($event)"
           tabindex="0"
           role="button"
-          [attr.aria-label]="('admin.products.form.image_upload' | transloco)"
+          [attr.aria-label]="'admin.products.form.image_upload' | transloco"
           (keydown.enter)="openFileDialog()"
           (keydown.space)="openFileDialog(); $event.preventDefault()"
         >
@@ -75,7 +76,7 @@ const MAX_BYTES = 5 * 1024 * 1024;
       @if (images.length > 0) {
         <ul class="image-gallery__grid" role="list">
           @for (image of images; track image.id; let i = $index) {
-            <li class="image-gallery__cell" [class.is-deleting]="deletingId() === image.id">
+            <li class="image-gallery__cell" [class.is-deleting]="deletingImageId === image.id">
               @if (i === 0) {
                 <span class="image-gallery__primary-badge">
                   {{ 'admin.products.form.image_primary' | transloco }}
@@ -90,12 +91,14 @@ const MAX_BYTES = 5 * 1024 * 1024;
               <button
                 type="button"
                 class="image-gallery__delete"
-                [disabled]="deletingId() !== null"
+                [disabled]="deletingImageId !== null"
                 (click)="onDelete(image.id)"
-                [attr.aria-label]="('admin.products.form.image_delete' | transloco)"
+                [attr.aria-label]="'admin.products.form.image_delete' | transloco"
               >
-                @if (deletingId() === image.id) {
-                  <span class="material-symbols-outlined image-gallery__spin">progress_activity</span>
+                @if (deletingImageId === image.id) {
+                  <span class="material-symbols-outlined image-gallery__spin"
+                    >progress_activity</span
+                  >
                 } @else {
                   <span class="material-symbols-outlined">delete</span>
                 }
@@ -145,7 +148,9 @@ const MAX_BYTES = 5 * 1024 * 1024;
         background: var(--color-surface-subtle, #f8fafc);
         color: var(--color-text-secondary, #64748b);
         cursor: pointer;
-        transition: background 0.15s ease, border-color 0.15s ease;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease;
         text-align: center;
       }
       .image-gallery__dropzone:hover {
@@ -284,15 +289,17 @@ const MAX_BYTES = 5 * 1024 * 1024;
 export class ImageGalleryEditorComponent {
   @ViewChild('fileInput', { static: false }) private fileInput?: ElementRef<HTMLInputElement>;
 
+  private readonly transloco = inject(TranslocoService);
+
   @Input() productId: string | null = null;
   @Input() images: ProductImageInfo[] = [];
   @Input() isUploading = false;
+  @Input() deletingImageId: string | null = null;
 
   @Output() readonly upload = new EventEmitter<File[]>();
   @Output() readonly delete = new EventEmitter<string>();
 
   readonly isDragging = signal(false);
-  readonly deletingId = signal<string | null>(null);
   readonly errorMessage = signal<string | null>(null);
 
   openFileDialog(): void {
@@ -328,18 +335,14 @@ export class ImageGalleryEditorComponent {
     this.tryUpload(files);
   }
 
-  setDeleting(id: string | null): void {
-    this.deletingId.set(id);
-  }
-
   onDelete(imageId: string): void {
-    if (this.deletingId() !== null) return;
-    this.deletingId.set(imageId);
+    if (this.deletingImageId !== null) return;
     this.delete.emit(imageId);
   }
 
   private tryUpload(files: File[]): void {
     this.errorMessage.set(null);
+
     const valid: File[] = [];
     for (const file of files) {
       if (!ALLOWED_TYPES.includes(file.type)) {
@@ -352,15 +355,16 @@ export class ImageGalleryEditorComponent {
       }
       valid.push(file);
     }
+
     if (valid.length === 0) return;
     this.upload.emit(valid);
   }
 
   private formatBadType(name: string): string {
-    return `${name}: invalid file type (use JPG, PNG, WEBP)`;
+    return this.transloco.translate('admin.products.form.image_error_type', { name });
   }
 
   private formatTooLarge(name: string): string {
-    return `${name}: exceeds 5 MB limit`;
+    return this.transloco.translate('admin.products.form.image_error_size', { name });
   }
 }
