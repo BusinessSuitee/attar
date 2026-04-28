@@ -4,6 +4,7 @@
     "about": "من نحن",
     "partners": "شركاؤنا",
     "products": "المحاصيل",
+    "seasons": "تقويم الموسم",
     "stations": "المحطات والأراضي",
     "certificates": "الشهادات",
     "gallery": "المعرض",
@@ -361,7 +362,10 @@
       "all": "الكل",
       "fruits": "فواكه",
       "vegetables": "خضراوات",
-      "frozen": "مجمدات"
+      "frozen": "مجمدات",
+      "category_label": "النوع",
+      "season_label": "الموسم",
+      "availability_label": "التوفر"
     },
     "seasons": {
       "all": "الكل",
@@ -836,19 +840,318 @@
     },
     "products": {
       "title": "المنتجات",
-      "subtitle": "إدارة كتالوج المحاصيل والحالات"
+      "subtitle": "إدارة كتالوج المحاصيل والحالات",
+      "filters": {
+        "all": "الكل"
+      },
+      "statuses": {
+        "valid": "متاح",
+        "coming_soon": "قريبًا",
+        "invalid": "غير صالح"
+      },
+      "types": {
+        "fruit": "فاكهة",
+        "vegetable": "خضار",
+        "frozen": "مجمّد"
+      },
+      "states": {
+        "fresh": "طازج",
+        "frozen": "مجمّد"
+      },
+      "seasons": {
+        "summer": "صيفى",
+        "winter": "شتوى",
+        "all_year": "طوال العام"
+      },
+      "list": {
+        "add": "منتج جديد",
+        "search_placeholder": "ابحث بالاسم أو الرمز…",
+        "toast_status_updated": "تم تحديث حالة المنتج",
+        "toast_status_failed": "تعذر تغيير حالة المنتج",
+        "filter_status": "الحالة",
+        "filter_type": "النوع",
+        "filter_state": "الشكل",
+        "filter_season": "الموسم",
+        "col_name": "المنتج",
+        "col_status": "الحالة",
+        "col_type": "النوع",
+        "col_state": "الشكل",
+        "col_season": "الموسم",
+        "col_stock": "المخزون",
+        "col_price": "السعر",
+        "filter_button": "الفلاتر",
+        "filters_title": "تصفية المنتجات",
+        "empty": "لا توجد منتجات بعد. اضغط على \"منتج جديد\" لإضافة منتج.",
+        "empty_filtered": "لا توجد منتجات مطابقة للفلاتر الحالية.",
+        "col_actions": "الإجراءات",
+        "status_change_label": "تغيير الحالة",
+        "delete_label": "حذف",
+        "toast_deleted": "تم حذف المنتج بنجاح",
+        "toast_delete_failed": "تعذّر حذف المنتج، حاول مرة أخرى.",
+        "delete_title": "حذف المنتج؟",
+        "delete_confirm": "هذا الإجراء نهائي ولا يمكن التراجع عنه. ستُحذف جميع صور المنتج وبياناته.",
+        "delete_confirm_action": "حذف",
+        "deleting": "جارٍ الحذف…"
+      },
+      "form": {
+        "title_new": "منتج جديد",
+        "title_edit": "تعديل المنتج",
+        "save": "حفظ",
+        "saving": "جارٍ الحفظ…",
+        "cancel": "إلغاء",
+        "delete": "حذف المنتج",
+        "delete_title": "حذف هذا المنتج؟",
+        "delete_confirm": "هذا الإجراء نهائي. ستُحذف جميع الصور والبيانات.",
+        "section_basic": "المعلومات الأساسية",
+        "section_classification": "التصنيف",
+        "section_specs": "المواصفات والخيارات",
+        "section_images": "صور المنتج",
+        "field_name_en": "الاسم (إنجليزي)",
+        "field_name_ar": "الاسم (عربي)",
+        "field_sku": "كود المنتج",
+        "field_price": "السعر",
+        "field_stock": "الكمية المتاحة",
+        "field_opening_stock": "الكمية الافتتاحية",
+        "field_desc_en": "الوصف (إنجليزي)",
+        "field_desc_ar": "الوصف (عربي)",
+        "field_type": "نوع المنتج",
+        "field_state": "حالة المنتج",
+        "field_season": "الموسم",
+        "field_status": "الحالة",
+        "field_varieties": "الأصناف",
+        "field_packaging": "خيارات التعبئة",
+        "field_weight": "خيارات الوزن",
+        "field_size": "خيارات المقاس",
+        "field_grade": "خيارات الدرجة",
+        "add_option": "إضافة",
+        "option_placeholder": "اكتب ثم اضغط Enter أو إضافة",
+        "image_upload": "رفع صور",
+        "image_upload_hint": "JPG, PNG, WEBP — الحد الأقصى 5 ميجابايت",
+        "image_delete": "حذف الصورة",
+        "image_uploading": "جارٍ الرفع…",
+        "image_primary": "رئيسية",
+        "image_save_first": "احفظ المنتج أولاً لرفع الصور.",
+        "no_images": "لا توجد صور بعد — أفلت أو ارفع لإضافة صور.",
+        "toast_created": "تم إنشاء المنتج",
+        "toast_updated": "تم تحديث المنتج",
+        "toast_create_failed": "تعذّر إنشاء المنتج",
+        "toast_update_failed": "تعذّر حفظ التغييرات",
+        "toast_image_uploaded": "تم رفع الصور",
+        "toast_image_upload_failed": "تعذّر رفع الصور",
+        "toast_image_deleted": "تم حذف الصورة",
+        "toast_image_delete_failed": "تعذّر حذف الصورة",
+        "err_name_required": "الاسم بالإنجليزية مطلوب",
+        "err_sku_required": "كود المنتج مطلوب",
+        "err_price_invalid": "السعر يجب أن يكون رقماً موجباً",
+        "err_stock_invalid": "الكمية يجب أن تكون رقماً غير سالب"
+      },
+      "categories": {
+        "section_title": "الفئات",
+        "section_description": "نظّم المحاصيل لتظهر بوضوح فى الكتالوج والصفحة الرئيسية.",
+        "add": "إضافة فئة",
+        "edit": "تعديل",
+        "delete": "حذف",
+        "save": "حفظ",
+        "cancel": "إلغاء",
+        "filter_type": "النوع",
+        "filter_season": "الموسم",
+        "create_title": "فئة جديدة",
+        "edit_title": "تعديل الفئة",
+        "delete_title": "حذف الفئة",
+        "delete_confirm": "هل أنت متأكد من حذف هذه الفئة؟",
+        "delete_failed": "تعذر حذف الفئة. ربما تكون مرتبطة بمنتجات.",
+        "field_name_en": "الاسم (إنجليزى)",
+        "field_name_ar": "الاسم (عربى)",
+        "field_type": "النوع",
+        "field_season": "الموسم",
+        "col_name": "الفئة",
+        "col_type": "النوع",
+        "col_season": "الموسم",
+        "empty": "لم تُضَف أى فئات بعد.",
+        "toast_created": "تم إنشاء الفئة",
+        "toast_updated": "تم تعديل الفئة",
+        "toast_deleted": "تم حذف الفئة"
+      }
     },
     "orders": {
       "title": "الطلبات",
-      "subtitle": "متابعة طلبات العروض من العملاء"
+      "subtitle": "تتبع وإدارة طلبات العروض من العملاء",
+      "refresh": "تحديث",
+      "kpi": {
+        "total": "إجمالي الطلبات",
+        "new": "جديد",
+        "new_hint": "يحتاج إلى اهتمام",
+        "in_progress": "قيد المعالجة",
+        "confirmed_7d": "مؤكّد (7 أيام)"
+      },
+      "status": {
+        "new": "جديد",
+        "in_review": "قيد المراجعة",
+        "contacted": "تمّ التواصل",
+        "confirmed": "مؤكّد",
+        "closed": "مغلق"
+      },
+      "filters": {
+        "search_placeholder": "ابحث بالاسم أو الهاتف أو المنتج…",
+        "all": "الكل",
+        "status_label": "الحالة",
+        "range_label": "التاريخ",
+        "range_today": "اليوم",
+        "range_7d": "آخر 7 أيام",
+        "range_30d": "آخر 30 يومًا",
+        "filter_button": "تصفية",
+        "sheet_title": "تصفية الطلبات"
+      },
+      "list": {
+        "col_status": "الحالة",
+        "col_requester": "مقدّم الطلب",
+        "col_product": "المنتج",
+        "col_quantity": "الكمية",
+        "col_date": "تاريخ الطلب",
+        "unit_tons": "ط",
+        "view_detail": "عرض التفاصيل",
+        "returning": "عميل متكرر",
+        "empty": "لا توجد طلبات بعد.",
+        "empty_filtered": "لا توجد طلبات تطابق الفلاتر المحددة."
+      },
+      "pagination": {
+        "of": "من",
+        "prev": "الصفحة السابقة",
+        "next": "الصفحة التالية",
+        "per_page": "لكل صفحة"
+      },
+      "detail": {
+        "workflow_title": "تحديث الحالة",
+        "customer_title": "العميل",
+        "call_phone": "اتصال",
+        "copy_phone": "نسخ الهاتف",
+        "returning_customer": "عميل متكرر · {{ count }} طلبات",
+        "product_title": "المنتج",
+        "specs_title": "المواصفات",
+        "spec_varieties": "الأصناف",
+        "spec_packaging": "التعبئة",
+        "spec_weight": "الوزن",
+        "spec_size": "الحجم",
+        "spec_grade": "الدرجة",
+        "spec_special": "متطلبات خاصة",
+        "delete": "حذف",
+        "delete_title": "حذف هذا الطلب؟",
+        "delete_body": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف الطلب وجميع تفاصيله نهائيًا.",
+        "delete_confirm_action": "حذف"
+      },
+      "toast": {
+        "status_updated": "تم تحديث الحالة",
+        "status_failed": "تعذّر تحديث الحالة",
+        "deleted": "تم حذف الطلب",
+        "delete_failed": "تعذّر حذف الطلب"
+      }
     },
     "contacts": {
       "title": "التواصل",
-      "subtitle": "رسائل وطلبات التواصل الواردة"
+      "subtitle": "رسائل وطلبات التواصل الواردة",
+      "refresh": "تحديث",
+      "kpi": {
+        "total": "إجمالي جهات التواصل",
+        "in_progress": "قيد المتابعة",
+        "in_progress_hint": "بانتظار التواصل",
+        "contacted": "تم التواصل",
+        "sale_confirmed_7d": "صفقات مؤكدة (7 أيام)"
+      },
+      "status": {
+        "in_progress": "قيد المتابعة",
+        "contacted": "تم التواصل",
+        "sale_confirmed": "صفقة مؤكدة"
+      },
+      "service_type": {
+        "export": "تصدير",
+        "local": "توريد محلي"
+      },
+      "filters": {
+        "search_placeholder": "ابحث بالاسم، الهاتف، الشركة، الدولة أو المحصول…",
+        "all": "الكل",
+        "status_label": "الحالة",
+        "service_label": "نوع الخدمة",
+        "range_label": "التاريخ",
+        "range_today": "اليوم",
+        "range_7d": "آخر 7 أيام",
+        "range_30d": "آخر 30 يومًا",
+        "filter_button": "تصفية",
+        "sheet_title": "تصفية جهات التواصل"
+      },
+      "list": {
+        "col_status": "الحالة",
+        "col_requester": "جهة التواصل",
+        "col_company": "الشركة",
+        "col_crop": "المحصول",
+        "col_quantity": "الكمية",
+        "col_service": "الخدمة",
+        "col_date": "تاريخ الإرسال",
+        "unit_tons": "طن",
+        "view_detail": "عرض التفاصيل",
+        "returning": "متكرر",
+        "empty": "لا توجد طلبات تواصل بعد.",
+        "empty_filtered": "لا توجد جهات تواصل مطابقة للفلاتر الحالية."
+      },
+      "pagination": {
+        "of": "من",
+        "prev": "الصفحة السابقة",
+        "next": "الصفحة التالية",
+        "per_page": "في الصفحة"
+      },
+      "detail": {
+        "workflow_title": "تحديث الحالة",
+        "customer_title": "جهة التواصل",
+        "request_title": "تفاصيل الطلب",
+        "call_phone": "اتصال",
+        "copy_phone": "نسخ رقم الهاتف",
+        "whatsapp": "فتح واتساب",
+        "returning_customer": "جهة تواصل متكررة · {{ count }} طلبًا بالمجمل",
+        "field_company": "الشركة",
+        "field_country": "الدولة",
+        "field_crop": "المحصول",
+        "field_delivery": "موعد التسليم",
+        "field_notes": "ملاحظات",
+        "delete": "حذف",
+        "delete_title": "حذف جهة التواصل؟",
+        "delete_body": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف جهة التواصل وكل بياناتها نهائيًا.",
+        "delete_confirm_action": "حذف"
+      },
+      "toast": {
+        "status_updated": "تم تحديث الحالة",
+        "status_failed": "تعذّر تحديث الحالة",
+        "deleted": "تم حذف جهة التواصل",
+        "delete_failed": "تعذّر حذف جهة التواصل"
+      }
     },
     "social_links": {
       "title": "روابط السوشيال ميديا",
-      "subtitle": "إدارة الروابط الظاهرة في الموقع"
+      "subtitle": "إدارة الروابط الظاهرة في الموقع",
+      "add": "إضافة رابط",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "save": "حفظ",
+      "create": "إضافة",
+      "enabled": "مفعّل",
+      "empty": "لا توجد روابط بعد. أضف أول رابط ليظهر فى الموقع.",
+      "create_title": "إضافة رابط جديد",
+      "edit_title": "تعديل الرابط",
+      "delete_title": "حذف هذا الرابط؟",
+      "delete_body": "لا يمكن التراجع عن هذا الإجراء. لن يظهر الرابط للزوار بعد الحذف.",
+      "field_platform": "المنصة",
+      "field_label": "الاسم الظاهر",
+      "field_label_placeholder": "اسم اختيارى للعرض",
+      "field_url": "الرابط",
+      "field_color": "لون العلامة التجارية",
+      "field_new_tab": "فتح فى نافذة جديدة",
+      "toast": {
+        "created": "تم إنشاء الرابط",
+        "updated": "تم تحديث الرابط",
+        "deleted": "تم حذف الرابط",
+        "create_failed": "تعذّر إنشاء الرابط",
+        "update_failed": "تعذّر حفظ التعديلات",
+        "delete_failed": "تعذّر حذف الرابط",
+        "toggle_failed": "تعذّر تغيير الحالة"
+      }
     },
     "settings": {
       "title": "الإعدادات",
@@ -867,6 +1170,90 @@
     "loadMore": "عرض المزيد",
     "language": {
       "toggle": "تغيير اللغة"
+    },
+    "errors": {
+      "unexpected": "حدث خطأ غير متوقع.",
+      "network": "تعذر الاتصال بالخادم، يُرجى المحاولة مجددًا.",
+      "request_failed": "تعذر إتمام الطلب.",
+      "http": {
+        "bad_request": "البيانات المُرسلة غير صالحة.",
+        "unauthorized": "انتهت الجلسة، يُرجى تسجيل الدخول من جديد.",
+        "forbidden": "ليس لديك صلاحية لتنفيذ هذا الإجراء.",
+        "not_found": "العنصر المطلوب غير موجود.",
+        "conflict": "هذا العنصر يتعارض مع بيانات موجودة بالفعل.",
+        "server_error": "حدث خطأ فى الخادم، يُرجى المحاولة مجددًا."
+      },
+      "codes": {
+        "products_not_found": "هذا المنتج لم يعد موجودًا.",
+        "products_sku_already_exists": "يوجد منتج آخر بنفس رمز SKU.",
+        "categories_not_found": "هذه الفئة لم تعد موجودة.",
+        "categories_invalid_type": "نوع الفئة المختار غير صالح.",
+        "categories_invalid_season": "الموسم المختار غير صالح.",
+        "categories_name_already_exists": "يوجد فئة أخرى بنفس الاسم.",
+        "image_required": "يجب رفع صورة واحدة على الأقل.",
+        "no_valid_images": "لا توجد صور صالحة للرفع.",
+        "image_not_found": "الصورة غير موجودة.",
+        "auth_credentials_required": "البريد الإلكترونى وكلمة المرور مطلوبان.",
+        "auth_invalid_credentials": "البريد أو كلمة المرور غير صحيحة."
+      }
+    },
+    "aria": {
+      "notifications": "إشعارات",
+      "dismiss": "إغلاق",
+      "close_menu": "إغلاق القائمة",
+      "breadcrumbs": "مسار التنقّل",
+      "admin_navigation": "قائمة لوحة التحكم"
+    },
+    "done": "تم",
+    "actions": {
+      "confirm": "تأكيد",
+      "cancel": "إلغاء"
+    }
+  },
+  "products_v2": {
+    "catalog": {
+      "category_all": "كل المنتجات",
+      "in_season_badge": "في الموسم",
+      "coming_soon_badge": "قريباً",
+      "filter_availability_all": "الكل",
+      "filter_availability_in_season": "متوفر الآن",
+      "filter_availability_coming_soon": "قريباً",
+      "filter_season_all": "كل المواسم",
+      "filter_season_summer": "الصيف",
+      "filter_season_winter": "الشتاء",
+      "load_more": "عرض المزيد من المنتجات",
+      "empty": "لا توجد منتجات تطابق اختيارك.",
+      "empty_action": "مسح الفلاتر",
+      "no_image": "لا توجد صورة متاحة"
+    },
+    "detail": {
+      "contact_cta": "تواصل للطلب",
+      "specs_title": "التعبئة والمواصفات",
+      "story_title": "كيف نزرعه",
+      "related_title": "قد يعجبك أيضاً",
+      "availability_title": "التوفر الموسمي",
+      "not_found": "المنتج غير موجود.",
+      "not_found_cta": "تصفح كل المنتجات",
+      "gallery_prev": "الصورة السابقة",
+      "gallery_next": "الصورة التالية",
+      "image_counter": "{{current}} / {{total}}"
+    },
+    "seasons": {
+      "page_title": "تقويم الموسم",
+      "page_subtitle": "خطط لمشترياتك — اكتشف المحاصيل المتاحة في كل شهر.",
+      "view_product": "عرض المنتج ←",
+      "month_1": "يناير",
+      "month_2": "فبراير",
+      "month_3": "مارس",
+      "month_4": "أبريل",
+      "month_5": "مايو",
+      "month_6": "يونيو",
+      "month_7": "يوليو",
+      "month_8": "أغسطس",
+      "month_9": "سبتمبر",
+      "month_10": "أكتوبر",
+      "month_11": "نوفمبر",
+      "month_12": "ديسمبر"
     }
   }
 }

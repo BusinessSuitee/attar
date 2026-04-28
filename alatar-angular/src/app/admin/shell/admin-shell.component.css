@@ -84,8 +84,13 @@
 
 @media (max-width: 767px) {
   .admin-shell {
-    grid-template-rows: 3.5rem 1fr;
+    grid-template-rows: calc(3.5rem + env(safe-area-inset-top)) 1fr;
   }
+}
+
+/* P3-D: safe-area for drawer sidebar */
+.admin-shell[data-sidebar-state='drawer-open'] .admin-shell__sidebar {
+  padding-top: env(safe-area-inset-top);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -50,6 +50,12 @@ public sealed class SqlProductRepository(IAlatarDbContext dbContext) : IProductR
             .AnyAsync(product => product.Sku == sku, cancellationToken);
     }
 
+    public Task<bool> HasOrderRequestsAsync(Guid productId, CancellationToken cancellationToken)
+    {
+        return dbContext.OrderRequests
+            .AnyAsync(orderRequest => orderRequest.ProductId == productId, cancellationToken);
+    }
+
     public async Task<IReadOnlyCollection<ProductImage>> ListImagesAsync(Guid productId, CancellationToken cancellationToken)
     {
         return await dbContext.ProductImages

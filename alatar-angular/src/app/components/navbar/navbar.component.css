@@ -543,7 +543,7 @@ html[lang='ar'] .brand__meta small {
     justify-self: end;
   }
   .menu-trigger {
-    display: inline-flex;
+    display: none;
   }
 
   /* Hide the inline desktop CTA on mobile — we keep language switcher compact */
@@ -670,6 +670,7 @@ html[lang='ar'] .brand__meta small {
     -webkit-backdrop-filter: saturate(140%) blur(14px);
     box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
     z-index: 100;
+    pointer-events: auto;
     justify-content: space-around;
     padding: 0.45rem 0.25rem calc(0.45rem + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid rgba(45, 106, 79, 0.1);

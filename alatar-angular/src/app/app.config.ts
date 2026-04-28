@@ -6,7 +6,6 @@ import {
   provideZonelessChangeDetection,
   isDevMode,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import {
   PreloadAllModules,
   provideRouter,
@@ -22,25 +21,8 @@ import { authInterceptor } from './core/auth/auth.interceptor';
 import { API_BASE_URL } from './core/config/api-base-url.token';
 import { routes } from './app.routes';
 
-function resolveApiBaseUrl(platformId: object): string {
-  const productionApiBaseUrl = 'https://attar.runasp.net';
-
-  if (!isPlatformBrowser(platformId)) {
-    return productionApiBaseUrl;
-  }
-
-  const isLocalHost =
-    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
-  if (isLocalHost) {
-    if (window.location.protocol === 'https:') {
-      return 'https://localhost:7253';
-    }
-
-    return 'http://127.0.0.1:5070';
-  }
-
-  return productionApiBaseUrl;
+function resolveApiBaseUrl(_platformId: object): string {
+  return 'https://attar.runasp.net';
 }
 
 export const appConfig: ApplicationConfig = {

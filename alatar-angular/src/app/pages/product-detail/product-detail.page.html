@@ -1,312 +1,238 @@
 <app-navbar></app-navbar>
 
-<div class="relative flex min-h-screen w-full flex-col bg-background-light font-sans text-slate-900 antialiased">
-  <main class="flex-grow pb-mobile-dock pt-mobile-nav md:pt-24 md:pb-10">
-    @if (storeIsLoading() && !product()) {
-      <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
-        <div class="flex flex-col items-center gap-4 text-slate-400">
-          <span class="material-symbols-outlined animate-spin text-5xl text-primary">progress_activity</span>
-          <p class="font-medium">{{ 'product_detail.loading' | transloco }}</p>
-        </div>
+<main class="product-detail">
+
+  @if (productsStore.isLoading() && !product()) {
+    <div class="product-detail__status" aria-live="polite">
+      <span class="material-symbols-outlined status-icon">hourglass_empty</span>
+      {{ 'product_detail.loading' | transloco }}
+    </div>
+  } @else if (productsStore.hasError()) {
+    <div class="product-detail__status" role="alert">
+      <p>{{ 'product_detail.load_error' | transloco }}</p>
+    </div>
+  } @else if (notFound()) {
+    <div class="product-detail__not-found">
+      <p class="product-detail__not-found-text">
+        {{ 'products_v2.detail.not_found' | transloco }}
+      </p>
+      <a class="product-detail__not-found-cta" routerLink="/products">
+        {{ 'products_v2.detail.not_found_cta' | transloco }}
+      </a>
+    </div>
+  } @else if (product() && infoPanelData()) {
+
+    <!-- ── Main split: Gallery | Info Panel ────────────────── -->
+    <article class="product-detail__split">
+      <div class="product-detail__gallery-cell">
+        <app-product-gallery
+          [imageUrls]="resolvedImageUrls()"
+          [productName]="displayName()"
+        ></app-product-gallery>
       </div>
-    }
-
-    @if (storeHasError() && !product()) {
-      <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
-        <div class="flex flex-col items-center gap-4 text-slate-500">
-          <span class="material-symbols-outlined text-5xl text-red-400">error_outline</span>
-          <p class="font-bold text-red-600">{{ 'product_detail.load_error' | transloco }}</p>
-          <button
-            type="button"
-            class="rounded-full bg-primary px-6 py-2 text-sm font-bold text-white transition hover:bg-primary-dark"
-            (click)="reload()"
-          >
-            {{ 'product_detail.retry' | transloco }}
-          </button>
-        </div>
+      <div class="product-detail__panel-cell">
+        <app-product-info-panel [product]="infoPanelData()!"></app-product-info-panel>
       </div>
-    }
+    </article>
 
-    @if (notFound()) {
-      <div class="mx-auto flex max-w-[1440px] items-center justify-center px-6 py-32">
-        <div class="flex flex-col items-center gap-4 text-slate-500">
-          <span class="material-symbols-outlined text-5xl text-slate-400">search_off</span>
-          <p class="text-xl font-bold text-slate-700">{{ 'product_detail.not_found' | transloco }}</p>
-          <a
-            routerLink="/products"
-            class="rounded-full bg-primary px-6 py-2 text-sm font-bold text-white transition hover:bg-primary-dark"
-          >
-            {{ 'product_detail.back_to_products' | transloco }}
-          </a>
-        </div>
-      </div>
-    }
+    <!-- ── Below fold ─────────────────────────────────────────── -->
+    <div class="product-detail__below-fold">
+      <div class="container">
 
-    @if (product(); as productItem) {
-      <article class="mx-auto max-w-[1440px] px-6 lg:px-10">
-        <nav class="mb-6 flex items-center gap-2 text-sm text-slate-500" aria-label="breadcrumb">
-          <a routerLink="/" class="hover:text-primary">{{ 'nav.home' | transloco }}</a>
-          <span class="material-symbols-outlined text-base text-slate-300">chevron_left</span>
-          <a routerLink="/products" class="hover:text-primary">{{ 'nav.products' | transloco }}</a>
-          <span class="material-symbols-outlined text-base text-slate-300">chevron_left</span>
-          <span class="font-bold text-slate-700">{{ displayPrimaryName(productItem) }}</span>
-        </nav>
+        <!-- ORDER FORM ─────────────────────────────────────── -->
+        @if (product()!.status !== 'ComingSoon') {
+          <section class="order-section" id="order-form" aria-labelledby="order-heading">
+            <h2 id="order-heading" class="section-title">
+              {{ 'products_page.modal.request_title' | transloco }}
+            </h2>
 
-        <div class="grid gap-10 lg:grid-cols-2">
-          <section class="flex flex-col gap-4">
-            <div class="aspect-square w-full overflow-hidden rounded-3xl bg-slate-100 shadow-md">
-              @if (hasImages(productItem)) {
-                <img
-                  [src]="imageUrl(validImageUrls(productItem)[activeImageIndex()])"
-                  alt=""
-                  class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="eager"
-                  decoding="async"
-                  (error)="onImageError($event)"
-                />
-              } @else {
-                <div class="flex h-full w-full items-center justify-center text-slate-300">
-                  <span class="material-symbols-outlined text-8xl">image</span>
+            <!-- Spec selector groups -->
+            @if (product()!.varieties.length > 0) {
+              <div class="spec-group">
+                <p class="spec-group__label">{{ 'products_page.modal.variety_label' | transloco }}</p>
+                <div class="spec-group__chips">
+                  @for (opt of product()!.varieties; track opt) {
+                    <button
+                      type="button"
+                      class="spec-chip"
+                      [class.spec-chip--active]="isOptionSelected('selectedVarieties', opt)"
+                      (click)="setOrderOption('selectedVarieties', opt)"
+                    >{{ opt }}</button>
+                  }
                 </div>
-              }
-            </div>
-
-            @if (hasImages(productItem) && validImageUrls(productItem).length > 1) {
-              <div class="grid grid-cols-5 gap-3">
-                @for (img of validImageUrls(productItem); track img; let i = $index) {
-                  <button
-                    type="button"
-                    class="aspect-square overflow-hidden rounded-xl border-2 transition"
-                    [class.border-primary]="activeImageIndex() === i"
-                    [class.border-transparent]="activeImageIndex() !== i"
-                    [attr.aria-label]="('product_detail.image_index' | transloco) + ' ' + (i + 1)"
-                    (click)="setActiveImage(i)"
-                  >
-                    <img
-                      [src]="imageUrl(img)"
-                      alt=""
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                      (error)="onImageError($event)"
-                    />
-                  </button>
-                }
               </div>
             }
-          </section>
 
-          <section class="flex flex-col gap-6">
-            <div class="flex flex-wrap items-center gap-2">
-              <span
-                class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-white"
-                [class]="categoryBadgeColor(productItem)"
-              >
-                {{ categoryLabelKey(productItem) | transloco }}
-              </span>
-              <span
-                class="inline-flex items-center gap-1.5 rounded-full bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700"
-              >
-                {{ seasonLabelKey(productItem.season) | transloco }}
-              </span>
-            </div>
-
-            <header>
-              <h1 class="text-4xl font-black leading-tight tracking-tight text-slate-900 md:text-5xl">
-                {{ displayPrimaryName(productItem) }}
-              </h1>
-              @if (displaySecondaryName(productItem); as secondary) {
-                <p class="mt-2 text-lg font-medium text-slate-500">{{ secondary }}</p>
-              }
-            </header>
-
-            @if (displayPrimaryDescription(productItem); as desc) {
-              <p class="text-base leading-relaxed text-slate-600">{{ desc }}</p>
+            @if (product()!.packagingOptions.length > 0) {
+              <div class="spec-group">
+                <p class="spec-group__label">{{ 'products_page.modal.packaging_label' | transloco }}</p>
+                <div class="spec-group__chips">
+                  @for (opt of product()!.packagingOptions; track opt) {
+                    <button
+                      type="button"
+                      class="spec-chip"
+                      [class.spec-chip--active]="isOptionSelected('selectedPackagingOptions', opt)"
+                      (click)="setOrderOption('selectedPackagingOptions', opt)"
+                    >{{ opt }}</button>
+                  }
+                </div>
+              </div>
             }
 
-            <div class="rounded-2xl border border-solid border-slate-200 bg-white p-6 shadow-sm">
-              <h2 class="mb-4 text-lg font-bold text-slate-900">
-                {{ 'product_detail.request_quote' | transloco }}
-              </h2>
-
-              <form class="flex flex-col gap-5" (ngSubmit)="submitOrderRequest()">
-                @if (productItem.varieties.length > 0) {
-                  <div>
-                    <label class="mb-2 block text-sm font-bold text-slate-700">
-                      {{ 'products_page.modal.variety_label' | transloco }}
-                    </label>
-                    <div class="flex flex-wrap gap-2">
-                      @for (v of productItem.varieties; track trackChip($index, v)) {
-                        <button
-                          type="button"
-                          class="rounded-full border border-solid px-3 py-1.5 text-xs font-bold transition"
-                          [class.border-primary]="isOrderOptionSelected('selectedVarieties', v)"
-                          [class.bg-primary]="isOrderOptionSelected('selectedVarieties', v)"
-                          [class.text-white]="isOrderOptionSelected('selectedVarieties', v)"
-                          [class.border-slate-300]="!isOrderOptionSelected('selectedVarieties', v)"
-                          [class.text-slate-700]="!isOrderOptionSelected('selectedVarieties', v)"
-                          (click)="setOrderOption('selectedVarieties', v)"
-                        >
-                          {{ v }}
-                        </button>
-                      }
-                    </div>
-                  </div>
-                }
-
-                @if (productItem.packagingOptions.length > 0) {
-                  <div>
-                    <label class="mb-2 block text-sm font-bold text-slate-700">
-                      {{ 'products_page.modal.packaging_label' | transloco }}
-                    </label>
-                    <div class="flex flex-wrap gap-2">
-                      @for (o of productItem.packagingOptions; track trackChip($index, o)) {
-                        <button
-                          type="button"
-                          class="rounded-full border border-solid px-3 py-1.5 text-xs font-bold transition"
-                          [class.border-primary]="isOrderOptionSelected('selectedPackagingOptions', o)"
-                          [class.bg-primary]="isOrderOptionSelected('selectedPackagingOptions', o)"
-                          [class.text-white]="isOrderOptionSelected('selectedPackagingOptions', o)"
-                          [class.border-slate-300]="!isOrderOptionSelected('selectedPackagingOptions', o)"
-                          [class.text-slate-700]="!isOrderOptionSelected('selectedPackagingOptions', o)"
-                          (click)="setOrderOption('selectedPackagingOptions', o)"
-                        >
-                          {{ o }}
-                        </button>
-                      }
-                    </div>
-                  </div>
-                }
-
-                <div class="grid gap-4 md:grid-cols-2">
-                  <div>
-                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-name">
-                      {{ 'products_page.modal.requester_name_label' | transloco }}
-                    </label>
-                    <input
-                      id="pd-name"
-                      type="text"
-                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
-                      [value]="orderRequestForm().requesterName"
-                      (input)="onOrderTextFieldInput('requesterName', $any($event.target).value)"
-                    />
-                  </div>
-                  <div>
-                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-phone">
-                      {{ 'products_page.modal.phone_label' | transloco }}
-                    </label>
-                    <input
-                      id="pd-phone"
-                      type="tel"
-                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
-                      [value]="orderRequestForm().phoneNumber"
-                      (input)="onOrderTextFieldInput('phoneNumber', $any($event.target).value)"
-                    />
-                  </div>
-                  <div>
-                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-qty">
-                      {{ 'products_page.modal.quantity_label' | transloco }}
-                    </label>
-                    <input
-                      id="pd-qty"
-                      type="number"
-                      min="0"
-                      step="0.5"
-                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
-                      [value]="orderRequestForm().quantityTons"
-                      (input)="onOrderTextFieldInput('quantityTons', $any($event.target).value)"
-                    />
-                  </div>
-                  <div>
-                    <label class="mb-2 block text-sm font-bold text-slate-700" for="pd-spec">
-                      {{ 'products_page.modal.special_spec_label' | transloco }}
-                    </label>
-                    <input
-                      id="pd-spec"
-                      type="text"
-                      class="w-full rounded-lg border border-solid border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-primary"
-                      [value]="orderRequestForm().specialSpecification"
-                      (input)="onOrderTextFieldInput('specialSpecification', $any($event.target).value)"
-                    />
-                  </div>
+            @if (product()!.weightOptions.length > 0) {
+              <div class="spec-group">
+                <p class="spec-group__label">{{ 'products_page.modal.weight_label' | transloco }}</p>
+                <div class="spec-group__chips">
+                  @for (opt of product()!.weightOptions; track opt) {
+                    <button
+                      type="button"
+                      class="spec-chip"
+                      [class.spec-chip--active]="isOptionSelected('selectedWeightOptions', opt)"
+                      (click)="setOrderOption('selectedWeightOptions', opt)"
+                    >{{ opt }}</button>
+                  }
                 </div>
+              </div>
+            }
 
-                @if (orderSubmitError()) {
-                  <p class="rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
-                    {{ orderSubmitError() }}
-                  </p>
-                }
-                @if (orderSubmitSuccess()) {
-                  <p class="rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700">
-                    {{ orderSubmitSuccess() }}
-                  </p>
-                }
-
-                <div class="flex flex-wrap gap-3">
-                  <button
-                    type="submit"
-                    class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-primary-dark disabled:opacity-60"
-                    [disabled]="isSubmittingOrderRequest()"
-                  >
-                    @if (isSubmittingOrderRequest()) {
-                      <span class="material-symbols-outlined animate-spin text-base">progress_activity</span>
-                    } @else {
-                      <span class="material-symbols-outlined text-base">send</span>
-                    }
-                    {{ 'product_detail.submit_request' | transloco }}
-                  </button>
-
-                  <a
-                    [href]="whatsAppHref(productItem)"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 rounded-full border border-solid border-green-600 px-6 py-3 text-sm font-bold text-green-700 transition hover:bg-green-600 hover:text-white"
-                  >
-                    <span class="material-symbols-outlined text-base">chat</span>
-                    {{ 'product_detail.contact_whatsapp' | transloco }}
-                  </a>
+            @if (product()!.sizeOptions.length > 0) {
+              <div class="spec-group">
+                <p class="spec-group__label">{{ 'products_page.modal.size_label' | transloco }}</p>
+                <div class="spec-group__chips">
+                  @for (opt of product()!.sizeOptions; track opt) {
+                    <button
+                      type="button"
+                      class="spec-chip"
+                      [class.spec-chip--active]="isOptionSelected('selectedSizeOptions', opt)"
+                      (click)="setOrderOption('selectedSizeOptions', opt)"
+                    >{{ opt }}</button>
+                  }
                 </div>
-              </form>
+              </div>
+            }
+
+            @if (product()!.gradeOptions.length > 0) {
+              <div class="spec-group">
+                <p class="spec-group__label">{{ 'products_page.modal.grade_label' | transloco }}</p>
+                <div class="spec-group__chips">
+                  @for (opt of product()!.gradeOptions; track opt) {
+                    <button
+                      type="button"
+                      class="spec-chip"
+                      [class.spec-chip--active]="isOptionSelected('selectedGradeOptions', opt)"
+                      (click)="setOrderOption('selectedGradeOptions', opt)"
+                    >{{ opt }}</button>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Contact fields -->
+            <div class="order-fields">
+              <div class="order-field">
+                <label class="order-field__label">
+                  {{ 'products_page.modal.requester_name_label' | transloco }}
+                </label>
+                <input
+                  type="text"
+                  class="order-field__input"
+                  [placeholder]="'products_page.modal.requester_name_placeholder' | transloco"
+                  [value]="orderForm().requesterName"
+                  (input)="onFieldInput('requesterName', $any($event.target).value)"
+                />
+              </div>
+              <div class="order-field">
+                <label class="order-field__label">
+                  {{ 'products_page.modal.phone_label' | transloco }}
+                </label>
+                <input
+                  type="tel"
+                  class="order-field__input"
+                  [placeholder]="'products_page.modal.phone_placeholder' | transloco"
+                  [value]="orderForm().phoneNumber"
+                  (input)="onFieldInput('phoneNumber', $any($event.target).value)"
+                  dir="ltr"
+                />
+              </div>
+              <div class="order-field">
+                <label class="order-field__label">
+                  {{ 'products_page.modal.quantity_label' | transloco }}
+                </label>
+                <input
+                  type="number"
+                  class="order-field__input"
+                  min="0.5"
+                  step="0.5"
+                  [placeholder]="'products_page.modal.quantity_placeholder' | transloco"
+                  [value]="orderForm().quantityTons"
+                  (input)="onFieldInput('quantityTons', $any($event.target).value)"
+                  dir="ltr"
+                />
+              </div>
+            </div>
+
+            @if (submitError()) {
+              <p class="order-error" role="alert">{{ submitError() }}</p>
+            }
+            @if (submitSuccess()) {
+              <p class="order-success" role="status">{{ submitSuccess() }}</p>
+            }
+
+            <div class="order-actions">
+              <button
+                type="button"
+                class="btn-order"
+                [disabled]="isSubmitting()"
+                (click)="submitOrder()"
+              >
+                @if (isSubmitting()) {
+                  <span class="material-symbols-outlined btn-spin">progress_activity</span>
+                }
+                {{ 'products_page.modal.submit_request' | transloco }}
+              </button>
+              <a
+                class="btn-whatsapp"
+                [href]="whatsAppHref()"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+              >
+                <svg class="btn-whatsapp__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </section>
-        </div>
+        }
 
-        @if (relatedProducts().length > 0) {
-          <section class="mt-16">
-            <h2 class="mb-6 text-2xl font-bold text-slate-900">
-              {{ 'product_detail.related_products' | transloco }}
+        <!-- STORY ──────────────────────────────────────────── -->
+        @if (story()) {
+          <section class="story" aria-labelledby="story-title">
+            <h2 id="story-title" class="section-title">
+              {{ 'products_v2.detail.story_title' | transloco }}
             </h2>
-            <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              @for (related of relatedProducts(); track related.id) {
-                <a
-                  [routerLink]="['/products', related.id]"
-                  class="group overflow-hidden rounded-2xl border border-solid border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div class="aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                    @if (hasImages(related)) {
-                      <img
-                        [src]="imageUrl(related.imageUrls![0])"
-                        [alt]="displayPrimaryName(related)"
-                        class="h-full w-full object-cover transition group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    } @else {
-                      <div class="flex h-full w-full items-center justify-center text-slate-300">
-                        <span class="material-symbols-outlined text-5xl">image</span>
-                      </div>
-                    }
-                  </div>
-                  <div class="p-4">
-                    <p class="text-sm font-bold text-slate-900">{{ displayPrimaryName(related) }}</p>
-                    <p class="mt-1 text-xs text-slate-500">
-                      {{ seasonLabelKey(related.season) | transloco }}
-                    </p>
-                  </div>
-                </a>
+            <div class="story__layout">
+              <p class="story__text">{{ story() }}</p>
+              @if (atmosphericImage()) {
+                <div class="story__image">
+                  <img
+                    [src]="atmosphericImage()"
+                    [alt]="displayName()"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
               }
             </div>
           </section>
         }
-      </article>
-    }
-  </main>
-</div>
+
+      </div>
+    </div>
+
+    <!-- RELATED PRODUCTS ─────────────────────────────────── -->
+    <app-related-products [products]="relatedProducts()"></app-related-products>
+
+  }
+</main>

@@ -15,6 +15,22 @@ export const adminRoutes: Routes = [
     data: { sectionId: 'products', titleKey: 'admin.nav.products' },
   },
   {
+    path: 'products/new',
+    loadComponent: () =>
+      import('./sections/products/product-edit.page').then(
+        (m) => m.AdminProductEditPageComponent,
+      ),
+    data: { sectionId: 'products', titleKey: 'admin.products.form.title_new' },
+  },
+  {
+    path: 'products/:id/edit',
+    loadComponent: () =>
+      import('./sections/products/product-edit.page').then(
+        (m) => m.AdminProductEditPageComponent,
+      ),
+    data: { sectionId: 'products', titleKey: 'admin.products.form.title_edit' },
+  },
+  {
     path: 'orders',
     loadComponent: () =>
       import('./sections/orders/orders.page').then((m) => m.AdminOrdersPageComponent),

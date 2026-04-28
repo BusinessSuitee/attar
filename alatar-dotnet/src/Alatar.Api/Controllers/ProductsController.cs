@@ -5,6 +5,7 @@ using Alatar.Api.Storage;
 using Alatar.Application.Abstractions.Persistence;
 using Alatar.Application.Features.Products.AddProduct;
 using Alatar.Application.Features.Products.ChangeProductStatus;
+using Alatar.Application.Features.Products.DeleteProduct;
 using Alatar.Application.Features.Products.GetProducts;
 using Alatar.Application.Features.Products.UpdateProduct;
 using Alatar.Domain.Products;
@@ -107,6 +108,33 @@ public sealed class ProductsController(
         var command = new ChangeProductStatusCommand(productId, request.Status);
         var result = await sender.Send(command, cancellationToken);
         return this.ToActionResult(result, id => Ok(new ProductIdResponse(id)));
+    }
+
+    [HttpDelete("{productId:guid}")]
+    [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
+    public async Task<IActionResult> Delete(Guid productId, CancellationToken cancellationToken)
+    {
+        var images = await productRepository.ListImagesAsync(productId, cancellationToken);
+        var result = await sender.Send(new DeleteProductCommand(productId), cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return this.ToActionResult(result);
+        }
+
+        foreach (var image in images)
+        {
+            try
+            {
+                await productImageStorage.DeleteAsync(image.RelativePath, cancellationToken);
+            }
+            catch
+            {
+                // Best-effort cleanup after a successful database delete.
+            }
+        }
+
+        return NoContent();
     }
 
     [HttpPost("{productId:guid}/images")]

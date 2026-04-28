@@ -23,6 +23,7 @@ import { finalize } from 'rxjs';
 
 type CategoryFilter = 'all' | 'Fruit' | 'Vegetable' | 'Frozen';
 type SeasonFilter = 'all' | 'Summer' | 'Winter' | 'AllYear';
+type AvailabilityFilter = 'all' | 'valid' | 'coming-soon';
 
 interface FilterOption {
   id: CategoryFilter;
@@ -32,6 +33,12 @@ interface FilterOption {
 
 interface SeasonOption {
   id: SeasonFilter;
+  labelKey: string;
+  icon: string;
+}
+
+interface AvailabilityOption {
+  id: AvailabilityFilter;
   labelKey: string;
   icon: string;
 }
@@ -92,6 +99,7 @@ export class ProductsPageComponent implements OnInit {
 
   readonly activeFilter = signal<CategoryFilter>('all');
   readonly activeSeason = signal<SeasonFilter>('all');
+  readonly activeAvailability = signal<AvailabilityFilter>('all');
   readonly selectedProduct = signal<ProductListItem | null>(null);
   readonly activeImageIndex = signal<number>(0);
   readonly products = this.productsStore.products;
@@ -147,12 +155,19 @@ export class ProductsPageComponent implements OnInit {
     { id: 'AllYear', labelKey: 'products_page.seasons.all_year', icon: 'autorenew' },
   ];
 
+  readonly availabilityOptions: AvailabilityOption[] = [
+    { id: 'all', labelKey: 'products_page.filters.all', icon: 'apps' },
+    { id: 'valid', labelKey: 'products_page.status.valid', icon: 'check_circle' },
+    { id: 'coming-soon', labelKey: 'products_page.status.coming_soon', icon: 'schedule' },
+  ];
+
   readonly showSeasonFilter = computed(() => {
     const f = this.activeFilter();
     return f === 'Fruit' || f === 'Vegetable';
   });
 
-  readonly visibleProducts = computed(() => {
+  /** Products narrowed by category + season only (status not yet applied) — used to compute live availability counts. */
+  private readonly categoryAndSeasonFiltered = computed(() => {
     const catFilter = this.activeFilter();
     const seasonFilter = this.activeSeason();
     let list = this.products().filter((p) => p.status !== 'Invalid');
@@ -167,6 +182,38 @@ export class ProductsPageComponent implements OnInit {
       list = list.filter((p) => p.season === seasonFilter);
     }
 
+    return list;
+  });
+
+  /** Live counts per availability bucket — drives whether the row is shown and whether each pill is enabled. */
+  readonly availabilityCounts = computed(() => {
+    const list = this.categoryAndSeasonFiltered();
+    let valid = 0;
+    let comingSoon = 0;
+    for (const p of list) {
+      if (p.status === 'Valid') valid++;
+      else if (p.status === 'ComingSoon') comingSoon++;
+    }
+    return { all: list.length, valid, comingSoon };
+  });
+
+  /** Hide the whole row when only one bucket has products (filtering would be a no-op). */
+  readonly showAvailabilityFilter = computed(() => {
+    const c = this.availabilityCounts();
+    return c.valid > 0 && c.comingSoon > 0;
+  });
+
+  countForAvailability(option: AvailabilityFilter): number {
+    const c = this.availabilityCounts();
+    return option === 'valid' ? c.valid : option === 'coming-soon' ? c.comingSoon : c.all;
+  }
+
+  readonly visibleProducts = computed(() => {
+    const list = this.categoryAndSeasonFiltered();
+    const availability = this.activeAvailability();
+
+    if (availability === 'valid') return list.filter((p) => p.status === 'Valid');
+    if (availability === 'coming-soon') return list.filter((p) => p.status === 'ComingSoon');
     return list;
   });
 
@@ -186,22 +233,41 @@ export class ProductsPageComponent implements OnInit {
     effect(() => {
       const cat = this.activeFilter();
       const season = this.activeSeason();
+      const availability = this.activeAvailability();
       if (!this.isBrowser) return;
 
       const params = this.route.snapshot.queryParamMap;
       const targetCat = cat === 'all' ? null : cat;
       const targetSeason = this.showSeasonFilter() && season !== 'all' ? season : null;
+      const targetAvailability =
+        this.showAvailabilityFilter() && availability !== 'all' ? availability : null;
 
-      if (params.get('category') === targetCat && params.get('season') === targetSeason) {
+      if (
+        params.get('category') === targetCat &&
+        params.get('season') === targetSeason &&
+        params.get('availability') === targetAvailability
+      ) {
         return;
       }
 
       this.router.navigate([], {
         relativeTo: this.route,
-        queryParams: { category: targetCat, season: targetSeason },
+        queryParams: {
+          category: targetCat,
+          season: targetSeason,
+          availability: targetAvailability,
+        },
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
+    });
+
+    // Auto-reset availability when the current pick has zero matches after a category/season change.
+    effect(() => {
+      const counts = this.availabilityCounts();
+      const a = this.activeAvailability();
+      if (a === 'valid' && counts.valid === 0) this.activeAvailability.set('all');
+      else if (a === 'coming-soon' && counts.comingSoon === 0) this.activeAvailability.set('all');
     });
   }
 
@@ -224,16 +290,41 @@ export class ProductsPageComponent implements OnInit {
       this.activeSeason.set(initialSeason);
     }
 
+    const initialAvailability = this.route.snapshot.queryParamMap.get('availability');
+    if (initialAvailability === 'valid' || initialAvailability === 'coming-soon') {
+      this.activeAvailability.set(initialAvailability);
+    }
+
     this.productsStore.ensureLoaded();
   }
 
   setFilter(filter: CategoryFilter): void {
     this.activeFilter.set(filter);
     this.activeSeason.set('all');
+    this.activeAvailability.set('all');
   }
 
   setSeason(season: SeasonFilter): void {
     this.activeSeason.set(season);
+    this.activeAvailability.set('all');
+  }
+
+  setAvailability(availability: AvailabilityFilter): void {
+    this.activeAvailability.set(availability);
+  }
+
+  hasActiveFilters(): boolean {
+    return (
+      this.activeFilter() !== 'all' ||
+      this.activeSeason() !== 'all' ||
+      this.activeAvailability() !== 'all'
+    );
+  }
+
+  clearAllFilters(): void {
+    this.activeFilter.set('all');
+    this.activeSeason.set('all');
+    this.activeAvailability.set('all');
   }
 
   openProduct(product: ProductListItem): void {

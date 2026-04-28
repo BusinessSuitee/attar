@@ -9,7 +9,7 @@
     }
   </div>
 
-  <nav class="admin-sidebar__nav" aria-label="Admin navigation">
+  <nav class="admin-sidebar__nav" [attr.aria-label]="'common.aria.admin_navigation' | transloco">
     @for (group of groups(); track trackGroup($index, group)) {
       <div class="admin-sidebar__group">
         @if (!isCollapsed) {

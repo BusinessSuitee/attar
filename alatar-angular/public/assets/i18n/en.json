@@ -4,6 +4,7 @@
     "about": "About Us",
     "partners": "Partners",
     "products": "Products",
+    "seasons": "Season Calendar",
     "stations": "Stations & Lands",
     "certificates": "Certificates",
     "gallery": "Gallery",
@@ -361,7 +362,10 @@
       "all": "All",
       "fruits": "Fruits",
       "vegetables": "Vegetables",
-      "frozen": "Frozen"
+      "frozen": "Frozen",
+      "category_label": "Category",
+      "season_label": "Season",
+      "availability_label": "Availability"
     },
     "seasons": {
       "all": "All",
@@ -836,19 +840,318 @@
     },
     "products": {
       "title": "Products",
-      "subtitle": "Manage the crop catalog and statuses"
+      "subtitle": "Manage the crop catalog and statuses",
+      "filters": {
+        "all": "All"
+      },
+      "statuses": {
+        "valid": "Valid",
+        "coming_soon": "Coming Soon",
+        "invalid": "Invalid"
+      },
+      "types": {
+        "fruit": "Fruit",
+        "vegetable": "Vegetable",
+        "frozen": "Frozen"
+      },
+      "states": {
+        "fresh": "Fresh",
+        "frozen": "Frozen"
+      },
+      "seasons": {
+        "summer": "Summer",
+        "winter": "Winter",
+        "all_year": "All year"
+      },
+      "list": {
+        "add": "New product",
+        "search_placeholder": "Search by name or SKU…",
+        "toast_status_updated": "Product status updated",
+        "toast_status_failed": "Could not change product status",
+        "filter_status": "Status",
+        "filter_type": "Type",
+        "filter_state": "State",
+        "filter_season": "Season",
+        "col_name": "Product",
+        "col_status": "Status",
+        "col_type": "Type",
+        "col_state": "State",
+        "col_season": "Season",
+        "col_stock": "Stock",
+        "col_price": "Price",
+        "filter_button": "Filters",
+        "filters_title": "Filter products",
+        "empty": "No products yet. Click \"New product\" to add one.",
+        "empty_filtered": "No products match the active filters.",
+        "col_actions": "Actions",
+        "status_change_label": "Change status",
+        "delete_label": "Delete",
+        "toast_deleted": "Product deleted successfully",
+        "toast_delete_failed": "Could not delete the product. Please try again.",
+        "delete_title": "Delete product?",
+        "delete_confirm": "This action is permanent and cannot be undone. All product images and data will be removed.",
+        "delete_confirm_action": "Delete",
+        "deleting": "Deleting…"
+      },
+      "form": {
+        "title_new": "New Product",
+        "title_edit": "Edit Product",
+        "save": "Save",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete Product",
+        "delete_title": "Delete this product?",
+        "delete_confirm": "This action is permanent. All images and data will be removed.",
+        "section_basic": "Basic Information",
+        "section_classification": "Classification",
+        "section_specs": "Specifications & Options",
+        "section_images": "Product Images",
+        "field_name_en": "Name (English)",
+        "field_name_ar": "Name (Arabic)",
+        "field_sku": "SKU",
+        "field_price": "Price",
+        "field_stock": "Stock Quantity",
+        "field_opening_stock": "Opening Stock",
+        "field_desc_en": "Description (English)",
+        "field_desc_ar": "Description (Arabic)",
+        "field_type": "Product Type",
+        "field_state": "Product State",
+        "field_season": "Season",
+        "field_status": "Status",
+        "field_varieties": "Varieties",
+        "field_packaging": "Packaging Options",
+        "field_weight": "Weight Options",
+        "field_size": "Size Options",
+        "field_grade": "Grade Options",
+        "add_option": "Add",
+        "option_placeholder": "Type and press Enter or click Add",
+        "image_upload": "Upload Images",
+        "image_upload_hint": "JPG, PNG, WEBP — max 5 MB each",
+        "image_delete": "Delete image",
+        "image_uploading": "Uploading…",
+        "image_primary": "Primary",
+        "image_save_first": "Save the product first to upload images.",
+        "no_images": "No images yet — drop or upload to add some.",
+        "toast_created": "Product created",
+        "toast_updated": "Product updated",
+        "toast_create_failed": "Could not create the product",
+        "toast_update_failed": "Could not save changes",
+        "toast_image_uploaded": "Images uploaded",
+        "toast_image_upload_failed": "Could not upload the images",
+        "toast_image_deleted": "Image deleted",
+        "toast_image_delete_failed": "Could not delete the image",
+        "err_name_required": "English name is required",
+        "err_sku_required": "SKU is required",
+        "err_price_invalid": "Price must be a positive number",
+        "err_stock_invalid": "Stock must be a non-negative number"
+      },
+      "categories": {
+        "section_title": "Categories",
+        "section_description": "Group produce so the public catalog and homepage can surface them clearly.",
+        "add": "Add category",
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "cancel": "Cancel",
+        "filter_type": "Type",
+        "filter_season": "Season",
+        "create_title": "New category",
+        "edit_title": "Edit category",
+        "delete_title": "Delete category",
+        "delete_confirm": "Are you sure you want to delete this category?",
+        "delete_failed": "Could not delete the category. It may still have products attached.",
+        "field_name_en": "Name (English)",
+        "field_name_ar": "Name (Arabic)",
+        "field_type": "Type",
+        "field_season": "Season",
+        "col_name": "Category",
+        "col_type": "Type",
+        "col_season": "Season",
+        "empty": "No categories defined yet.",
+        "toast_created": "Category created",
+        "toast_updated": "Category updated",
+        "toast_deleted": "Category deleted"
+      }
     },
     "orders": {
       "title": "Orders",
-      "subtitle": "Track quote requests from customers"
+      "subtitle": "Track and manage quote requests from customers",
+      "refresh": "Refresh",
+      "kpi": {
+        "total": "Total Requests",
+        "new": "New",
+        "new_hint": "Needs attention",
+        "in_progress": "In Progress",
+        "confirmed_7d": "Confirmed (7d)"
+      },
+      "status": {
+        "new": "New",
+        "in_review": "In Review",
+        "contacted": "Contacted",
+        "confirmed": "Confirmed",
+        "closed": "Closed"
+      },
+      "filters": {
+        "search_placeholder": "Search by name, phone, or product…",
+        "all": "All",
+        "status_label": "Status",
+        "range_label": "Date",
+        "range_today": "Today",
+        "range_7d": "Last 7 days",
+        "range_30d": "Last 30 days",
+        "filter_button": "Filters",
+        "sheet_title": "Filter requests"
+      },
+      "list": {
+        "col_status": "Status",
+        "col_requester": "Requester",
+        "col_product": "Product",
+        "col_quantity": "Qty",
+        "col_date": "Submitted",
+        "unit_tons": "t",
+        "view_detail": "View detail",
+        "returning": "Returning",
+        "empty": "No quote requests yet.",
+        "empty_filtered": "No requests match the active filters."
+      },
+      "pagination": {
+        "of": "of",
+        "prev": "Previous page",
+        "next": "Next page",
+        "per_page": "Per page"
+      },
+      "detail": {
+        "workflow_title": "Update Status",
+        "customer_title": "Customer",
+        "call_phone": "Call",
+        "copy_phone": "Copy phone",
+        "returning_customer": "Returning customer · {{ count }} total requests",
+        "product_title": "Product",
+        "specs_title": "Specifications",
+        "spec_varieties": "Varieties",
+        "spec_packaging": "Packaging",
+        "spec_weight": "Weight",
+        "spec_size": "Size",
+        "spec_grade": "Grade",
+        "spec_special": "Special requirements",
+        "delete": "Delete",
+        "delete_title": "Delete this request?",
+        "delete_body": "This action cannot be undone. The request and all its details will be permanently removed.",
+        "delete_confirm_action": "Delete"
+      },
+      "toast": {
+        "status_updated": "Status updated",
+        "status_failed": "Could not update status",
+        "deleted": "Request deleted",
+        "delete_failed": "Could not delete the request"
+      }
     },
     "contacts": {
       "title": "Contacts",
-      "subtitle": "Inbound contact and inquiry messages"
+      "subtitle": "Inbound contact and inquiry messages",
+      "refresh": "Refresh",
+      "kpi": {
+        "total": "Total Contacts",
+        "in_progress": "In Progress",
+        "in_progress_hint": "Awaiting outreach",
+        "contacted": "Contacted",
+        "sale_confirmed_7d": "Sales Confirmed (7d)"
+      },
+      "status": {
+        "in_progress": "In Progress",
+        "contacted": "Contacted",
+        "sale_confirmed": "Sale Confirmed"
+      },
+      "service_type": {
+        "export": "Export",
+        "local": "Local supply"
+      },
+      "filters": {
+        "search_placeholder": "Search by name, phone, company, country, or crop…",
+        "all": "All",
+        "status_label": "Status",
+        "service_label": "Service",
+        "range_label": "Date",
+        "range_today": "Today",
+        "range_7d": "Last 7 days",
+        "range_30d": "Last 30 days",
+        "filter_button": "Filters",
+        "sheet_title": "Filter contacts"
+      },
+      "list": {
+        "col_status": "Status",
+        "col_requester": "Contact",
+        "col_company": "Company",
+        "col_crop": "Crop",
+        "col_quantity": "Qty",
+        "col_service": "Service",
+        "col_date": "Submitted",
+        "unit_tons": "t",
+        "view_detail": "View detail",
+        "returning": "Returning",
+        "empty": "No contact requests yet.",
+        "empty_filtered": "No contacts match the active filters."
+      },
+      "pagination": {
+        "of": "of",
+        "prev": "Previous page",
+        "next": "Next page",
+        "per_page": "Per page"
+      },
+      "detail": {
+        "workflow_title": "Update Status",
+        "customer_title": "Contact",
+        "request_title": "Request",
+        "call_phone": "Call",
+        "copy_phone": "Copy phone",
+        "whatsapp": "Open WhatsApp",
+        "returning_customer": "Returning contact · {{ count }} total requests",
+        "field_company": "Company",
+        "field_country": "Country",
+        "field_crop": "Crop",
+        "field_delivery": "Delivery window",
+        "field_notes": "Notes",
+        "delete": "Delete",
+        "delete_title": "Delete this contact?",
+        "delete_body": "This action cannot be undone. The contact and all its details will be permanently removed.",
+        "delete_confirm_action": "Delete"
+      },
+      "toast": {
+        "status_updated": "Status updated",
+        "status_failed": "Could not update status",
+        "deleted": "Contact deleted",
+        "delete_failed": "Could not delete the contact"
+      }
     },
     "social_links": {
       "title": "Social Links",
-      "subtitle": "Manage the social links shown across the site"
+      "subtitle": "Manage the social links shown across the site",
+      "add": "Add link",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "create": "Create",
+      "enabled": "Enabled",
+      "empty": "No social links yet. Add the first one to make it visible across the site.",
+      "create_title": "Add social link",
+      "edit_title": "Edit social link",
+      "delete_title": "Delete this social link?",
+      "delete_body": "This action cannot be undone. Visitors will no longer see this link.",
+      "field_platform": "Platform",
+      "field_label": "Label",
+      "field_label_placeholder": "Display name (optional)",
+      "field_url": "URL",
+      "field_color": "Brand color",
+      "field_new_tab": "Open in a new tab",
+      "toast": {
+        "created": "Link created",
+        "updated": "Link updated",
+        "deleted": "Link deleted",
+        "create_failed": "Could not create the link",
+        "update_failed": "Could not save changes",
+        "delete_failed": "Could not delete the link",
+        "toggle_failed": "Could not update the toggle"
+      }
     },
     "settings": {
       "title": "Settings",
@@ -867,6 +1170,90 @@
     "loadMore": "Load more",
     "language": {
       "toggle": "Change language"
+    },
+    "errors": {
+      "unexpected": "An unexpected error occurred.",
+      "network": "We couldn't reach the server. Please try again.",
+      "request_failed": "The request could not be completed.",
+      "http": {
+        "bad_request": "The submitted data is invalid.",
+        "unauthorized": "Your session has expired. Please sign in again.",
+        "forbidden": "You don't have permission to perform this action.",
+        "not_found": "The requested item was not found.",
+        "conflict": "This conflicts with existing data.",
+        "server_error": "A server error occurred. Please try again."
+      },
+      "codes": {
+        "products_not_found": "This product no longer exists.",
+        "products_sku_already_exists": "A product with this SKU already exists.",
+        "categories_not_found": "This category no longer exists.",
+        "categories_invalid_type": "The selected category type is not valid.",
+        "categories_invalid_season": "The selected season is not valid.",
+        "categories_name_already_exists": "A category with this name already exists.",
+        "image_required": "At least one image is required.",
+        "no_valid_images": "No valid images were uploaded.",
+        "image_not_found": "Image not found.",
+        "auth_credentials_required": "Email and password are required.",
+        "auth_invalid_credentials": "Invalid email or password."
+      }
+    },
+    "aria": {
+      "notifications": "Notifications",
+      "dismiss": "Dismiss",
+      "close_menu": "Close menu",
+      "breadcrumbs": "Breadcrumbs",
+      "admin_navigation": "Admin navigation"
+    },
+    "done": "Done",
+    "actions": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+  "products_v2": {
+    "catalog": {
+      "category_all": "All Products",
+      "in_season_badge": "In Season",
+      "coming_soon_badge": "Coming Soon",
+      "filter_availability_all": "All",
+      "filter_availability_in_season": "In Season Now",
+      "filter_availability_coming_soon": "Coming Soon",
+      "filter_season_all": "All Seasons",
+      "filter_season_summer": "Summer",
+      "filter_season_winter": "Winter",
+      "load_more": "Load more products",
+      "empty": "No products match your selection.",
+      "empty_action": "Clear filters",
+      "no_image": "No image available"
+    },
+    "detail": {
+      "contact_cta": "Contact to Order",
+      "specs_title": "Packaging & Specs",
+      "story_title": "How we grow it",
+      "related_title": "You might also like",
+      "availability_title": "Seasonal availability",
+      "not_found": "Product not found.",
+      "not_found_cta": "Browse all products",
+      "gallery_prev": "Previous image",
+      "gallery_next": "Next image",
+      "image_counter": "{{current}} / {{total}}"
+    },
+    "seasons": {
+      "page_title": "Season Calendar",
+      "page_subtitle": "Plan your procurement — see which crops are available each month.",
+      "view_product": "View product →",
+      "month_1": "Jan",
+      "month_2": "Feb",
+      "month_3": "Mar",
+      "month_4": "Apr",
+      "month_5": "May",
+      "month_6": "Jun",
+      "month_7": "Jul",
+      "month_8": "Aug",
+      "month_9": "Sep",
+      "month_10": "Oct",
+      "month_11": "Nov",
+      "month_12": "Dec"
     }
   }
 }

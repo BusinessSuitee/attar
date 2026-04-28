@@ -59,8 +59,9 @@
   .admin-topbar {
     height: 3.5rem;
     padding: 0 0.75rem;
+    padding-top: env(safe-area-inset-top);
   }
   .admin-topbar__breadcrumbs {
-    font-size: 0.8125rem;
+    display: none;
   }
 }

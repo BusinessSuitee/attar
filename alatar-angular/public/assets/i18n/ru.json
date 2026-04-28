@@ -4,6 +4,7 @@
     "about": "О нас",
     "partners": "Партнеры",
     "products": "Продукты",
+    "seasons": "Календарь сезонов",
     "stations": "Станции и земли",
     "certificates": "Сертификаты",
     "gallery": "Галерея",
@@ -361,7 +362,10 @@
       "winter": "Зимний Сезон",
       "summer": "Летний Сезон",
       "vegetables": "Овощи",
-      "frozen": "Замороженные"
+      "frozen": "Замороженные",
+      "category_label": "Категория",
+      "season_label": "Сезон",
+      "availability_label": "Доступность"
     },
     "seasons": {
       "all": "Все",
@@ -748,19 +752,318 @@
     },
     "products": {
       "title": "Товары",
-      "subtitle": "Управление каталогом и статусами"
+      "subtitle": "Управление каталогом и статусами",
+      "filters": {
+        "all": "Все"
+      },
+      "statuses": {
+        "valid": "Активен",
+        "coming_soon": "Скоро",
+        "invalid": "Недоступен"
+      },
+      "types": {
+        "fruit": "Фрукт",
+        "vegetable": "Овощ",
+        "frozen": "Заморозка"
+      },
+      "states": {
+        "fresh": "Свежий",
+        "frozen": "Замороженный"
+      },
+      "seasons": {
+        "summer": "Лето",
+        "winter": "Зима",
+        "all_year": "Круглый год"
+      },
+      "list": {
+        "add": "Новый товар",
+        "search_placeholder": "Поиск по названию или артикулу…",
+        "toast_status_updated": "Статус товара обновлён",
+        "toast_status_failed": "Не удалось изменить статус товара",
+        "filter_status": "Статус",
+        "filter_type": "Тип",
+        "filter_state": "Форма",
+        "filter_season": "Сезон",
+        "col_name": "Товар",
+        "col_status": "Статус",
+        "col_type": "Тип",
+        "col_state": "Форма",
+        "col_season": "Сезон",
+        "col_stock": "Остаток",
+        "col_price": "Цена",
+        "filter_button": "Фильтры",
+        "filters_title": "Фильтр товаров",
+        "empty": "Товары пока не добавлены. Нажмите «Новый товар», чтобы создать.",
+        "empty_filtered": "Нет товаров, соответствующих фильтрам.",
+        "col_actions": "Действия",
+        "status_change_label": "Изменить статус",
+        "delete_label": "Удалить",
+        "toast_deleted": "Товар успешно удалён",
+        "toast_delete_failed": "Не удалось удалить товар. Попробуйте снова.",
+        "delete_title": "Удалить товар?",
+        "delete_confirm": "Это действие необратимо. Все изображения и данные товара будут удалены.",
+        "delete_confirm_action": "Удалить",
+        "deleting": "Удаление…"
+      },
+      "form": {
+        "title_new": "Новый товар",
+        "title_edit": "Редактировать товар",
+        "save": "Сохранить",
+        "saving": "Сохранение…",
+        "cancel": "Отмена",
+        "delete": "Удалить товар",
+        "delete_title": "Удалить этот товар?",
+        "delete_confirm": "Действие необратимо. Все изображения и данные будут удалены.",
+        "section_basic": "Основная информация",
+        "section_classification": "Классификация",
+        "section_specs": "Характеристики и опции",
+        "section_images": "Изображения товара",
+        "field_name_en": "Название (английский)",
+        "field_name_ar": "Название (арабский)",
+        "field_sku": "Артикул (SKU)",
+        "field_price": "Цена",
+        "field_stock": "Остаток на складе",
+        "field_opening_stock": "Начальный остаток",
+        "field_desc_en": "Описание (английский)",
+        "field_desc_ar": "Описание (арабский)",
+        "field_type": "Тип продукта",
+        "field_state": "Состояние продукта",
+        "field_season": "Сезон",
+        "field_status": "Статус",
+        "field_varieties": "Сорта",
+        "field_packaging": "Варианты упаковки",
+        "field_weight": "Варианты веса",
+        "field_size": "Варианты размера",
+        "field_grade": "Варианты сорта",
+        "add_option": "Добавить",
+        "option_placeholder": "Введите и нажмите Enter или Добавить",
+        "image_upload": "Загрузить изображения",
+        "image_upload_hint": "JPG, PNG, WEBP — макс. 5 МБ",
+        "image_delete": "Удалить изображение",
+        "image_uploading": "Загрузка…",
+        "image_primary": "Основное",
+        "image_save_first": "Сначала сохраните товар, чтобы загрузить изображения.",
+        "no_images": "Изображений пока нет — перетащите или загрузите.",
+        "toast_created": "Товар создан",
+        "toast_updated": "Товар обновлён",
+        "toast_create_failed": "Не удалось создать товар",
+        "toast_update_failed": "Не удалось сохранить изменения",
+        "toast_image_uploaded": "Изображения загружены",
+        "toast_image_upload_failed": "Не удалось загрузить изображения",
+        "toast_image_deleted": "Изображение удалено",
+        "toast_image_delete_failed": "Не удалось удалить изображение",
+        "err_name_required": "Требуется название на английском",
+        "err_sku_required": "Требуется артикул",
+        "err_price_invalid": "Цена должна быть положительным числом",
+        "err_stock_invalid": "Количество должно быть неотрицательным числом"
+      },
+      "categories": {
+        "section_title": "Категории",
+        "section_description": "Группируйте продукцию для каталога и главной страницы.",
+        "add": "Добавить категорию",
+        "edit": "Изменить",
+        "delete": "Удалить",
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "filter_type": "Тип",
+        "filter_season": "Сезон",
+        "create_title": "Новая категория",
+        "edit_title": "Изменить категорию",
+        "delete_title": "Удалить категорию",
+        "delete_confirm": "Удалить эту категорию?",
+        "delete_failed": "Не удалось удалить категорию. Возможно, к ней привязаны товары.",
+        "field_name_en": "Название (английский)",
+        "field_name_ar": "Название (арабский)",
+        "field_type": "Тип",
+        "field_season": "Сезон",
+        "col_name": "Категория",
+        "col_type": "Тип",
+        "col_season": "Сезон",
+        "empty": "Категорий пока нет.",
+        "toast_created": "Категория создана",
+        "toast_updated": "Категория обновлена",
+        "toast_deleted": "Категория удалена"
+      }
     },
     "orders": {
       "title": "Заказы",
-      "subtitle": "Запросы предложений от клиентов"
+      "subtitle": "Отслеживание и управление запросами от клиентов",
+      "refresh": "Обновить",
+      "kpi": {
+        "total": "Всего запросов",
+        "new": "Новые",
+        "new_hint": "Требует внимания",
+        "in_progress": "В работе",
+        "confirmed_7d": "Подтверждено (7д)"
+      },
+      "status": {
+        "new": "Новый",
+        "in_review": "На рассмотрении",
+        "contacted": "Связались",
+        "confirmed": "Подтверждён",
+        "closed": "Закрыт"
+      },
+      "filters": {
+        "search_placeholder": "Поиск по имени, телефону или продукту…",
+        "all": "Все",
+        "status_label": "Статус",
+        "range_label": "Дата",
+        "range_today": "Сегодня",
+        "range_7d": "Последние 7 дней",
+        "range_30d": "Последние 30 дней",
+        "filter_button": "Фильтры",
+        "sheet_title": "Фильтр запросов"
+      },
+      "list": {
+        "col_status": "Статус",
+        "col_requester": "Заявитель",
+        "col_product": "Продукт",
+        "col_quantity": "Кол-во",
+        "col_date": "Дата",
+        "unit_tons": "т",
+        "view_detail": "Подробнее",
+        "returning": "Повторный",
+        "empty": "Запросов пока нет.",
+        "empty_filtered": "Нет запросов, соответствующих фильтрам."
+      },
+      "pagination": {
+        "of": "из",
+        "prev": "Предыдущая",
+        "next": "Следующая",
+        "per_page": "На странице"
+      },
+      "detail": {
+        "workflow_title": "Изменить статус",
+        "customer_title": "Клиент",
+        "call_phone": "Позвонить",
+        "copy_phone": "Копировать телефон",
+        "returning_customer": "Постоянный клиент · {{ count }} запросов",
+        "product_title": "Продукт",
+        "specs_title": "Характеристики",
+        "spec_varieties": "Сорта",
+        "spec_packaging": "Упаковка",
+        "spec_weight": "Вес",
+        "spec_size": "Размер",
+        "spec_grade": "Сорт/класс",
+        "spec_special": "Особые требования",
+        "delete": "Удалить",
+        "delete_title": "Удалить этот запрос?",
+        "delete_body": "Это действие нельзя отменить. Запрос и все его данные будут удалены навсегда.",
+        "delete_confirm_action": "Удалить"
+      },
+      "toast": {
+        "status_updated": "Статус обновлён",
+        "status_failed": "Не удалось обновить статус",
+        "deleted": "Запрос удалён",
+        "delete_failed": "Не удалось удалить запрос"
+      }
     },
     "contacts": {
       "title": "Контакты",
-      "subtitle": "Входящие сообщения и обращения"
+      "subtitle": "Входящие сообщения и обращения",
+      "refresh": "Обновить",
+      "kpi": {
+        "total": "Всего контактов",
+        "in_progress": "В работе",
+        "in_progress_hint": "Ожидает связи",
+        "contacted": "Связались",
+        "sale_confirmed_7d": "Сделки (7 дн)"
+      },
+      "status": {
+        "in_progress": "В работе",
+        "contacted": "Связались",
+        "sale_confirmed": "Сделка подтверждена"
+      },
+      "service_type": {
+        "export": "Экспорт",
+        "local": "Местные поставки"
+      },
+      "filters": {
+        "search_placeholder": "Поиск по имени, телефону, компании, стране или культуре…",
+        "all": "Все",
+        "status_label": "Статус",
+        "service_label": "Услуга",
+        "range_label": "Дата",
+        "range_today": "Сегодня",
+        "range_7d": "Последние 7 дней",
+        "range_30d": "Последние 30 дней",
+        "filter_button": "Фильтры",
+        "sheet_title": "Фильтр контактов"
+      },
+      "list": {
+        "col_status": "Статус",
+        "col_requester": "Контакт",
+        "col_company": "Компания",
+        "col_crop": "Культура",
+        "col_quantity": "Кол-во",
+        "col_service": "Услуга",
+        "col_date": "Отправлено",
+        "unit_tons": "т",
+        "view_detail": "Подробнее",
+        "returning": "Повторный",
+        "empty": "Пока нет обращений.",
+        "empty_filtered": "Нет контактов по выбранным фильтрам."
+      },
+      "pagination": {
+        "of": "из",
+        "prev": "Предыдущая",
+        "next": "Следующая",
+        "per_page": "На странице"
+      },
+      "detail": {
+        "workflow_title": "Обновить статус",
+        "customer_title": "Контакт",
+        "request_title": "Запрос",
+        "call_phone": "Позвонить",
+        "copy_phone": "Скопировать номер",
+        "whatsapp": "Открыть WhatsApp",
+        "returning_customer": "Повторный контакт · {{ count }} запросов всего",
+        "field_company": "Компания",
+        "field_country": "Страна",
+        "field_crop": "Культура",
+        "field_delivery": "Срок поставки",
+        "field_notes": "Примечания",
+        "delete": "Удалить",
+        "delete_title": "Удалить контакт?",
+        "delete_body": "Это действие нельзя отменить. Контакт и все его данные будут удалены безвозвратно.",
+        "delete_confirm_action": "Удалить"
+      },
+      "toast": {
+        "status_updated": "Статус обновлён",
+        "status_failed": "Не удалось обновить статус",
+        "deleted": "Контакт удалён",
+        "delete_failed": "Не удалось удалить контакт"
+      }
     },
     "social_links": {
       "title": "Социальные ссылки",
-      "subtitle": "Управление ссылками социальных сетей на сайте"
+      "subtitle": "Управление ссылками социальных сетей на сайте",
+      "add": "Добавить",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "save": "Сохранить",
+      "create": "Создать",
+      "enabled": "Включено",
+      "empty": "Ссылок пока нет. Добавьте первую, чтобы она появилась на сайте.",
+      "create_title": "Новая ссылка",
+      "edit_title": "Редактировать ссылку",
+      "delete_title": "Удалить эту ссылку?",
+      "delete_body": "Это действие нельзя отменить. Посетители больше не увидят ссылку.",
+      "field_platform": "Платформа",
+      "field_label": "Подпись",
+      "field_label_placeholder": "Отображаемое название (необязательно)",
+      "field_url": "URL",
+      "field_color": "Цвет бренда",
+      "field_new_tab": "Открывать в новой вкладке",
+      "toast": {
+        "created": "Ссылка создана",
+        "updated": "Ссылка обновлена",
+        "deleted": "Ссылка удалена",
+        "create_failed": "Не удалось создать ссылку",
+        "update_failed": "Не удалось сохранить изменения",
+        "delete_failed": "Не удалось удалить ссылку",
+        "toggle_failed": "Не удалось обновить переключатель"
+      }
     },
     "settings": {
       "title": "Настройки",
@@ -779,6 +1082,90 @@
     "loadMore": "Показать ещё",
     "language": {
       "toggle": "Сменить язык"
+    },
+    "errors": {
+      "unexpected": "Произошла непредвиденная ошибка.",
+      "network": "Не удалось связаться с сервером. Попробуйте ещё раз.",
+      "request_failed": "Не удалось выполнить запрос.",
+      "http": {
+        "bad_request": "Отправленные данные некорректны.",
+        "unauthorized": "Сеанс истёк. Войдите снова.",
+        "forbidden": "У вас нет прав на это действие.",
+        "not_found": "Запрошенный элемент не найден.",
+        "conflict": "Это конфликтует с существующими данными.",
+        "server_error": "Ошибка сервера. Попробуйте ещё раз."
+      },
+      "codes": {
+        "products_not_found": "Этот товар больше не существует.",
+        "products_sku_already_exists": "Товар с таким SKU уже существует.",
+        "categories_not_found": "Эта категория больше не существует.",
+        "categories_invalid_type": "Выбранный тип категории недопустим.",
+        "categories_invalid_season": "Выбранный сезон недопустим.",
+        "categories_name_already_exists": "Категория с таким именем уже существует.",
+        "image_required": "Требуется хотя бы одно изображение.",
+        "no_valid_images": "Нет допустимых изображений для загрузки.",
+        "image_not_found": "Изображение не найдено.",
+        "auth_credentials_required": "Требуются email и пароль.",
+        "auth_invalid_credentials": "Неверный email или пароль."
+      }
+    },
+    "aria": {
+      "notifications": "Уведомления",
+      "dismiss": "Закрыть",
+      "close_menu": "Закрыть меню",
+      "breadcrumbs": "Хлебные крошки",
+      "admin_navigation": "Навигация админ-панели"
+    },
+    "done": "Готово",
+    "actions": {
+      "confirm": "Подтвердить",
+      "cancel": "Отмена"
+    }
+  },
+  "products_v2": {
+    "catalog": {
+      "category_all": "Все продукты",
+      "in_season_badge": "В сезоне",
+      "coming_soon_badge": "Скоро",
+      "filter_availability_all": "Все",
+      "filter_availability_in_season": "Сейчас в сезоне",
+      "filter_availability_coming_soon": "Скоро",
+      "filter_season_all": "Все сезоны",
+      "filter_season_summer": "Лето",
+      "filter_season_winter": "Зима",
+      "load_more": "Показать ещё",
+      "empty": "Нет продуктов, соответствующих выбору.",
+      "empty_action": "Сбросить фильтры",
+      "no_image": "Изображение отсутствует"
+    },
+    "detail": {
+      "contact_cta": "Связаться для заказа",
+      "specs_title": "Упаковка и спецификации",
+      "story_title": "Как мы выращиваем",
+      "related_title": "Вам также может понравиться",
+      "availability_title": "Сезонная доступность",
+      "not_found": "Продукт не найден.",
+      "not_found_cta": "Посмотреть все продукты",
+      "gallery_prev": "Предыдущее изображение",
+      "gallery_next": "Следующее изображение",
+      "image_counter": "{{current}} / {{total}}"
+    },
+    "seasons": {
+      "page_title": "Календарь сезонов",
+      "page_subtitle": "Планируйте закупки — узнайте, какие культуры доступны в каждом месяце.",
+      "view_product": "Открыть продукт →",
+      "month_1": "Янв",
+      "month_2": "Фев",
+      "month_3": "Мар",
+      "month_4": "Апр",
+      "month_5": "Май",
+      "month_6": "Июн",
+      "month_7": "Июл",
+      "month_8": "Авг",
+      "month_9": "Сен",
+      "month_10": "Окт",
+      "month_11": "Ноя",
+      "month_12": "Дек"
     }
   }
 }

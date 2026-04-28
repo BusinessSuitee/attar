@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, Validators, NonNullableFormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ContactService, ContactUiServiceType } from '../../core/contacts/contact.service';
@@ -14,11 +15,12 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.css'
 })
-export class ContactPageComponent {
+export class ContactPageComponent implements OnInit {
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly contactService = inject(ContactService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly translocoService = inject(TranslocoService);
+  private readonly route = inject(ActivatedRoute);
 
   readonly countries = [
     'egypt',
@@ -59,6 +61,13 @@ export class ContactPageComponent {
     this.form.controls.serviceType.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((serviceType) => this.applyCountryValidation(serviceType));
+  }
+
+  ngOnInit(): void {
+    const cropFromQuery = this.route.snapshot.queryParamMap.get('crop');
+    if (cropFromQuery && cropFromQuery.trim().length > 0) {
+      this.form.patchValue({ crop: cropFromQuery.trim() });
+    }
   }
 
   get isExportSelected(): boolean {

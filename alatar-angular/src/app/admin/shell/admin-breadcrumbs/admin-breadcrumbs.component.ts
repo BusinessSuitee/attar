@@ -29,7 +29,7 @@ interface Crumb {
   imports: [CommonModule, RouterLink, TranslocoPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <nav class="admin-breadcrumbs" aria-label="Breadcrumbs">
+    <nav class="admin-breadcrumbs" [attr.aria-label]="'common.aria.breadcrumbs' | transloco">
       <ol class="admin-breadcrumbs__list">
         @for (crumb of crumbs(); track $index; let last = $last) {
           <li class="admin-breadcrumbs__item">

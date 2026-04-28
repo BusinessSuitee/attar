@@ -11,9 +11,11 @@ import {
   signal,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { AdminTopbarComponent } from './admin-topbar/admin-topbar.component';
+import { AdminToastHostComponent } from '../shared/toasts/toast-host.component';
 
 export type AdminBreakpoint = 'mobile' | 'tablet' | 'desktop';
 export type AdminSidebarState = 'expanded' | 'collapsed' | 'drawer-open' | 'hidden';
@@ -23,7 +25,14 @@ const SIDEBAR_PREF_KEY = 'alatar.admin.sidebar.collapsed';
 @Component({
   selector: 'app-admin-shell',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, AdminSidebarComponent, AdminTopbarComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    TranslocoPipe,
+    AdminSidebarComponent,
+    AdminTopbarComponent,
+    AdminToastHostComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './admin-shell.component.html',
   styleUrl: './admin-shell.component.css',

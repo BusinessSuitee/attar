@@ -26,7 +26,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       @media (max-width: 767px) {
         .admin-page {
           padding: 1rem;
-          gap: 1rem;
+          gap: 1.25rem;
         }
       }
     `,

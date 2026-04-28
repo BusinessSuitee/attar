@@ -36,6 +36,12 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'seasons',
+    loadComponent: () =>
+      import('./pages/seasons/seasons.page').then((module) => module.SeasonsPageComponent),
+    title: 'Season Calendar — Alatar Sons',
+  },
+  {
     path: 'certificates',
     loadComponent: () =>
       import('./pages/certificates/certificates.page').then(

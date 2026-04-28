@@ -1,7 +1,7 @@
 :host {
   --sl-tile: 44px;
   --sl-gap: 6px;
-  --sl-radius: 0 10px 10px 0;
+  --sl-radius: 10px 0 0 10px;
   --sl-label-bg: rgba(10, 22, 40, 0.92);
   --sl-label-color: #f4c430;
   --sl-border: rgba(244, 196, 48, 0.18);
@@ -12,7 +12,7 @@
 .social-sidebar {
   position: fixed;
   top: 50%;
-  inset-inline-start: 0;
+  inset-inline-end: 0;
   transform: translateY(-50%);
   z-index: 120;
   pointer-events: none;
@@ -30,6 +30,7 @@
 
 .social-sidebar__item {
   display: flex;
+  justify-content: flex-end;
 }
 
 .social-sidebar__link {
@@ -37,10 +38,11 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  flex-direction: row-reverse;
   gap: 10px;
   min-width: var(--sl-tile);
   height: var(--sl-tile);
-  padding: 0 12px 0 0;
+  padding: 0 0 0 12px;
   background: var(--sl-accent);
   color: #ffffff;
   text-decoration: none;
@@ -56,8 +58,8 @@
 
 [dir='rtl'] .social-sidebar__link,
 :host-context([dir='rtl']) .social-sidebar__link {
-  border-radius: 10px 0 0 10px;
-  padding: 0 0 0 12px;
+  border-radius: 0 10px 10px 0;
+  padding: 0 12px 0 0;
 }
 
 .social-sidebar__icon {
@@ -91,7 +93,7 @@
   color: #ffffff;
   white-space: nowrap;
   opacity: 0;
-  transform: translateX(-6px);
+  transform: translateX(6px);
   transition:
     opacity 260ms ease 60ms,
     transform 260ms ease 60ms;
@@ -99,7 +101,7 @@
 
 [dir='rtl'] .social-sidebar__label,
 :host-context([dir='rtl']) .social-sidebar__label {
-  transform: translateX(6px);
+  transform: translateX(-6px);
 }
 
 .social-sidebar__link:hover,
@@ -121,43 +123,19 @@
 
 @media (max-width: 760px) {
   .social-sidebar {
-    top: auto;
-    bottom: calc(var(--mobile-dock-height, 5.4rem) + 0.5rem);
-    inset-inline-start: 0;
-    inset-inline-end: 0;
-    transform: none;
-    display: flex;
-    justify-content: center;
+    /* Keep it on the side but adjust for mobile maybe? Let's just let it use the default desktop styles on the side,
+       perhaps scale down slightly to avoid covering too much content. */
+    transform: translateY(-50%) scale(0.9);
+    transform-origin: right center;
   }
 
-  .social-sidebar__list {
-    flex-direction: row;
-    gap: 8px;
-    padding: 8px 12px;
-    background: rgba(10, 22, 40, 0.82);
-    backdrop-filter: blur(10px);
-    border-radius: 999px;
-    border: 1px solid var(--sl-border);
-    max-width: calc(100vw - 24px);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .social-sidebar__list::-webkit-scrollbar {
-    display: none;
+  [dir='rtl'] .social-sidebar,
+  :host-context([dir='rtl']) .social-sidebar {
+    transform-origin: left center;
   }
 
   .social-sidebar__link {
     --sl-tile: 40px;
-    border-radius: 999px;
-    max-width: var(--sl-tile);
-    padding: 0;
-  }
-
-  [dir='rtl'] .social-sidebar__link,
-  :host-context([dir='rtl']) .social-sidebar__link {
-    border-radius: 999px;
-    padding: 0;
   }
 
   .social-sidebar__label {

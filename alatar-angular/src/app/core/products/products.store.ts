@@ -43,6 +43,20 @@ export class ProductsStore {
     return this.products().find((p) => p.id === id);
   }
 
+  upsertProduct(product: ProductListItem): void {
+    this.products.update((items) => {
+      const idx = items.findIndex((p) => p.id === product.id);
+      if (idx === -1) return [product, ...items];
+      const next = [...items];
+      next[idx] = product;
+      return next;
+    });
+  }
+
+  removeProduct(productId: string): void {
+    this.products.update((items) => items.filter((p) => p.id !== productId));
+  }
+
   applyStatusUpdate(productId: string, status: ProductStatus): void {
     this.products.update((items) =>
       items.map((p) => (p.id === productId ? { ...p, status } : p)),
