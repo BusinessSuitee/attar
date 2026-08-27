@@ -7,10 +7,10 @@ export type AppLang = 'ar' | 'en' | 'ru';
 const SUPPORTED: readonly AppLang[] = ['ar', 'en', 'ru'] as const;
 
 export function normalizeLang(value: string | null | undefined): AppLang {
-  const v = (value ?? 'ar').toLowerCase();
-  if (v.startsWith('en')) return 'en';
+  const v = (value ?? 'en').toLowerCase();
+  if (v.startsWith('ar')) return 'ar';
   if (v.startsWith('ru')) return 'ru';
-  return 'ar';
+  return 'en';
 }
 
 export function provideCurrentLangSignal(): Signal<AppLang> {

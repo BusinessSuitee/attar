@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
     provideTransloco({
       config: {
         availableLangs: ['ar', 'en', 'ru'],
-        defaultLang: 'ar',
+        defaultLang: 'en',
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
       },

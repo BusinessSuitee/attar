@@ -94,7 +94,7 @@ export class ProductsPageComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   readonly isBrowser = typeof window !== 'undefined';
-  readonly currentLanguage = signal<'ar' | 'en' | 'ru'>('ar');
+  readonly currentLanguage = signal<'ar' | 'en' | 'ru'>('en');
   readonly isArabicUi = computed(() => this.currentLanguage() === 'ar');
 
   readonly activeFilter = signal<CategoryFilter>('all');
@@ -671,17 +671,17 @@ export class ProductsPageComponent implements OnInit {
   }
 
   private normalizeLanguage(language: string | null | undefined): 'ar' | 'en' | 'ru' {
-    const normalized = (language || 'ar').toLowerCase();
+    const normalized = (language || 'en').toLowerCase();
 
-    if (normalized.startsWith('en')) {
-      return 'en';
+    if (normalized.startsWith('ar')) {
+      return 'ar';
     }
 
     if (normalized.startsWith('ru')) {
       return 'ru';
     }
 
-    return 'ar';
+    return 'en';
   }
 
   private sameText(left: string, right: string): boolean {
