@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const STORAGE_KEY = "awlad_elattar_lang";
   const SUPPORTED = ["AR", "EN", "RU"];
   const HTML_LANG = { AR: "ar", EN: "en", RU: "ru" };
@@ -286,9 +286,9 @@
   function getLanguage() {
     const lang = (window.awladLanguage && typeof window.awladLanguage.get === "function"
       ? window.awladLanguage.get()
-      : window.localStorage.getItem(STORAGE_KEY) || "AR").toUpperCase();
+      : window.localStorage.getItem(STORAGE_KEY) || "EN").toUpperCase();
 
-    return SUPPORTED.includes(lang) ? lang : "AR";
+    return SUPPORTED.includes(lang) ? lang : "EN";
   }
 
   function translateCore(value, lang) {
@@ -396,8 +396,8 @@
       titleElement.textContent = translateCore(titleElement.dataset.i18nOriginal, lang);
     }
 
-    document.documentElement.setAttribute("lang", HTML_LANG[lang] || "ar");
-    document.documentElement.setAttribute("dir", HTML_DIR[lang] || "rtl");
+    document.documentElement.setAttribute("lang", HTML_LANG[lang] || "en");
+    document.documentElement.setAttribute("dir", HTML_DIR[lang] || "ltr");
   }
 
   function bootstrap() {
@@ -418,7 +418,7 @@
 
   window.addEventListener("awlad:lang-change", (event) => {
     const requested = ((event && event.detail && event.detail.language) || getLanguage()).toUpperCase();
-    const safeLang = SUPPORTED.includes(requested) ? requested : "AR";
+    const safeLang = SUPPORTED.includes(requested) ? requested : "EN";
     applyLanguage(safeLang);
   });
 
