@@ -66,6 +66,7 @@
           </div>
         </section>
         <!-- Stats Bar -->
+        @defer (on viewport) {
         <section class="bg-primary text-white py-12">
           <div class="max-w-7xl mx-auto px-6 lg:px-20">
             <div
@@ -94,6 +95,9 @@
             </div>
           </div>
         </section>
+        } @placeholder {
+          <div style="min-height: 200px"></div>
+        }
         <!-- Founder Bio Section -->
         <section class="py-20 px-6 lg:px-20 bg-background-light dark:bg-background-dark">
           <div class="max-w-6xl mx-auto">
@@ -476,6 +480,7 @@
           </div>
         </section>
         <!-- CTA Section -->
+        @defer (on viewport) {
         <section
           class="py-16 px-6 lg:px-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800"
         >
@@ -498,6 +503,9 @@
             </div>
           </div>
         </section>
+        } @placeholder {
+          <div style="min-height: 200px"></div>
+        }
       </ng-container>
     </main>
   </div>

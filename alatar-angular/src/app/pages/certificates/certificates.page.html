@@ -70,6 +70,7 @@
     </section>
 
     <!-- ═══════════ CERTIFICATES GRID ═══════════ -->
+    @defer (on viewport) {
     <section class="bg-slate-50 py-16 lg:py-24">
       <div class="mx-auto max-w-6xl px-6">
         <div class="mb-12 text-center" appScrollReveal="up">
@@ -284,6 +285,9 @@
         </div>
       </div>
     </section>
+    } @placeholder {
+      <div style="min-height: 800px"></div>
+    }
   </main>
 
   <!-- ═══════════ LIGHTBOX ═══════════ -->

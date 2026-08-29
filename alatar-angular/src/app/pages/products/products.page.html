@@ -154,6 +154,7 @@
     </section>
 
     <!-- ══ QUALITY STRIP ══════════════════════════════════════════ -->
+    @defer (on viewport) {
     <section class="quality-strip">
       <div class="quality-strip__inner">
         <div class="quality-strip__text">
@@ -185,6 +186,9 @@
         </a>
       </div>
     </section>
+    } @placeholder {
+      <div style="min-height: 400px"></div>
+    }
 
   </main>
 

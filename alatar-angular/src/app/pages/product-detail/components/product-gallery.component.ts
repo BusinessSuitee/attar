@@ -25,14 +25,15 @@ import { API_BASE_URL } from '../../../core/config/api-base-url.token';
   changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div class="gallery">
+    <div class="relative w-full h-full min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] bg-slate-100 overflow-hidden rounded-t-3xl lg:rounded-tr-none lg:rounded-s-3xl">
       @if (resolvedUrls().length === 0) {
-        <div class="gallery__placeholder" aria-hidden="true">
-          <span class="material-symbols-outlined">image</span>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400" aria-hidden="true">
+          <span class="material-symbols-outlined text-6xl mb-4">image</span>
+          <span class="text-sm font-medium">No Image Available</span>
         </div>
       } @else if (resolvedUrls().length === 1) {
         <img
-          class="gallery__single"
+          class="absolute inset-0 w-full h-full object-cover"
           [src]="resolvedUrls()[0]"
           [alt]="productName + ' image 1'"
           loading="eager"
@@ -41,7 +42,7 @@ import { API_BASE_URL } from '../../../core/config/api-base-url.token';
       } @else {
         <swiper-container
           #swiperEl
-          class="gallery__swiper"
+          class="w-full h-full absolute inset-0"
           [attr.dir]="dir()"
           [attr.keyboard]="'true'"
           [attr.navigation]="'false'"
@@ -52,7 +53,7 @@ import { API_BASE_URL } from '../../../core/config/api-base-url.token';
           @for (url of resolvedUrls(); track $index) {
             <swiper-slide>
               <img
-                class="gallery__img"
+                class="w-full h-full object-cover"
                 [src]="url"
                 [alt]="productName + ' image ' + ($index + 1)"
                 [attr.loading]="$index === 0 ? 'eager' : 'lazy'"
@@ -61,23 +62,27 @@ import { API_BASE_URL } from '../../../core/config/api-base-url.token';
             </swiper-slide>
           }
         </swiper-container>
+        
+        <!-- Navigation Buttons -->
         <button
           type="button"
-          class="gallery__nav gallery__nav--prev"
+          class="absolute top-1/2 -translate-y-1/2 left-4 w-12 h-12 rounded-full bg-white/90 text-slate-800 flex items-center justify-center shadow-lg hover:bg-white transition-all z-10 hover:scale-105"
           [attr.aria-label]="'products_v2.detail.gallery_prev' | transloco"
           (click)="prev()"
         >
-          <span class="material-symbols-outlined">chevron_left</span>
+          <span class="material-symbols-outlined text-2xl" [class.scale-x-[-1]]="dir() === 'rtl'">chevron_left</span>
         </button>
         <button
           type="button"
-          class="gallery__nav gallery__nav--next"
+          class="absolute top-1/2 -translate-y-1/2 right-4 w-12 h-12 rounded-full bg-white/90 text-slate-800 flex items-center justify-center shadow-lg hover:bg-white transition-all z-10 hover:scale-105"
           [attr.aria-label]="'products_v2.detail.gallery_next' | transloco"
           (click)="next()"
         >
-          <span class="material-symbols-outlined">chevron_right</span>
+          <span class="material-symbols-outlined text-2xl" [class.scale-x-[-1]]="dir() === 'rtl'">chevron_right</span>
         </button>
-        <div class="gallery__counter" aria-live="polite">
+        
+        <!-- Counter Badge -->
+        <div class="absolute bottom-4 right-4 px-4 py-1.5 bg-slate-900/70 backdrop-blur-sm text-white rounded-full text-sm font-bold shadow-lg z-10 tracking-widest" aria-live="polite">
           {{ activeIndex() + 1 }} / {{ resolvedUrls().length }}
         </div>
       }
@@ -87,98 +92,7 @@ import { API_BASE_URL } from '../../../core/config/api-base-url.token';
     `
       :host {
         display: block;
-      }
-      .gallery {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 4 / 5;
-        background-color: #f8fafc;
-        overflow: hidden;
-        border-radius: 1rem;
-      }
-      @media (min-width: 768px) {
-        .gallery {
-          aspect-ratio: unset;
-          border-radius: 0;
-          width: 100%;
-          min-height: 520px;
-          max-height: min(720px, 82vh);
-        }
-      }
-      .gallery__swiper {
-        width: 100%;
         height: 100%;
-        display: block;
-      }
-      .gallery__single,
-      .gallery__img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .gallery__placeholder {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        color: rgba(100, 116, 139, 0.5);
-      }
-      .gallery__placeholder .material-symbols-outlined {
-        font-size: 6rem;
-      }
-      .gallery__nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
-        border-radius: 9999px;
-        background-color: rgba(255, 255, 255, 0.92);
-        color: #0f172a;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
-        transition: background-color 150ms ease;
-        z-index: 2;
-      }
-      .gallery__nav:hover {
-        background-color: #ffffff;
-      }
-      .gallery__nav:focus-visible {
-        outline: 2px solid #0fbd66;
-        outline-offset: 2px;
-      }
-      .gallery__nav--prev {
-        inset-inline-start: 0.75rem;
-      }
-      .gallery__nav--next {
-        inset-inline-end: 0.75rem;
-      }
-      .gallery__nav .material-symbols-outlined {
-        font-size: 1.5rem;
-      }
-      [dir='rtl'] .gallery__nav--prev .material-symbols-outlined {
-        transform: scaleX(-1);
-      }
-      [dir='rtl'] .gallery__nav--next .material-symbols-outlined {
-        transform: scaleX(-1);
-      }
-      .gallery__counter {
-        position: absolute;
-        inset-block-end: 0.75rem;
-        inset-inline-end: 0.75rem;
-        padding: 0.25rem 0.625rem;
-        background-color: rgba(15, 23, 42, 0.7);
-        color: #ffffff;
-        border-radius: 9999px;
-        font-size: 0.8125rem;
-        font-weight: 600;
-        z-index: 2;
       }
     `,
   ],

@@ -97,6 +97,7 @@
     </div>
   </section>
 
+  @defer (on viewport) {
   <section id="partners" class="partners-section" aria-labelledby="partners-title" *transloco="let map; read: 'partners.map'">
     <div class="partners-section__grid" aria-hidden="true"></div>
 
@@ -211,7 +212,10 @@
       </div>
     </div>
   </section>
-
+  } @placeholder {
+    <div style="min-height: 600px"></div>
+  }
+  @defer (on viewport) {
   <section id="products" class="products-section">
     <div class="products-shell">
       <header class="products-head" appScrollReveal="up">
@@ -290,7 +294,10 @@
       </div>
     </div>
   </section>
-
+  } @placeholder {
+    <div style="min-height: 600px"></div>
+  }
+  @defer (on viewport) {
   <section class="home-cta" aria-labelledby="cta-heading">
     <div class="home-cta__leaf home-cta__leaf--a" aria-hidden="true"></div>
     <div class="home-cta__leaf home-cta__leaf--b" aria-hidden="true"></div>
@@ -311,4 +318,7 @@
       </a>
     </div>
   </section>
+  } @placeholder {
+    <div style="min-height: 300px"></div>
+  }
 </main>
