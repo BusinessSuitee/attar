@@ -181,7 +181,7 @@ export const PLATFORM_ICONS: Record<SocialPlatform, PlatformIconDefinition> = {
     viewBox: VB,
     svgPath:
       'M1.5 4.5h21A1.5 1.5 0 0124 6v12a1.5 1.5 0 01-1.5 1.5h-21A1.5 1.5 0 010 18V6a1.5 1.5 0 011.5-1.5zm.5 2v.217l10 6.25 10-6.25V6.5H2zm20 1.849L12.53 14.24a1 1 0 01-1.06 0L2 8.349V17.5h20V8.349z',
-    hints: 'mailto:info@alatar.com',
+    hints: 'mailto:info@qtc.company',
   },
   Phone: {
     key: 'Phone',
