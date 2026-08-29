@@ -303,6 +303,72 @@
   } @placeholder {
     <div style="min-height: 600px"></div>
   }
+
+  <!-- Samples from other pages -->
+  @defer (on viewport) {
+  <section class="py-16 sm:py-24 bg-background-light dark:bg-background-dark relative border-t border-neutral-light dark:border-neutral-dark/30">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
+      <header class="mb-12 text-center" appScrollReveal="up">
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-slate-100 mb-4">{{ 'nav.more' | transloco }}</h2>
+      </header>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Stations -->
+        <a routerLink="/stations" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="0">
+          <img src="assets/Images/alattarstation2.jpeg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
+          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
+            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
+              <span class="material-symbols-outlined">factory</span>
+            </span>
+            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.stations' | transloco }}</h3>
+          </div>
+        </a>
+
+        <!-- Seasons -->
+        <a routerLink="/seasons" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="100">
+          <img src="assets/Images/غسيل.png" onerror="this.src='assets/Images/فرز.png'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
+          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
+            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
+              <span class="material-symbols-outlined">calendar_month</span>
+            </span>
+            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.seasons' | transloco }}</h3>
+          </div>
+        </a>
+
+        <!-- Certificates -->
+        <a routerLink="/certificates" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="200">
+          <img src="assets/Images/شحن.jpeg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
+          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
+            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
+              <span class="material-symbols-outlined">workspace_premium</span>
+            </span>
+            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.certificates' | transloco }}</h3>
+          </div>
+        </a>
+
+        <!-- Gallery -->
+        <a routerLink="/gallery" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="300">
+          <img src="assets/Images/alattarstationinside2.jpeg" onerror="this.src='assets/Images/تعبئة.jpeg'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
+          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
+            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
+              <span class="material-symbols-outlined">collections</span>
+            </span>
+            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.gallery' | transloco }}</h3>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+  } @placeholder {
+    <div style="min-height: 400px"></div>
+  }
+
   @defer (on viewport) {
   <section class="home-cta" aria-labelledby="cta-heading">
     <div class="home-cta__leaf home-cta__leaf--a" aria-hidden="true"></div>
@@ -314,14 +380,23 @@
       </span>
       <h2 id="cta-heading" class="home-cta__title">{{ t('cta.title') }}</h2>
       <p class="home-cta__desc">{{ t('cta.desc') }}</p>
-      <a
-        href="https://wa.me/201004623085"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="home-cta__btn"
-      >
-        {{ t('cta.sales') }}
-      </a>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+        <a
+          href="https://wa.me/201004623085"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="home-cta__btn"
+        >
+          {{ t('cta.sales') }}
+        </a>
+        <a
+          routerLink="/contact"
+          class="home-cta__btn"
+          style="background: transparent; color: white; border: 2px solid white;"
+        >
+          {{ 'nav.contact' | transloco }}
+        </a>
+      </div>
     </div>
   </section>
   } @placeholder {
