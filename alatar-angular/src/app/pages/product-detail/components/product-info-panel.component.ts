@@ -32,7 +32,7 @@ interface ChipGroup {
   imports: [RouterLink, TranslocoPipe, InSeasonBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex flex-col p-8 lg:p-10">
+    <div class="flex flex-col mb-4">
       
       <!-- Title Area -->
       <div class="mb-6">
