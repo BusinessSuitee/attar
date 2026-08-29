@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
   const scrollToAboutBtn = document.getElementById("scrollToAbout");
@@ -6,21 +6,21 @@
   const langButtons = document.querySelectorAll(".lang-btn");
   const supportedLanguages = ["AR", "EN", "RU"];
   const preferredLanguage = (
-    window.localStorage.getItem("awlad_elattar_lang") || "AR"
+    window.localStorage.getItem("awlad_elattar_lang") || "EN"
   ).toUpperCase();
 
   function getCurrentLanguage() {
     const saved = (
-      window.localStorage.getItem("awlad_elattar_lang") || "AR"
+      window.localStorage.getItem("awlad_elattar_lang") || "EN"
     ).toUpperCase();
-    return supportedLanguages.includes(saved) ? saved : "AR";
+    return supportedLanguages.includes(saved) ? saved : "EN";
   }
 
   function setActiveLanguage(langCode, shouldPersist = true) {
-    const normalizedLanguage = (langCode || "AR").toUpperCase();
+    const normalizedLanguage = (langCode || "EN").toUpperCase();
     const safeLanguage = supportedLanguages.includes(normalizedLanguage)
       ? normalizedLanguage
-      : "AR";
+      : "EN";
 
     langButtons.forEach((button) => {
       const isActive =
@@ -186,7 +186,7 @@
 
     langButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        window.awladLanguage.set(button.dataset.lang || "AR");
+        window.awladLanguage.set(button.dataset.lang || "EN");
       });
     });
   } else {

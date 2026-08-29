@@ -78,7 +78,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly activeItem = signal('home');
   readonly isScrolled = signal(false);
   readonly topNavVisible = signal(true);
-  readonly activeLanguage = signal<LanguageCode>('ar');
+  readonly activeLanguage = signal<LanguageCode>('en');
   readonly productsMenuOpen = signal(false);
   readonly openedViaKeyboard = signal(false);
 
@@ -386,7 +386,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let langToSet: LanguageCode = 'ar';
+    let langToSet: LanguageCode = 'en';
     if (typeof localStorage !== 'undefined') {
       const savedLang = localStorage.getItem('alatarLanguage') as LanguageCode | null;
       if (savedLang && ['ar', 'en', 'ru'].includes(savedLang)) {
