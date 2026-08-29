@@ -32,7 +32,7 @@ interface ChipGroup {
   imports: [RouterLink, TranslocoPipe, InSeasonBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex flex-col h-full p-8 lg:p-12">
+    <div class="flex flex-col p-8 lg:p-10">
       
       <!-- Title Area -->
       <div class="mb-6">
@@ -71,18 +71,6 @@ interface ChipGroup {
         }
       </div>
 
-      <!-- CTA -->
-      @if (product.status !== 'ComingSoon') {
-        <div class="mt-auto pt-6 border-t border-slate-100">
-          <button
-            class="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-[#2D6A4F] text-white rounded-2xl font-bold text-lg hover:bg-[#1f4a37] transition-all shadow-xl shadow-[#2D6A4F]/20 group cursor-pointer border-0"
-            (click)="scrollToOrder()"
-          >
-            <span>{{ 'products_v2.detail.contact_cta' | transloco }}</span>
-            <span class="material-symbols-outlined ms-2 group-hover:translate-y-1 transition-transform">arrow_downward</span>
-          </button>
-        </div>
-      }
     </div>
   `,
   styles: [
@@ -102,13 +90,6 @@ export class ProductInfoPanelComponent {
   private readonly activeLang = toSignal(this.transloco.langChanges$, {
     initialValue: this.transloco.getActiveLang(),
   });
-
-  scrollToOrder() {
-    const el = document.getElementById('order-form');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
 
   isArabic(): boolean {
     return (this.activeLang() || 'ar').toLowerCase().startsWith('ar');

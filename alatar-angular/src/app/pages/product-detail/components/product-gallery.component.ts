@@ -25,7 +25,7 @@ import { API_BASE_URL } from '../../../core/config/api-base-url.token';
   changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div class="relative w-full h-full min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] bg-slate-100 overflow-hidden rounded-t-3xl lg:rounded-tr-none lg:rounded-s-3xl">
+    <div class="relative w-full h-full min-h-[400px] lg:min-h-[500px] xl:min-h-[600px] bg-slate-100 overflow-hidden">
       @if (resolvedUrls().length === 0) {
         <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400" aria-hidden="true">
           <span class="material-symbols-outlined text-6xl mb-4">image</span>
