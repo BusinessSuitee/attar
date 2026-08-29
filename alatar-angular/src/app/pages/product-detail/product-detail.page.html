@@ -48,10 +48,14 @@
           <!-- STORY ──────────────────────────────────────────── -->
           @if (story()) {
             <section class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200/60" aria-labelledby="story-title">
-              <h2 id="story-title" class="text-2xl sm:text-3xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                <span class="material-symbols-outlined text-[#E8871E] text-3xl">auto_stories</span>
-                {{ 'products_v2.detail.story_title' | transloco }}
-              </h2>
+              <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-full bg-[#E8871E]/10 text-[#E8871E] flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-2xl">auto_stories</span>
+                </div>
+                <h2 id="story-title" class="text-2xl sm:text-3xl font-black text-slate-900 m-0">
+                  {{ 'products_v2.detail.story_title' | transloco }}
+                </h2>
+              </div>
               <div class="prose prose-slate prose-lg max-w-none text-slate-600 leading-relaxed mb-8">
                 <p>{{ story() }}</p>
               </div>
@@ -76,14 +80,13 @@
         <div class="lg:col-span-5 xl:col-span-4">
           
           <!-- ORDER FORM ─────────────────────────────────────── -->
-          @defer (on viewport) {
           @if (product()!.status !== 'ComingSoon') {
-            <section class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/40 border border-slate-200/80 sticky top-[7rem]" id="order-form" aria-labelledby="order-heading">
-              <div class="flex items-center gap-3 mb-8">
-                <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                  <span class="material-symbols-outlined">shopping_cart_checkout</span>
+            <section class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200/60 sticky top-[7rem]" id="order-form" aria-labelledby="order-heading">
+              <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-full bg-[#2D6A4F]/10 text-[#2D6A4F] flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-2xl">shopping_cart_checkout</span>
                 </div>
-                <h2 id="order-heading" class="text-2xl font-black text-slate-900 m-0">
+                <h2 id="order-heading" class="text-2xl sm:text-3xl font-black text-slate-900 m-0">
                   {{ 'products_page.modal.request_title' | transloco }}
                 </h2>
               </div>
@@ -250,9 +253,6 @@
                 </a>
               </div>
             </section>
-          }
-          } @placeholder {
-            <div style="min-height: 400px"></div>
           }
         </div>
       </div>
