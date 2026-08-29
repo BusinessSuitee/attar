@@ -11,7 +11,7 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ProductListItem } from '../../core/products/product.service';
@@ -21,7 +21,7 @@ import { OrderRequestService } from '../../core/orders/order-request.service';
 import { ContactService, ContactUiServiceType } from '../../core/contacts/contact.service';
 import { finalize } from 'rxjs';
 
-type CategoryFilter = 'all' | 'Fruit' | 'Vegetable' | 'Frozen';
+type CategoryFilter = 'all' | 'Citrus' | 'Fruit' | 'Vegetable' | 'Frozen' | 'coming-soon';
 type SeasonFilter = 'all' | 'Summer' | 'Winter' | 'AllYear';
 type AvailabilityFilter = 'all' | 'valid' | 'coming-soon';
 
@@ -79,7 +79,7 @@ interface ContactFormState {
 @Component({
   selector: 'app-products-page',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, TranslocoPipe],
+  imports: [CommonModule, NavbarComponent, TranslocoPipe, RouterLink],
   templateUrl: './products.page.html',
   styleUrl: './products.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -143,9 +143,10 @@ export class ProductsPageComponent implements OnInit {
 
   readonly filterOptions: FilterOption[] = [
     { id: 'all', labelKey: 'products_page.filters.all', icon: 'apps' },
-    { id: 'Fruit', labelKey: 'products_page.filters.fruits', icon: 'nutrition' },
-    { id: 'Vegetable', labelKey: 'products_page.filters.vegetables', icon: 'eco' },
-    { id: 'Frozen', labelKey: 'products_page.filters.frozen', icon: 'severe_cold' },
+    { id: 'Citrus', labelKey: 'products_page.filters.citrus', icon: 'nutrition' },
+    { id: 'Fruit', labelKey: 'products_page.filters.fruits', icon: 'eco' },
+    { id: 'Vegetable', labelKey: 'products_page.filters.vegetables', icon: 'yard' },
+    { id: 'coming-soon', labelKey: 'products_page.filters.coming_soon', icon: 'schedule' },
   ];
 
   readonly seasonOptions: SeasonOption[] = [
@@ -163,8 +164,25 @@ export class ProductsPageComponent implements OnInit {
 
   readonly showSeasonFilter = computed(() => {
     const f = this.activeFilter();
-    return f === 'Fruit' || f === 'Vegetable';
+    return f === 'Citrus' || f === 'Fruit' || f === 'Vegetable';
   });
+
+  isCitrusProduct(p: ProductListItem): boolean {
+    const text = `${p.name} ${p.nameAr} ${p.sku} ${p.descriptionEn} ${p.descriptionAr} ${(p.varieties || []).join(' ')}`.toLowerCase();
+    return (
+      text.includes('orange') ||
+      text.includes('برتقال') ||
+      text.includes('lemon') ||
+      text.includes('ليمون') ||
+      text.includes('mandarin') ||
+      text.includes('يوسفي') ||
+      text.includes('مندرين') ||
+      text.includes('grapefruit') ||
+      text.includes('جريب') ||
+      text.includes('citrus') ||
+      text.includes('موالح')
+    );
+  }
 
   /** Products narrowed by category + season only (status not yet applied) — used to compute live availability counts. */
   private readonly categoryAndSeasonFiltered = computed(() => {
@@ -172,10 +190,16 @@ export class ProductsPageComponent implements OnInit {
     const seasonFilter = this.activeSeason();
     let list = this.products().filter((p) => p.status !== 'Invalid');
 
-    if (catFilter === 'Frozen') {
+    if (catFilter === 'Citrus') {
+      list = list.filter((p) => this.isCitrusProduct(p));
+    } else if (catFilter === 'Fruit') {
+      list = list.filter((p) => p.productType === 'Fruit' && !this.isCitrusProduct(p) && p.productState === 'Fresh');
+    } else if (catFilter === 'Vegetable') {
+      list = list.filter((p) => p.productType === 'Vegetable' && p.productState === 'Fresh');
+    } else if (catFilter === 'Frozen') {
       list = list.filter((p) => p.productState === 'Frozen');
-    } else if (catFilter !== 'all') {
-      list = list.filter((p) => p.productType === catFilter && p.productState === 'Fresh');
+    } else if (catFilter === 'coming-soon') {
+      list = list.filter((p) => p.status === 'ComingSoon');
     }
 
     if (this.showSeasonFilter() && seasonFilter !== 'all') {
@@ -281,8 +305,14 @@ export class ProductsPageComponent implements OnInit {
       });
 
     const initialCategory = this.route.snapshot.queryParamMap.get('category');
-    if (initialCategory === 'Fruit' || initialCategory === 'Vegetable' || initialCategory === 'Frozen') {
-      this.activeFilter.set(initialCategory);
+    if (
+      initialCategory === 'Citrus' ||
+      initialCategory === 'Fruit' ||
+      initialCategory === 'Vegetable' ||
+      initialCategory === 'Frozen' ||
+      initialCategory === 'coming-soon'
+    ) {
+      this.activeFilter.set(initialCategory as CategoryFilter);
     }
 
     const initialSeason = this.route.snapshot.queryParamMap.get('season');
@@ -327,13 +357,13 @@ export class ProductsPageComponent implements OnInit {
     this.activeAvailability.set('all');
   }
 
-  openProduct(product: ProductListItem): void {
+  openProduct(product: ProductListItem, tab: ModalFormTab = 'product_request'): void {
     if (this.isComingSoon(product)) {
       return;
     }
     this.selectedProduct.set(product);
     this.activeImageIndex.set(0);
-    this.activeModalTab.set('product_request');
+    this.activeModalTab.set(tab);
     this.resetOrderRequestForm(product);
     this.resetContactForm(product);
     if (this.isBrowser) document.body.style.overflow = 'hidden';
@@ -375,15 +405,19 @@ export class ProductsPageComponent implements OnInit {
   }
 
   categoryLabelKey(product: ProductListItem): string {
+    if (this.isComingSoon(product)) return 'products_page.filters.coming_soon';
     if (product.productState === 'Frozen') return 'products_page.filters.frozen';
+    if (this.isCitrusProduct(product)) return 'products_page.filters.citrus';
     if (product.productType === 'Fruit') return 'products_page.filters.fruits';
     return 'products_page.filters.vegetables';
   }
 
   categoryBadgeColor(product: ProductListItem): string {
+    if (this.isComingSoon(product)) return 'bg-amber-600';
     if (product.productState === 'Frozen') return 'bg-teal-700';
-    if (product.productType === 'Fruit') return 'bg-orange-500';
-    return 'bg-green-600';
+    if (this.isCitrusProduct(product)) return 'bg-amber-500';
+    if (product.productType === 'Fruit') return 'bg-red-500';
+    return 'bg-emerald-600';
   }
 
   encodeWhatsAppMessage(product: ProductListItem): string {

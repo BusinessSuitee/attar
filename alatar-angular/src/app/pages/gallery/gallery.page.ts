@@ -161,6 +161,38 @@ export class GalleryPageComponent {
       titleKey: 'attar_4',
       descKey: 'attar_4',
     },
+    {
+      id: 17,
+      category: 'stations',
+      src: 'assets/Images/alattarstationinside4.jpeg',
+      alt: 'QTC station modern facility',
+      titleKey: 'qtc_1',
+      descKey: 'qtc_1',
+    },
+    {
+      id: 18,
+      category: 'stations',
+      src: 'assets/Images/alattarstationinside5.jpeg',
+      alt: 'QTC station optical sorting',
+      titleKey: 'qtc_2',
+      descKey: 'qtc_2',
+    },
+    {
+      id: 19,
+      category: 'stations',
+      src: 'assets/Images/mhainside.jpeg',
+      alt: 'QTC station automated packaging',
+      titleKey: 'qtc_3',
+      descKey: 'qtc_3',
+    },
+    {
+      id: 20,
+      category: 'stations',
+      src: 'assets/Images/outsidemha.jpeg',
+      alt: 'QTC station loading and logistics',
+      titleKey: 'qtc_4',
+      descKey: 'qtc_4',
+    },
   ];
 
   readonly visibleItems = computed(() => {

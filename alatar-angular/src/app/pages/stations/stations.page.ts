@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
+import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-stations-page',
   standalone: true,
-  imports: [NavbarComponent, RouterLink, TranslocoModule],
+  imports: [NavbarComponent, TranslocoModule, ScrollRevealDirective],
   templateUrl: './stations.page.html',
-  styleUrls: ['./stations.page.css']
+  styleUrl: './stations.page.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StationsPageComponent implements OnInit {
   constructor() { }

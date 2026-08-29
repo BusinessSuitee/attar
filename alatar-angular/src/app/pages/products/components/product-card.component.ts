@@ -5,67 +5,71 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 import { API_BASE_URL } from '../../../core/config/api-base-url.token';
 import { PublicProductCard } from '../public-catalog.store';
-import { InSeasonBadgeComponent } from './in-season-badge.component';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [NgTemplateOutlet, RouterLink, TranslocoPipe, InSeasonBadgeComponent],
+  imports: [NgTemplateOutlet, RouterLink, TranslocoPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (card.status === 'ComingSoon') {
       <article
-        class="card card--coming-soon"
-        [style.--card-accent]="card.accentColor"
+        class="product-card product-card--coming-soon"
       >
         <ng-container *ngTemplateOutlet="cardBody"></ng-container>
-        <div class="card__coming-overlay" aria-hidden="true">
-          <span class="card__coming-text">
-            {{ 'products_v2.catalog.coming_soon_badge' | transloco }}
-          </span>
-        </div>
       </article>
     } @else {
-      <a
-        class="card"
-        [routerLink]="['/products', card.id]"
-        [style.--card-accent]="card.accentColor"
-        [attr.aria-label]="primaryName()"
+      <article
+        class="product-card"
       >
         <ng-container *ngTemplateOutlet="cardBody"></ng-container>
-      </a>
+      </article>
     }
 
     <ng-template #cardBody>
-      <div class="card__media">
+      <a
+        class="product-card-img"
+        [routerLink]="['/products', card.id]"
+      >
         @if (card.thumbnailUrl && !imageBroken) {
           <img
-            class="card__img"
             [src]="resolvedThumbnail()"
             [alt]="primaryName()"
+            [class.product-card-img--grayscale]="card.status === 'ComingSoon'"
             loading="lazy"
             decoding="async"
             (error)="onImageError()"
           />
         } @else {
-          <div class="card__placeholder" aria-hidden="true">
-            <span class="material-symbols-outlined">image</span>
+          <div class="product-card-placeholder">
+            <span class="material-symbols-outlined">agriculture</span>
           </div>
         }
-        <div class="card__badge">
-          <app-in-season-badge
-            [status]="card.status"
-            [isInSeason]="card.isInSeasonNow"
-          />
+        <span class="product-card-cat" [class.product-card-cat--coming]="card.status === 'ComingSoon'">
+          {{ categoryLabelKey() | transloco }}
+        </span>
+      </a>
+
+      <div class="product-card-body">
+        <h3>
+          <a [routerLink]="['/products', card.id]" class="hover:text-[var(--cleo-gold-deep)] transition-colors text-inherit no-underline block">
+            {{ primaryName() }}
+          </a>
+        </h3>
+        
+        <p class="product-card-season">
+          <span class="material-symbols-outlined">calendar_month</span>
+          {{ seasonLabelKey(card.season) | transloco }}
+        </p>
+
+        <div class="product-card-cta">
+          <a
+            class="btn btn-outline btn-sm"
+            [routerLink]="['/products', card.id]"
+          >
+            {{ 'products_page.buttons.view_details' | transloco }}
+          </a>
         </div>
-      </div>
-      <div class="card__info">
-        <p class="card__name">{{ primaryName() }}</p>
-        @if (secondaryName()) {
-          <p class="card__name-alt" [attr.dir]="isArabic() ? 'ltr' : 'rtl'">
-            {{ secondaryName() }}
-          </p>
-        }
       </div>
     </ng-template>
   `,
@@ -73,109 +77,150 @@ import { InSeasonBadgeComponent } from './in-season-badge.component';
     `
       :host {
         display: block;
+        height: 100%;
       }
-      .card {
+      .product-card {
+        background: #ffffff;
+        border: 1px solid var(--cleo-border, #e2e8f0);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        height: 100%;
+      }
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        border-color: var(--cleo-gold-soft, #fef08a);
+      }
+      .product-card--coming-soon {
+        border-style: dashed;
+      }
+      .product-card-img {
         position: relative;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        background: var(--cleo-cream, #fefce8);
+        cursor: pointer;
         display: block;
-        overflow: hidden;
-        border-radius: 1rem;
-        background-color: #ffffff;
-        border: 1px solid rgba(15, 23, 42, 0.06);
-        text-decoration: none;
-        color: inherit;
-        transition:
-          transform 200ms ease,
-          box-shadow 200ms ease,
-          border-color 200ms ease;
       }
-      .card:hover,
-      .card:focus-visible {
-        transform: translateY(-2px);
-        border-color: var(--card-accent, rgba(15, 189, 102, 0.4));
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      }
-      .card:focus-visible {
-        outline: 2px solid var(--card-accent, #0fbd66);
-        outline-offset: 3px;
-      }
-      .card--coming-soon {
-        cursor: default;
-      }
-      .card__media {
-        position: relative;
-        aspect-ratio: var(--card-aspect-ratio, 3 / 4);
-        background-color: #f1f5f9;
-        overflow: hidden;
-      }
-      .card__img {
+      .product-card-img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 350ms ease;
+        transition: transform 0.5s ease;
       }
-      .card:hover .card__img,
-      .card:focus-visible .card__img {
-        transform: scale(1.05);
+      .product-card:hover .product-card-img img {
+        transform: scale(1.06);
       }
-      .card__placeholder {
+      .product-card-img--grayscale {
+        filter: grayscale(0.85);
+      }
+      .product-card-placeholder {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
         height: 100%;
-        color: rgba(100, 116, 139, 0.6);
+        color: #cbd5e1;
+        background: var(--cleo-cream, #fefce8);
       }
-      .card__placeholder .material-symbols-outlined {
-        font-size: 4rem;
+      .product-card-placeholder .material-symbols-outlined {
+        font-size: 3.5rem;
       }
-      .card__badge {
+      .product-card-cat {
         position: absolute;
-        inset-block-start: 0.75rem;
-        inset-inline-start: 0.75rem;
-        z-index: 2;
-      }
-      .card__info {
-        padding: 0.875rem 1rem 1rem;
-      }
-      .card__name {
-        margin: 0;
-        font-size: 1rem;
+        top: 14px;
+        inset-inline-start: 14px;
+        background: rgba(255, 255, 255, 0.96);
+        color: var(--cleo-green, #1f4d3a);
+        font-size: 0.72rem;
+        padding: 5px 12px;
+        border-radius: 4px;
         font-weight: 700;
-        line-height: 1.35;
-        color: #0f172a;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       }
-      .card__name-alt {
-        margin: 0.25rem 0 0;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        color: rgba(15, 23, 42, 0.7);
+      .product-card-cat--coming {
+        background: var(--cleo-gold, #eab308);
+        color: #ffffff;
       }
-      .card__coming-overlay {
-        position: absolute;
-        inset: 0;
+      .product-card-body {
+        padding: 22px 22px 24px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .product-card h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--cleo-green-dark, #064e3b);
+        margin: 0 0 6px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        line-height: 1.3;
+      }
+      .product-card h3 a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+      }
+      .product-card h3:hover, .product-card h3 a:hover {
+        color: var(--cleo-gold-deep, #ca8a04);
+      }
+      .product-card-season {
         display: flex;
         align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: var(--cleo-gold-deep, #ca8a04);
+        margin-bottom: 12px;
+        font-weight: 600;
+      }
+      .product-card-season .material-symbols-outlined {
+        font-size: 1rem;
+        color: var(--cleo-gold, #eab308);
+      }
+      .product-card-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: auto;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.65);
-        backdrop-filter: blur(2px);
-      }
-      .card__coming-text {
-        padding: 0.5rem 1rem;
-        border-radius: 9999px;
-        background-color: rgba(15, 23, 42, 0.85);
-        color: #ffffff;
-        font-size: 0.8125rem;
+        gap: 0.35rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9375rem;
         font-weight: 700;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
+        font-family: inherit;
+        line-height: 1.25;
+        border-radius: 9999px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        text-decoration: none;
+        text-align: center;
       }
-      @media (prefers-reduced-motion: reduce) {
-        .card,
-        .card__img {
-          transition: none;
-        }
+      .btn-outline {
+        background-color: transparent;
+        color: var(--cleo-green-dark, #064e3b);
+        border-color: var(--cleo-green-dark, #064e3b);
       }
-    `,
+      .btn-outline:hover {
+        background-color: var(--cleo-green-dark, #064e3b);
+        color: #ffffff;
+      }
+      .btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+      }
+    `
   ],
 })
 export class ProductCardComponent {
@@ -211,6 +256,21 @@ export class ProductCardComponent {
       return en && en !== this.primaryName() ? en : null;
     }
     return null;
+  }
+
+  categoryLabelKey(): string {
+    if (this.card.status === 'ComingSoon') return 'products_page.filters.coming_soon';
+    if (this.card.productType === 'Vegetable') return 'products_page.filters.vegetables';
+    return 'products_page.filters.fruits';
+  }
+
+  seasonLabelKey(season: string): string {
+    switch (season) {
+      case 'Summer': return 'products_page.filters.summer';
+      case 'Winter': return 'products_page.filters.winter';
+      case 'AllYear': return 'products_page.filters.all_year';
+      default: return 'products_page.filters.all_year';
+    }
   }
 
   onImageError(): void {

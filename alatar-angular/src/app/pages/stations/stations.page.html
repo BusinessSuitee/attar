@@ -30,7 +30,7 @@
     <section class="py-16 px-4 sm:px-10 max-w-[1280px] mx-auto">
       <div class="flex flex-col md:flex-row gap-12 items-start">
         <div class="flex-1 space-y-6">
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-3 flex-wrap">
             <span
               class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary"
             >
@@ -39,6 +39,12 @@
             <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">
               {{ t('attar.title') }}
             </h2>
+            <span
+              class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20 flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-sm">person</span>
+              {{ t('attar.manager') }}
+            </span>
           </div>
           <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
             {{ t('attar.desc') }}
@@ -111,7 +117,7 @@
       <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
         <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
           <div class="flex-1 space-y-6">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 flex-wrap">
               <span
                 class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
               >
@@ -124,6 +130,12 @@
                 class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20"
                 >{{ t('mha.badge') }}</span
               >
+              <span
+                class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full border border-blue-200 dark:border-blue-800 flex items-center gap-1"
+              >
+                <span class="material-symbols-outlined text-sm">person</span>
+                {{ t('mha.manager') }}
+              </span>
             </div>
             <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
               {{ t('mha.desc') }}
@@ -196,6 +208,97 @@
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QTC Station Section -->
+    <section class="py-16 px-4 sm:px-10 max-w-[1280px] mx-auto">
+      <div class="flex flex-col md:flex-row gap-12 items-start">
+        <div class="flex-1 space-y-6">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+            >
+              <span class="material-symbols-outlined">precision_manufacturing</span>
+            </span>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">
+              {{ t('qtc.title') }}
+            </h2>
+            <span
+              class="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-500/20"
+              >{{ t('qtc.badge') }}</span
+            >
+            <span
+              class="px-3 py-1 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-full border border-emerald-500/20 flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-sm">person</span>
+              {{ t('qtc.manager') }}
+            </span>
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+            {{ t('qtc.desc') }}
+          </p>
+          <div class="grid grid-cols-2 gap-4 pt-4">
+            <div
+              class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50"
+            >
+              <div class="text-emerald-500 mb-2">
+                <span class="material-symbols-outlined text-3xl">visibility</span>
+              </div>
+              <h3 class="font-bold text-lg mb-1">{{ t('qtc.storage_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">
+                {{ t('qtc.storage_desc') }}
+              </p>
+            </div>
+            <div
+              class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50"
+            >
+              <div class="text-emerald-500 mb-2">
+                <span class="material-symbols-outlined text-3xl">smart_toy</span>
+              </div>
+              <h3 class="font-bold text-lg mb-1">{{ t('qtc.production_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">
+                {{ t('qtc.production_desc') }}
+              </p>
+            </div>
+          </div>
+          <div class="pt-4">
+            <button
+              class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold hover:opacity-80 transition-colors group"
+            >
+              <span>{{ t('qtc.details_btn') }}</span>
+              <span
+                class="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform rtl:rotate-180"
+                >arrow_forward</span
+              >
+            </button>
+          </div>
+        </div>
+        <div class="flex-1 w-full">
+          <div class="grid grid-cols-2 gap-3 h-[400px]">
+            <div class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-lg relative group">
+              <img
+                src="assets/Images/alattarstationinside4.jpeg"
+                alt="QTC station smart facility"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
+              <img
+                src="assets/Images/alattarstationinside5.jpeg"
+                alt="QTC optical sorting"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
+              <img
+                src="assets/Images/alattarstationinside3.jpeg"
+                alt="QTC automated packing"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
             </div>
           </div>
         </div>

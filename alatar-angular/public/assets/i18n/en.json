@@ -57,7 +57,7 @@
       "local_partners": "Partners in Success",
       "global_title": "Global Export Gateway",
       "global_subtitle": "+50,000 Tons Annually",
-      "global_desc": "Integrated infrastructure ensuring our products reach European and Asian markets fresh, supported by world-class packing stations.",
+      "global_desc": "Integrated infrastructure ensuring our products reach European and Asian markets fresh, with three world-class packing and processing stations established by Haj Ebada.",
       "global_partners": "Symbols of Trust and Quality"
     },
     "products": {
@@ -172,11 +172,14 @@
       "y1990Title": "Expansion and Growth",
       "y1990Desc": "Massive expansion in the farm network and starting to supply high-quality grapes and summer crops.",
       "y2000": "2000s",
-      "y2000Title": "El-Attar Station",
-      "y2000Desc": "A turning point with the establishment of 'El-Attar Station' and the strategic shift into international export.",
+      "y2000Title": "Al-Attar Station",
+      "y2000Desc": "A turning point with the establishment of 'Al-Attar Station' and the strategic shift into international export.",
       "y2010": "2010s",
       "y2010Title": "MHA Station",
       "y2010Desc": "Establishing 'MHA Station', equipped with the latest technologies to enhance export capacity and meet global demand.",
+      "now": "Now",
+      "nowTitle": "QTC Station",
+      "nowDesc": "Launching 'QTC Station' equipped with smart optical sorting and automated packaging to expand global processing capacity.",
       "today": "Today",
       "todayTitle": "El-Attar Brand",
       "todayDesc": "Launching the brand as a symbol of quality, sustainability, and continuity for future generations."
@@ -272,11 +275,12 @@
   "stations": {
     "hero": {
       "title": "Our Stations: Export Infrastructure Built to Global Standards",
-      "desc": "From Al-Attar Station to MHA Station, we operate an integrated sorting, packing, and preparation system that delivers premium quality to local and international markets."
+      "desc": "Across our three integrated facilities—Al-Attar Station, MHA Station, and QTC Station—we operate an advanced sorting, packing, and processing ecosystem delivering premium quality to global markets."
     },
     "attar": {
       "title": "Al-Attar Station",
-      "desc": "Al-Attar Station is the core starting point of our operations, where receiving, sorting, and initial preparation are handled through precise quality-controlled procedures.",
+      "manager": "Management: Abdelghani, Mahmoud & Hossam El-Attar",
+      "desc": "Al-Attar Station represents the foundational cornerstone of our operations under the joint management of Abdelghani, Mahmoud, and Hossam El-Attar, where receiving, sorting, and initial preparation are managed under rigorous quality-control procedures.",
       "storage_title": "Cold Storage",
       "storage_desc": "Large storage capacity to preserve crop quality before shipping.",
       "production_title": "Production Lines",
@@ -285,13 +289,25 @@
     },
     "mha": {
       "title": "MHA Station",
+      "manager": "Management: Abdelghani, Mahmoud & Hossam El-Attar",
       "badge": "Export Certified",
-      "desc": "MHA Station is equipped with modern operational technologies and strict control standards, efficiently serving export needs across Europe, Russia, and the Gulf.",
+      "desc": "MHA Station is equipped with modern operational technologies and strict control standards under the joint management of the three brothers, efficiently serving export needs across Europe, Russia, and the Gulf.",
       "cert_gap": "Global GAP",
       "cert_haccp": "HACCP",
       "cert_organic": "Organic Ready",
       "visit_btn": "Visit the Station",
       "video_caption": "Field Tour Inside MHA Station"
+    },
+    "qtc": {
+      "title": "QTC Station",
+      "manager": "Management: Abdelghani, Mahmoud & Hossam El-Attar",
+      "badge": "Smart Technology Hub",
+      "desc": "QTC Station is our newest state-of-the-art export facility under the joint management of Haj Ebada's sons, engineered with advanced smart optical sorting and automated packaging technologies to boost capacity and meet global demand.",
+      "storage_title": "Smart Optical Sorting",
+      "storage_desc": "Advanced optical vision systems for high-precision grading and defect detection.",
+      "production_title": "Automated Packaging",
+      "production_desc": "High-speed automated packaging lines ensuring maximum hygiene and product integrity.",
+      "details_btn": "Explore QTC Station"
     },
     "lands": {
       "kicker": "Our Agricultural Reach",
@@ -359,13 +375,22 @@
       "desc": "We offer a diverse selection of premium Egyptian crops, carefully grown and processed to the highest global export standards."
     },
     "filters": {
-      "all": "All",
+      "all": "All Products",
+      "all_products": "All Products",
+      "citrus": "Citrus",
       "fruits": "Fruits",
       "vegetables": "Vegetables",
       "frozen": "Frozen",
+      "coming_soon": "Coming Soon",
       "category_label": "Category",
       "season_label": "Season",
       "availability_label": "Availability"
+    },
+    "buttons": {
+      "view_details": "View Details",
+      "request_quote": "Request Quote",
+      "chat_with_sales": "Chat with Sales",
+      "register_interest": "Register Interest"
     },
     "seasons": {
       "all": "All",
@@ -713,6 +738,22 @@
       "mha_6": {
         "title": "Station Operations",
         "description": "Daily production and logistics operations inside MHA station."
+      },
+      "qtc_1": {
+        "title": "QTC Modern Facility",
+        "description": "Front facade of our newest smart sorting and high-capacity packing hub."
+      },
+      "qtc_2": {
+        "title": "QTC Optical Sorting Systems",
+        "description": "Advanced optical vision technology for precise grading and crop quality."
+      },
+      "qtc_3": {
+        "title": "QTC Automated Packaging Lines",
+        "description": "High-speed automated packaging lines optimized for global export demands."
+      },
+      "qtc_4": {
+        "title": "QTC Logistics & Loading Docks",
+        "description": "Climate-controlled loading bays maintaining cold chain integrity."
       }
     },
     "not_found": {

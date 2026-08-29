@@ -167,14 +167,27 @@
                 <span class="partners-stations__dot" aria-hidden="true"></span>
                 <div>
                   <strong>{{ 'stations.attar.title' | transloco }}</strong>
-                  <span>{{ map('center') }}</span>
+                  <span class="partners-stations__meta">
+                    {{ map('center') }} · <span class="partners-stations__manager">{{ 'stations.attar.manager' | transloco }}</span>
+                  </span>
                 </div>
               </li>
               <li>
                 <span class="partners-stations__dot partners-stations__dot--alt" aria-hidden="true"></span>
                 <div>
                   <strong>{{ 'stations.mha.title' | transloco }}</strong>
-                  <span>{{ map('gulf_region') }} · {{ map('russia_region') }}</span>
+                  <span class="partners-stations__meta">
+                    {{ map('gulf_region') }} · {{ map('russia_region') }} · <span class="partners-stations__manager">{{ 'stations.mha.manager' | transloco }}</span>
+                  </span>
+                </div>
+              </li>
+              <li>
+                <span class="partners-stations__dot partners-stations__dot--third" aria-hidden="true"></span>
+                <div>
+                  <strong>{{ 'stations.qtc.title' | transloco }}</strong>
+                  <span class="partners-stations__meta">
+                    {{ map('eu_region') }} · <span class="partners-stations__manager">{{ 'stations.qtc.manager' | transloco }}</span>
+                  </span>
                 </div>
               </li>
             </ul>
@@ -214,82 +227,66 @@
       </header>
 
       <div class="products-grid" role="list">
-        <article
-          class="product-card cursor-pointer"
-          role="listitem"
-          routerLink="/products"
-          appScrollReveal="up"
-        >
-          <img
-            class="product-card__image"
-            src="https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=1200&q=80"
-            alt="Fresh Oranges"
-            loading="lazy"
-          />
-          <div class="product-card__overlay" aria-hidden="true"></div>
-
-          <div class="product-card__badge" aria-hidden="true">
-            <span class="material-symbols-outlined">verified</span>
-            <span>{{ t('products.badge') }}</span>
-          </div>
-
-          <div class="product-card__content">
-            <h3>{{ t('products.citrus_title') }}</h3>
-            <p>
-              {{ t('products.citrus_desc') }}
-            </p>
-
-            <div class="product-card__meta">
-              <span>
-                <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
-                {{ t('products.citrus_meta1') }}
+        @for (product of featuredProducts(); track product.id) {
+          <article
+            class="product-card"
+            [class.product-card--coming-soon]="isComingSoon(product)"
+            role="listitem"
+            appScrollReveal="up"
+          >
+            <!-- Image -->
+            <a class="product-card-img" [routerLink]="['/products', product.id]">
+              @if (hasImages(product)) {
+                <img
+                  [src]="firstImage(product)"
+                  [alt]="displayPrimaryName(product)"
+                  [class.product-card-img--grayscale]="isComingSoon(product)"
+                  loading="lazy"
+                  decoding="async"
+                />
+              } @else {
+                <div class="product-card-placeholder">
+                  <span class="material-symbols-outlined">agriculture</span>
+                </div>
+              }
+              <span class="product-card-cat" [class.product-card-cat--coming]="isComingSoon(product)">
+                {{ categoryLabelKey(product) | transloco }}
               </span>
-              <span>
-                <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
-                {{ t('products.citrus_meta2') }}
-              </span>
+            </a>
+
+            <!-- Info Body -->
+            <div class="product-card-body">
+              <h3>
+                <a [routerLink]="['/products', product.id]" class="hover:text-[var(--cleo-gold-deep)] transition-colors text-inherit no-underline block">
+                  {{ displayPrimaryName(product) }}
+                </a>
+              </h3>
+              
+              <p class="product-card-season">
+                <span class="material-symbols-outlined">calendar_month</span>
+                {{ seasonLabelKey(product.season) | transloco }}
+              </p>
+
+              <p class="product-card-desc">{{ displayPrimaryDescription(product) }}</p>
+
+              <!-- CTA -->
+              <div class="product-card-cta">
+                <a
+                  class="btn btn-outline btn-sm"
+                  [routerLink]="['/products', product.id]"
+                >
+                  {{ 'products_page.buttons.view_details' | transloco }}
+                </a>
+              </div>
             </div>
-          </div>
-        </article>
-
-        <article
-          class="product-card cursor-pointer"
-          role="listitem"
-          routerLink="/products"
-          appScrollReveal="up"
-          revealDelay="130"
-        >
-          <img
-            class="product-card__image"
-            src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=1200&q=80"
-            alt="Premium Grapes"
-            loading="lazy"
-          />
-          <div class="product-card__overlay" aria-hidden="true"></div>
-
-          <div class="product-card__badge" aria-hidden="true">
-            <span class="material-symbols-outlined">verified</span>
-            <span>{{ t('products.badge') }}</span>
-          </div>
-
-          <div class="product-card__content">
-            <h3>{{ t('products.grapes_title') }}</h3>
-            <p>
-              {{ t('products.grapes_desc') }}
-            </p>
-
-            <div class="product-card__meta">
-              <span>
-                <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
-                {{ t('products.grapes_meta1') }}
-              </span>
-              <span>
-                <span class="material-symbols-outlined" aria-hidden="true">package_2</span>
-                {{ t('products.grapes_meta2') }}
-              </span>
-            </div>
-          </div>
-        </article>
+          </article>
+        }
+      </div>
+      
+      <div class="all-products-wrapper">
+        <a routerLink="/products" class="btn btn-primary btn-large">
+          {{ t('products.view_all') }}
+        </a>
       </div>
     </div>
   </section>

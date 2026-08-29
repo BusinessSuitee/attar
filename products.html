@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html dir="rtl" lang="ar">
   <head>
     <meta charset="utf-8" />
@@ -221,410 +221,356 @@
           </div>
         </section>
 
-        <div
-          class="sticky top-20 z-40 bg-white border-b border-slate-200 shadow-sm"
-        >
+        <!-- ══ Cleo Fruits Style Filter Bar ══ -->
+        <div class="sticky top-20 z-40 bg-white border-b border-[#E7E1CE] shadow-sm py-4">
           <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-            <div
-              class="flex items-center justify-center sm:justify-start overflow-x-auto no-scrollbar py-4 gap-2 sm:gap-4"
-            >
+            <div class="flex items-center justify-center overflow-x-auto no-scrollbar gap-2 sm:gap-3">
               <button
-                class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-white transition-all shadow-md"
-                data-filter="winter"
+                class="product-filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all border border-[#1F4D3A] bg-[#1F4D3A] text-white shadow-md cursor-pointer"
+                data-filter="all"
                 aria-pressed="true"
               >
-                <span class="material-symbols-outlined text-lg">ac_unit</span>
-                المحاصيل الشتوية
+                كل المنتجات
               </button>
               <button
-                class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full bg-slate-100 px-6 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-200 hover:text-primary transition-all"
-                data-filter="summer"
+                class="product-filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:border-[#1F4D3A] hover:text-[#1F4D3A] cursor-pointer"
+                data-filter="citrus"
                 aria-pressed="false"
               >
-                <span class="material-symbols-outlined text-lg">wb_sunny</span>
-                المحاصيل الصيفية
+                الموالح
               </button>
               <button
-                class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full bg-slate-100 px-6 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-200 hover:text-primary transition-all"
+                class="product-filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:border-[#1F4D3A] hover:text-[#1F4D3A] cursor-pointer"
+                data-filter="fruits"
+                aria-pressed="false"
+              >
+                الفواكه
+              </button>
+              <button
+                class="product-filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:border-[#1F4D3A] hover:text-[#1F4D3A] cursor-pointer"
                 data-filter="vegetables"
                 aria-pressed="false"
               >
-                <span class="material-symbols-outlined text-lg">nutrition</span>
-                الخضروات
+                الخضراوات
               </button>
               <button
-                class="product-filter-btn flex items-center gap-2 whitespace-nowrap rounded-full bg-slate-100 px-6 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-200 hover:text-primary transition-all"
-                data-filter="frozen"
+                class="product-filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:border-[#1F4D3A] hover:text-[#1F4D3A] cursor-pointer"
+                data-filter="coming"
                 aria-pressed="false"
               >
-                <span class="material-symbols-outlined text-lg"
-                  >severe_cold</span
-                >
-                منتجات مجمدة
+                قريباً
               </button>
             </div>
           </div>
         </div>
 
-        <section class="py-20 bg-background-light overflow-hidden">
+        <!-- ══ Products Grid ══ -->
+        <section class="py-16 bg-white">
           <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-            <div class="flex flex-col lg:flex-row gap-12 items-center">
-              <div class="w-full lg:w-1/2 relative group">
-                <div
-                  class="absolute -inset-4 bg-accent/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity"
-                ></div>
-                <div
-                  class="relative overflow-hidden rounded-2xl shadow-2xl border-4 border-white h-[500px]"
-                >
-                  <img
-                    alt="البرتقال المصري"
-                    class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmsanB1tlU06aaCmNIXzGESo7nXFoCl8xCYmf9V6olKVcX1SHBxiclG-IFA-gthlFEP258NK72jTQCdxg0AIhL_2W2S7NPSv2jnVIjzzY_zjZrN2rKGoqMSXouLNoftc8rQmr-TRLfSBPAtFhvLq7hauBYyG8fjvwpKDOZf-7xdtLBTRlE2Z4MX2Eqdff8ouEbotE487tDdz7ZItWCgsxuQ8rqICS9X1gUAdombNR9whDogwzhYE-plIDPo-1pWSIIrM9aqbhe1OA"
-                  />
-                  <div
-                    class="absolute bottom-6 right-6 bg-white/90 backdrop-blur text-primary px-4 py-2 rounded-lg font-bold shadow-lg flex items-center gap-2"
-                  >
-                    <span class="material-symbols-outlined text-accent"
-                      >verified</span
-                    >
-                    المنتج الأكثر تصديرا
-                  </div>
-                </div>
-              </div>
-              <div class="w-full lg:w-1/2 space-y-8">
-                <div>
-                  <h2
-                    class="text-accent font-bold text-sm tracking-widest uppercase mb-2"
-                  >
-                    فخر الزراعة المصرية
-                  </h2>
-                  <h3
-                    class="text-4xl lg:text-5xl font-black text-slate-900 leading-tight mb-4"
-                  >
-                    الموالح والبرتقال المصري
-                  </h3>
-                  <p class="text-lg text-slate-600 leading-relaxed">
-                    تعد شركة أولاد العطار من الرواد في تصدير الموالح المصرية،
-                    حيث نمتلك مزارع شاسعة تنتج أفخر أنواع البرتقال المطلوب
-                    عالميا بفضل المناخ المثالي والتربة الخصبة، مع مراعاة أدق
-                    تفاصيل الجودة من الغرس حتى التعبئة.
-                  </p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div
-                    class="bg-slate-50 p-5 rounded-xl border border-slate-100"
-                  >
-                    <h4
-                      class="font-bold text-primary mb-3 flex items-center gap-2"
-                    >
-                      <span class="material-symbols-outlined text-accent"
-                        >category</span
-                      >
-                      الأصناف المتوفرة
-                    </h4>
-                    <ul class="space-y-2 text-sm text-slate-600">
-                      <li class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                        برتقال أبو سرة (Navel)
-                      </li>
-                      <li class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                        فالنسيا (Valencia)
-                      </li>
-                      <li class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                        بلدي (Baladi)
-                      </li>
-                    </ul>
-                  </div>
-                  <div
-                    class="bg-slate-50 p-5 rounded-xl border border-slate-100"
-                  >
-                    <h4
-                      class="font-bold text-primary mb-3 flex items-center gap-2"
-                    >
-                      <span class="material-symbols-outlined text-accent"
-                        >calendar_month</span
-                      >
-                      مواسم التوريد
-                    </h4>
-                    <div class="relative pt-2">
-                      <div class="h-2 bg-slate-200 rounded-full w-full">
-                        <div
-                          class="h-2 bg-accent rounded-full w-3/4 absolute top-2 right-0"
-                        ></div>
-                      </div>
-                      <div
-                        class="flex justify-between mt-2 text-xs font-bold text-slate-500"
-                      >
-                        <span>نوفمبر</span><span>مايو</span>
-                      </div>
-                      <p class="text-xs text-slate-400 mt-2">
-                        متاح طوال موسم الشتاء والربيع
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="flex flex-wrap gap-4 pt-4 border-t border-slate-100"
-                >
-                  <div
-                    class="flex items-center gap-2 text-sm text-slate-500 font-medium bg-white px-3 py-1 rounded border border-slate-200"
-                  >
-                    <span class="material-symbols-outlined text-green-600"
-                      >check_circle</span
-                    >
-                    مطابق للمواصفات الأوروبية
-                  </div>
-                  <div
-                    class="flex items-center gap-2 text-sm text-slate-500 font-medium bg-white px-3 py-1 rounded border border-slate-200"
-                  >
-                    <span class="material-symbols-outlined text-green-600"
-                      >check_circle</span
-                    >
-                    تعبئة آلية معقمة
-                  </div>
-                  <div
-                    class="flex items-center gap-2 text-sm text-slate-500 font-medium bg-white px-3 py-1 rounded border border-slate-200"
-                  >
-                    <span class="material-symbols-outlined text-green-600"
-                      >check_circle</span
-                    >
-                    شحن مبرد
-                  </div>
-                </div>
-                <button
-                  class="w-full sm:w-auto bg-primary text-white font-bold py-3.5 px-8 rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
-                >
-                  <span class="material-symbols-outlined">request_quote</span>
-                  طلب عرض أسعار للبرتقال
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="py-20 bg-slate-50">
-          <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
-            <div class="text-center mb-16">
-              <span
-                class="text-accent font-bold uppercase tracking-widest text-sm mb-2 block"
-                >تنوع لا يضاهى</span
-              >
-              <h2 class="text-3xl font-bold text-slate-900 md:text-4xl">
-                قائمة المحاصيل الموسمية
-              </h2>
-            </div>
             <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7"
               id="productsGrid"
             >
+              <!-- Card 1: Orange -->
               <article
-                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group"
-                data-categories="summer"
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="citrus"
               >
-                <div class="relative h-64 overflow-hidden">
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
                   <img
-                    alt="Grapes"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt="البرتقال المصري"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmsanB1tlU06aaCmNIXzGESo7nXFoCl8xCYmf9V6olKVcX1SHBxiclG-IFA-gthlFEP258NK72jTQCdxg0AIhL_2W2S7NPSv2jnVIjzzY_zjZrN2rKGoqMSXouLNoftc8rQmr-TRLfSBPAtFhvLq7hauBYyG8fjvwpKDOZf-7xdtLBTRlE2Z4MX2Eqdff8ouEbotE487tDdz7ZItWCgsxuQ8rqICS9X1gUAdombNR9whDogwzhYE-plIDPo-1pWSIIrM9aqbhe1OA"
+                  />
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    موالح
+                  </span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    البرتقال المصري
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    نوفمبر – مايو
+                  </p>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    أبو سرة، فالنسيا، وبلدي — أصناف تصديرية ممتازة غنية بالعصارة وقدرة شحن فائقة للأسواق الأوروبية والآسيوية.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=orange" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=orange" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 2: Lemon -->
+              <article
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="citrus"
+              >
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
+                  <img
+                    alt="الليمون المصري"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    src="https://images.unsplash.com/photo-1590502593747-42a996133562?w=800&q=80"
+                  />
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    موالح
+                  </span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    الليمون الأضاليا والبنزهير
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    أكتوبر – مارس
+                  </p>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    ليمون مصري صلب بلون زاهٍ ونسبة حموضة مثالية، معبأ في كراتين تلسكوبية أو صناديق بلاستيكية للشحن الجوي والبحري.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=lemon" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=lemon" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 3: Grapes -->
+              <article
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="fruits"
+              >
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
+                  <img
+                    alt="العنب الفاخر"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjzxjNfKGW7rmqfJuM2pxOW117GPNATQcvZo0fNRZsFhcPBAwQVW6stwieog_79ypAOy9Qpge--Hi9oDodyVedKxVJEUSJhda3gXatlRodoviKO-jRYMqbCJTBDGxhXpOeMx38hw1ffB_WiF1gBVvydSejBgYcx2Z82VuzfceM-S-TXMOVp_zSeCE127qfwJ2_IMXfbOmHq9RhhujMU-mI96S1NWDnkmH2kGAQBJi9L9YPrtbSqoVk9rMUKHdCNupm8fjZnUad7gY"
                   />
-                  <div
-                    class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full"
-                  >
-                    موسم صيفي
-                  </div>
-                  <div
-                    class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent"
-                  ></div>
-                  <h3
-                    class="absolute bottom-4 right-4 text-2xl font-bold text-white"
-                  >
-                    العنب الفاخر
-                  </h3>
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    فواكه
+                  </span>
                 </div>
-                <div class="p-6">
-                  <p
-                    class="text-slate-500 text-sm mb-4 flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-lg text-primary"
-                      >calendar_month</span
-                    >
-                    مايو - أغسطس
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    العنب الفاخر (عديم البذور)
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    مايو – أغسطس
                   </p>
-                  <button
-                    class="w-full border border-primary text-primary font-bold py-2.5 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                  >
-                    طلب تسعير
-                  </button>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    فليم، كريمسون، وسوبيريور — برنامج متكامل من العنب الطازج عالي السكر معبأ في عبوات 4.5 كجم و 5 كجم.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=grapes" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=grapes" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
                 </div>
               </article>
+
+              <!-- Card 4: Mango -->
               <article
-                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group"
-                data-categories="summer"
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="fruits"
               >
-                <div class="relative h-64 overflow-hidden">
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
                   <img
-                    alt="Mango"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt="المانجو المصرية"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq1eJok6fcxTEYBq1GWtkH2C7nlzJpOzBuTaZpktv4T1QenmbwCi08GfyTYCO-fLecSTSRdN4oJn-XIPH5rWTRn2rb_4-A2zZs-o0lnxEzesR4W_NLvR-DqdTiMpmmWUQRkGe3zfkWhpxmPxCQmuSY1zbwaLCnOD-2cjelG0ztsfUTMoL41b3w9jFJgTBlrnmuDxgYw1EZrBJDb_gHvneZC-WLGxOq8z-VY96NHa3mflbBsSxF8oda7iY36K9D-b0KGd6ZvU5rhyQ"
                   />
-                  <div
-                    class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full"
-                  >
-                    موسم صيفي
-                  </div>
-                  <div
-                    class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent"
-                  ></div>
-                  <h3
-                    class="absolute bottom-4 right-4 text-2xl font-bold text-white"
-                  >
-                    المانجو المصرية
-                  </h3>
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    فواكه
+                  </span>
                 </div>
-                <div class="p-6">
-                  <p
-                    class="text-slate-500 text-sm mb-4 flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-lg text-primary"
-                      >calendar_month</span
-                    >
-                    يونيو - سبتمبر
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    المانجو المصرية الفاخرة
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    يوليو – نوفمبر
                   </p>
-                  <button
-                    class="w-full border border-primary text-primary font-bold py-2.5 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                  >
-                    طلب تسعير
-                  </button>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    كيت، كينت، نعومي، وتومي — ثمار منتقاة بعناية بدرجة نضج مثالية وشحن مبرد مجهز للتصدير الجوي والبحري.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=mango" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=mango" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
                 </div>
               </article>
+
+              <!-- Card 5: Potatoes -->
               <article
-                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group"
-                data-categories="winter vegetables"
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="vegetables"
               >
-                <div class="relative h-64 overflow-hidden">
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
                   <img
-                    alt="Potatoes"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt="البطاطس"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPdYTFGiP_6CIMLYOUrlCLuaAoSbKpNjNnt5Yy7JZubQtpeOLJh9IlJjLoTuxzs0egOtzea4-tYsN8CoMmestlkSmsqw4qZeKhDASrDTgbicIeTMEtvrRVHZpUErqmBUCP1moW6pNVaR-tZXfH1u699r68QQxP_xwl78zPxVe5FNGozN6mytYewaHHMz9mVQosJ6sfGfmcq3bHMLHR4a9G7uzB9Nb6C6pbFnWbWXEbD6S4zHsfk3uDw4KCdVKweCWRmS9g3wNtk_I"
                   />
-                  <div
-                    class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full"
-                  >
-                    خضروات
-                  </div>
-                  <div
-                    class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent"
-                  ></div>
-                  <h3
-                    class="absolute bottom-4 right-4 text-2xl font-bold text-white"
-                  >
-                    البطاطس
-                  </h3>
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    خضراوات
+                  </span>
                 </div>
-                <div class="p-6">
-                  <p
-                    class="text-slate-500 text-sm mb-4 flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-lg text-primary"
-                      >calendar_month</span
-                    >
-                    يناير - مايو
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    البطاطس للتصنيع والمائدة
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    يناير – مايو
                   </p>
-                  <button
-                    class="w-full border border-primary text-primary font-bold py-2.5 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                  >
-                    طلب تسعير
-                  </button>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    سبونتا، كارا، وليدي روزيتا — حبات نظيفة متجانسة الحجم مغسولة ومعبأة بأجولة 10 و 25 كجم وحاويات كاملة.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=potatoes" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=potatoes" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
                 </div>
               </article>
+
+              <!-- Card 6: Onions -->
               <article
-                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group"
-                data-categories="winter vegetables"
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="vegetables"
               >
-                <div class="relative h-64 overflow-hidden">
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
                   <img
-                    alt="Onions"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt="البصل المصري"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk68avb3HU4cJ2ad9LpySJ4vCWBtI_teFdcmUb_44wDXaAm2Iaa6fGNQS-xZdDwlwzWdtX_Z6EaiFeHFInXaFYA9vu70XrNGaVUFCS4KhoO8NcNw_NduvLtDw8jBwaUw8l0cJFWmTXTunK0V6VL2d360wWl-2xqSSMDSHtFKgeI0TmlrrXoxoX9SylhFaE2YoQnNgyjkY6Tj8dN092aj4Tlz8rlpZR5BZ7mxUHEgmkFq5zOdWrA1wnKPXoqLcGxt0kR2tInHXKwWY"
                   />
-                  <div
-                    class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full"
-                  >
-                    خضروات
-                  </div>
-                  <div
-                    class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent"
-                  ></div>
-                  <h3
-                    class="absolute bottom-4 right-4 text-2xl font-bold text-white"
-                  >
-                    البصل
-                  </h3>
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    خضراوات
+                  </span>
                 </div>
-                <div class="p-6">
-                  <p
-                    class="text-slate-500 text-sm mb-4 flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-lg text-primary"
-                      >calendar_month</span
-                    >
-                    أبريل - يوليو
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    البصل الذهبي والأحمر
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    فبراير – ديسمبر
                   </p>
-                  <button
-                    class="w-full border border-primary text-primary font-bold py-2.5 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                  >
-                    طلب تسعير
-                  </button>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    بصل مصري صلب بأحجام 40-60 و 60-80 مم، معبأ في أكياس شبكية 10 أو 25 كجم بقدرة تصدير حاويات متواصلة.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=onions" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=onions" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
                 </div>
               </article>
+
+              <!-- Card 7: Garlic -->
               <article
-                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 group"
-                data-categories="winter vegetables"
+                class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E1CE] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+                data-categories="vegetables"
               >
-                <div class="relative h-64 overflow-hidden">
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
                   <img
-                    alt="Garlic"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    alt="الثوم المصري"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmEpV1yVRTStosFtUO_2SOM5jjxxTpWVTgDAbdhlj5yzxGs2raUZKABEYJW8xKM-jUZxhAWbQJFLD026TA9tenrPwc2uxF_Kj8jyC7cU8BwmRaqmLglIfSP_8UVN2aYgr9seGKgoCM9XnkFwz-fn6_0fzk9lB4uZb-gdZTh5xEz52s-CbBuhCZ7sZOGz7lAgEkkTZhCFISoE5YQMNZ338ZP1fTfLeZ8j_GUgl2grlPezLYZS_8oLxl3FOu6dJqVprKYby4mmicpUk"
                   />
-                  <div
-                    class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full"
-                  >
-                    خضروات
-                  </div>
-                  <div
-                    class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent"
-                  ></div>
-                  <h3
-                    class="absolute bottom-4 right-4 text-2xl font-bold text-white"
-                  >
-                    الثوم
-                  </h3>
+                  <span class="absolute top-3.5 right-3.5 bg-white/95 text-[#1F4D3A] text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    خضراوات
+                  </span>
                 </div>
-                <div class="p-6">
-                  <p
-                    class="text-slate-500 text-sm mb-4 flex items-center gap-1"
-                  >
-                    <span class="material-symbols-outlined text-lg text-primary"
-                      >calendar_month</span
-                    >
-                    مارس - أبريل
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-[#1F4D3A] transition-colors">
+                    الثوم الجاف والطازج
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">calendar_month</span>
+                    مارس – مايو
                   </p>
-                  <button
-                    class="w-full border border-primary text-primary font-bold py-2.5 rounded-lg hover:bg-primary hover:text-white transition-colors"
-                  >
-                    طلب تسعير
-                  </button>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    ثوم مصري أبيض وأحمر مقاس 50+ مم معبأ في أكياس 5 كجم أو صناديق بلاستيكية للمستوردين ومنافذ التجزئة.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=garlic" class="flex-1 text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      عرض التفاصيل
+                    </a>
+                    <a href="contact.html?product=garlic" class="flex-1 text-center py-2.5 px-3 rounded-lg bg-[#1F4D3A] text-white font-bold text-xs hover:bg-[#143026] shadow-sm hover:shadow transition-all">
+                      طلب تسعير
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Card 8: Frozen Produce Line (Coming Soon) -->
+              <article
+                class="flex flex-col bg-white rounded-xl overflow-hidden border-2 border-dashed border-[#C9A14A] shadow-sm opacity-95 group"
+                data-categories="coming"
+              >
+                <div class="relative aspect-[4/3] bg-[#FAF6EC] overflow-hidden">
+                  <img
+                    alt="منتجات مجمدة IQF قريباً"
+                    class="w-full h-full object-cover filter grayscale"
+                    src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80"
+                  />
+                  <span class="absolute top-3.5 right-3.5 bg-[#C9A14A] text-white text-xs font-bold px-3 py-1 rounded shadow-sm tracking-wider uppercase">
+                    قريباً
+                  </span>
+                </div>
+                <div class="p-5 flex-1 flex flex-col">
+                  <h3 class="text-xl font-bold text-slate-900 mb-1.5">
+                    خط الخضار والفواكه المجمدة (IQF)
+                  </h3>
+                  <p class="text-xs font-semibold text-[#A8842F] mb-3 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#C9A14A]">hourglass_top</span>
+                    قيد التجهيز والإطلاق
+                  </p>
+                  <p class="text-sm text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    فراولة وخضروات مجمدة بتقنية التجميد السريع الفردي (IQF) لقطاع الفنادق والمطاعم والتصنيع الغذائي.
+                  </p>
+                  <div class="flex gap-2.5 mt-auto pt-3 border-t border-slate-100">
+                    <a href="contact.html?product=frozen" class="w-full text-center py-2.5 px-3 rounded-lg border-1.5 border-[#1F4D3A] text-[#1F4D3A] font-bold text-xs hover:bg-[#1F4D3A] hover:text-white transition-all">
+                      سجل اهتمامك
+                    </a>
+                  </div>
                 </div>
               </article>
             </div>
+
             <div
-              class="hidden mt-8 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center"
+              class="hidden mt-12 rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center"
               id="productsEmptyState"
             >
-              <p class="font-bold text-slate-700 mb-2">
+              <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">search_off</span>
+              <p class="font-bold text-slate-800 text-lg mb-1">
                 لا توجد محاصيل متاحة في هذا التصنيف حالياً
               </p>
               <p class="text-sm text-slate-500">
@@ -633,6 +579,17 @@
             </div>
           </div>
         </section>
+
+        <!-- ══ Floating WhatsApp Button ══ -->
+        <a
+          href="https://wa.me/201004623085?text=Hello%20Awlad%20El%20Attar,%20I%20am%20interested%20in%20an%20export%20inquiry."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 bg-[#25D366] text-white px-5 py-3 rounded-full font-bold text-sm shadow-xl hover:bg-[#20BA5A] hover:scale-105 transition-all"
+        >
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20.52 3.48A11.94 11.94 0 0 0 12.03 0C5.42 0 .04 5.37.04 11.99c0 2.11.55 4.18 1.6 6.01L0 24l6.16-1.62a11.9 11.9 0 0 0 5.87 1.5h.01c6.61 0 11.99-5.37 11.99-11.99 0-3.2-1.25-6.2-3.51-8.41zm-8.49 18.37h-.01a9.9 9.9 0 0 1-5.03-1.37l-.36-.21-3.66.96.98-3.56-.24-.37a9.86 9.86 0 0 1-1.52-5.29c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7 2.9a9.82 9.82 0 0 1 2.9 7c0 5.47-4.45 9.91-9.92 9.91zm5.44-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.11 3.23 5.11 4.53.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg>
+          <span>تواصل مع المبيعات</span>
+        </a>
         <section class="bg-primary py-12 text-white">
           <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
             <div

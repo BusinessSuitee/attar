@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const STORAGE_KEY = "awlad_elattar_lang";
   const SUPPORTED = ["AR", "EN", "RU"];
   const HTML_LANG = { AR: "ar", EN: "en", RU: "ru" };
@@ -83,13 +83,18 @@
     "بيكو (Pico)": { EN: "Pico", RU: "Пико" },
     "مغربي (Maghrabi)": { EN: "Maghrabi", RU: "Маграби" },
     "بوابة التصدير العالمية": { EN: "Global export gateway", RU: "Глобальные ворота экспорта" },
-    "بنية تحتية متكاملة تضمن وصول منتجاتنا طازجة إلى الأسواق الأوروبية والآسيوية، مدعومة بمحطات تعبئة بمعايير عالمية.": {
-      EN: "An integrated infrastructure ensures our products reach European and Asian markets fresh, supported by packing stations that meet global standards.",
-      RU: "Комплексная инфраструктура обеспечивает поставку нашей продукции в свежем виде на европейские и азиатские рынки при поддержке упаковочных станций мирового уровня.",
+    "بنية تحتية متكاملة تضمن وصول منتجاتنا طازجة إلى الأسواق الأوروبية والآسيوية، حيث قام الحاج عبادة بتنفيذ ثلاث محطات تعبئة وفرز وتجهيز بمعايير عالمية.": {
+      EN: "An integrated infrastructure ensures our products reach European and Asian markets fresh, with three world-class packing and processing stations established by Haj Ebada.",
+      RU: "Комплексная инфраструктура обеспечивает поставку нашей продукции в свежем виде на мировые рынки благодаря трем упаковочным станциям, созданным Хаджи Эбадой.",
     },
+    "رموز الثقة والجودة — المحطات وإداراتها": { EN: "Symbols of trust and quality — Stations & Management", RU: "Символы доверия и качества — Станции и руководство" },
     "رموز الثقة والجودة": { EN: "Symbols of trust and quality", RU: "Символы доверия и качества" },
-    "محطة العطار (Al-Attar Station)": { EN: "Al-Attar Station", RU: "Станция Аль-Аттар" },
+    "محطة العطار": { EN: "Al-Attar Station", RU: "Станция Аль-Аттар" },
+    "إدارة: عبد الغني العطار": { EN: "Management: Abdelghani El-Attar", RU: "Управление: Абдельгани Эль-Аттар" },
     "محطة MHA": { EN: "MHA Station", RU: "Станция MHA" },
+    "إدارة: محمود العطار": { EN: "Management: Mahmoud El-Attar", RU: "Управление: Махмуд Эль-Аттар" },
+    "محطة QTC": { EN: "QTC Station", RU: "Станция QTC" },
+    "إدارة: حسام العطار": { EN: "Management: Hossam El-Attar", RU: "Управление: Хоссам Эль-Аттар" },
     "فخر إنتاجنا": { EN: "Pride of our production", RU: "Гордость нашего производства" },
     "أجود محاصيل مصر": { EN: "Egypt's finest crops", RU: "Лучшие культуры Египта" },
     "جودة منذ 1975": { EN: "Quality since 1975", RU: "Качество с 1975 года" },

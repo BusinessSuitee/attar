@@ -332,6 +332,16 @@ html[lang='ar'] .partners-card__tags span {
   animation-delay: 1.3s;
 }
 
+.partners-stations__dot--third {
+  background: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+}
+
+.partners-stations__dot--third::before {
+  border-color: #059669;
+  animation-delay: 0.65s;
+}
+
 @keyframes partners-ping {
   0%   { transform: scale(0.8); opacity: 0.7; }
   100% { transform: scale(2.2); opacity: 0; }
@@ -363,6 +373,20 @@ html[lang='ar'] .partners-stations li strong {
 html[lang='ar'] .partners-stations li span {
   font-family: 'Cairo', sans-serif;
   font-size: 0.88rem;
+}
+
+.partners-stations__manager {
+  display: inline-block !important;
+  font-weight: 700;
+  color: var(--p-green-deep) !important;
+  background: var(--p-surface-soft);
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.78rem !important;
+}
+
+html[lang='ar'] .partners-stations__manager {
+  font-size: 0.82rem !important;
 }
 
 /* Map panel */
