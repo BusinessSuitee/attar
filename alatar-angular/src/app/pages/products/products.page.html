@@ -28,6 +28,22 @@
             </button>
           }
         </div>
+
+        @if (showSeasonFilter()) {
+          <div class="filter-bar filter-bar--secondary mt-4">
+            @for (season of seasonOptions; track season.id) {
+              <button
+                type="button"
+                class="filter-btn filter-btn--secondary"
+                [class.active]="activeSeason() === season.id"
+                (click)="setSeason(season.id)"
+                [attr.aria-pressed]="activeSeason() === season.id"
+              >
+                {{ season.labelKey | transloco }}
+              </button>
+            }
+          </div>
+        }
       </div>
     </section>
 

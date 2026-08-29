@@ -146,6 +146,7 @@ export class ProductsPageComponent implements OnInit {
     { id: 'Citrus', labelKey: 'products_page.filters.citrus', icon: 'nutrition' },
     { id: 'Fruit', labelKey: 'products_page.filters.fruits', icon: 'eco' },
     { id: 'Vegetable', labelKey: 'products_page.filters.vegetables', icon: 'yard' },
+    { id: 'Frozen', labelKey: 'products_page.filters.frozen', icon: 'ac_unit' },
     { id: 'coming-soon', labelKey: 'products_page.filters.coming_soon', icon: 'schedule' },
   ];
 
@@ -164,7 +165,7 @@ export class ProductsPageComponent implements OnInit {
 
   readonly showSeasonFilter = computed(() => {
     const f = this.activeFilter();
-    return f === 'Citrus' || f === 'Fruit' || f === 'Vegetable';
+    return f !== 'coming-soon';
   });
 
   isCitrusProduct(p: ProductListItem): boolean {
