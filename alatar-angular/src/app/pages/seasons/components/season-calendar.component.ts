@@ -63,6 +63,10 @@ export interface SeasonCalendarRow {
               type="button"
               class="grid__cell"
               [class.grid__cell--filled]="row.availableMonths.includes(month)"
+              [class.grid__cell--start]="isStartMonth(row.availableMonths, month)"
+              [class.grid__cell--end]="isEndMonth(row.availableMonths, month)"
+              [class.grid__cell--middle]="isMiddleMonth(row.availableMonths, month)"
+              [class.grid__cell--single]="isSingleMonth(row.availableMonths, month)"
               [class.grid__cell--current]="month === currentMonth()"
               [style.--cell-accent]="row.product.accentColor"
               [attr.aria-label]="
@@ -145,7 +149,8 @@ export interface SeasonCalendarRow {
       .grid {
         display: grid;
         grid-template-columns: 220px repeat(12, minmax(48px, 1fr));
-        gap: 4px;
+        row-gap: 8px;
+        column-gap: 0;
         direction: ltr;
         align-items: stretch;
       }
@@ -209,7 +214,7 @@ export interface SeasonCalendarRow {
         min-height: 44px;
         background-color: #f8fafc;
         border: none;
-        border-radius: 0.375rem;
+        border-radius: 0;
         cursor: pointer;
         padding: 0;
         transition: background-color 150ms ease;
@@ -231,6 +236,17 @@ export interface SeasonCalendarRow {
       }
       .grid__cell--filled:hover {
         opacity: 1;
+      }
+      .grid__cell--start {
+        border-top-left-radius: 99px;
+        border-bottom-left-radius: 99px;
+      }
+      .grid__cell--end {
+        border-top-right-radius: 99px;
+        border-bottom-right-radius: 99px;
+      }
+      .grid__cell--single {
+        border-radius: 99px;
       }
       .grid__cell--current {
         outline: 2px solid #0fbd66;
@@ -358,5 +374,33 @@ export class SeasonCalendarComponent {
 
   private isArabic(): boolean {
     return (this.transloco.getActiveLang() || 'ar').toLowerCase().startsWith('ar');
+  }
+
+  isSingleMonth(availableMonths: number[], month: number): boolean {
+    if (!availableMonths.includes(month)) return false;
+    const prev = month === 1 ? 12 : month - 1;
+    const next = month === 12 ? 1 : month + 1;
+    return !availableMonths.includes(prev) && !availableMonths.includes(next);
+  }
+
+  isStartMonth(availableMonths: number[], month: number): boolean {
+    if (!availableMonths.includes(month)) return false;
+    const prev = month === 1 ? 12 : month - 1;
+    const next = month === 12 ? 1 : month + 1;
+    return !availableMonths.includes(prev) && availableMonths.includes(next);
+  }
+
+  isEndMonth(availableMonths: number[], month: number): boolean {
+    if (!availableMonths.includes(month)) return false;
+    const prev = month === 1 ? 12 : month - 1;
+    const next = month === 12 ? 1 : month + 1;
+    return availableMonths.includes(prev) && !availableMonths.includes(next);
+  }
+
+  isMiddleMonth(availableMonths: number[], month: number): boolean {
+    if (!availableMonths.includes(month)) return false;
+    const prev = month === 1 ? 12 : month - 1;
+    const next = month === 12 ? 1 : month + 1;
+    return availableMonths.includes(prev) && availableMonths.includes(next);
   }
 }
