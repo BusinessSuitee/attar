@@ -41,6 +41,7 @@
             src="assets/Images/alattar.jpeg"
             [attr.alt]="t('founder.name')"
             loading="eager"
+            fetchpriority="high"
           />
         </div>
         <figcaption class="patron-caption">
@@ -209,6 +210,11 @@
           <strong>{{ stats('quality_value') }}</strong>
           <span>{{ stats('quality_label') }}</span>
         </article>
+      </div>
+      <div class="mt-12 text-center" appScrollReveal="up" revealDelay="400">
+        <a routerLink="/partners" class="inline-flex items-center justify-center rounded-full border-2 border-[var(--cleo-gold-deep)] px-8 py-3 text-sm font-bold text-[var(--cleo-gold-deep)] transition-all hover:bg-[var(--cleo-gold-deep)] hover:text-white no-underline">
+          {{ 'nav.partners' | transloco }}
+        </a>
       </div>
     </div>
   </section>
