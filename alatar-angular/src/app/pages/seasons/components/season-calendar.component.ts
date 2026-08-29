@@ -155,9 +155,17 @@ export interface SeasonCalendarRow {
         align-items: stretch;
       }
       .grid__corner {
-        background: transparent;
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
       }
       .grid__month-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #ffffff;
         padding: 0.5rem 0;
         text-align: center;
         font-size: 0.75rem;
@@ -212,7 +220,7 @@ export interface SeasonCalendarRow {
       }
       .grid__cell {
         min-height: 44px;
-        background-color: #f8fafc;
+        background-color: transparent;
         border: none;
         border-radius: 0;
         cursor: pointer;

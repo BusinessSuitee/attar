@@ -66,43 +66,9 @@ public static class ServiceCollectionExtensions
         {
             options.AddPolicy(CorsPolicies.Frontend, policy =>
             {
-                policy.AllowAnyHeader().AllowAnyMethod();
-
-                var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
-
-                if (environment.IsDevelopment())
-                {
-                    var allowedOriginSet = new HashSet<string>(allowedOrigins, StringComparer.OrdinalIgnoreCase);
-
-                    policy.SetIsOriginAllowed(origin =>
-                    {
-                        if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
-                        {
-                            return false;
-                        }
-
-                        if (uri.Scheme is not ("http" or "https"))
-                        {
-                            return false;
-                        }
-
-                        if (uri.Host is "localhost" or "127.0.0.1")
-                        {
-                            return true;
-                        }
-
-                        return allowedOriginSet.Contains(origin);
-                    });
-
-                    return;
-                }
-
-                if (allowedOrigins.Length == 0)
-                {
-                    throw new InvalidOperationException("Cors:AllowedOrigins must be configured in non-development environments.");
-                }
-
-                policy.WithOrigins(allowedOrigins);
+                policy.AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowAnyOrigin();
             });
         });
 
