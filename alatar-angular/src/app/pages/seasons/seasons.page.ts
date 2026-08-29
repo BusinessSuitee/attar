@@ -101,21 +101,27 @@ import {
       }
 
       .seasons-hero {
-        padding-block-start: 9rem;
-        padding-block-end: 3.5rem;
-        background: linear-gradient(
-          170deg,
-          rgba(14, 165, 233, 0.06) 0%,
-          rgba(14, 165, 233, 0.02) 40%,
-          #ffffff 65%
-        );
-        border-block-end: 1px solid rgba(15, 23, 42, 0.05);
+        position: relative;
+        padding-block-start: 10rem;
+        padding-block-end: 5rem;
+        background-color: #032b13; /* Fallback */
+        background-image: linear-gradient(
+          to bottom,
+          rgba(3, 43, 19, 0.75) 0%,
+          rgba(3, 43, 19, 0.85) 100%
+        ), url('/assets/images/%D9%85%D8%B2%D8%A7%D8%B1%D8%B9%201.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #ffffff;
       }
 
       .seasons-hero .container {
+        position: relative;
+        z-index: 2;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.25rem;
         align-items: center;
         text-align: center;
       }
@@ -124,7 +130,7 @@ import {
         .seasons-hero .container {
           align-items: flex-start;
           text-align: start;
-          max-width: 700px;
+          max-width: 800px;
         }
       }
 
@@ -132,35 +138,40 @@ import {
         margin: 0;
         display: inline-flex;
         align-items: center;
-        padding: 0.375rem 0.875rem;
+        padding: 0.375rem 1rem;
         border-radius: 9999px;
-        background-color: rgba(14, 165, 233, 0.1);
-        color: #0369a1;
-        font-size: 0.75rem;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #e2e8f0;
+        font-size: 0.8125rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.1em;
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       .seasons-hero__title {
         margin: 0;
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-size: clamp(2.5rem, 5vw, 4rem);
         font-weight: 800;
-        line-height: 1.05;
+        line-height: 1.1;
         letter-spacing: -0.02em;
-        color: #0f172a;
+        color: #ffffff;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       }
 
       .seasons-hero__subtitle {
         margin: 0;
         max-width: 44ch;
-        font-size: 1.0625rem;
+        font-size: 1.125rem;
         line-height: 1.6;
-        color: rgba(15, 23, 42, 0.65);
+        color: rgba(255, 255, 255, 0.85);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
 
       .seasons-page__body {
-        padding-block-start: 2rem;
+        padding-block-start: 3rem;
       }
 
       .seasons-page__status {

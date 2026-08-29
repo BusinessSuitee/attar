@@ -108,6 +108,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       fragment: undefined,
     },
     {
+      id: 'seasons',
+      translocoKey: 'products_v2.seasons.page_title',
+      label: 'المواسم',
+      route: '/seasons',
+      fragment: undefined,
+    },
+    {
       id: 'stations',
       translocoKey: 'nav.stations',
       label: 'المحطات والأراضي',
