@@ -67,6 +67,48 @@
     </nav>
   </section>
 
+  <!-- Quick station shortcut near the top of the homepage -->
+  <section class="home-station-shortcut" aria-labelledby="station-shortcut-heading">
+    <div class="home-station-shortcut__intro" appScrollReveal="up">
+      <span class="home-section-kicker">{{ t('station_shortcut.kicker') }}</span>
+      <h2 id="station-shortcut-heading">{{ t('station_shortcut.title') }}</h2>
+      <p>{{ t('station_shortcut.desc') }}</p>
+      <a routerLink="/stations" class="home-station-shortcut__link">
+        {{ t('station_shortcut.cta') }}
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      </a>
+    </div>
+
+    <div class="home-station-shortcut__list" role="list">
+      <a routerLink="/stations" class="home-station-shortcut__item home-station-shortcut__item--qtc" role="listitem" appScrollReveal="up" revealDelay="60">
+        <span class="home-station-shortcut__number">01</span>
+        <span class="material-symbols-outlined home-station-shortcut__icon" aria-hidden="true">precision_manufacturing</span>
+        <span class="home-station-shortcut__copy">
+          <strong>{{ 'stations.qtc.title' | transloco }}</strong>
+          <small>{{ 'stations.qtc.manager' | transloco }}</small>
+        </span>
+      </a>
+
+      <a routerLink="/stations" class="home-station-shortcut__item" role="listitem" appScrollReveal="up" revealDelay="120">
+        <span class="home-station-shortcut__number">02</span>
+        <span class="material-symbols-outlined home-station-shortcut__icon" aria-hidden="true">factory</span>
+        <span class="home-station-shortcut__copy">
+          <strong>{{ 'stations.mha.title' | transloco }}</strong>
+          <small>{{ 'stations.mha.manager' | transloco }}</small>
+        </span>
+      </a>
+
+      <a routerLink="/stations" class="home-station-shortcut__item" role="listitem" appScrollReveal="up" revealDelay="180">
+        <span class="home-station-shortcut__number">03</span>
+        <span class="material-symbols-outlined home-station-shortcut__icon" aria-hidden="true">warehouse</span>
+        <span class="home-station-shortcut__copy">
+          <strong>{{ 'stations.attar.title' | transloco }}</strong>
+          <small>{{ 'stations.attar.manager' | transloco }}</small>
+        </span>
+      </a>
+    </div>
+  </section>
+
   <!-- What QTC offers -->
   @defer (on viewport) {
     <section id="products" class="products-section" aria-labelledby="products-heading">

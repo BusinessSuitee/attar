@@ -46,6 +46,12 @@
       "contact_title": "Talk to QTC",
       "contact_desc": "Reach sales, request a quote, or plan a visit"
     },
+    "station_shortcut": {
+      "kicker": "Our Stations",
+      "title": "Find the right station quickly",
+      "desc": "See the three connected stations at a glance, then open the full locations and capabilities.",
+      "cta": "View all station details"
+    },
     "network": {
       "kicker": "From Farm to Market",
       "title": "Three Stations, One Network",
@@ -827,8 +833,7 @@
     "contact_title": "Contact Us",
     "address_line1": "Alexandria Desert Road, Km 75",
     "address_line2": "Nubaria, El Beheira, Egypt",
-    "phone": "+20 1092069059",
-    "phone2": "+20 109 2069059",
+    "phone": "01092069059",
     "social_title": "Follow Us",
     "copyright": "© 2026 QTC. All rights reserved."
   },

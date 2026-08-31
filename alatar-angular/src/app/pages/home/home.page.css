@@ -2098,27 +2098,159 @@ html[dir='rtl'] .home-gateway-card:hover .home-gateway-card__arrow {
   transform: rotate(180deg) translateX(0.2rem);
 }
 
+.home-station-shortcut {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-block: 0 clamp(3rem, 6vw, 5.5rem);
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid #dce7df;
+  border-radius: 1.35rem;
+  background: #f4f8f5;
+  box-shadow: 0 14px 32px rgba(15, 61, 42, 0.06);
+}
+
+.home-station-shortcut__intro h2 {
+  margin: 0.25rem 0 0;
+  color: #17372a;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.home-station-shortcut__intro p {
+  max-width: 25rem;
+  margin: 0.7rem 0 0;
+  color: #5e7568;
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.home-station-shortcut__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.8rem;
+  color: #17804d;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.home-station-shortcut__link .material-symbols-outlined {
+  font-size: 1rem;
+  transition: transform 180ms ease;
+}
+
+.home-station-shortcut__link:hover .material-symbols-outlined {
+  transform: translateX(0.2rem);
+}
+
+html[dir='rtl'] .home-station-shortcut__link .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+
+html[dir='rtl'] .home-station-shortcut__link:hover .material-symbols-outlined {
+  transform: rotate(180deg) translateX(0.2rem);
+}
+
+.home-station-shortcut__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.home-station-shortcut__item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: 1px solid #d9e5dc;
+  border-radius: 1rem;
+  background: #ffffff;
+  color: #17372a;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.home-station-shortcut__item:hover {
+  transform: translateY(-0.25rem);
+  border-color: #50aa7e;
+  box-shadow: 0 12px 24px rgba(15, 61, 42, 0.1);
+}
+
+.home-station-shortcut__item--qtc {
+  border-color: #e0c36b;
+  background: #fffaf0;
+}
+
+.home-station-shortcut__number {
+  color: #8aab99;
+  font-size: 0.65rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+}
+
+.home-station-shortcut__item--qtc .home-station-shortcut__number {
+  color: #ad8120;
+}
+
+.home-station-shortcut__icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: #e8f5ed;
+  color: #197149;
+  font-size: 1.2rem;
+}
+
+.home-station-shortcut__item--qtc .home-station-shortcut__icon {
+  background: #fff0c8;
+  color: #9b731e;
+}
+
+.home-station-shortcut__copy {
+  min-width: 0;
+}
+
+.home-station-shortcut__copy strong,
+.home-station-shortcut__copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-station-shortcut__copy strong {
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.home-station-shortcut__copy small {
+  margin-top: 0.3rem;
+  color: #688075;
+  font-size: 0.68rem;
+}
+
 .home-network {
   position: relative;
   isolation: isolate;
   margin-block-start: clamp(3rem, 6vw, 5.5rem);
   padding: clamp(3.5rem, 6vw, 5.5rem) 0;
-  background:
-    radial-gradient(circle at 8% 8%, rgba(216, 170, 68, 0.12), transparent 26rem),
-    linear-gradient(135deg, #092d20 0%, #0f4935 56%, #0b3022 100%);
-  box-shadow: 0 0 0 100vmax #0b3022;
+  background: #0e3a2b;
+  box-shadow: 0 0 0 100vmax #0e3a2b;
   clip-path: inset(0 -100vmax);
   color: #ffffff;
 }
 
 .home-network::after {
-  position: absolute;
-  z-index: -1;
-  inset: auto 6% 0;
-  height: 14rem;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.18), transparent 68%);
-  content: '';
-  pointer-events: none;
+  display: none;
 }
 
 .home-network .home-section-heading {
@@ -2525,6 +2657,14 @@ html[dir='rtl'] .home-gateway-card:hover .home-gateway-card__arrow {
     grid-template-columns: 1fr;
   }
 
+  .home-station-shortcut {
+    grid-template-columns: 1fr;
+  }
+
+  .home-station-shortcut__intro p {
+    max-width: 36rem;
+  }
+
   .home-cert-logos--single {
     height: auto;
   }
@@ -2555,6 +2695,10 @@ html[dir='rtl'] .home-gateway-card:hover .home-gateway-card__arrow {
 
   .home-network-grid {
     gap: 0.9rem;
+  }
+
+  .home-station-shortcut__list {
+    grid-template-columns: 1fr;
   }
 
   .home-network-grid::before {

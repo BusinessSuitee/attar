@@ -39,7 +39,7 @@ public static class DatabaseInitializer
                                    ([Id], [Platform], [Url], [Label], [IconKey], [CustomIconPath], [ColorHex], [DisplayOrder], [IsEnabled], [OpensInNewTab], [CreatedAtUtc], [UpdatedAtUtc])
                                VALUES
                                    (NEWID(), N'WhatsApp',  N'https://wa.me/201092069059',             N'WhatsApp',    NULL, NULL, NULL, 0, 1, 1, @p0, @p0),
-                                   (NEWID(), N'Phone',     N'tel:+20 1092069059',                      N'اتصل بنا',    NULL, NULL, NULL, 1, 1, 0, @p0, @p0),
+                                   (NEWID(), N'Phone',     N'tel:01092069059',                         N'اتصل بنا',    NULL, NULL, NULL, 1, 1, 0, @p0, @p0),
                                    (NEWID(), N'Email',     N'mailto:info@alatar.com',                 N'البريد',      NULL, NULL, NULL, 2, 1, 0, @p0, @p0),
                                    (NEWID(), N'Facebook',  N'https://facebook.com/alatar',            N'فيسبوك',      NULL, NULL, NULL, 3, 1, 1, @p0, @p0),
                                    (NEWID(), N'Instagram', N'https://instagram.com/alatar',           N'إنستجرام',    NULL, NULL, NULL, 4, 1, 1, @p0, @p0),

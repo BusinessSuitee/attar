@@ -311,7 +311,7 @@ export class ProductDetailPageComponent implements OnInit {
       lines.push(`الكمية: ${form.quantityTons.trim()} طن`);
     if (form.specialSpecification.trim())
       lines.push(`مواصفة خاصة: ${form.specialSpecification.trim()}`);
-    return `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
+    return `https://wa.me/201092069059?text=${encodeURIComponent(lines.join('\n'))}`;
   }
 
   private validateForm(product: ProductListItem, form: OrderFormState): string | null {
