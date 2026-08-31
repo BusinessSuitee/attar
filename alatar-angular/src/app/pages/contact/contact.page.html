@@ -6,11 +6,36 @@
 >
   <main class="flex-grow pb-mobile-dock md:pb-10">
     <div class="layout-container flex h-full grow flex-col">
-      <div class="flex flex-1 justify-center py-5">
+      <div class="contact-page-shell flex flex-1 justify-center py-5">
         <div
-          class="layout-content-container flex flex-col max-w-[960px] flex-1 w-full px-4 md:px-6"
+          class="layout-content-container flex flex-col max-w-[1440px] flex-1 w-full px-4 md:px-8"
         >
-          <div class="@container mb-8">
+          <section class="contact-hero" aria-labelledby="contact-heading">
+            <div class="contact-hero__copy">
+              <span class="contact-eyebrow">QTC · {{ t('phone_title') }}</span>
+              <h1 id="contact-heading">{{ t('title') }}</h1>
+              <p>{{ t('subtitle') }}</p>
+              <div class="contact-hero__actions">
+                <a class="contact-button contact-button--primary" href="#booking-form">
+                  <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
+                  {{ t('btn_order') }}
+                </a>
+                <a class="contact-button contact-button--ghost" href="tel:+201092069059">
+                  <span class="material-symbols-outlined" aria-hidden="true">call</span>
+                  {{ t('btn_call') }}
+                </a>
+              </div>
+            </div>
+            <div class="contact-hero__visual" aria-hidden="true">
+              <img src="assets/Images/mhaoutside.jpeg" alt="" loading="eager" />
+              <div class="contact-hero__visual-card">
+                <span class="material-symbols-outlined">support_agent</span>
+                <span>{{ t('phone_desc') }}</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="contact-hero-legacy @container mb-8">
             <div class="rounded-xl overflow-hidden relative shadow-lg">
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 z-10"
@@ -49,13 +74,14 @@
             </div>
           </div>
 
-          <div class="mb-10">
+          <section class="contact-info-section mb-10" aria-labelledby="contact-info-heading">
             <h2
+              id="contact-info-heading"
               class="text-slate-900 text-2xl font-bold leading-tight tracking-[-0.015em] mb-6 border-s-4 border-slate-300 rtl:border-primary ltr:border-primary rtl:pr-3 ltr:pl-3"
             >
               {{ t('contact_info_title') }}
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="contact-info-grid grid grid-cols-1 md:grid-cols-3 gap-4">
               <div
                 class="group flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
               >
@@ -121,13 +147,14 @@
                 </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+          <section class="contact-workspace grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12" aria-labelledby="form-heading">
             <div class="lg:col-span-8" id="booking-form">
-              <div class="bg-white rounded-xl border border-slate-200 p-6 md:p-8 shadow-sm">
+              <div class="contact-form-card bg-white rounded-xl border border-slate-200 p-6 md:p-8 shadow-sm">
                 <div class="mb-8">
                   <h2
+                    id="form-heading"
                     class="text-slate-900 text-2xl font-bold leading-tight tracking-[-0.015em] mb-2"
                   >
                     {{ t('form_title') }}
@@ -426,7 +453,7 @@
 
             <div class="lg:col-span-4 flex flex-col gap-6">
               <div
-                class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col h-fit"
+                class="contact-map-card bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col h-fit"
               >
                 <div class="p-4 border-b border-slate-100">
                   <h3 class="font-bold text-slate-900 flex items-center gap-2">
@@ -453,7 +480,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>

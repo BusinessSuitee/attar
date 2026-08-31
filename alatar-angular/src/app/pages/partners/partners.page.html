@@ -187,113 +187,64 @@
 
     <!-- Strategic Partners Section -->
     @defer (on viewport) {
-    <section class="py-16 bg-white dark:bg-[#1e2a24]">
-      <div class="layout-content-container max-w-7xl mx-auto px-4 lg:px-10">
-        <div class="text-center mb-12">
-          <span class="text-primary font-bold text-sm tracking-wider uppercase mb-2 block">{{
-            t('strategic.badge')
-          }}</span>
-          <h2 class="text-slate-900 dark:text-white text-3xl font-bold">
-            {{ t('strategic.title') }}
-          </h2>
-          <p class="text-slate-500 mt-2 max-w-2xl mx-auto">{{ t('strategic.desc') }}</p>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 lg:gap-6">
-          <!-- Partner 1 -->
-          <div class="group flex flex-col items-center gap-4">
-            <div
-              class="w-full aspect-[4/3] bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
-            >
-              <img
-                src="assets/Images/logos/elwadi.jpg"
-                [attr.alt]="t('strategic.partner1')"
-                class="h-full w-full object-contain mix-blend-multiply"
-                loading="lazy"
-              />
+    <section class="strategic-partners">
+      <div class="strategic-partners__inner">
+        <header class="strategic-partners__header">
+          <span class="strategic-partners__kicker">{{ t('strategic.badge') }}</span>
+          <h2>{{ t('strategic.title') }}</h2>
+          <p>{{ t('strategic.desc') }}</p>
+        </header>
+
+        <div class="partners-logo-grid">
+          <article class="partner-logo-card">
+            <div class="partner-logo-card__image">
+              <img src="assets/Images/logos/elwadi.jpg" [attr.alt]="t('strategic.partner1')" loading="lazy" />
             </div>
-            <div class="text-center">
-              <h3 class="font-bold text-slate-900 dark:text-white">
-                {{ t('strategic.partner1') }}
-              </h3>
-              <p class="text-xs text-slate-500">{{ t('strategic.partner1_sub') }}</p>
+            <div class="partner-logo-card__body">
+              <h3>{{ t('strategic.partner1') }}</h3>
+              <p>{{ t('strategic.partner1_sub') }}</p>
             </div>
-          </div>
-          <!-- Partner 2 -->
-          <div class="group flex flex-col items-center gap-4">
-            <div
-              class="w-full aspect-[4/3] bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
-            >
-              <img
-                src="assets/Images/logos/nahdet misr.jpg"
-                [attr.alt]="t('strategic.partner2')"
-                class="h-full w-full object-contain"
-                loading="lazy"
-              />
+          </article>
+
+          <article class="partner-logo-card">
+            <div class="partner-logo-card__image">
+              <img src="assets/Images/logos/nahdet misr.jpg" [attr.alt]="t('strategic.partner2')" loading="lazy" />
             </div>
-            <div class="text-center">
-              <h3 class="font-bold text-slate-900 dark:text-white">
-                {{ t('strategic.partner2') }}
-              </h3>
-              <p class="text-xs text-slate-500">{{ t('strategic.partner2_sub') }}</p>
+            <div class="partner-logo-card__body">
+              <h3>{{ t('strategic.partner2') }}</h3>
+              <p>{{ t('strategic.partner2_sub') }}</p>
             </div>
-          </div>
-          <!-- Partner 4 -->
-          <div class="group flex flex-col items-center gap-4">
-            <div
-              class="w-full aspect-[4/3] bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
-            >
-              <img
-                src="assets/Images/logos/pico.png"
-                [attr.alt]="t('strategic.partner4')"
-                class="h-full w-full object-contain"
-                loading="lazy"
-              />
+          </article>
+
+          <article class="partner-logo-card">
+            <div class="partner-logo-card__image">
+              <img src="assets/Images/logos/pico.png" [attr.alt]="t('strategic.partner4')" loading="lazy" />
             </div>
-            <div class="text-center">
-              <h3 class="font-bold text-slate-900 dark:text-white">
-                {{ t('strategic.partner4') }}
-              </h3>
-              <p class="text-xs text-slate-500">{{ t('strategic.partner4_sub') }}</p>
+            <div class="partner-logo-card__body">
+              <h3>{{ t('strategic.partner4') }}</h3>
+              <p>{{ t('strategic.partner4_sub') }}</p>
             </div>
-          </div>
-          <!-- Partner 5 -->
-          <div class="group flex flex-col items-center gap-4">
-            <div
-              class="w-full aspect-[4/3] bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
-            >
-              <img
-                src="assets/Images/logos/horus.jpg"
-                [attr.alt]="t('strategic.partner5')"
-                class="h-full w-full object-contain mix-blend-multiply"
-                loading="lazy"
-              />
+          </article>
+
+          <article class="partner-logo-card">
+            <div class="partner-logo-card__image">
+              <img src="assets/Images/logos/horus.jpg" [attr.alt]="t('strategic.partner5')" loading="lazy" />
             </div>
-            <div class="text-center">
-              <h3 class="font-bold text-slate-900 dark:text-white">
-                {{ t('strategic.partner5') }}
-              </h3>
-              <p class="text-xs text-slate-500">{{ t('strategic.partner5_sub') }}</p>
+            <div class="partner-logo-card__body">
+              <h3>{{ t('strategic.partner5') }}</h3>
+              <p>{{ t('strategic.partner5_sub') }}</p>
             </div>
-          </div>
-          <!-- Partner 6 -->
-          <div class="group flex flex-col items-center gap-4">
-            <div
-              class="w-full aspect-[4/3] bg-white dark:bg-slate-100 border border-slate-200 rounded-2xl flex items-center justify-center p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
-            >
-              <img
-                src="assets/Images/logos/maghrabi.jpg"
-                [attr.alt]="t('strategic.partner6')"
-                class="h-full w-full object-contain"
-                loading="lazy"
-              />
+          </article>
+
+          <article class="partner-logo-card">
+            <div class="partner-logo-card__image">
+              <img src="assets/Images/logos/maghrabi.jpg" [attr.alt]="t('strategic.partner6')" loading="lazy" />
             </div>
-            <div class="text-center">
-              <h3 class="font-bold text-slate-900 dark:text-white">
-                {{ t('strategic.partner6') }}
-              </h3>
-              <p class="text-xs text-slate-500">{{ t('strategic.partner6_sub') }}</p>
+            <div class="partner-logo-card__body">
+              <h3>{{ t('strategic.partner6') }}</h3>
+              <p>{{ t('strategic.partner6_sub') }}</p>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>

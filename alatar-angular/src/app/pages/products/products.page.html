@@ -165,12 +165,30 @@
           <p class="quality-strip__desc">{{ 'products_page.quality.desc' | transloco }}</p>
         </div>
         <div class="quality-strip__certs">
-          @for (cert of [['GLOBAL\nG.A.P', 'products_page.quality.cert1'], ['HACCP', 'products_page.quality.cert2'], ['ISO\n22000', 'products_page.quality.cert3']]; track cert[0]) {
-            <div class="quality-cert">
-              <div class="quality-cert__badge">{{ cert[0] }}</div>
-              <span class="quality-cert__label">{{ cert[1] | transloco }}</span>
+          <div class="quality-cert">
+            <div class="quality-cert__logo-wrap">
+              <img src="assets/Images/globalgap-logo.png" alt="GLOBALG.A.P." class="quality-cert__logo" loading="lazy" />
             </div>
-          }
+            <span class="quality-cert__label">{{ 'products_page.quality.cert1' | transloco }}</span>
+          </div>
+          <div class="quality-cert">
+            <div class="quality-cert__logo-wrap">
+              <img src="assets/Images/grasp-logo.svg" alt="GRASP" class="quality-cert__logo quality-cert__logo--compact" loading="lazy" />
+            </div>
+            <span class="quality-cert__label">{{ 'products_page.quality.cert2' | transloco }}</span>
+          </div>
+          <div class="quality-cert">
+            <div class="quality-cert__logo-wrap">
+              <img src="assets/Images/sedex-logo.jpg" alt="Sedex" class="quality-cert__logo" loading="lazy" />
+            </div>
+            <span class="quality-cert__label">{{ 'products_page.quality.cert3' | transloco }}</span>
+          </div>
+          <div class="quality-cert">
+            <div class="quality-cert__logo-wrap">
+              <img src="assets/Images/brcgs-food-safety-logo.png" alt="BRCGS Food Safety" class="quality-cert__logo quality-cert__logo--compact" loading="lazy" />
+            </div>
+            <span class="quality-cert__label">{{ 'products_page.quality.cert4' | transloco }}</span>
+          </div>
         </div>
       </div>
     </section>

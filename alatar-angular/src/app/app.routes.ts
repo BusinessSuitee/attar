@@ -39,7 +39,7 @@ export const routes: Routes = [
     path: 'seasons',
     loadComponent: () =>
       import('./pages/seasons/seasons.page').then((module) => module.SeasonsPageComponent),
-    title: 'Season Calendar — Alatar Sons',
+    title: 'Season Calendar — QTC',
   },
   {
     path: 'certificates',

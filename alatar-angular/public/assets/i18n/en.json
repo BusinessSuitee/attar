@@ -1,4 +1,5 @@
 {
+  "direction": "ltr",
   "nav": {
     "home": "Home",
     "about": "About Us",
@@ -24,10 +25,40 @@
     }
   },
   "brand": {
-    "name": "Alatar Sons",
+    "name": "QTC",
     "established": "Est. 1975"
   },
   "home": {
+    "gateway": {
+      "kicker": "Your Quick Guide",
+      "title": "Start Here",
+      "desc": "Choose what you need and go straight to the details without repetition or extra steps.",
+      "products_title": "Crops",
+      "products_desc": "Products, specifications, and quote requests",
+      "seasons_title": "Season Calendar",
+      "seasons_desc": "Monthly availability for every crop",
+      "stations_title": "Stations & Lands",
+      "stations_desc": "Sorting, packing, and operating locations",
+      "partners_title": "Partners & Export",
+      "partners_desc": "Our partners and the markets we serve",
+      "gallery_title": "Gallery",
+      "gallery_desc": "A visual tour of our farms and stations",
+      "contact_title": "Talk to QTC",
+      "contact_desc": "Reach sales, request a quote, or plan a visit"
+    },
+    "network": {
+      "kicker": "From Farm to Market",
+      "title": "Three Stations, One Network",
+      "desc": "QTC, followed by MHA and Al-Attar Station, operate as one integrated sorting, packing, and export network managed by Haj Ebada's sons and brothers: Hossam El-Attar, Mahmoud El-Attar, and Abdelghani El-Attar.",
+      "main_hub": "Main Hub",
+      "cta": "Explore Stations & Locations"
+    },
+    "partners_preview": {
+      "kicker": "Partners in Success",
+      "title": "Trusted Supply and Export Relationships",
+      "desc": "We work with leading agricultural and industrial organizations, building long-term partnerships based on quality and commitment.",
+      "cta": "Meet Our Partner Network"
+    },
     "certifications": {
       "kicker": "Our Station Accreditations",
       "title": "International Certificates & Accreditations",
@@ -40,7 +71,7 @@
       "tag": "A Legacy of Trust",
       "name": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar, known as Obada Al-Attar",
       "quote": "\"Trade built on ethics and keeping promises... from our farms to the world with full honesty\"",
-      "p1": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar, known as Obada Al-Attar, grew up embracing the Holy Quran and authentic morals, which formed the foundation of the \"Al-Attar Sons\" empire. He was not just a trader, but an advisor, a peacemaker, and a pioneer who laid the first stone for modern export agriculture in Egypt.",
+      "p1": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar, known as Obada Al-Attar, grew up embracing the Holy Quran and authentic morals, which formed the foundation of QTC. He was not just a trader, but an advisor, a peacemaker, and a pioneer who laid the first stone for modern export agriculture in Egypt.",
       "p2": "What began as a passion for the land transformed, through his vision and wisdom, into a deep-rooted institution lasting over half a century, preserving the covenant and passing the trust from generation to generation.",
       "role": "Group Founder",
       "headline_prefix": "A story of legacy, told since",
@@ -65,7 +96,7 @@
       "local_partners": "Partners in Success",
       "global_title": "Global Export Gateway",
       "global_subtitle": "+50,000 Tons Annually",
-      "global_desc": "An integrated infrastructure ensures our products reach European and Asian markets fresh, via three world-class packing stations (Al-Attar, MHA, QTC) under the management of Haj Ebada's sons: Abdelghani El-Attar, Mahmoud El-Attar, and Hossam El-Attar.",
+      "global_desc": "An integrated infrastructure ensures our products reach European and Asian markets fresh, via three world-class packing stations (QTC, MHA, Al-Attar) managed by Haj Ebada's sons and brothers: Hossam El-Attar, Mahmoud El-Attar, and Abdelghani El-Attar.",
       "global_partners": "Symbols of trust and quality"
     },
     "products": {
@@ -104,12 +135,12 @@
     "cta": {
       "kicker": "Get in Touch",
       "title": "Looking for a Reliable Agricultural Partner?",
-      "desc": "Whether you need massive volumes for the local market or global export quality, Al-Attar Sons ensures commitment and quality in every shipment.",
+      "desc": "Whether you need massive volumes for the local market or global export quality, QTC ensures commitment and quality in every shipment.",
       "sales": "Contact Sales",
       "catalog": "Download Catalog"
     },
     "hero": {
-      "slide1_tag": "Alatar Sons — Since 1975",
+      "slide1_tag": "QTC — Since 1975",
       "slide1_title": "From our farms to the world with full honesty",
       "slide1_sub": "Trade built on ethics and keeping promises, generation after generation",
       "slide2_tag": "Supply & Export Power",
@@ -268,7 +299,7 @@
       "btn2": "Download Company Profile"
     },
     "footer": {
-      "brand_name": "Alatar Sons",
+      "brand_name": "QTC",
       "brand_desc": "We are committed to delivering Egypt's finest agricultural crops to the world while maintaining the highest standards of quality and sustainability.",
       "quick_links_title": "Quick Links",
       "link_about": "About Us",
@@ -278,7 +309,7 @@
       "contact_title": "Contact Us",
       "address": "Sadat City, Menoufia, Egypt",
       "follow_title": "Follow Us",
-      "copyright": "© 2026 Alatar Sons. All rights reserved."
+      "copyright": "© 2026 QTC. All rights reserved."
     }
   },
   "stations": {
@@ -359,7 +390,7 @@
       "sales_btn": "Contact Sales"
     },
     "footer": {
-      "brand_name": "Alatar Sons",
+      "brand_name": "QTC",
       "brand_desc": "An integrated station ecosystem for sorting, packing, and exporting Egyptian crops at premium quality.",
       "quick_links_title": "Quick Links",
       "link_about": "About Us",
@@ -373,7 +404,7 @@
       "newsletter_title": "Newsletter",
       "newsletter_desc": "Subscribe for crop updates, seasonal insights, and supply opportunities.",
       "newsletter_placeholder": "Enter your email",
-      "copyright": "© 2026 Alatar Sons. All rights reserved.",
+      "copyright": "© 2026 QTC. All rights reserved.",
       "made_in": "Made in Egypt"
     }
   },
@@ -384,6 +415,7 @@
       "desc": "We offer a diverse selection of premium Egyptian crops, carefully grown and processed to the highest global export standards."
     },
     "filters": {
+      "product_variety": "Product / Variety",
       "all": "All Products",
       "all_products": "All Products",
       "citrus": "Citrus",
@@ -415,7 +447,7 @@
     "featured": {
       "badge": "Pride of Egyptian Agriculture",
       "title": "Egyptian Citrus & Oranges",
-      "desc": "Alatar is a pioneer in exporting Egyptian citrus, owning vast farms that produce the finest oranges globally demanded due to the ideal climate and fertile soil, with strict quality control from planting to packing.",
+      "desc": "QTC is a pioneer in exporting Egyptian citrus, owning vast farms that produce the finest oranges globally demanded due to the ideal climate and fertile soil, with strict quality control from planting to packing.",
       "varieties": "Available Varieties",
       "var_navel": "Navel Oranges",
       "var_valencia": "Valencia Oranges",
@@ -438,11 +470,12 @@
       "empty_desc": "Try another category or contact our sales team for upcoming availability."
     },
     "quality": {
-      "title": "Quality & Food Safety Guarantee",
-      "desc": "We strictly adhere to global food safety standards ensuring our products arrive healthy and safe for consumers. All our stations and farms are tightly monitored and apply the latest agricultural protocols.",
-      "cert1": "Agricultural Practices",
-      "cert2": "Food Safety",
-      "cert3": "Quality Management"
+      "title": "Trusted Quality at Every Stage",
+      "desc": "From farm to sorting, packing, and export, we follow rigorous quality and food-safety procedures. These logos represent the accreditations applied across our stations.",
+      "cert1": "GLOBALG.A.P.",
+      "cert2": "GRASP",
+      "cert3": "Sedex Member",
+      "cert4": "BRCGS Food Safety"
     },
     "cta": {
       "title": "Ready to order your crops?",
@@ -588,7 +621,7 @@
       "grapes": "Grapes",
       "contact_us": "Contact Us",
       "address": "Cairo-Alexandria Desert Road, Egypt",
-      "copyright": "© 2026 Alatar Group. All rights reserved.",
+      "copyright": "© 2026 QTC. All rights reserved.",
       "privacy": "Privacy Policy",
       "terms": "Terms & Conditions"
     }
@@ -683,9 +716,9 @@
   },
   "gallery_page": {
     "hero": {
-      "tag": "Alatar Sons",
+      "tag": "QTC",
       "title": "Visual Gallery",
-      "subtitle": "A visual documentation of Alatar Sons' journey in agriculture and export. A tour inside our farms and modern sorting stations ensuring the highest quality."
+      "subtitle": "A visual documentation of QTC's journey in agriculture and export. A tour inside our farms and modern sorting stations ensuring the highest quality."
     },
     "filters": {
       "all": "All",
@@ -781,7 +814,7 @@
   },
   "footer": {
     "established": "Est. 1975",
-    "brand_name": "Alatar Sons",
+    "brand_name": "QTC",
     "brand_desc": "We are committed to delivering Egypt's finest agricultural crops to the world while maintaining the highest standards of quality and sustainability.",
     "nav_title": "Quick Links",
     "link_home": "Home",
@@ -797,7 +830,7 @@
     "phone": "+20 1092069059",
     "phone2": "+20 109 2069059",
     "social_title": "Follow Us",
-    "copyright": "© 2026 Alatar Sons. All rights reserved."
+    "copyright": "© 2026 QTC. All rights reserved."
   },
   "contact_page": {
     "title": "Contact Us & Order Now",

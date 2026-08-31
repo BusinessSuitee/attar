@@ -23,11 +23,7 @@ import { API_BASE_URL } from '../../core/config/api-base-url.token';
   standalone: true,
   imports: [NavbarComponent, HeroComponent, TranslocoModule, RouterLink, ScrollRevealDirective],
   templateUrl: './home.page.html',
-  styleUrls: [
-    './home.page.css',
-    './home.founder.css',
-    './home.partners.css',
-  ],
+  styleUrl: './home.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit, AfterViewInit {
@@ -42,21 +38,21 @@ export class HomePageComponent implements OnInit, AfterViewInit {
   readonly featuredProducts = computed<ProductListItem[]>(() => {
     const products = this.productsStore.products();
     if (!products || products.length === 0) return [];
-    
+
     // Try to get diverse products (one vegetable, one fruit)
     const veg = products.find(p => p.productType === 'Vegetable' && p.status !== 'Invalid');
     const fruit = products.find(p => p.productType === 'Fruit' && p.status !== 'Invalid');
-    
+
     const selected = new Set<ProductListItem>();
     if (veg) selected.add(veg);
     if (fruit) selected.add(fruit);
-    
+
     // Fill up to 3 if we didn't find diverse ones
     for (const p of products) {
       if (selected.size >= 3) break;
       if (p.status !== 'Invalid') selected.add(p);
     }
-    
+
     return Array.from(selected);
   });
 

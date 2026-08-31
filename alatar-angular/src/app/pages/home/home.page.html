@@ -2,455 +2,269 @@
 <app-hero></app-hero>
 
 <main class="page-shell pb-mobile-dock" *transloco="let t; read: 'home'">
-  <!-- ═══ FOUNDER MONUMENT — iconic portrait, data orbiting ═══ -->
-  <section id="about" class="patron-section" aria-labelledby="patron-heading">
-    <div class="patron-year-ghost" aria-hidden="true">1975</div>
+  <!-- A clear index to the whole website -->
+  <section class="home-gateway" aria-labelledby="gateway-heading">
+    <header class="home-section-heading" appScrollReveal="up">
+      <span class="home-section-kicker">{{ t('gateway.kicker') }}</span>
+      <h2 id="gateway-heading">{{ t('gateway.title') }}</h2>
+      <p>{{ t('gateway.desc') }}</p>
+    </header>
 
-    <div class="patron-shell">
-
-      <!-- Col 1 · Info -->
-      <div class="patron-info" appScrollReveal="up" revealDelay="0">
-        <span class="patron-kicker">
-          <span class="patron-kicker-dot" aria-hidden="true"></span>
-          {{ t('founder.tag') }}
+    <nav class="home-gateway-grid" [attr.aria-label]="t('gateway.title')">
+      <a routerLink="/products" class="home-gateway-card" appScrollReveal="up">
+        <span class="home-gateway-card__icon material-symbols-outlined" aria-hidden="true">agriculture</span>
+        <span class="home-gateway-card__body">
+          <strong>{{ t('gateway.products_title') }}</strong>
+          <small>{{ t('gateway.products_desc') }}</small>
         </span>
+        <span class="material-symbols-outlined home-gateway-card__arrow" aria-hidden="true">arrow_forward</span>
+      </a>
 
-        <h2 id="patron-heading" class="patron-heading">
-          {{ t('founder.headline_prefix') }}
-          <span class="patron-heading__year">1975</span>
-        </h2>
+      <a routerLink="/seasons" class="home-gateway-card" appScrollReveal="up" revealDelay="60">
+        <span class="home-gateway-card__icon material-symbols-outlined" aria-hidden="true">calendar_month</span>
+        <span class="home-gateway-card__body">
+          <strong>{{ t('gateway.seasons_title') }}</strong>
+          <small>{{ t('gateway.seasons_desc') }}</small>
+        </span>
+        <span class="material-symbols-outlined home-gateway-card__arrow" aria-hidden="true">arrow_forward</span>
+      </a>
 
-        <p class="patron-since">SINCE <span>1975</span></p>
+      <a routerLink="/stations" class="home-gateway-card" appScrollReveal="up" revealDelay="120">
+        <span class="home-gateway-card__icon material-symbols-outlined" aria-hidden="true">factory</span>
+        <span class="home-gateway-card__body">
+          <strong>{{ t('gateway.stations_title') }}</strong>
+          <small>{{ t('gateway.stations_desc') }}</small>
+        </span>
+        <span class="material-symbols-outlined home-gateway-card__arrow" aria-hidden="true">arrow_forward</span>
+      </a>
 
-        <div class="patron-side-stats" *transloco="let s; read: 'about.stats'">
-          <div class="patron-side-stat">
-            <strong>{{ s('stat1Num') }}</strong>
-            <span>{{ s('stat1Text') }}</span>
-          </div>
-          <div class="patron-side-stat">
-            <strong>{{ s('stat3Num') }}</strong>
-            <span>{{ s('stat3Text') }}</span>
-          </div>
-        </div>
-      </div>
+      <a routerLink="/partners" class="home-gateway-card" appScrollReveal="up" revealDelay="180">
+        <span class="home-gateway-card__icon material-symbols-outlined" aria-hidden="true">handshake</span>
+        <span class="home-gateway-card__body">
+          <strong>{{ t('gateway.partners_title') }}</strong>
+          <small>{{ t('gateway.partners_desc') }}</small>
+        </span>
+        <span class="material-symbols-outlined home-gateway-card__arrow" aria-hidden="true">arrow_forward</span>
+      </a>
 
-      <!-- Col 2 · Iconic Portrait -->
-      <figure class="patron-portrait-wrap" appScrollReveal="up" revealDelay="80">
-        <div class="patron-portrait">
-          <img
-            src="assets/Images/alattar.jpeg"
-            [attr.alt]="t('founder.name')"
-            loading="eager"
-            fetchpriority="high"
-          />
-        </div>
-        <figcaption class="patron-caption">
-          <strong>{{ t('founder.role') }}</strong>
-          <span>{{ t('founder.name') }}</span>
-        </figcaption>
-      </figure>
+      <a routerLink="/gallery" class="home-gateway-card" appScrollReveal="up" revealDelay="240">
+        <span class="home-gateway-card__icon material-symbols-outlined" aria-hidden="true">collections</span>
+        <span class="home-gateway-card__body">
+          <strong>{{ t('gateway.gallery_title') }}</strong>
+          <small>{{ t('gateway.gallery_desc') }}</small>
+        </span>
+        <span class="material-symbols-outlined home-gateway-card__arrow" aria-hidden="true">arrow_forward</span>
+      </a>
 
-      <!-- Col 3 · Story -->
-      <div class="patron-story" appScrollReveal="up" revealDelay="160">
-        <blockquote class="patron-quote">
-          <p>{{ t('founder.quote') }}</p>
-          <cite>{{ t('founder.cite') }}</cite>
-        </blockquote>
-
-        <ul class="patron-values">
-          <li>
-            <span class="patron-value-num">01</span>
-            <span class="patron-value-text">{{ t('founder.pillar1_title') }}</span>
-          </li>
-          <li>
-            <span class="patron-value-num">02</span>
-            <span class="patron-value-text">{{ t('founder.pillar2_title') }}</span>
-          </li>
-          <li>
-            <span class="patron-value-num">03</span>
-            <span class="patron-value-text">{{ t('founder.pillar3_title') }}</span>
-          </li>
-        </ul>
-
-        <a routerLink="/about" class="patron-cta">{{ t('founder.cta') }}</a>
-      </div>
-
-    </div><!-- /patron-shell -->
-
-    <!-- Stats ribbon -->
-    <div class="patron-stats" appScrollReveal="up" revealDelay="200" *transloco="let s; read: 'about.stats'">
-      <div class="patron-stat">
-        <strong>{{ s('stat1Num') }}</strong>
-        <span>{{ s('stat1Text') }}</span>
-      </div>
-      <div class="patron-stat">
-        <strong>{{ s('stat2Num') }}</strong>
-        <span>{{ s('stat2Text') }}</span>
-      </div>
-      <div class="patron-stat">
-        <strong>{{ s('stat3Num') }}</strong>
-        <span>{{ s('stat3Text') }}</span>
-      </div>
-      <div class="patron-stat">
-        <strong>{{ s('stat4Num') }}</strong>
-        <span>{{ s('stat4Text') }}</span>
-      </div>
-    </div>
+      <a routerLink="/contact" class="home-gateway-card home-gateway-card--contact" appScrollReveal="up" revealDelay="300">
+        <span class="home-gateway-card__icon material-symbols-outlined" aria-hidden="true">call</span>
+        <span class="home-gateway-card__body">
+          <strong>{{ t('gateway.contact_title') }}</strong>
+          <small>{{ t('gateway.contact_desc') }}</small>
+        </span>
+        <span class="material-symbols-outlined home-gateway-card__arrow" aria-hidden="true">arrow_forward</span>
+      </a>
+    </nav>
   </section>
 
+  <!-- What QTC offers -->
   @defer (on viewport) {
-  <section id="partners" class="partners-section" aria-labelledby="partners-title" *transloco="let map; read: 'partners.map'">
-    <div class="partners-section__grid" aria-hidden="true"></div>
-
-    <div class="partners-shell">
-      <header class="partners-header" appScrollReveal="up">
-        <span class="partners-kicker">
-          <span class="partners-kicker__dot" aria-hidden="true"></span>
-          {{ t('partners.kicker') }}
-        </span>
-        <h2 id="partners-title" class="partners-title">{{ t('partners.title') }}</h2>
-        <p class="partners-desc">{{ t('partners.desc') }}</p>
-      </header>
-
-      <div class="partners-layout">
-        <article
-          class="partners-card"
-          appScrollReveal="up"
-          revealDelay="120"
-          *transloco="let strategic; read: 'partners.strategic'"
-        >
-          <div class="partners-card__head">
-            <span class="partners-card__num">01</span>
-            <span class="partners-card__eyebrow">{{ t('partners.local_subtitle') }}</span>
+    <section id="products" class="products-section" aria-labelledby="products-heading">
+      <div class="products-shell">
+        <header class="products-head" appScrollReveal="up">
+          <div>
+            <span class="products-kicker">{{ t('products.kicker') }}</span>
+            <h2 id="products-heading">{{ t('products.title') }}</h2>
           </div>
 
-          <h3 class="partners-card__title">{{ t('partners.local_title') }}</h3>
-          <p class="partners-card__copy">{{ t('partners.local_desc') }}</p>
+          <a class="products-link" routerLink="/products">
+            {{ t('products.view_all') }}
+          </a>
+        </header>
 
-          <div class="partners-card__foot">
-            <span class="partners-card__label">{{ t('partners.local_partners') }}</span>
-            <div class="partners-card__tags">
-              <span>{{ strategic('partner1') }}</span>
-              <span>{{ strategic('partner2') }}</span>
-              <span>{{ strategic('partner4') }}</span>
-              <span>{{ strategic('partner6') }}</span>
-            </div>
-          </div>
-        </article>
+        <div class="products-grid" role="list">
+          @for (product of featuredProducts(); track product.id) {
+            <article
+              class="product-card"
+              [class.product-card--coming-soon]="isComingSoon(product)"
+              role="listitem"
+              appScrollReveal="up"
+            >
+              <a class="product-card-img" [routerLink]="['/products', product.id]">
+                @if (hasImages(product)) {
+                  <img
+                    [src]="firstImage(product)"
+                    [alt]="displayPrimaryName(product)"
+                    [class.product-card-img--grayscale]="isComingSoon(product)"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                } @else {
+                  <div class="product-card-placeholder">
+                    <span class="material-symbols-outlined">agriculture</span>
+                  </div>
+                }
+                <span class="product-card-cat" [class.product-card-cat--coming]="isComingSoon(product)">
+                  {{ categoryLabelKey(product) | transloco }}
+                </span>
+              </a>
 
-        <div class="partners-map" appScrollReveal="up" revealDelay="200">
-          <span class="partners-map__kicker">{{ map('kicker') }}</span>
-          <img
-            class="partners-map__img"
-            src="assets/Images/MAP.png"
-            [alt]="map('title')"
-            loading="lazy"
-          />
-          <div class="partners-map__legend" aria-hidden="true">
-            <span class="partners-map__legend-dot"></span>
-            <span class="partners-map__legend-text">CAIRO · EGYPT</span>
-          </div>
-        </div>
-
-        <article class="partners-card" appScrollReveal="up" revealDelay="280">
-          <div class="partners-card__head">
-            <span class="partners-card__num">02</span>
-            <span class="partners-card__eyebrow">{{ t('partners.global_subtitle') }}</span>
-          </div>
-
-          <h3 class="partners-card__title">{{ t('partners.global_title') }}</h3>
-          <p class="partners-card__copy">{{ t('partners.global_desc') }}</p>
-
-          <div class="partners-card__foot">
-            <span class="partners-card__label">{{ t('partners.global_partners') }}</span>
-
-            <ul class="partners-stations" role="list">
-              <li>
-                <span class="partners-stations__dot" aria-hidden="true"></span>
-                <div>
-                  <strong>{{ 'stations.attar.title' | transloco }}</strong>
-                  <span class="partners-stations__meta">
-                    {{ map('center') }}
-                  </span>
+              <div class="product-card-body">
+                <h3>
+                  <a [routerLink]="['/products', product.id]">
+                    {{ displayPrimaryName(product) }}
+                  </a>
+                </h3>
+                <p class="product-card-season">
+                  <span class="material-symbols-outlined">calendar_month</span>
+                  {{ seasonLabelKey(product.season) | transloco }}
+                </p>
+                <p class="product-card-desc">{{ displayPrimaryDescription(product) }}</p>
+                <div class="product-card-cta">
+                  <a class="btn btn-outline btn-sm" [routerLink]="['/products', product.id]">
+                    {{ 'products_page.buttons.view_details' | transloco }}
+                  </a>
                 </div>
-              </li>
-              <li>
-                <span class="partners-stations__dot partners-stations__dot--alt" aria-hidden="true"></span>
-                <div>
-                  <strong>{{ 'stations.mha.title' | transloco }}</strong>
-                  <span class="partners-stations__meta">
-                    {{ map('gulf_region') }} · {{ map('russia_region') }}
-                  </span>
-                </div>
-              </li>
-              <li>
-                <span class="partners-stations__dot partners-stations__dot--third" aria-hidden="true"></span>
-                <div>
-                  <strong>{{ 'stations.qtc.title' | transloco }}</strong>
-                  <span class="partners-stations__meta">
-                    {{ map('eu_region') }}
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-
-      <div class="partners-stats" appScrollReveal="up" revealDelay="340" *transloco="let stats; read: 'partners.stats'">
-        <article class="partners-stat">
-          <strong>{{ stats('export_value') }}</strong>
-          <span>{{ stats('export_label') }}</span>
-        </article>
-        <article class="partners-stat">
-          <strong>{{ stats('volume_value') }}</strong>
-          <span>{{ stats('volume_label') }}</span>
-        </article>
-        <article class="partners-stat">
-          <strong>{{ stats('quality_value') }}</strong>
-          <span>{{ stats('quality_label') }}</span>
-        </article>
-      </div>
-      <div class="mt-12 text-center" appScrollReveal="up" revealDelay="400">
-        <a routerLink="/partners" class="inline-flex items-center justify-center rounded-full border-2 border-[var(--cleo-gold-deep)] px-8 py-3 text-sm font-bold text-[var(--cleo-gold-deep)] transition-all hover:bg-[var(--cleo-gold-deep)] hover:text-white no-underline">
-          {{ 'nav.partners' | transloco }}
-        </a>
-      </div>
-    </div>
-  </section>
-  } @placeholder {
-    <div style="min-height: 600px"></div>
-  }
-  @defer (on viewport) {
-  <section id="products" class="products-section">
-    <div class="products-shell">
-      <header class="products-head" appScrollReveal="up">
-        <div>
-          <span class="products-kicker">{{ t('products.kicker') }}</span>
-          <h2>{{ t('products.title') }}</h2>
-        </div>
-
-        <a class="products-link" routerLink="/products">
-          {{ t('products.view_all') }}
-          <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-        </a>
-      </header>
-
-      <div class="products-grid" role="list">
-        @for (product of featuredProducts(); track product.id) {
-          <article
-            class="product-card"
-            [class.product-card--coming-soon]="isComingSoon(product)"
-            role="listitem"
-            appScrollReveal="up"
-          >
-            <!-- Image -->
-            <a class="product-card-img" [routerLink]="['/products', product.id]">
-              @if (hasImages(product)) {
-                <img
-                  [src]="firstImage(product)"
-                  [alt]="displayPrimaryName(product)"
-                  [class.product-card-img--grayscale]="isComingSoon(product)"
-                  loading="lazy"
-                  decoding="async"
-                />
-              } @else {
-                <div class="product-card-placeholder">
-                  <span class="material-symbols-outlined">agriculture</span>
-                </div>
-              }
-              <span class="product-card-cat" [class.product-card-cat--coming]="isComingSoon(product)">
-                {{ categoryLabelKey(product) | transloco }}
-              </span>
-            </a>
-
-            <!-- Info Body -->
-            <div class="product-card-body">
-              <h3>
-                <a [routerLink]="['/products', product.id]" class="hover:text-[var(--cleo-gold-deep)] transition-colors text-inherit no-underline block">
-                  {{ displayPrimaryName(product) }}
-                </a>
-              </h3>
-              
-              <p class="product-card-season">
-                <span class="material-symbols-outlined">calendar_month</span>
-                {{ seasonLabelKey(product.season) | transloco }}
-              </p>
-
-              <p class="product-card-desc">{{ displayPrimaryDescription(product) }}</p>
-
-              <!-- CTA -->
-              <div class="product-card-cta">
-                <a
-                  class="btn btn-outline btn-sm"
-                  [routerLink]="['/products', product.id]"
-                >
-                  {{ 'products_page.buttons.view_details' | transloco }}
-                </a>
               </div>
-            </div>
-          </article>
-        }
+            </article>
+          }
+        </div>
+
+        <div class="all-products-wrapper">
+          <a routerLink="/products" class="btn btn-primary btn-large">{{ t('products.view_all') }}</a>
+        </div>
       </div>
-      
-      <div class="all-products-wrapper">
-        <a routerLink="/products" class="btn btn-primary btn-large">
-          {{ t('products.view_all') }}
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
   } @placeholder {
     <div style="min-height: 600px"></div>
   }
 
-  <!-- Station Certifications -->
-  <section
-    id="certificates"
-    class="scroll-mt-24 py-16 sm:py-20 bg-[#f8f4e9] dark:bg-background-dark/70 border-y border-[#e6dfca] dark:border-slate-800"
-    aria-labelledby="certificates-heading"
-  >
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10">
-      <header class="mb-10 text-center" appScrollReveal="up">
-        <span class="text-primary font-bold text-sm tracking-wider uppercase mb-3 block">
-          {{ t('certifications.kicker') }}
-        </span>
-        <h2 id="certificates-heading" class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-bold">
-          {{ t('certifications.title') }}
-        </h2>
-        <p class="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-300">
-          {{ t('certifications.desc') }}
-        </p>
-      </header>
+  <!-- How QTC operates: concise station overview -->
+  <section class="home-network" aria-labelledby="network-heading">
+    <header class="home-section-heading home-section-heading--light" appScrollReveal="up">
+      <span class="home-section-kicker">{{ t('network.kicker') }}</span>
+      <h2 id="network-heading">{{ t('network.title') }}</h2>
+      <p>{{ t('network.desc') }}</p>
+    </header>
 
-      <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(240px,0.48fr)]">
-        <article
-          class="bg-white rounded-3xl border border-[#ded7c4] p-7 sm:p-10 shadow-[0_14px_40px_rgba(92,76,35,0.08)]"
-          appScrollReveal="up"
-        >
-          <div class="mb-8 flex items-center gap-3">
-            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <span class="material-symbols-outlined" aria-hidden="true">factory</span>
-            </span>
-            <div>
-              <p class="text-xs font-bold tracking-[0.16em] text-primary uppercase">{{ t('certifications.station_label') }}</p>
-              <h3 class="text-xl font-bold text-slate-900">{{ t('certifications.mha_title') }}</h3>
-            </div>
-          </div>
+    <div class="home-network-grid">
+      <article class="home-network-card home-network-card--qtc" appScrollReveal="up">
+        <div class="home-network-card__topline">
+          <span class="home-network-card__number">01</span>
+          <span class="home-network-card__badge">{{ 'stations.qtc.badge' | transloco }}</span>
+        </div>
+        <span class="material-symbols-outlined home-network-card__icon" aria-hidden="true">verified</span>
+        <h3>{{ 'stations.qtc.title' | transloco }}</h3>
+        <p class="home-network-card__manager">{{ 'stations.qtc.manager' | transloco }}</p>
+        <p>{{ 'stations.qtc.desc' | transloco }}</p>
+      </article>
 
-          <div class="grid grid-cols-2 gap-x-5 gap-y-9 sm:gap-x-10">
-            <div class="flex min-w-0 flex-col items-center justify-end gap-3">
-              <div class="flex h-20 sm:h-24 w-full items-center justify-center">
-                <img src="assets/Images/globalgap-logo.png" alt="GLOBALG.A.P." class="max-h-full max-w-[90%] object-contain" loading="lazy" />
-              </div>
-              <span class="text-xs sm:text-sm font-bold tracking-[0.14em] text-[#0d2e22]">GLOBALG.A.P.</span>
-            </div>
-            <div class="flex min-w-0 flex-col items-center justify-end gap-3">
-              <div class="flex h-20 sm:h-24 w-full items-center justify-center">
-                <img src="assets/Images/grasp-logo.svg" alt="GRASP" class="max-h-full max-w-[72%] object-contain" loading="lazy" />
-              </div>
-              <span class="text-xs sm:text-sm font-bold tracking-[0.14em] text-[#0d2e22]">GRASP</span>
-            </div>
-            <div class="flex min-w-0 flex-col items-center justify-end gap-3">
-              <div class="flex h-20 sm:h-24 w-full items-center justify-center">
-                <img src="assets/Images/sedex-logo.jpg" alt="Sedex" class="max-h-full max-w-[92%] object-contain" loading="lazy" />
-              </div>
-              <span class="text-xs sm:text-sm font-bold tracking-[0.14em] text-[#0d2e22]">SEDEX MEMBER</span>
-            </div>
-            <div class="flex min-w-0 flex-col items-center justify-end gap-3">
-              <div class="flex h-20 sm:h-24 w-full items-center justify-center">
-                <img src="assets/Images/brcgs-food-safety-logo.png" alt="BRCGS Food Safety" class="max-h-full max-w-[78%] object-contain" loading="lazy" />
-              </div>
-              <span class="max-w-36 text-center text-xs sm:text-sm font-bold leading-relaxed tracking-[0.12em] text-[#0d2e22]">BRCGS FOOD SAFETY</span>
-            </div>
-          </div>
-        </article>
+      <article class="home-network-card" appScrollReveal="up" revealDelay="80">
+        <div class="home-network-card__topline">
+          <span class="home-network-card__number">02</span>
+          <span class="home-network-card__badge">{{ 'stations.mha.badge' | transloco }}</span>
+        </div>
+        <span class="material-symbols-outlined home-network-card__icon" aria-hidden="true">factory</span>
+        <h3>{{ 'stations.mha.title' | transloco }}</h3>
+        <p class="home-network-card__manager">{{ 'stations.mha.manager' | transloco }}</p>
+        <p>{{ 'stations.mha.desc' | transloco }}</p>
+      </article>
 
-        <article
-          class="bg-[#103d2b] rounded-3xl p-7 sm:p-10 text-center shadow-[0_14px_40px_rgba(16,61,43,0.18)] flex flex-col items-center justify-center"
-          appScrollReveal="up"
-          revealDelay="100"
-        >
-          <span class="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-[#d9b653]">
-            <span class="material-symbols-outlined" aria-hidden="true">verified</span>
-          </span>
-          <p class="text-xs font-bold tracking-[0.16em] text-[#d9b653] uppercase">{{ t('certifications.station_label') }}</p>
-          <h3 class="mt-2 text-2xl font-bold text-white">{{ t('certifications.qtc_title') }}</h3>
-          <div class="my-8 flex h-28 w-full items-center justify-center rounded-2xl bg-white p-5">
-            <img src="assets/Images/globalgap-logo.png" alt="GLOBALG.A.P." class="max-h-full max-w-[86%] object-contain" loading="lazy" />
+      <article class="home-network-card" appScrollReveal="up" revealDelay="160">
+        <div class="home-network-card__topline">
+          <span class="home-network-card__number">03</span>
+          <span class="home-network-card__badge">{{ t('network.main_hub') }}</span>
+        </div>
+        <span class="material-symbols-outlined home-network-card__icon" aria-hidden="true">warehouse</span>
+        <h3>{{ 'stations.attar.title' | transloco }}</h3>
+        <p class="home-network-card__manager">{{ 'stations.attar.manager' | transloco }}</p>
+        <p>{{ 'stations.attar.desc' | transloco }}</p>
+      </article>
+    </div>
+
+    <div class="home-section-action" appScrollReveal="up">
+      <a routerLink="/stations" class="home-outline-link">
+        {{ t('network.cta') }}
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Trust: certifications and partner logos, without document downloads -->
+  <section id="certificates" class="home-trust scroll-mt-24" aria-labelledby="certificates-heading">
+    <header class="home-section-heading" appScrollReveal="up">
+      <span class="home-section-kicker">{{ t('certifications.kicker') }}</span>
+      <h2 id="certificates-heading">{{ t('certifications.title') }}</h2>
+      <p>{{ t('certifications.desc') }}</p>
+    </header>
+
+    <div class="home-cert-grid">
+      <article class="home-cert-card" appScrollReveal="up">
+        <div class="home-cert-card__heading">
+          <span class="material-symbols-outlined" aria-hidden="true">factory</span>
+          <div>
+            <small>{{ t('certifications.station_label') }}</small>
+            <h3>{{ t('certifications.mha_title') }}</h3>
           </div>
-          <span class="text-sm font-bold tracking-[0.14em] text-white">GLOBALG.A.P.</span>
-        </article>
+        </div>
+        <div class="home-cert-logos home-cert-logos--four">
+          <img src="assets/Images/globalgap-logo.png" alt="GLOBALG.A.P." loading="lazy" />
+          <img src="assets/Images/grasp-logo.svg" alt="GRASP" loading="lazy" />
+          <img src="assets/Images/sedex-logo.jpg" alt="Sedex" loading="lazy" />
+          <img src="assets/Images/brcgs-food-safety-logo.png" alt="BRCGS Food Safety" loading="lazy" />
+        </div>
+      </article>
+
+      <article class="home-cert-card home-cert-card--qtc" appScrollReveal="up" revealDelay="100">
+        <div class="home-cert-card__heading">
+          <span class="material-symbols-outlined" aria-hidden="true">verified</span>
+          <div>
+            <small>{{ t('certifications.station_label') }}</small>
+            <h3>{{ t('certifications.qtc_title') }}</h3>
+          </div>
+        </div>
+        <div class="home-cert-logos home-cert-logos--single">
+          <img src="assets/Images/globalgap-logo.png" alt="GLOBALG.A.P." loading="lazy" />
+        </div>
+      </article>
+    </div>
+
+    <div class="home-partner-preview" appScrollReveal="up">
+      <div class="home-partner-preview__copy">
+        <span class="home-section-kicker">{{ t('partners_preview.kicker') }}</span>
+        <h3>{{ t('partners_preview.title') }}</h3>
+        <p>{{ t('partners_preview.desc') }}</p>
+        <a routerLink="/partners">{{ t('partners_preview.cta') }}</a>
+      </div>
+      <div class="home-partner-logos" aria-label="Partners">
+        <img src="assets/Images/logos/elwadi.jpg" alt="El-Wadi" loading="lazy" />
+        <img src="assets/Images/logos/nahdet misr.jpg" alt="Nahda Misr" loading="lazy" />
+        <img src="assets/Images/logos/pico.png" alt="Pico" loading="lazy" />
+        <img src="assets/Images/logos/horus.jpg" alt="Horus" loading="lazy" />
+        <img src="assets/Images/logos/maghrabi.jpg" alt="Al-Maghribi" loading="lazy" />
       </div>
     </div>
   </section>
 
-  <!-- Samples from other pages -->
-  @defer (on viewport) {
-  <section class="py-16 sm:py-24 bg-background-light dark:bg-background-dark relative border-t border-neutral-light dark:border-neutral-dark/30">
-    <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
-      <header class="mb-12 text-center" appScrollReveal="up">
-        <h2 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-slate-100 mb-4">{{ 'nav.more' | transloco }}</h2>
-      </header>
+  <!-- The human story: concise preview only -->
+  <section id="about" class="home-story" aria-labelledby="story-heading">
+    <div class="home-story__image" appScrollReveal="up">
+      <img src="assets/Images/alattar.jpeg" [alt]="t('founder.name')" loading="lazy" />
+      <span>{{ t('founder.role') }}</span>
+    </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <!-- Stations -->
-        <a routerLink="/stations" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="0">
-          <img src="assets/Images/alattarstation2.jpeg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
-          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
-            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
-              <span class="material-symbols-outlined">factory</span>
-            </span>
-            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.stations' | transloco }}</h3>
-          </div>
-        </a>
-
-        <!-- Seasons -->
-        <a routerLink="/seasons" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="100">
-          <img src="assets/Images/غسيل.png" onerror="this.src='assets/Images/فرز.png'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
-          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
-            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
-              <span class="material-symbols-outlined">calendar_month</span>
-            </span>
-            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.seasons' | transloco }}</h3>
-          </div>
-        </a>
-
-        <!-- Certificates -->
-        <a routerLink="/" fragment="certificates" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="200">
-          <img src="assets/Images/شحن.jpeg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
-          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
-            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
-              <span class="material-symbols-outlined">workspace_premium</span>
-            </span>
-            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.certificates' | transloco }}</h3>
-          </div>
-        </a>
-
-        <!-- Gallery -->
-        <a routerLink="/gallery" class="group block relative h-80 rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-2 no-underline" appScrollReveal="up" revealDelay="300">
-          <img src="assets/Images/alattarstationinside2.jpeg" onerror="this.src='assets/Images/تعبئة.jpeg'" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-80"></div>
-          <div class="absolute bottom-0 left-0 p-6 flex flex-col items-start w-full">
-            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-white backdrop-blur-md mb-3 group-hover:bg-primary transition-colors">
-              <span class="material-symbols-outlined">collections</span>
-            </span>
-            <h3 class="text-2xl font-bold text-white mb-0">{{ 'nav.gallery' | transloco }}</h3>
-          </div>
-        </a>
-
-      </div>
+    <div class="home-story__content" appScrollReveal="up" revealDelay="100">
+      <span class="home-section-kicker">{{ t('founder.tag') }}</span>
+      <h2 id="story-heading">{{ t('founder.headline_prefix') }} <strong>1975</strong></h2>
+      <blockquote>{{ t('founder.quote') }}</blockquote>
+      <p>{{ t('founder.p2') }}</p>
+      <a routerLink="/about" class="home-outline-link">
+        {{ t('founder.cta') }}
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      </a>
     </div>
   </section>
-  } @placeholder {
-    <div style="min-height: 400px"></div>
-  }
 
-  @defer (on viewport) {
   <section class="home-cta" aria-labelledby="cta-heading">
     <div class="home-cta__leaf home-cta__leaf--a" aria-hidden="true"></div>
     <div class="home-cta__leaf home-cta__leaf--b" aria-hidden="true"></div>
@@ -462,25 +276,13 @@
       <h2 id="cta-heading" class="home-cta__title">{{ t('cta.title') }}</h2>
       <p class="home-cta__desc">{{ t('cta.desc') }}</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-        <a
-          href="https://wa.me/201092069059"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="home-cta__btn"
-        >
+        <a href="https://wa.me/201092069059" target="_blank" rel="noopener noreferrer" class="home-cta__btn">
           {{ t('cta.sales') }}
         </a>
-        <a
-          routerLink="/contact"
-          class="home-cta__btn"
-          style="background: transparent; color: white; border: 2px solid white;"
-        >
+        <a routerLink="/contact" class="home-cta__btn" style="background: transparent; color: white; border: 2px solid white;">
           {{ 'nav.contact' | transloco }}
         </a>
       </div>
     </div>
   </section>
-  } @placeholder {
-    <div style="min-height: 300px"></div>
-  }
 </main>
