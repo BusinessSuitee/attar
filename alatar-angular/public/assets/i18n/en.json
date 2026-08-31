@@ -28,6 +28,14 @@
     "established": "Est. 1975"
   },
   "home": {
+    "certifications": {
+      "kicker": "Our Station Accreditations",
+      "title": "International Certificates & Accreditations",
+      "desc": "We present our stations' accreditations through their official logos only.",
+      "station_label": "Station",
+      "mha_title": "MHA Station",
+      "qtc_title": "QTC Station"
+    },
     "founder": {
       "tag": "A Legacy of Trust",
       "name": "Hajj Abdel Fattah Youssef Abdel Ghani Al-Attar, known as Obada Al-Attar",
@@ -250,7 +258,8 @@
       "iso_label": "Quality Management",
       "gap_label": "Certified",
       "haccp_label": "Food Safety",
-      "brcgs_label": "Global Standard"
+      "brcgs_label": "Global Standard",
+      "note": "Certificates are available to qualified buyers upon request and verification. Official logos and certificate copies are shared under confidentiality with serious buyers."
     },
     "cta": {
       "title": "Be Our Partner in Success",
@@ -275,34 +284,34 @@
   "stations": {
     "hero": {
       "title": "Our Stations: Export Infrastructure Built to Global Standards",
-      "desc": "Across our three integrated facilities—Al-Attar Station, MHA Station, and QTC Station—we operate an advanced sorting, packing, and processing ecosystem delivering premium quality to global markets."
+      "desc": "Across our three integrated facilities—QTC Station, MHA Station, and Al-Attar Station—we operate an advanced sorting, packing, and processing ecosystem delivering premium quality to global markets."
     },
     "attar": {
-      "title": "Al-Attar Station",
-      "manager": "Management: Abdelghani, Mahmoud & Hossam El-Attar",
-      "desc": "Al-Attar Station represents the foundational cornerstone of our operations under the joint management of Abdelghani, Mahmoud, and Hossam El-Attar, where receiving, sorting, and initial preparation are managed under rigorous quality-control procedures.",
+      "title": "Abdel-Raqeeb Farm & Al-Attar Station",
+      "manager": "Management: Abdelghani El-Attar",
+      "desc": "Al-Attar Station represents the foundational cornerstone of our operations under the management of Abdelghani El-Attar, where receiving, sorting, and initial preparation are managed under rigorous quality-control procedures.",
       "storage_title": "Cold Storage",
       "storage_desc": "Large storage capacity to preserve crop quality before shipping.",
       "production_title": "Production Lines",
       "production_desc": "Specialized sorting and packing lines prepared for export.",
-      "details_btn": "Explore Station Details"
+      "details_btn": "Explore Details"
     },
     "mha": {
-      "title": "MHA Station",
-      "manager": "Management: Abdelghani, Mahmoud & Hossam El-Attar",
+      "title": "Al-Shujaa Farm & MHA Station",
+      "manager": "Management: Mahmoud El-Attar",
       "badge": "Export Certified",
-      "desc": "MHA Station is equipped with modern operational technologies and strict control standards under the joint management of the three brothers, efficiently serving export needs across Europe, Russia, and the Gulf.",
+      "desc": "MHA Station is equipped with modern operational technologies and strict control standards under the management of Mahmoud El-Attar, efficiently serving export needs across Europe, Russia, and the Gulf.",
       "cert_gap": "Global GAP",
       "cert_haccp": "HACCP",
       "cert_organic": "Organic Ready",
-      "visit_btn": "Visit the Station",
+      "visit_btn": "Explore Details",
       "video_caption": "Field Tour Inside MHA Station"
     },
     "qtc": {
       "title": "QTC Station",
-      "manager": "Management: Abdelghani, Mahmoud & Hossam El-Attar",
-      "badge": "Smart Technology Hub",
-      "desc": "QTC Station is our newest state-of-the-art export facility under the joint management of Haj Ebada's sons, engineered with advanced smart optical sorting and automated packaging technologies to boost capacity and meet global demand.",
+      "manager": "Management: Hossam El-Attar",
+      "badge": "Soon",
+      "desc": "QTC Station is our newest state-of-the-art export facility under the management of Hossam El-Attar, engineered with advanced smart optical sorting and automated packaging technologies to boost capacity and meet global demand.",
       "storage_title": "Smart Optical Sorting",
       "storage_desc": "Advanced optical vision systems for high-precision grading and defect detection.",
       "production_title": "Automated Packaging",
@@ -394,9 +403,9 @@
     },
     "seasons": {
       "all": "All",
-      "summer": "Summer",
-      "winter": "Winter",
-      "all_year": "All Year"
+      "summer": "Summer (April–September)",
+      "winter": "Winter (October–March)",
+      "all_year": "All year (January–December)"
     },
     "status": {
       "valid": "Available",
@@ -908,9 +917,9 @@
         "frozen": "Frozen"
       },
       "seasons": {
-        "summer": "Summer",
-        "winter": "Winter",
-        "all_year": "All year"
+        "summer": "Summer (April–September)",
+        "winter": "Winter (October–March)",
+        "all_year": "All year (January–December)"
       },
       "list": {
         "add": "New product",

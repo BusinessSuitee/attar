@@ -43,10 +43,8 @@ export const routes: Routes = [
   },
   {
     path: 'certificates',
-    loadComponent: () =>
-      import('./pages/certificates/certificates.page').then(
-        (module) => module.CertificatesPageComponent,
-      ),
+    redirectTo: '',
+    pathMatch: 'full',
   },
   {
     path: 'gallery',

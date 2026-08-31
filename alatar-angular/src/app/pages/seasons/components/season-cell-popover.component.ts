@@ -221,14 +221,11 @@ export class SeasonCellPopoverComponent {
   }
 
   primaryName(product: PublicProductCard): string {
-    return this.isArabic() ? product.nameAr || product.name : product.name || product.nameAr;
+    return product.name || product.nameAr;
   }
 
   secondaryName(product: PublicProductCard): string | null {
-    if (this.isArabic()) {
-      return product.name && product.name !== product.nameAr ? product.name : null;
-    }
-    return product.nameAr && product.nameAr !== product.name ? product.nameAr : null;
+    return null;
   }
 
   resolveUrl(url: string): string {

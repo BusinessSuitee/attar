@@ -1,5 +1,15 @@
-import { Component, OnInit, inject, computed, ChangeDetectionStrategy } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  OnInit,
+  AfterViewInit,
+  computed,
+  inject,
+} from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 import { HeroComponent } from '../../components/hero/hero.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -20,9 +30,12 @@ import { API_BASE_URL } from '../../core/config/api-base-url.token';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, AfterViewInit {
   private readonly productsStore = inject(ProductsStore);
   private readonly apiBaseUrl = inject(API_BASE_URL);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly isLoading = this.productsStore.isLoading;
 
@@ -49,6 +62,29 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.productsStore.ensureLoaded();
+  }
+
+  ngAfterViewInit(): void {
+    this.scrollToFragment(this.router.parseUrl(this.router.url).fragment);
+
+    this.route.fragment.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((fragment) => {
+      this.scrollToFragment(fragment);
+    });
+
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => this.scrollToFragment(this.router.parseUrl(this.router.url).fragment));
+  }
+
+  private scrollToFragment(fragment: string | null): void {
+    if (!fragment || typeof document === 'undefined') return;
+
+    setTimeout(() => {
+      document.getElementById(fragment)?.scrollIntoView({ block: 'start' });
+    }, 120);
   }
 
   isComingSoon(product: ProductListItem): boolean {
@@ -83,10 +119,10 @@ export class HomePageComponent implements OnInit {
 
   seasonLabelKey(season: string): string {
     switch (season) {
-      case 'Summer': return 'products_page.filters.summer';
-      case 'Winter': return 'products_page.filters.winter';
-      case 'AllYear': return 'products_page.filters.all_year';
-      default: return 'products_page.filters.all_year';
+      case 'Summer': return 'products_page.seasons.summer';
+      case 'Winter': return 'products_page.seasons.winter';
+      case 'AllYear': return 'products_page.seasons.all_year';
+      default: return 'products_page.seasons.all_year';
     }
   }
 }

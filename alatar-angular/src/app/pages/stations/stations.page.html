@@ -27,199 +27,7 @@
       </div>
     </section>
 
-    <section class="py-16 px-4 sm:px-10 max-w-[1280px] mx-auto">
-      <div class="flex flex-col md:flex-row gap-12 items-start">
-        <div class="flex-1 space-y-6">
-          <div class="flex items-center gap-3 flex-wrap">
-            <span
-              class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary"
-            >
-              <span class="material-symbols-outlined">factory</span>
-            </span>
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">
-              {{ t('attar.title') }}
-            </h2>
-            <span
-              class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20 flex items-center gap-1"
-            >
-              <span class="material-symbols-outlined text-sm">person</span>
-              {{ t('attar.manager') }}
-            </span>
-          </div>
-          <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
-            {{ t('attar.desc') }}
-          </p>
-          <div class="grid grid-cols-2 gap-4 pt-4">
-            <div
-              class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50"
-            >
-              <div class="text-primary mb-2">
-                <span class="material-symbols-outlined text-3xl">warehouse</span>
-              </div>
-              <h3 class="font-bold text-lg mb-1">{{ t('attar.storage_title') }}</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">
-                {{ t('attar.storage_desc') }}
-              </p>
-            </div>
-            <div
-              class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50"
-            >
-              <div class="text-primary mb-2">
-                <span class="material-symbols-outlined text-3xl">conveyor_belt</span>
-              </div>
-              <h3 class="font-bold text-lg mb-1">{{ t('attar.production_title') }}</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">
-                {{ t('attar.production_desc') }}
-              </p>
-            </div>
-          </div>
-          <div class="pt-4">
-            <button
-              class="flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors group"
-            >
-              <span>{{ t('attar.details_btn') }}</span>
-              <span
-                class="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform rtl:rotate-180"
-                >arrow_forward</span
-              >
-            </button>
-          </div>
-        </div>
-        <div class="flex-1 w-full">
-          <div class="grid grid-cols-2 gap-3 h-[400px]">
-            <div class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstation2.jpeg"
-                alt="Al Attar station exterior"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstationinside.jpeg"
-                alt="Al Attar station inside"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstationinside2.jpeg"
-                alt="Al Attar station operations"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    @defer (on viewport) {
-    <section class="py-16 bg-white dark:bg-neutral-dark">
-      <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
-        <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
-          <div class="flex-1 space-y-6">
-            <div class="flex items-center gap-3 flex-wrap">
-              <span
-                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
-              >
-                <span class="material-symbols-outlined">globe</span>
-              </span>
-              <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">
-                {{ t('mha.title') }}
-              </h2>
-              <span
-                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20"
-                >{{ t('mha.badge') }}</span
-              >
-              <span
-                class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full border border-blue-200 dark:border-blue-800 flex items-center gap-1"
-              >
-                <span class="material-symbols-outlined text-sm">person</span>
-                {{ t('mha.manager') }}
-              </span>
-            </div>
-            <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
-              {{ t('mha.desc') }}
-            </p>
-            <div class="flex flex-wrap gap-4 pt-2">
-              <div
-                class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50"
-              >
-                <span class="material-symbols-outlined text-green-600">verified</span>
-                <span class="font-semibold text-sm">{{ t('mha.cert_gap') }}</span>
-              </div>
-              <div
-                class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50"
-              >
-                <span class="material-symbols-outlined text-green-600">health_and_safety</span>
-                <span class="font-semibold text-sm">{{ t('mha.cert_haccp') }}</span>
-              </div>
-              <div
-                class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50"
-              >
-                <span class="material-symbols-outlined text-green-600">eco</span>
-                <span class="font-semibold text-sm">{{ t('mha.cert_organic') }}</span>
-              </div>
-            </div>
-            <div class="pt-6">
-              <a
-                class="inline-flex items-center justify-center rounded-lg h-12 px-8 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-sm font-bold shadow hover:opacity-90 transition-opacity"
-                href="#"
-              >
-                {{ t('mha.visit_btn') }}
-                <span class="material-symbols-outlined mr-2 rtl:ml-2 text-base">open_in_new</span>
-              </a>
-            </div>
-          </div>
-          <div class="flex-1 w-full">
-            <div class="grid grid-cols-2 gap-3 h-[420px]">
-              <div
-                class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-xl border border-neutral-light dark:border-neutral-dark/50 relative group"
-              >
-                <img
-                  src="assets/Images/mhaoutside.jpeg"
-                  alt="MHA station exterior"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4"
-                >
-                  <p class="text-white font-bold text-base sm:text-lg">
-                    {{ t('mha.video_caption') }}
-                  </p>
-                </div>
-              </div>
-
-              <div
-                class="h-[170px] rounded-2xl overflow-hidden shadow-lg border border-neutral-light dark:border-neutral-dark/50 relative group"
-              >
-                <img
-                  src="assets/Images/mhainside2.jpeg"
-                  alt="MHA station sorting line"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              <div
-                class="h-[170px] rounded-2xl overflow-hidden shadow-lg border border-neutral-light dark:border-neutral-dark/50 relative group"
-              >
-                <img
-                  src="assets/Images/mhainside4.jpeg"
-                  alt="MHA station operations"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    } @placeholder {
-      <div style="min-height: 420px"></div>
-    }
-
     <!-- QTC Station Section -->
-    @defer (on viewport) {
     <section class="py-16 px-4 sm:px-10 max-w-[1280px] mx-auto">
       <div class="flex flex-col md:flex-row gap-12 items-start">
         <div class="flex-1 space-y-6">
@@ -302,6 +110,199 @@
               <img
                 src="assets/Images/alattarstationinside3.jpeg"
                 alt="QTC automated packing"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    @defer (on viewport) {
+    <section class="py-16 bg-white dark:bg-neutral-dark">
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
+        <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
+          <div class="flex-1 space-y-6">
+            <div class="flex items-center gap-3 flex-wrap">
+              <span
+                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+              >
+                <span class="material-symbols-outlined">globe</span>
+              </span>
+              <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">
+                {{ t('mha.title') }}
+              </h2>
+              <span
+                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20"
+                >{{ t('mha.badge') }}</span
+              >
+              <span
+                class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full border border-blue-200 dark:border-blue-800 flex items-center gap-1"
+              >
+                <span class="material-symbols-outlined text-sm">person</span>
+                {{ t('mha.manager') }}
+              </span>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+              {{ t('mha.desc') }}
+            </p>
+            <div class="flex flex-wrap gap-4 pt-2">
+              <div
+                class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50"
+              >
+                <span class="material-symbols-outlined text-green-600">verified</span>
+                <span class="font-semibold text-sm">{{ t('mha.cert_gap') }}</span>
+              </div>
+              <div
+                class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50"
+              >
+                <span class="material-symbols-outlined text-green-600">health_and_safety</span>
+                <span class="font-semibold text-sm">{{ t('mha.cert_haccp') }}</span>
+              </div>
+              <div
+                class="flex items-center gap-2 px-4 py-2 bg-background-light dark:bg-background-dark rounded-lg border border-neutral-light dark:border-neutral-dark/50"
+              >
+                <span class="material-symbols-outlined text-green-600">eco</span>
+                <span class="font-semibold text-sm">{{ t('mha.cert_organic') }}</span>
+              </div>
+            </div>
+            <div class="pt-6">
+              <a
+                class="inline-flex items-center justify-center rounded-lg h-12 px-8 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-sm font-bold shadow hover:opacity-90 transition-opacity"
+                href="https://www.google.com/maps?q=30.629423141479492,30.123647689819336&z=17&hl=en" target="_blank"
+              >
+                {{ t('mha.visit_btn') }}
+                <span class="material-symbols-outlined mr-2 rtl:ml-2 text-base">open_in_new</span>
+              </a>
+            </div>
+          </div>
+          <div class="flex-1 w-full">
+            <div class="grid grid-cols-2 gap-3 h-[420px]">
+              <div
+                class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-xl border border-neutral-light dark:border-neutral-dark/50 relative group"
+              >
+                <img
+                  src="assets/Images/mhaoutside.jpeg"
+                  alt="MHA station exterior"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4"
+                >
+                  <p class="text-white font-bold text-base sm:text-lg">
+                    {{ t('mha.video_caption') }}
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="h-[170px] rounded-2xl overflow-hidden shadow-lg border border-neutral-light dark:border-neutral-dark/50 relative group"
+              >
+                <img
+                  src="assets/Images/mhainside2.jpeg"
+                  alt="MHA station sorting line"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              <div
+                class="h-[170px] rounded-2xl overflow-hidden shadow-lg border border-neutral-light dark:border-neutral-dark/50 relative group"
+              >
+                <img
+                  src="assets/Images/mhainside4.jpeg"
+                  alt="MHA station operations"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    } @placeholder {
+      <div style="min-height: 420px"></div>
+    }
+
+    @defer (on viewport) {
+    <section class="py-16 px-4 sm:px-10 max-w-[1280px] mx-auto">
+      <div class="flex flex-col md:flex-row gap-12 items-start">
+        <div class="flex-1 space-y-6">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary"
+            >
+              <span class="material-symbols-outlined">factory</span>
+            </span>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">
+              {{ t('attar.title') }}
+            </h2>
+            <span
+              class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20 flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-sm">person</span>
+              {{ t('attar.manager') }}
+            </span>
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+            {{ t('attar.desc') }}
+          </p>
+          <div class="grid grid-cols-2 gap-4 pt-4">
+            <div
+              class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50"
+            >
+              <div class="text-primary mb-2">
+                <span class="material-symbols-outlined text-3xl">warehouse</span>
+              </div>
+              <h3 class="font-bold text-lg mb-1">{{ t('attar.storage_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">
+                {{ t('attar.storage_desc') }}
+              </p>
+            </div>
+            <div
+              class="p-4 bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-neutral-light dark:border-neutral-dark/50"
+            >
+              <div class="text-primary mb-2">
+                <span class="material-symbols-outlined text-3xl">conveyor_belt</span>
+              </div>
+              <h3 class="font-bold text-lg mb-1">{{ t('attar.production_title') }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">
+                {{ t('attar.production_desc') }}
+              </p>
+            </div>
+          </div>
+          <div class="pt-4">
+            <a
+              href="https://www.google.com/maps/search/%D9%85%D8%AD%D8%B7%D9%87%20%D8%A7%D9%84%D8%B9%D8%B7%D8%A7%D8%B1%20%D9%84%D9%84%D9%81%D9%88%D8%A7%D9%83%D9%87/@30.66410255432129,30.04559898376465,17z?hl=en"
+              target="_blank"
+              class="flex items-center gap-2 text-primary font-bold hover:text-primary/80 transition-colors group"
+            >
+              <span>{{ t('attar.details_btn') }}</span>
+              <span
+                class="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform rtl:rotate-180"
+                >open_in_new</span
+              >
+            </a>
+          </div>
+        </div>
+        <div class="flex-1 w-full">
+          <div class="grid grid-cols-2 gap-3 h-[400px]">
+            <div class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-lg relative group">
+              <img
+                src="assets/Images/alattarstation2.jpeg"
+                alt="Al Attar station exterior"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
+              <img
+                src="assets/Images/alattarstationinside.jpeg"
+                alt="Al Attar station inside"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
+              <img
+                src="assets/Images/alattarstationinside2.jpeg"
+                alt="Al Attar station operations"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>

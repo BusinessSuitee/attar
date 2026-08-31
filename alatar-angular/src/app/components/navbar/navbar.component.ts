@@ -125,8 +125,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       id: 'certificates',
       translocoKey: 'nav.certificates',
       label: 'الشهادات',
-      route: '/certificates',
-      fragment: undefined,
+      route: '/',
+      fragment: 'certificates',
     },
     {
       id: 'gallery',
