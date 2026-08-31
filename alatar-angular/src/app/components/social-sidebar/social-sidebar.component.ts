@@ -34,7 +34,7 @@ const FALLBACK_LINKS: SocialLinkDto[] = [
   {
     id: 'fallback-whatsapp',
     platform: 'WhatsApp',
-    url: 'https://wa.me/201004623085',
+    url: 'https://wa.me/201092069059',
     label: 'WhatsApp',
     iconKey: null,
     customIconUrl: null,

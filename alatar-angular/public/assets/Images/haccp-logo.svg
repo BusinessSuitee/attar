@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#005A9C" stroke-width="10"/>
+  <text x="100" y="115" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#005A9C" text-anchor="middle">HACCP</text>
+  <text x="100" y="145" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#005A9C" text-anchor="middle">CERTIFIED</text>
+  <path d="M50 70 L150 70" stroke="#005A9C" stroke-width="4"/>
+</svg>

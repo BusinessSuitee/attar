@@ -659,6 +659,14 @@
       "name": "BRCGS",
       "desc": "Global food safety standard recognized by the Global Food Safety Initiative."
     },
+    "badge_grasp": {
+      "name": "GRASP",
+      "desc": "Risk assessment on social practice ensuring worker welfare."
+    },
+    "badge_sedex": {
+      "name": "SEDEX MEMBER",
+      "desc": "Empowering sustainable and ethical supply chains."
+    },
     "cta_title": "Our Quality Speaks for Itself",
     "cta_desc": "Discover our Egyptian agricultural products exported to the highest global quality standards, or contact us for a price quote.",
     "cta_products": "Explore Our Products",
@@ -777,7 +785,7 @@
     "contact_title": "Contact Us",
     "address_line1": "Alexandria Desert Road, Km 75",
     "address_line2": "Nubaria, El Beheira, Egypt",
-    "phone": "+20 1004623085",
+    "phone": "+20 1092069059",
     "phone2": "+20 109 2069059",
     "social_title": "Follow Us",
     "copyright": "© 2026 Alatar Sons. All rights reserved."
