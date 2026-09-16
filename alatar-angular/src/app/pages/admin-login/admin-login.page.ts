@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectorRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -19,6 +19,7 @@ export class AdminLoginPageComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly loginForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -45,6 +46,7 @@ export class AdminLoginPageComponent {
       .pipe(
         finalize(() => {
           this.isSubmitting = false;
+          this.cdr.markForCheck();
         }),
         takeUntilDestroyed(this.destroyRef),
       )
@@ -62,6 +64,7 @@ export class AdminLoginPageComponent {
           }
 
           this.errorMessage = 'تعذر تسجيل الدخول حاليا. حاول لاحقا.';
+          this.cdr.markForCheck();
         },
       });
   }
