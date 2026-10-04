@@ -132,4 +132,4 @@ export class HomePageComponent implements OnInit, AfterViewInit {
       default: return 'products_page.seasons.all_year';
     }
   }
-}`r`n
+}
