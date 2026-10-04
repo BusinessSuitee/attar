@@ -35,9 +35,9 @@ swiper-slide {
 .slide__bg {
   position: absolute;
   inset: 0;
+  background: #111;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   transform: scale(1.14);
   transition: transform 9000ms cubic-bezier(0.25, 0.1, 0.25, 1);
   will-change: transform;
@@ -48,11 +48,21 @@ swiper-slide {
   transform: scale(1);
 }
 
-.slide__bg--1 { background-image: url('/assets/hero/fundo4.png'); }
-.slide__bg--2 { background-image: url('/assets/hero/fundo1.png'); }
-.slide__bg--3 { background-image: url('/assets/hero/fundo3.png'); background-position: center 30%; }
-.slide__bg--4 { background-image: url('/assets/hero/fundo2.png'); }
-.slide__bg--5 { background-image: url('/assets/hero/fundo5.png'); }
+.slide__bg picture,
+.slide__bg img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.slide__bg img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.slide__bg--3 img { object-position: center 30%; }
 
 /* =====================================================
    CINEMATIC OVERLAYS — radial vignette + directional

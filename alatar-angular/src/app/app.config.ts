@@ -7,10 +7,8 @@ import {
   isDevMode,
 } from '@angular/core';
 import {
-  PreloadAllModules,
   provideRouter,
   withInMemoryScrolling,
-  withPreloading,
 } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideTransloco } from '@jsverse/transloco';
@@ -31,7 +29,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
-      withPreloading(PreloadAllModules),
     ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, authErrorInterceptor])),

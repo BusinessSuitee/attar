@@ -3,7 +3,6 @@ import {
   Directive,
   ElementRef,
   Input,
-  NgZone,
   OnDestroy,
   OnInit,
   PLATFORM_ID,
@@ -14,26 +13,14 @@ import {
 
 type RevealDirection = 'up' | 'down' | 'left' | 'right' | 'zoom' | 'blur';
 
-const DIRECTION_PROPS: Record<RevealDirection, Record<string, unknown>> = {
-  up:    { y: 48, opacity: 0 },
-  down:  { y: -48, opacity: 0 },
-  left:  { x: 48, opacity: 0 },
-  right: { x: -48, opacity: 0 },
-  zoom:  { scale: 0.88, y: 16, opacity: 0 },
-  blur:  { filter: 'blur(10px)', y: 16, opacity: 0 },
+const OFFSETS: Record<RevealDirection, string> = {
+  up: 'translate3d(0, 48px, 0)',
+  down: 'translate3d(0, -48px, 0)',
+  left: 'translate3d(48px, 0, 0)',
+  right: 'translate3d(-48px, 0, 0)',
+  zoom: 'translate3d(0, 16px, 0) scale(.88)',
+  blur: 'translate3d(0, 16px, 0)',
 };
-
-const DIRECTION_EASE: Record<RevealDirection, string> = {
-  up:    'power3.out',
-  down:  'power3.out',
-  left:  'power3.out',
-  right: 'power3.out',
-  zoom:  'back.out(1.4)',
-  blur:  'power2.out',
-};
-
-// Registered once across all directive instances — GSAP registers the plugin globally.
-let gsapReady = false;
 
 @Directive({
   selector: '[appScrollReveal]',
@@ -41,7 +28,6 @@ let gsapReady = false;
 })
 export class ScrollRevealDirective implements OnInit, OnDestroy {
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
 
   @Input({ alias: 'appScrollReveal' }) revealDirection: RevealDirection = 'up';
@@ -49,82 +35,58 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
   @Input({ transform: numberAttribute }) revealDuration = 900;
   @Input({ transform: booleanAttribute }) revealOnce = true;
 
-  private destroyed = false;
-  private cleanup: (() => void) | null = null;
+  private observer?: IntersectionObserver;
+  private animation?: Animation;
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
 
-    const prefersReducedMotion =
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-    if (prefersReducedMotion) return;
+    // Keep above-the-fold content visible immediately. Below-the-fold elements use
+    // the browser's native IntersectionObserver + Web Animations APIs, avoiding a
+    // 40KB animation library on the critical loading path.
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) return;
+    if (!('IntersectionObserver' in window)) return;
 
-    this.ngZone.runOutsideAngular(() => {
-      void this.initGsap();
-    });
+    const direction = this.normalizeDirection(this.revealDirection);
+    const startTransform = OFFSETS[direction];
+    const startFilter = direction === 'blur' ? 'blur(10px)' : 'none';
+    const element = this.el.nativeElement;
+    element.style.opacity = '0';
+    element.style.transform = startTransform;
+    if (startFilter !== 'none') element.style.filter = startFilter;
+
+    this.observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        this.animation = element.animate(
+          [
+            { opacity: 0, transform: startTransform, filter: startFilter },
+            { opacity: 1, transform: 'none', filter: 'none' },
+          ],
+          {
+            duration: Math.max(150, this.revealDuration),
+            delay: Math.max(0, this.revealDelay),
+            easing: direction === 'zoom' ? 'cubic-bezier(.34,1.56,.64,1)' : 'cubic-bezier(.22,1,.36,1)',
+            fill: 'both',
+          },
+        );
+        if (this.revealOnce) this.observer?.unobserve(element);
+        break;
+      }
+    }, { rootMargin: '0px 0px -12% 0px' });
+    this.observer.observe(element);
   }
 
   ngOnDestroy(): void {
-    this.destroyed = true;
-    this.cleanup?.();
-    this.cleanup = null;
-  }
-
-  private async initGsap(): Promise<void> {
-    let gsap: (typeof import('gsap'))['gsap'];
-    let ScrollTrigger: (typeof import('gsap/ScrollTrigger'))['ScrollTrigger'];
-
-    try {
-      [{ gsap }, { ScrollTrigger }] = await Promise.all([
-        import('gsap'),
-        import('gsap/ScrollTrigger'),
-      ]);
-    } catch {
-      return;
-    }
-
-    if (this.destroyed) return;
-
-    // If the element is already in the viewport when GSAP loads (common with SSR +
-    // slow bundle delivery in production), skip the entrance animation entirely.
-    // Without this guard, gsap.from() snaps the element to y:48/opacity:0 while
-    // overflow:hidden ancestors clip it — producing a permanent "half image" cut.
-    const rect = this.el.nativeElement.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) return;
-
-    if (!gsapReady) {
-      gsap.registerPlugin(ScrollTrigger);
-      gsapReady = true;
-    }
-
-    const direction = this.normalizeDirection(this.revealDirection);
-    const fromVars = { ...DIRECTION_PROPS[direction] };
-    const duration = Math.max(0.15, this.revealDuration / 1000);
-    const delay = Math.max(0, this.revealDelay / 1000);
-
-    const tween = gsap.from(this.el.nativeElement, {
-      ...fromVars,
-      duration,
-      delay,
-      ease: DIRECTION_EASE[direction],
-      scrollTrigger: {
-        trigger: this.el.nativeElement,
-        start: 'top 88%',
-        once: this.revealOnce,
-        toggleActions: this.revealOnce
-          ? 'play none none none'
-          : 'play none none reverse',
-      },
-    });
-
-    this.cleanup = () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-    };
+    this.observer?.disconnect();
+    this.animation?.cancel();
   }
 
   private normalizeDirection(value: string): RevealDirection {
-    const supported: RevealDirection[] = ['up', 'down', 'left', 'right', 'zoom', 'blur'];
-    return supported.includes(value as RevealDirection) ? (value as RevealDirection) : 'up';
+    return (['up', 'down', 'left', 'right', 'zoom', 'blur'] as RevealDirection[]).includes(value as RevealDirection)
+      ? (value as RevealDirection)
+      : 'up';
   }
 }

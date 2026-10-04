@@ -10,8 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://attar.runasp.net" crossorigin>
   
-  <link rel="preload" as="image" href="assets/hero/fundo4.png">
-  <link rel="preload" as="image" href="assets/Images/alattar.jpeg">
+  <link rel="preload" as="image" href="assets/hero/fundo4.webp" type="image/webp" fetchpriority="high">
 
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700;900&family=Noto+Sans+Arabic:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,23 +30,29 @@
 <body>
   <div id="al-pl" role="status" aria-label="Loading">
     <div class="al-pl-inner">
-      <img src="assets/logo/QTC logo.png" alt="QTC Logo" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 1rem;" />
+      <strong class="al-pl-brand">QTC</strong>
       <div class="al-pl-bar"><span class="al-pl-fill"></span></div>
     </div>
   </div>
   <script>
     (function(){
-      var start = Date.now(), MIN = 700;
+      var dismissed = false;
       function dismiss(){
+        if (dismissed) return;
+        dismissed = true;
         var el = document.getElementById('al-pl');
         if(!el) return;
         el.classList.add('out');
-        setTimeout(function(){ el.parentNode && el.parentNode.removeChild(el); }, 600);
+        setTimeout(function(){ el.parentNode && el.parentNode.removeChild(el); }, 350);
       }
-      window.addEventListener('load', function(){
-        var wait = Math.max(0, MIN - (Date.now() - start));
-        setTimeout(dismiss, wait);
-      });
+      // Do not hold the first paint hostage to every image/font request.
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function(){ setTimeout(dismiss, 80); }, { once: true });
+      } else {
+        setTimeout(dismiss, 80);
+      }
+      window.addEventListener('load', dismiss, { once: true });
+      setTimeout(dismiss, 1500);
     })();
   </script>
   <app-root></app-root>

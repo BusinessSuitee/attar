@@ -6,8 +6,10 @@ import {
   AfterViewInit,
   computed,
   inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { HeroComponent } from '../../components/hero/hero.component';
@@ -28,6 +30,7 @@ import { API_BASE_URL } from '../../core/config/api-base-url.token';
 })
 export class HomePageComponent implements OnInit, AfterViewInit {
   private readonly productsStore = inject(ProductsStore);
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly apiBaseUrl = inject(API_BASE_URL);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -56,8 +59,16 @@ export class HomePageComponent implements OnInit, AfterViewInit {
     return Array.from(selected);
   });
 
-  ngOnInit() {
-    this.productsStore.ensureLoaded();
+  ngOnInit(): void {
+    // Products are below the fold; keep the SSR request and the first paint independent
+    // from the API's latency, then fetch during browser idle time.
+    if (!isPlatformBrowser(this.platformId)) return;
+    const load = () => this.productsStore.ensureLoaded();
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(load, { timeout: 2000 });
+    } else {
+      setTimeout(load, 0);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -121,4 +132,4 @@ export class HomePageComponent implements OnInit, AfterViewInit {
       default: return 'products_page.seasons.all_year';
     }
   }
-}
+}`r`n
