@@ -2499,29 +2499,46 @@ html[dir='rtl'] .home-station-shortcut__link:hover .material-symbols-outlined {
   margin-top: 1.5rem;
 }
 
-.home-cert-logos--four {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.home-cert-logos--mha {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.home-cert-logos--single {
-  grid-template-columns: 1fr;
-  height: calc(100% - 4.3rem);
-  min-height: 7.5rem;
+.home-cert-logos--qtc {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.home-cert-logos img {
-  width: 100%;
-  height: 7.5rem;
-  padding: 0.8rem;
+.home-cert-logos--qtc .home-cert-logo:first-child {
+  grid-column: 1 / -1;
+}
+
+.home-cert-logo {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.9rem 0.65rem;
   border: 1px solid #ece7da;
   border-radius: 0.9rem;
   background: #ffffff;
+}
+
+.home-cert-logo img {
+  width: 100%;
+  max-width: 12rem;
+  height: 5.8rem;
   object-fit: contain;
 }
 
-.home-cert-logos--single img {
-  height: 100%;
-  max-height: 10rem;
+.home-cert-logo figcaption {
+  max-width: 100%;
+  color: #103d2b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .home-partner-preview {
@@ -2665,14 +2682,6 @@ html[dir='rtl'] .home-station-shortcut__link:hover .material-symbols-outlined {
     max-width: 36rem;
   }
 
-  .home-cert-logos--single {
-    height: auto;
-  }
-
-  .home-cert-logos--single img {
-    height: 8rem;
-  }
-
   .home-partner-logos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2709,7 +2718,7 @@ html[dir='rtl'] .home-station-shortcut__link:hover .material-symbols-outlined {
     min-height: 0;
   }
 
-  .home-cert-logos--four {
+  .home-cert-logos--mha {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
