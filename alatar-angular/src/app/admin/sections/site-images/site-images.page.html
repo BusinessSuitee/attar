@@ -66,17 +66,25 @@
 
 <admin-confirm-dialog [open]="editorOpen()" [title]="'admin.site_images.' + (mode === 'create' ? 'add' : mode) | transloco" [confirmLabel]="'admin.site_images.save' | transloco" [cancelLabel]="'admin.site_images.cancel' | transloco" [confirmDisabled]="busy() || (mode !== 'replace' && isOccupied(form.placement))" (confirm)="save()" (cancel)="closeEditor()">
   <div class="media-form">
-    @if (preview()) { <img class="media-preview" [src]="preview()" [alt]="form.ar.title" /> }
-    @if (mode !== 'edit') {
-      <label>{{ 'admin.site_images.file' | transloco }}<input type="file" accept=".jpg,.jpeg,.png,.webp" [disabled]="busy()" (change)="chooseFile($event)" /></label>
-      <p class="media-hint">{{ 'admin.site_images.file_hint' | transloco }}</p>
+    @if (mode === 'create') {
+      <p class="media-form__intro">{{ 'admin.site_images.quick_add_hint' | transloco }}</p>
     }
+    @if (preview()) { <img class="media-preview" [src]="preview()" [alt]="form.ar.title" /> }
     @if (mode !== 'replace') {
       <label>{{ 'admin.site_images.placement' | transloco }}
         <select [ngModel]="form.placement" (ngModelChange)="changePlacement($event)" [ngModelOptions]="{standalone: true}" [disabled]="busy()">
           @for (p of placements; track p) { <option [value]="p" [disabled]="isOccupied(p)">{{ 'admin.site_images.placements.' + p | transloco }}</option> }
         </select>
       </label>
+    }
+    @if (mode !== 'edit') {
+      <label>{{ 'admin.site_images.file' | transloco }}
+        <input type="file" accept=".jpg,.jpeg,.png,.webp" [multiple]="acceptsMultiple()" [disabled]="busy()" (change)="chooseFile($event)" />
+      </label>
+      <p class="media-hint">{{ acceptsMultiple() ? ('admin.site_images.multi_file_hint' | transloco) : ('admin.site_images.file_hint' | transloco) }}</p>
+      @if (files.length > 1) { <p class="media-selected-count">{{ 'admin.site_images.selected_count' | transloco: { count: files.length } }}</p> }
+    }
+    @if (mode !== 'replace') {
       @if (isOccupied(form.placement)) { <p class="media-error">{{ 'admin.site_images.occupied' | transloco }}</p> }
       @if (form.placement === 'gallery') {
         <label>{{ 'admin.site_images.category' | transloco }}<select [(ngModel)]="form.category" [ngModelOptions]="{standalone: true}" [disabled]="busy()">
@@ -84,14 +92,23 @@
         </select></label>
       }
       <label class="media-check"><input type="checkbox" [(ngModel)]="form.isEnabled" [ngModelOptions]="{standalone: true}" [disabled]="busy()" />{{ 'admin.site_images.visible' | transloco }}</label>
-      @for (lang of languages; track lang) {
-        <fieldset [disabled]="busy()">
-          <legend>{{ 'admin.site_images.languages.' + lang | transloco }}</legend>
-          <label>{{ 'admin.site_images.image_title' | transloco }}{{ lang === 'ar' ? ' *' : '' }}<input [(ngModel)]="form[lang].title" [ngModelOptions]="{standalone: true}" maxlength="220" [dir]="lang === 'ar' ? 'rtl' : 'ltr'" /></label>
-          <label>{{ 'admin.site_images.description' | transloco }}<textarea [(ngModel)]="form[lang].description" [ngModelOptions]="{standalone: true}" maxlength="2000" rows="2" [dir]="lang === 'ar' ? 'rtl' : 'ltr'"></textarea></label>
-          <label>{{ 'admin.site_images.alt' | transloco }}<input [(ngModel)]="form[lang].alt" [ngModelOptions]="{standalone: true}" maxlength="300" [dir]="lang === 'ar' ? 'rtl' : 'ltr'" /></label>
-        </fieldset>
-      }
+      <fieldset [disabled]="busy()">
+        <legend>{{ 'admin.site_images.languages.ar' | transloco }}</legend>
+        <label>{{ 'admin.site_images.image_title' | transloco }} *<input [(ngModel)]="form.ar.title" [ngModelOptions]="{standalone: true}" maxlength="220" dir="rtl" /></label>
+        <label>{{ 'admin.site_images.description' | transloco }}<textarea [(ngModel)]="form.ar.description" [ngModelOptions]="{standalone: true}" maxlength="2000" rows="2" dir="rtl"></textarea></label>
+        <label>{{ 'admin.site_images.alt' | transloco }}<input [(ngModel)]="form.ar.alt" [ngModelOptions]="{standalone: true}" maxlength="300" dir="rtl" /></label>
+      </fieldset>
+      <details class="media-advanced">
+        <summary>{{ 'admin.site_images.optional_translations' | transloco }}</summary>
+        @for (lang of optionalLanguages; track lang) {
+          <fieldset [disabled]="busy()">
+            <legend>{{ 'admin.site_images.languages.' + lang | transloco }}</legend>
+            <label>{{ 'admin.site_images.image_title' | transloco }}<input [(ngModel)]="form[lang].title" [ngModelOptions]="{standalone: true}" maxlength="220" [dir]="lang === 'ar' ? 'rtl' : 'ltr'" /></label>
+            <label>{{ 'admin.site_images.description' | transloco }}<textarea [(ngModel)]="form[lang].description" [ngModelOptions]="{standalone: true}" maxlength="2000" rows="2" [dir]="lang === 'ar' ? 'rtl' : 'ltr'"></textarea></label>
+            <label>{{ 'admin.site_images.alt' | transloco }}<input [(ngModel)]="form[lang].alt" [ngModelOptions]="{standalone: true}" maxlength="300" [dir]="lang === 'ar' ? 'rtl' : 'ltr'" /></label>
+          </fieldset>
+        }
+      </details>
       <p class="media-hint">{{ 'admin.site_images.translation_hint' | transloco }}</p>
     }
     @if (formError()) { <p class="media-error" role="alert">{{ formError() }}</p> }

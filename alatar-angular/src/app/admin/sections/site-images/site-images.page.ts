@@ -33,6 +33,7 @@ export class AdminSiteImagesPageComponent implements OnInit, OnDestroy {
   readonly placements = SITE_IMAGE_PLACEMENTS;
   readonly categories = ['farms', 'stations', 'crops', 'legacy'] as const;
   readonly languages: SiteImageLanguage[] = ['ar', 'en', 'ru'];
+  readonly optionalLanguages: SiteImageLanguage[] = ['en', 'ru'];
   readonly items = signal<SiteImageDto[]>([]);
   readonly loading = signal(false);
   readonly error = signal(false);
@@ -55,7 +56,7 @@ export class AdminSiteImagesPageComponent implements OnInit, OnDestroy {
   form = emptyForm();
   mode: 'create' | 'edit' | 'replace' = 'create';
   editing: SiteImageDto | null = null;
-  file: File | null = null;
+  files: File[] = [];
   private objectUrl: string | null = null;
 
   ngOnInit(): void { void this.reload(); }
@@ -63,6 +64,7 @@ export class AdminSiteImagesPageComponent implements OnInit, OnDestroy {
   pageOf(p: string): string { return p === 'gallery' || p === 'gallery-hero' ? 'gallery' : 'stations'; }
   title(image: SiteImageDto): string { return siteImageText(image, this.language()).title; }
   isSlot(p: SiteImagePlacement): boolean { return (SITE_IMAGE_SLOTS as readonly string[]).includes(p); }
+  acceptsMultiple(): boolean { return this.mode === 'create' && !this.isSlot(this.form.placement); }
   isOccupied(p: SiteImagePlacement): boolean { return this.isSlot(p) && this.items().some(x => x.placement === p && x.id !== this.editing?.id); }
   setPage(value: string): void { this.pageFilter.set(value); this.placementFilter.set('all'); }
 
@@ -75,7 +77,7 @@ export class AdminSiteImagesPageComponent implements OnInit, OnDestroy {
 
   open(mode: 'create' | 'edit' | 'replace', image?: SiteImageDto): void {
     this.releasePreview();
-    this.mode = mode; this.editing = image ?? null; this.file = null; this.formError.set('');
+    this.mode = mode; this.editing = image ?? null; this.files = []; this.formError.set('');
     this.form = image ? { placement: image.placement, category: image.category, isEnabled: image.isEnabled, ar: { ...image.ar }, en: { ...image.en }, ru: { ...image.ru } } : emptyForm();
     if (!image && this.placementFilter() !== 'all') {
       this.form.placement = this.placementFilter() as SiteImagePlacement;
@@ -93,30 +95,69 @@ export class AdminSiteImagesPageComponent implements OnInit, OnDestroy {
 
   chooseFile(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
+    const files = Array.from(input.files ?? []);
     input.value = '';
-    if (!file) return;
-    if (!validSiteImageFile(file)) { this.formError.set(this.transloco.translate('admin.site_images.invalid_file')); return; }
-    this.releasePreview(); this.file = file; this.formError.set('');
-    this.objectUrl = URL.createObjectURL(file); this.preview.set(this.objectUrl);
+    if (!files.length) return;
+    if (this.isSlot(this.form.placement) && files.length > 1) {
+      this.formError.set(this.transloco.translate('admin.site_images.single_file_only')); return;
+    }
+    if (files.some(file => !validSiteImageFile(file))) {
+      this.formError.set(this.transloco.translate('admin.site_images.invalid_file')); return;
+    }
+    this.releasePreview(); this.files = files; this.formError.set('');
+    this.objectUrl = URL.createObjectURL(files[0]); this.preview.set(this.objectUrl);
+    if (this.mode === 'create' && !this.form.ar.title.trim()) {
+      this.form = { ...this.form, ar: { ...this.form.ar, title: this.titleFromFile(files[0]) } };
+    }
   }
 
   closeEditor(): void {
     if (this.busy()) return;
-    this.editorOpen.set(false); this.releasePreview(); this.file = null;
+    this.editorOpen.set(false); this.releasePreview(); this.files = [];
   }
   private releasePreview(): void { if (this.objectUrl) URL.revokeObjectURL(this.objectUrl); this.objectUrl = null; }
 
+  private titleFromFile(file: File): string {
+    const title = file.name.replace(/\.[^.]+$/, '').replace(/[\-_]+/g, ' ').trim();
+    return title.slice(0, 220) || this.transloco.translate('admin.site_images.default_title');
+  }
+
   async save(): Promise<void> {
     if (this.busy()) return;
-    if ((this.mode !== 'edit' && !this.file) || (this.mode !== 'replace' && !this.form.ar.title.trim())) {
+    if ((this.mode !== 'edit' && !this.files.length) || (this.mode !== 'replace' && !this.form.ar.title.trim())) {
       this.formError.set(this.transloco.translate('admin.site_images.required')); return;
     }
+    if (this.isSlot(this.form.placement) && this.files.length > 1) {
+      this.formError.set(this.transloco.translate('admin.site_images.single_file_only')); return;
+    }
+    if (this.mode === 'create') {
+      await this.createImages();
+      return;
+    }
     let work: Observable<unknown>;
-    if (this.mode === 'create') work = this.service.create(this.form, this.file!);
-    else if (this.mode === 'replace') work = this.service.replace(this.editing!.id, this.file!);
+    if (this.mode === 'replace') work = this.service.replace(this.editing!.id, this.files[0]);
     else work = this.service.update(this.editing!.id, this.form);
     if (await this.mutate(work)) this.closeEditor();
+  }
+
+  private async createImages(): Promise<void> {
+    if (this.busy()) return;
+    this.busy.set(true);
+    try {
+      for (const file of this.files) {
+        const metadata = this.form.ar.title.trim()
+          ? this.form
+          : { ...this.form, ar: { ...this.form.ar, title: this.titleFromFile(file) } };
+        await firstValueFrom(this.service.create(metadata, file));
+      }
+      this.toast.success(this.transloco.translate('admin.site_images.added_count', { count: this.files.length }));
+      await this.reload();
+      this.closeEditor();
+    } catch (error) {
+      const message = this.errors.translate(error) || this.transloco.translate('admin.site_images.save_error');
+      this.formError.set(message); this.toast.error(message);
+      await this.reload();
+    } finally { this.busy.set(false); }
   }
 
   async toggle(image: SiteImageDto): Promise<void> {

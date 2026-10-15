@@ -1341,7 +1341,14 @@
         "en": "English",
         "ru": "Russian"
       },
-      "language": "Dashboard language"
+      "language": "Dashboard language",
+      "quick_add_hint": "Choose where the images appear and upload one image or a group. The Arabic title is filled from the file name and can be edited.",
+      "multi_file_hint": "You can choose several images together for albums.",
+      "selected_count": "{{count}} images selected",
+      "single_file_only": "This placement accepts one image only.",
+      "default_title": "New image",
+      "optional_translations": "Optional translations",
+      "added_count": "{{count}} images added."
     }
   },
   "common": {
