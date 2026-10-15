@@ -30,3 +30,5 @@ app.MapGet("/", () =>
 await app.Services.EnsureDatabaseCreatedAsync();
 
 app.Run();
+
+public partial class Program { }

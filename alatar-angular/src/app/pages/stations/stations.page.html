@@ -5,12 +5,10 @@
   *transloco="let t; read: 'stations'"
 >
   <main class="flex-grow pb-mobile-dock">
-    <section class="relative h-[400px] md:h-[500px] w-full overflow-hidden">
+    <section class="relative h-[400px] md:h-[500px] w-full overflow-hidden bg-slate-900">
       <div
         class="absolute inset-0 bg-cover bg-center"
-        style="
-          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCZlmAY-NvDYu0-F79mrIHmyhRuTFkoW9rCmppXMZCni8ggo3JALLslweFAPvtBgUZsgeHq4MWo-dKN-8s7NWQZMUv3-HDd22jhnYJOZvwM-zahkMMdsH-kkGqinvAYPPZsMeaaAIcFm2rEybXfrKGPLj65OHXJiGruEIlP0NKEIuzRZrYT6Rd4iIoyLayEebcri8dZ9IwYQCJgR0lzliFVTB5DtTrAV3KZL3osoZVKocCpYfjFZpH5D9HEcMrdPBPK7jx3lpl6TSs');
-        "
+        [style.background-image]="media.background('stations-hero')"
       ></div>
       <div
         class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-background-dark/40 to-transparent"
@@ -26,6 +24,8 @@
         <p class="text-slate-200 text-lg md:text-xl font-medium max-w-2xl">{{ t('hero.desc') }}</p>
       </div>
     </section>
+
+    <app-site-image-status [loading]="media.loading()" [error]="media.error()" (retry)="media.load('stations')"></app-site-image-status>
 
     <!-- QTC Station Section -->
     <section class="py-16 px-4 sm:px-10 max-w-[1280px] mx-auto">
@@ -90,30 +90,8 @@
             </button>
           </div>
         </div>
-        <div class="flex-1 w-full">
-          <div class="grid grid-cols-2 gap-3 h-[400px]">
-            <div class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/QTC.png"
-                alt="QTC station facility"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstationinside5.jpeg"
-                alt="QTC optical sorting"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstationinside3.jpeg"
-                alt="QTC automated packing"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-          </div>
+        <div class="flex-1 w-full" data-managed-album="qtc">
+          <app-station-image-album [images]="media.album('station-qtc')" [captionFirst]="false" [pending]="media.loading() || media.error()"></app-station-image-album>
         </div>
       </div>
     </section>
@@ -175,46 +153,9 @@
               </a>
             </div>
           </div>
-          <div class="flex-1 w-full">
-            <div class="grid grid-cols-2 gap-3 h-[420px]">
-              <div
-                class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-xl border border-neutral-light dark:border-neutral-dark/50 relative group"
-              >
-                <img
-                  src="assets/Images/mhaoutside.jpeg"
-                  alt="MHA station exterior"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4"
-                >
-                  <p class="text-white font-bold text-base sm:text-lg">
-                    {{ t('mha.video_caption') }}
-                  </p>
-                </div>
-              </div>
-
-              <div
-                class="h-[170px] rounded-2xl overflow-hidden shadow-lg border border-neutral-light dark:border-neutral-dark/50 relative group"
-              >
-                <img
-                  src="assets/Images/mhainside2.jpeg"
-                  alt="MHA station sorting line"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              <div
-                class="h-[170px] rounded-2xl overflow-hidden shadow-lg border border-neutral-light dark:border-neutral-dark/50 relative group"
-              >
-                <img
-                  src="assets/Images/mhainside4.jpeg"
-                  alt="MHA station operations"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-            </div>
-          </div>
+          <div class="flex-1 w-full" data-managed-album="mha">
+          <app-station-image-album [images]="media.album('station-mha')" [captionFirst]="true" [pending]="media.loading() || media.error()"></app-station-image-album>
+        </div>
         </div>
       </div>
     </section>
@@ -283,30 +224,8 @@
             </a>
           </div>
         </div>
-        <div class="flex-1 w-full">
-          <div class="grid grid-cols-2 gap-3 h-[400px]">
-            <div class="col-span-2 h-[240px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstation2.jpeg"
-                alt="Al Attar station exterior"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstationinside.jpeg"
-                alt="Al Attar station inside"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div class="h-[150px] rounded-2xl overflow-hidden shadow-lg relative group">
-              <img
-                src="assets/Images/alattarstationinside2.jpeg"
-                alt="Al Attar station operations"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-          </div>
+        <div class="flex-1 w-full" data-managed-album="attar">
+          <app-station-image-album [images]="media.album('station-attar')" [captionFirst]="false" [pending]="media.loading() || media.error()"></app-station-image-album>
         </div>
       </div>
     </section>
@@ -331,9 +250,7 @@
         >
           <div
             class="absolute inset-0 bg-cover bg-center opacity-80"
-            style="
-              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDR9sYSXz8XnFVi0YWh0Sgm5CBMsuj7hC2PBGrjFGLUEF3izLGOsZ8DayBBKg4kKjRHWILIzCbod7fiszlKrafDin9ogtQlCsS1B3yYOa45-exaGhiiOVDJmEI3l5b2JBLVEuJUYkeSYn81qOTtY-kG7FuE0s-fGMgLR9BpdEoevJFBL1UhPCUbnTNPRIa0cRd-O-R0vdhdvnS_Lwg5mvNS36ebnK4qfw28ywaVdV1C8NP3YZYD7BvJLxC9KS8NLWm_lH-y-RtNQZI');
-            "
+            [style.background-image]="media.background('lands-background')"
           ></div>
           <div
             class="absolute top-1/4 left-1/3 transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
@@ -451,6 +368,7 @@
           </div>
         </div>
       </div>
+      <app-station-image-album [images]="media.album('lands-album')" [compact]="true"></app-station-image-album>
     </section>
     } @placeholder {
       <div style="min-height: 500px"></div>
@@ -479,10 +397,10 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div class="group cursor-pointer">
-            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative bg-slate-200 dark:bg-neutral-dark">
               <div
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                style="background-image: url('assets/Images/فرز.png')"
+                [style.background-image]="media.background('sorting')"
               ></div>
               <div
                 class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow"
@@ -498,10 +416,10 @@
             </p>
           </div>
           <div class="group cursor-pointer">
-            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative bg-slate-200 dark:bg-neutral-dark">
               <div
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                style="background-image: url('assets/Images/غسيل.png')"
+                [style.background-image]="media.background('washing')"
               ></div>
               <div
                 class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow"
@@ -517,10 +435,10 @@
             </p>
           </div>
           <div class="group cursor-pointer">
-            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative bg-slate-200 dark:bg-neutral-dark">
               <div
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                style="background-image: url('assets/Images/تعبئة.jpeg')"
+                [style.background-image]="media.background('packing')"
               ></div>
               <div
                 class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow"
@@ -536,10 +454,10 @@
             </p>
           </div>
           <div class="group cursor-pointer">
-            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4 relative bg-slate-200 dark:bg-neutral-dark">
               <div
                 class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                style="background-image: url('assets/Images/شحن.jpeg')"
+                [style.background-image]="media.background('shipping')"
               ></div>
               <div
                 class="absolute top-3 right-3 bg-white/90 text-slate-900 text-xs font-bold px-2 py-1 rounded shadow"

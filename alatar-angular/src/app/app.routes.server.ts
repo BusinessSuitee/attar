@@ -1,6 +1,8 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
+  { path: 'gallery', renderMode: RenderMode.Server },
+  { path: 'stations', renderMode: RenderMode.Server },
   {
     path: 'products',
     renderMode: RenderMode.Server,

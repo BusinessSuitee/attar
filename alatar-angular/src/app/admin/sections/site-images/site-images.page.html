@@ -1,0 +1,100 @@
+<admin-page>
+  <admin-page-header [title]="'admin.site_images.title' | transloco" [subtitle]="'admin.site_images.subtitle' | transloco">
+    <select slot="actions" class="media-language" [ngModel]="language()" (ngModelChange)="languagePreference.setLanguage($event)" [attr.aria-label]="'admin.site_images.language' | transloco">
+      <option value="ar">العربية</option><option value="en">English</option><option value="ru">Русский</option>
+    </select>
+    <button slot="actions" type="button" class="media-button media-button--primary" [disabled]="busy() || loading() || error()" (click)="open('create')">
+      <span class="material-symbols-outlined">add_photo_alternate</span>{{ 'admin.site_images.add' | transloco }}
+    </button>
+  </admin-page-header>
+  <admin-section-card>
+    <div class="media-filters">
+      <label>{{ 'admin.site_images.page' | transloco }}
+        <select [ngModel]="pageFilter()" (ngModelChange)="setPage($event)">
+          <option value="all">{{ 'admin.site_images.all' | transloco }}</option>
+          <option value="gallery">{{ 'admin.site_images.gallery' | transloco }}</option>
+          <option value="stations">{{ 'admin.site_images.stations' | transloco }}</option>
+        </select>
+      </label>
+      <label>{{ 'admin.site_images.placement' | transloco }}
+        <select [ngModel]="placementFilter()" (ngModelChange)="placementFilter.set($event)">
+          <option value="all">{{ 'admin.site_images.all' | transloco }}</option>
+          @for (p of filteredPlacements(); track p) { <option [value]="p">{{ 'admin.site_images.placements.' + p | transloco }}</option> }
+        </select>
+      </label>
+      <label>{{ 'admin.site_images.category' | transloco }}
+        <select [ngModel]="categoryFilter()" (ngModelChange)="categoryFilter.set($event)">
+          <option value="all">{{ 'admin.site_images.all' | transloco }}</option>
+          @for (c of categories; track c) { <option [value]="c">{{ 'gallery_page.filters.' + (c === 'stations' ? 'sorting' : c) | transloco }}</option> }
+        </select>
+      </label>
+      <label>{{ 'admin.site_images.status' | transloco }}
+        <select [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event)">
+          <option value="all">{{ 'admin.site_images.all' | transloco }}</option>
+          <option value="visible">{{ 'admin.site_images.visible' | transloco }}</option>
+          <option value="hidden">{{ 'admin.site_images.hidden' | transloco }}</option>
+        </select>
+      </label>
+    </div>
+  </admin-section-card>
+  @if (loading()) { <p role="status">{{ 'site_images.loading' | transloco }}</p> }
+  @if (error()) {
+    <div class="media-state" role="alert"><p>{{ 'site_images.load_error' | transloco }}</p><button class="media-button" (click)="reload()">{{ 'site_images.retry' | transloco }}</button></div>
+  } @else if (!loading()) {
+    <div class="media-grid" [attr.aria-busy]="busy()">
+      @for (image of filtered(); track image.id) {
+        <article class="media-card" [class.media-card--hidden]="!image.isEnabled">
+          <img [src]="service.url(image)" [alt]="title(image)" loading="lazy" />
+          <div class="media-card__body">
+            <span class="media-badge" [class.media-badge--hidden]="!image.isEnabled">{{ 'admin.site_images.' + (image.isEnabled ? 'visible' : 'hidden') | transloco }}</span>
+            <h2>{{ title(image) }}</h2>
+            <p>{{ 'admin.site_images.placements.' + image.placement | transloco }}</p>
+            <div class="media-actions">
+              <button class="media-button" [disabled]="busy()" (click)="open('edit', image)">{{ 'admin.site_images.edit' | transloco }}</button>
+              <button class="media-button" [disabled]="busy()" (click)="open('replace', image)">{{ 'admin.site_images.replace' | transloco }}</button>
+              <button class="media-button" [disabled]="busy()" (click)="toggle(image)">{{ 'admin.site_images.' + (image.isEnabled ? 'hide' : 'show') | transloco }}</button>
+              <button class="media-button" [disabled]="busy() || !canMove(image, -1)" (click)="move(image, -1)" [attr.aria-label]="'admin.site_images.move_up' | transloco" [title]="'admin.site_images.move_up' | transloco"><span class="material-symbols-outlined">arrow_upward</span></button>
+              <button class="media-button" [disabled]="busy() || !canMove(image, 1)" (click)="move(image, 1)" [attr.aria-label]="'admin.site_images.move_down' | transloco" [title]="'admin.site_images.move_down' | transloco"><span class="material-symbols-outlined">arrow_downward</span></button>
+              <button class="media-button media-button--danger" [disabled]="busy()" (click)="deleting.set(image)">{{ 'admin.site_images.delete' | transloco }}</button>
+            </div>
+          </div>
+        </article>
+      } @empty { <p class="media-state">{{ 'site_images.empty' | transloco }}</p> }
+    </div>
+  }
+</admin-page>
+
+<admin-confirm-dialog [open]="editorOpen()" [title]="'admin.site_images.' + (mode === 'create' ? 'add' : mode) | transloco" [confirmLabel]="'admin.site_images.save' | transloco" [cancelLabel]="'admin.site_images.cancel' | transloco" [confirmDisabled]="busy() || (mode !== 'replace' && isOccupied(form.placement))" (confirm)="save()" (cancel)="closeEditor()">
+  <div class="media-form">
+    @if (preview()) { <img class="media-preview" [src]="preview()" [alt]="form.ar.title" /> }
+    @if (mode !== 'edit') {
+      <label>{{ 'admin.site_images.file' | transloco }}<input type="file" accept=".jpg,.jpeg,.png,.webp" [disabled]="busy()" (change)="chooseFile($event)" /></label>
+      <p class="media-hint">{{ 'admin.site_images.file_hint' | transloco }}</p>
+    }
+    @if (mode !== 'replace') {
+      <label>{{ 'admin.site_images.placement' | transloco }}
+        <select [ngModel]="form.placement" (ngModelChange)="changePlacement($event)" [ngModelOptions]="{standalone: true}" [disabled]="busy()">
+          @for (p of placements; track p) { <option [value]="p" [disabled]="isOccupied(p)">{{ 'admin.site_images.placements.' + p | transloco }}</option> }
+        </select>
+      </label>
+      @if (isOccupied(form.placement)) { <p class="media-error">{{ 'admin.site_images.occupied' | transloco }}</p> }
+      @if (form.placement === 'gallery') {
+        <label>{{ 'admin.site_images.category' | transloco }}<select [(ngModel)]="form.category" [ngModelOptions]="{standalone: true}" [disabled]="busy()">
+          @for (c of categories; track c) { <option [value]="c">{{ 'gallery_page.filters.' + (c === 'stations' ? 'sorting' : c) | transloco }}</option> }
+        </select></label>
+      }
+      <label class="media-check"><input type="checkbox" [(ngModel)]="form.isEnabled" [ngModelOptions]="{standalone: true}" [disabled]="busy()" />{{ 'admin.site_images.visible' | transloco }}</label>
+      @for (lang of languages; track lang) {
+        <fieldset [disabled]="busy()">
+          <legend>{{ 'admin.site_images.languages.' + lang | transloco }}</legend>
+          <label>{{ 'admin.site_images.image_title' | transloco }}{{ lang === 'ar' ? ' *' : '' }}<input [(ngModel)]="form[lang].title" [ngModelOptions]="{standalone: true}" maxlength="220" [dir]="lang === 'ar' ? 'rtl' : 'ltr'" /></label>
+          <label>{{ 'admin.site_images.description' | transloco }}<textarea [(ngModel)]="form[lang].description" [ngModelOptions]="{standalone: true}" maxlength="2000" rows="2" [dir]="lang === 'ar' ? 'rtl' : 'ltr'"></textarea></label>
+          <label>{{ 'admin.site_images.alt' | transloco }}<input [(ngModel)]="form[lang].alt" [ngModelOptions]="{standalone: true}" maxlength="300" [dir]="lang === 'ar' ? 'rtl' : 'ltr'" /></label>
+        </fieldset>
+      }
+      <p class="media-hint">{{ 'admin.site_images.translation_hint' | transloco }}</p>
+    }
+    @if (formError()) { <p class="media-error" role="alert">{{ formError() }}</p> }
+  </div>
+</admin-confirm-dialog>
+<admin-confirm-dialog [open]="deleting() !== null" [title]="'admin.site_images.delete' | transloco" [description]="deleteDescription()" [confirmLabel]="'admin.site_images.delete' | transloco" [cancelLabel]="'admin.site_images.cancel' | transloco" tone="danger" [confirmDisabled]="busy()" (confirm)="remove()" (cancel)="!busy() && deleting.set(null)"></admin-confirm-dialog>

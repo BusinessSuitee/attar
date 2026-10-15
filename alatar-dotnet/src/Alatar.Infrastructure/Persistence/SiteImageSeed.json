@@ -1,0 +1,876 @@
+[
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/2.jpeg",
+    "sourceKind": "Asset",
+    "category": "crops",
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "البرتقال المصري للاستهلاك الطازج",
+      "description": "محصول شتوي متميز للتصدير.",
+      "alt": "Orange"
+    },
+    "en": {
+      "title": "Egyptian Oranges for Fresh Consumption",
+      "description": "Premium winter crop for export.",
+      "alt": "Orange"
+    },
+    "ru": {
+      "title": "Египетские апельсины для свежего потребления",
+      "description": "Премиальный зимний урожай для экспорта.",
+      "alt": "Orange"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/1.jpeg",
+    "sourceKind": "Asset",
+    "category": "crops",
+    "displayOrder": 1,
+    "isEnabled": true,
+    "ar": {
+      "title": "فلفل",
+      "description": "محصول طازج عالي الجودة.",
+      "alt": "Pepper"
+    },
+    "en": {
+      "title": "Pepper",
+      "description": "High quality fresh crop.",
+      "alt": "Pepper"
+    },
+    "ru": {
+      "title": "Перец",
+      "description": "Свежий урожай высокого качества.",
+      "alt": "Pepper"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/3.jpeg",
+    "sourceKind": "Asset",
+    "category": "crops",
+    "displayOrder": 2,
+    "isEnabled": true,
+    "ar": {
+      "title": "عنب أسود فاخر",
+      "description": "محصول صيفي للتصدير المبكر.",
+      "alt": "Grapes"
+    },
+    "en": {
+      "title": "Premium Black Grapes",
+      "description": "Summer crop for early export.",
+      "alt": "Grapes"
+    },
+    "ru": {
+      "title": "Премиальный черный виноград",
+      "description": "Летний урожай для раннего экспорта.",
+      "alt": "Grapes"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/4.jpeg",
+    "sourceKind": "Asset",
+    "category": "crops",
+    "displayOrder": 3,
+    "isEnabled": true,
+    "ar": {
+      "title": "مانجو مصرية",
+      "description": "ثمرات منتقاة وعالية المذاق.",
+      "alt": "Mango"
+    },
+    "en": {
+      "title": "Egyptian Mangoes",
+      "description": "Hand-picked fruits with high flavor.",
+      "alt": "Mango"
+    },
+    "ru": {
+      "title": "Египетское манго",
+      "description": "Отборные плоды с отличным вкусом.",
+      "alt": "Mango"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/8.jpeg",
+    "sourceKind": "Asset",
+    "category": "crops",
+    "displayOrder": 4,
+    "isEnabled": true,
+    "ar": {
+      "title": "بصل أحمر",
+      "description": "صلابة وقدرة تخزينية ممتازة.",
+      "alt": "Onion"
+    },
+    "en": {
+      "title": "Red Onions",
+      "description": "Excellent firmness and storage capacity.",
+      "alt": "Onion"
+    },
+    "ru": {
+      "title": "Красный лук",
+      "description": "Отличная твердость и срок хранения.",
+      "alt": "Onion"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/mhaoutside.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 5,
+    "isEnabled": true,
+    "ar": {
+      "title": "الواجهة الخارجية لمحطة MHA",
+      "description": "المدخل الرئيسي ومنطقة التجهيز المخصصة لعمليات التصدير.",
+      "alt": "MHA station exterior"
+    },
+    "en": {
+      "title": "MHA Station Exterior",
+      "description": "Main entrance and loading zone prepared for export operations.",
+      "alt": "MHA station exterior"
+    },
+    "ru": {
+      "title": "Внешний вид станции MHA",
+      "description": "Главный вход и зона погрузки, подготовленная для экспортных операций.",
+      "alt": "MHA station exterior"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/outsidemha.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 6,
+    "isEnabled": true,
+    "ar": {
+      "title": "ساحة تشغيل محطة MHA",
+      "description": "ساحة تشغيل محطة MHA",
+      "alt": "MHA station outside view"
+    },
+    "en": {
+      "title": "MHA Yard Operations",
+      "description": "Outdoor handling and movement area supporting daily shipment flow.",
+      "alt": "MHA station outside view"
+    },
+    "ru": {
+      "title": "Открытая площадка MHA",
+      "description": "Внешняя рабочая зона, поддерживающая ежедневный поток отгрузок.",
+      "alt": "MHA station outside view"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/mhainside.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 7,
+    "isEnabled": true,
+    "ar": {
+      "title": "خط التشغيل الداخلي",
+      "description": "خط التشغيل الداخلي",
+      "alt": "MHA station inside line"
+    },
+    "en": {
+      "title": "Internal Processing Line",
+      "description": "Integrated inside line for receiving and preparing produce.",
+      "alt": "MHA station inside line"
+    },
+    "ru": {
+      "title": "Внутренняя производственная линия",
+      "description": "Интегрированная линия внутри станции для приемки и подготовки продукции.",
+      "alt": "MHA station inside line"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/mhainside2.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 8,
+    "isEnabled": true,
+    "ar": {
+      "title": "منطقة الفرز والتدريج",
+      "description": "آلية فرز دقيقة متوافقة مع متطلبات الجودة التصديرية.",
+      "alt": "MHA station sorting line"
+    },
+    "en": {
+      "title": "Sorting & Grading Area",
+      "description": "Controlled sorting workflow aligned with export quality requirements.",
+      "alt": "MHA station sorting line"
+    },
+    "ru": {
+      "title": "Зона сортировки и калибровки",
+      "description": "Контролируемый процесс сортировки в соответствии с экспортными стандартами качества.",
+      "alt": "MHA station sorting line"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/mhainside3.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 9,
+    "isEnabled": true,
+    "ar": {
+      "title": "قسم التعبئة",
+      "description": "حلول تعبئة مرنة تناسب احتياجات الأسواق المختلفة.",
+      "alt": "MHA station packaging area"
+    },
+    "en": {
+      "title": "Packaging Section",
+      "description": "Flexible packaging setup tailored for different market needs.",
+      "alt": "MHA station packaging area"
+    },
+    "ru": {
+      "title": "Упаковочный участок",
+      "description": "Гибкая упаковка под требования различных рынков.",
+      "alt": "MHA station packaging area"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/mhainside4.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 10,
+    "isEnabled": true,
+    "ar": {
+      "title": "تشغيل المحطة اليومي",
+      "description": "تفاصيل من عمليات الإنتاج واللوجستيات داخل محطة MHA.",
+      "alt": "MHA station operations"
+    },
+    "en": {
+      "title": "Station Operations",
+      "description": "Daily production and logistics operations inside MHA station.",
+      "alt": "MHA station operations"
+    },
+    "ru": {
+      "title": "Операции станции",
+      "description": "Ежедневные производственные и логистические процессы внутри станции MHA.",
+      "alt": "MHA station operations"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/alattarstation2.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 11,
+    "isEnabled": true,
+    "ar": {
+      "title": "الواجهة الخارجية لمحطة العطار",
+      "description": "مشهد خارجي لمحطة العطار.",
+      "alt": "Al Attar station exterior"
+    },
+    "en": {
+      "title": "Al Attar Station Exterior",
+      "description": "Exterior view of Al Attar station.",
+      "alt": "Al Attar station exterior"
+    },
+    "ru": {
+      "title": "Внешний вид станции Аль-Аттар",
+      "description": "Внешний вид станции Аль-Аттар.",
+      "alt": "Al Attar station exterior"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/alattarstationinside.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 12,
+    "isEnabled": true,
+    "ar": {
+      "title": "ساحة محطة العطار",
+      "description": "ساحة التشغيل الخارجية بمحطة العطار.",
+      "alt": "Al Attar station yard"
+    },
+    "en": {
+      "title": "Al Attar Yard Area",
+      "description": "Outdoor operating yard at Al Attar station.",
+      "alt": "Al Attar station yard"
+    },
+    "ru": {
+      "title": "Площадка станции Аль-Аттар",
+      "description": "Внешняя рабочая площадка станции Аль-Аттар.",
+      "alt": "Al Attar station yard"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/alattarstationinside2.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 13,
+    "isEnabled": true,
+    "ar": {
+      "title": "خط تشغيل محطة العطار",
+      "description": "جزء من خط التشغيل الداخلي بمحطة العطار.",
+      "alt": "Al Attar station processing line"
+    },
+    "en": {
+      "title": "Al Attar Processing Line",
+      "description": "Part of the internal processing line at Al Attar station.",
+      "alt": "Al Attar station processing line"
+    },
+    "ru": {
+      "title": "Производственная линия Аль-Аттар",
+      "description": "Часть внутренней производственной линии станции Аль-Аттар.",
+      "alt": "Al Attar station processing line"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/alattarstationinside3.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 14,
+    "isEnabled": true,
+    "ar": {
+      "title": "منطقة تجهيز محطة العطار",
+      "description": "منطقة تجهيز وفرز داخل محطة العطار.",
+      "alt": "Al Attar station sorting and handling"
+    },
+    "en": {
+      "title": "Al Attar Preparation Zone",
+      "description": "Sorting and preparation area inside Al Attar station.",
+      "alt": "Al Attar station sorting and handling"
+    },
+    "ru": {
+      "title": "Зона подготовки Аль-Аттар",
+      "description": "Зона сортировки и подготовки внутри станции Аль-Аттар.",
+      "alt": "Al Attar station sorting and handling"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/alattarstationinside4.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 15,
+    "isEnabled": true,
+    "ar": {
+      "title": "الواجهة الحديثة لمحطة QTC",
+      "description": "الواجهة الرئيسية لأحدث محطات الفرز الذكي والتعبئة المتطورة.",
+      "alt": "QTC station modern facility"
+    },
+    "en": {
+      "title": "QTC Modern Facility",
+      "description": "Front facade of our newest smart sorting and high-capacity packing hub.",
+      "alt": "QTC station modern facility"
+    },
+    "ru": {
+      "title": "Современный комплекс QTC",
+      "description": "Главный фасад новейшего центра интеллектуальной сортировки и упаковки.",
+      "alt": "QTC station modern facility"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/alattarstationinside5.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 16,
+    "isEnabled": true,
+    "ar": {
+      "title": "أنظمة الفرز الإلكتروني بمحطة QTC",
+      "description": "تقنيات فرز بصرية متقدمة لتدريج المحاصيل التصديرية بدقة متناهية.",
+      "alt": "QTC station optical sorting"
+    },
+    "en": {
+      "title": "QTC Optical Sorting Systems",
+      "description": "Advanced optical vision technology for precise grading and crop quality.",
+      "alt": "QTC station optical sorting"
+    },
+    "ru": {
+      "title": "Системы оптической сортировки QTC",
+      "description": "Передовые оптические технологии для высокоточной калибровки и контроля качества.",
+      "alt": "QTC station optical sorting"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/mhainside.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 17,
+    "isEnabled": true,
+    "ar": {
+      "title": "خطوط التعبئة الآلية بمحطة QTC",
+      "description": "خطوط آلية بالكامل مجهزة لتعبئة الشحنات الدولية بكفاءة وسرعة.",
+      "alt": "QTC station automated packaging"
+    },
+    "en": {
+      "title": "QTC Automated Packaging Lines",
+      "description": "High-speed automated packaging lines optimized for global export demands.",
+      "alt": "QTC station automated packaging"
+    },
+    "ru": {
+      "title": "Автоматизированные линии упаковки QTC",
+      "description": "Высокоскоростные линии упаковки, оптимизированные под мировые экспортные стандарты.",
+      "alt": "QTC station automated packaging"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/outsidemha.jpeg",
+    "sourceKind": "Asset",
+    "category": "stations",
+    "displayOrder": 18,
+    "isEnabled": true,
+    "ar": {
+      "title": "منطقة التحميل واللوجستيات بمحطة QTC",
+      "description": "أرصفة تحميل مجهزة للحفاظ على سلسلة التبريد حتى التصدير.",
+      "alt": "QTC station loading and logistics"
+    },
+    "en": {
+      "title": "QTC Logistics & Loading Docks",
+      "description": "Climate-controlled loading bays maintaining cold chain integrity.",
+      "alt": "QTC station loading and logistics"
+    },
+    "ru": {
+      "title": "Логистическая зона и рампы QTC",
+      "description": "Погрузочные рампы с контролем температуры для сохранения холодовой цепи.",
+      "alt": "QTC station loading and logistics"
+    }
+  },
+  {
+    "placement": "station-qtc",
+    "sourcePath": "assets/Images/QTC.png",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "محطة QTC",
+      "description": "",
+      "alt": "QTC station facility"
+    },
+    "en": {
+      "title": "QTC Station",
+      "description": "",
+      "alt": "QTC station facility"
+    },
+    "ru": {
+      "title": "Станция QTC",
+      "description": "",
+      "alt": "QTC station facility"
+    }
+  },
+  {
+    "placement": "station-qtc",
+    "sourcePath": "assets/Images/alattarstationinside5.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 1,
+    "isEnabled": true,
+    "ar": {
+      "title": "محطة QTC",
+      "description": "",
+      "alt": "QTC optical sorting"
+    },
+    "en": {
+      "title": "QTC Station",
+      "description": "",
+      "alt": "QTC optical sorting"
+    },
+    "ru": {
+      "title": "Станция QTC",
+      "description": "",
+      "alt": "QTC optical sorting"
+    }
+  },
+  {
+    "placement": "station-qtc",
+    "sourcePath": "assets/Images/alattarstationinside3.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 2,
+    "isEnabled": true,
+    "ar": {
+      "title": "محطة QTC",
+      "description": "",
+      "alt": "QTC automated packing"
+    },
+    "en": {
+      "title": "QTC Station",
+      "description": "",
+      "alt": "QTC automated packing"
+    },
+    "ru": {
+      "title": "Станция QTC",
+      "description": "",
+      "alt": "QTC automated packing"
+    }
+  },
+  {
+    "placement": "station-mha",
+    "sourcePath": "assets/Images/mhaoutside.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "جولة ميدانية داخل محطة MHA",
+      "description": "",
+      "alt": "MHA station exterior"
+    },
+    "en": {
+      "title": "Field Tour Inside MHA Station",
+      "description": "",
+      "alt": "MHA station exterior"
+    },
+    "ru": {
+      "title": "Экскурсия по станции MHA",
+      "description": "",
+      "alt": "MHA station exterior"
+    }
+  },
+  {
+    "placement": "station-mha",
+    "sourcePath": "assets/Images/mhainside2.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 1,
+    "isEnabled": true,
+    "ar": {
+      "title": "مزرعة الشجاعة ومحطة MHA",
+      "description": "",
+      "alt": "MHA station sorting line"
+    },
+    "en": {
+      "title": "Al-Shujaa Farm & MHA Station",
+      "description": "",
+      "alt": "MHA station sorting line"
+    },
+    "ru": {
+      "title": "Ферма Аль-Шуджаа и станция MHA",
+      "description": "",
+      "alt": "MHA station sorting line"
+    }
+  },
+  {
+    "placement": "station-mha",
+    "sourcePath": "assets/Images/mhainside4.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 2,
+    "isEnabled": true,
+    "ar": {
+      "title": "مزرعة الشجاعة ومحطة MHA",
+      "description": "",
+      "alt": "MHA station operations"
+    },
+    "en": {
+      "title": "Al-Shujaa Farm & MHA Station",
+      "description": "",
+      "alt": "MHA station operations"
+    },
+    "ru": {
+      "title": "Ферма Аль-Шуджаа и станция MHA",
+      "description": "",
+      "alt": "MHA station operations"
+    }
+  },
+  {
+    "placement": "station-attar",
+    "sourcePath": "assets/Images/alattarstation2.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "مزرعة عبدالرقيب ومحطة العطار",
+      "description": "",
+      "alt": "Al Attar station exterior"
+    },
+    "en": {
+      "title": "Abdel-Raqeeb Farm & Al-Attar Station",
+      "description": "",
+      "alt": "Al Attar station exterior"
+    },
+    "ru": {
+      "title": "Ферма Абдель-Ракиб и станция Аль-Аттар",
+      "description": "",
+      "alt": "Al Attar station exterior"
+    }
+  },
+  {
+    "placement": "station-attar",
+    "sourcePath": "assets/Images/alattarstationinside.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 1,
+    "isEnabled": true,
+    "ar": {
+      "title": "مزرعة عبدالرقيب ومحطة العطار",
+      "description": "",
+      "alt": "Al Attar station inside"
+    },
+    "en": {
+      "title": "Abdel-Raqeeb Farm & Al-Attar Station",
+      "description": "",
+      "alt": "Al Attar station inside"
+    },
+    "ru": {
+      "title": "Ферма Абдель-Ракиб и станция Аль-Аттар",
+      "description": "",
+      "alt": "Al Attar station inside"
+    }
+  },
+  {
+    "placement": "station-attar",
+    "sourcePath": "assets/Images/alattarstationinside2.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 2,
+    "isEnabled": true,
+    "ar": {
+      "title": "مزرعة عبدالرقيب ومحطة العطار",
+      "description": "",
+      "alt": "Al Attar station operations"
+    },
+    "en": {
+      "title": "Abdel-Raqeeb Farm & Al-Attar Station",
+      "description": "",
+      "alt": "Al Attar station operations"
+    },
+    "ru": {
+      "title": "Ферма Абдель-Ракиб и станция Аль-Аттар",
+      "description": "",
+      "alt": "Al Attar station operations"
+    }
+  },
+  {
+    "placement": "gallery-hero",
+    "sourcePath": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyQtT8owDfJ0GB8LrztrDcShRTPEL4FGq35Lne3RPA5uMFf6iHQu9kSM8-KPt-L6y5zTOovmQJXZ0mUS6U1YYxRVl2VcixOtrncy5dFbj8Ju4owI_1D9Ur3RPcWAE7iU4H3gMygtbnh_5gSxtp-_U6YdmWNiVPKOB1tCJcj8i3ObfxmwTxLcIcZ4FNamMEBsd120cJCHSjU5aM9Dzx3IhUzCJ9hgs31U9SIaaarvAUcGbmt-Cb-iLLO9rHlu25c-5p4qGuDPshWH8",
+    "sourceKind": "External",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "معرض الصور المرئي",
+      "description": "",
+      "alt": "معرض الصور المرئي"
+    },
+    "en": {
+      "title": "Visual Gallery",
+      "description": "",
+      "alt": "Visual Gallery"
+    },
+    "ru": {
+      "title": "Визуальная галерея",
+      "description": "",
+      "alt": "Визуальная галерея"
+    }
+  },
+  {
+    "placement": "stations-hero",
+    "sourcePath": "https://lh3.googleusercontent.com/aida-public/AB6AXuCZlmAY-NvDYu0-F79mrIHmyhRuTFkoW9rCmppXMZCni8ggo3JALLslweFAPvtBgUZsgeHq4MWo-dKN-8s7NWQZMUv3-HDd22jhnYJOZvwM-zahkMMdsH-kkGqinvAYPPZsMeaaAIcFm2rEybXfrKGPLj65OHXJiGruEIlP0NKEIuzRZrYT6Rd4iIoyLayEebcri8dZ9IwYQCJgR0lzliFVTB5DtTrAV3KZL3osoZVKocCpYfjFZpH5D9HEcMrdPBPK7jx3lpl6TSs",
+    "sourceKind": "External",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "محطاتنا الزراعية: بنية تحتية تصديرية بمعايير عالمية",
+      "description": "",
+      "alt": "محطاتنا الزراعية: بنية تحتية تصديرية بمعايير عالمية"
+    },
+    "en": {
+      "title": "Our Stations: Export Infrastructure Built to Global Standards",
+      "description": "",
+      "alt": "Our Stations: Export Infrastructure Built to Global Standards"
+    },
+    "ru": {
+      "title": "Наши станции: экспортная инфраструктура по мировым стандартам",
+      "description": "",
+      "alt": "Наши станции: экспортная инфраструктура по мировым стандартам"
+    }
+  },
+  {
+    "placement": "lands-background",
+    "sourcePath": "https://lh3.googleusercontent.com/aida-public/AB6AXuDR9sYSXz8XnFVi0YWh0Sgm5CBMsuj7hC2PBGrjFGLUEF3izLGOsZ8DayBBKg4kKjRHWILIzCbod7fiszlKrafDin9ogtQlCsS1B3yYOa45-exaGhiiOVDJmEI3l5b2JBLVEuJUYkeSYn81qOTtY-kG7FuE0s-fGMgLR9BpdEoevJFBL1UhPCUbnTNPRIa0cRd-O-R0vdhdvnS_Lwg5mvNS36ebnK4qfw28ywaVdV1C8NP3YZYD7BvJLxC9KS8NLWm_lH-y-RtNQZI",
+    "sourceKind": "External",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "أراضينا وشبكة التوريد",
+      "description": "",
+      "alt": "أراضينا وشبكة التوريد"
+    },
+    "en": {
+      "title": "Our Lands and Supply Network",
+      "description": "",
+      "alt": "Our Lands and Supply Network"
+    },
+    "ru": {
+      "title": "Наши земли и сеть поставок",
+      "description": "",
+      "alt": "Наши земли и сеть поставок"
+    }
+  },
+  {
+    "placement": "sorting",
+    "sourcePath": "assets/Images/فرز.png",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "استلام وفرز أولي",
+      "description": "فحص الشحنات الواردة واستبعاد أي منتجات غير مطابقة.",
+      "alt": "استلام وفرز أولي"
+    },
+    "en": {
+      "title": "Receiving & Initial Sorting",
+      "description": "Inspecting incoming batches and excluding non-compliant produce.",
+      "alt": "Receiving & Initial Sorting"
+    },
+    "ru": {
+      "title": "Приемка и первичная сортировка",
+      "description": "Проверка входящих партий и исключение несоответствующей продукции.",
+      "alt": "Приемка и первичная сортировка"
+    }
+  },
+  {
+    "placement": "washing",
+    "sourcePath": "assets/Images/غسيل.png",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "الغسيل والتجفيف",
+      "description": "تنظيف وتجفيف المحاصيل بأدوات مخصصة للحفاظ على سلامتها.",
+      "alt": "الغسيل والتجفيف"
+    },
+    "en": {
+      "title": "Washing & Drying",
+      "description": "Cleaning and drying crops with dedicated equipment to preserve integrity.",
+      "alt": "Washing & Drying"
+    },
+    "ru": {
+      "title": "Мойка и сушка",
+      "description": "Очистка и сушка продукции на специализированном оборудовании.",
+      "alt": "Мойка и сушка"
+    }
+  },
+  {
+    "placement": "packing",
+    "sourcePath": "assets/Images/تعبئة.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "التعبئة الذكية",
+      "description": "تعبئة مرنة بحسب متطلبات كل عميل وسوق مستهدف.",
+      "alt": "التعبئة الذكية"
+    },
+    "en": {
+      "title": "Smart Packing",
+      "description": "Flexible packing formats tailored to each client and market.",
+      "alt": "Smart Packing"
+    },
+    "ru": {
+      "title": "Умная упаковка",
+      "description": "Гибкие форматы упаковки под требования каждого клиента и рынка.",
+      "alt": "Умная упаковка"
+    }
+  },
+  {
+    "placement": "shipping",
+    "sourcePath": "assets/Images/شحن.jpeg",
+    "sourceKind": "Asset",
+    "category": null,
+    "displayOrder": 0,
+    "isEnabled": true,
+    "ar": {
+      "title": "التجهيز للشحن",
+      "description": "تجهيز نهائي وتوثيق كامل قبل التحميل والتصدير.",
+      "alt": "التجهيز للشحن"
+    },
+    "en": {
+      "title": "Shipment Preparation",
+      "description": "Final preparation and full documentation before loading and export.",
+      "alt": "Shipment Preparation"
+    },
+    "ru": {
+      "title": "Подготовка к отгрузке",
+      "description": "Финальная подготовка и полная документация перед погрузкой и экспортом.",
+      "alt": "Подготовка к отгрузке"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/مزارع 1.jpeg",
+    "sourceKind": "Asset",
+    "category": "farms",
+    "displayOrder": 19,
+    "isEnabled": false,
+    "ar": {
+      "title": "مزرعة 1",
+      "description": "",
+      "alt": "مزرعة 1"
+    },
+    "en": {
+      "title": "Farm 1",
+      "description": "",
+      "alt": "Farm 1"
+    },
+    "ru": {
+      "title": "Ферма 1",
+      "description": "",
+      "alt": "Ферма 1"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/مزارع 2.jpeg",
+    "sourceKind": "Asset",
+    "category": "farms",
+    "displayOrder": 20,
+    "isEnabled": false,
+    "ar": {
+      "title": "مزرعة 2",
+      "description": "",
+      "alt": "مزرعة 2"
+    },
+    "en": {
+      "title": "Farm 2",
+      "description": "",
+      "alt": "Farm 2"
+    },
+    "ru": {
+      "title": "Ферма 2",
+      "description": "",
+      "alt": "Ферма 2"
+    }
+  },
+  {
+    "placement": "gallery",
+    "sourcePath": "assets/Images/مزارع 3.jpeg",
+    "sourceKind": "Asset",
+    "category": "farms",
+    "displayOrder": 21,
+    "isEnabled": false,
+    "ar": {
+      "title": "مزرعة 3",
+      "description": "",
+      "alt": "مزرعة 3"
+    },
+    "en": {
+      "title": "Farm 3",
+      "description": "",
+      "alt": "Farm 3"
+    },
+    "ru": {
+      "title": "Ферма 3",
+      "description": "",
+      "alt": "Ферма 3"
+    }
+  }
+]

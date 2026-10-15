@@ -924,7 +924,8 @@
       "orders": "Orders",
       "contacts": "Contacts",
       "social_links": "Social Links",
-      "settings": "Settings"
+      "settings": "Settings",
+      "site_images": "Site images"
     },
     "placeholder": {
       "title": "Section under construction",
@@ -1286,6 +1287,61 @@
     "settings": {
       "title": "Settings",
       "subtitle": "Account and platform preferences"
+    },
+    "site_images": {
+      "title": "Site images",
+      "subtitle": "Manage gallery, station and land images. Changes apply only to the selected placement.",
+      "add": "Add image",
+      "all": "All",
+      "gallery": "Gallery",
+      "stations": "Stations and lands",
+      "page": "Page",
+      "placement": "Placement",
+      "category": "Category",
+      "status": "Visibility",
+      "visible": "Published",
+      "hidden": "Hidden",
+      "edit": "Edit details",
+      "replace": "Replace image",
+      "hide": "Hide",
+      "show": "Publish",
+      "move_up": "Move up",
+      "move_down": "Move down",
+      "delete": "Delete image",
+      "save": "Save",
+      "cancel": "Cancel",
+      "file": "Image file",
+      "file_hint": "JPG / JPEG / PNG / WebP — up to 5MB",
+      "image_title": "Image title",
+      "description": "Description",
+      "alt": "Alternative text",
+      "translation_hint": "Arabic title is required. Missing translations use Arabic.",
+      "invalid_file": "Choose a JPG, JPEG, PNG or WebP image up to 5MB.",
+      "required": "Select an image and enter the required Arabic title.",
+      "occupied": "This placement already has an image. Replace or delete it first.",
+      "saved": "Change saved.",
+      "save_error": "Could not save the change. Please try again.",
+      "delete_description": "Delete “{{title}}” from “{{placement}}” only. Uses in other placements will remain.",
+      "placements": {
+        "gallery": "Gallery images",
+        "station-qtc": "QTC station album",
+        "station-mha": "MHA station album",
+        "station-attar": "Al Attar station album",
+        "lands-album": "Lands album",
+        "gallery-hero": "Gallery background",
+        "stations-hero": "Stations page background",
+        "lands-background": "Lands background",
+        "sorting": "Sorting image",
+        "washing": "Washing image",
+        "packing": "Packing image",
+        "shipping": "Shipping image"
+      },
+      "languages": {
+        "ar": "Arabic",
+        "en": "English",
+        "ru": "Russian"
+      },
+      "language": "Dashboard language"
     }
   },
   "common": {
@@ -1385,5 +1441,11 @@
       "month_11": "Nov",
       "month_12": "Dec"
     }
+  },
+  "site_images": {
+    "loading": "Loading images…",
+    "load_error": "Could not load images. Please try again.",
+    "retry": "Try again",
+    "empty": "No images to display."
   }
 }

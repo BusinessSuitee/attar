@@ -5,4 +5,7 @@
     <Project Path="src/Alatar.Domain/Alatar.Domain.csproj" />
     <Project Path="src/Alatar.Infrastructure/Alatar.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Alatar.SiteImages.Tests/Alatar.SiteImages.Tests.csproj" />
+  </Folder>
 </Solution>

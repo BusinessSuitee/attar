@@ -21,6 +21,18 @@
   ],
   "rewrites": [
     {
+      "source": "/gallery",
+      "destination": "/index.csr.html"
+    },
+    {
+      "source": "/stations",
+      "destination": "/index.csr.html"
+    },
+    {
+      "source": "/admin/site-images",
+      "destination": "/index.csr.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

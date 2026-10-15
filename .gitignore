@@ -22,6 +22,7 @@ Thumbs.db
 **/[Bb]in/
 **/[Oo]bj/
 **/TestResults/
+alatar-dotnet/artifacts/
 
 # -----------------------------
 # Node / Angular artifacts

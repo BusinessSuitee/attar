@@ -4,6 +4,7 @@ using Alatar.Domain.Contacts;
 using Alatar.Domain.OrderRequests;
 using Alatar.Domain.Products;
 using Alatar.Domain.SocialLinks;
+using Alatar.Domain.SiteImages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Alatar.Infrastructure.Persistence;
@@ -80,6 +81,28 @@ public sealed class AlatarDbContext(DbContextOptions<AlatarDbContext> options)
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var siteImage = modelBuilder.Entity<SiteImage>();
+        siteImage.ToTable("SiteImages");
+        siteImage.HasKey(x => x.Id);
+        siteImage.Property(x => x.Id).ValueGeneratedNever();
+        siteImage.Property(x => x.Placement).HasMaxLength(40).IsRequired();
+        siteImage.Property(x => x.SlotKey).HasMaxLength(40);
+        siteImage.Property(x => x.Category).HasMaxLength(32);
+        siteImage.Property(x => x.SourceKind).HasMaxLength(16).IsRequired();
+        siteImage.Property(x => x.SourcePath).HasMaxLength(2000).IsRequired();
+        foreach (var lang in new[] { "Ar", "En", "Ru" })
+        {
+            siteImage.Property<string>("Title" + lang).HasMaxLength(220).IsRequired();
+            siteImage.Property<string>("Description" + lang).HasMaxLength(2000).IsRequired();
+            siteImage.Property<string>("Alt" + lang).HasMaxLength(300).IsRequired();
+        }
+        siteImage.HasIndex(x => x.SlotKey).IsUnique().HasFilter("[SlotKey] IS NOT NULL");
+        siteImage.HasIndex(x => new { x.Placement, x.DisplayOrder });
+        var import = modelBuilder.Entity<SiteImageImport>();
+        import.ToTable("SiteImageImports");
+        import.HasKey(x => x.Version);
+        import.Property(x => x.Version).HasMaxLength(80);
+
         var category = modelBuilder.Entity<Category>();
 
         category.ToTable("Categories");

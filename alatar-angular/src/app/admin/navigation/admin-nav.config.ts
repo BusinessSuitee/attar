@@ -8,6 +8,10 @@ export const ADMIN_NAV_GROUPS: AdminNavGroupMeta[] = [
 
 export const ADMIN_NAV: AdminSection[] = [
   {
+    id: 'site-images', path: 'site-images', labelKey: 'admin.nav.site_images',
+    icon: 'photo_library', group: 'system', order: 0,
+  },
+  {
     id: 'overview',
     path: 'overview',
     labelKey: 'admin.nav.overview',

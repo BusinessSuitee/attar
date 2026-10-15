@@ -26,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderRequestRepository, SqlOrderRequestRepository>();
         services.AddScoped<IProductRepository, SqlProductRepository>();
         services.AddScoped<ISocialLinkRepository, SqlSocialLinkRepository>();
+        services.AddScoped<ISiteImageRepository, SqlSiteImageRepository>();
 
         return services;
     }

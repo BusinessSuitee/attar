@@ -19,6 +19,7 @@ public static class DatabaseInitializer
         await EnsureOrderRequestsTableExistsAsync(dbContext);
         await EnsureProductImagesTableExistsAsync(dbContext);
         await EnsureSocialLinksTableExistsAsync(dbContext);
+        await SiteImageSeedImporter.InitializeAsync(dbContext);
         await MigrateAndNormalizeProductOptionsAsync(dbContext);
         await SeedDefaultCategoriesAsync(dbContext);
         await SeedDefaultProductsAsync(dbContext);

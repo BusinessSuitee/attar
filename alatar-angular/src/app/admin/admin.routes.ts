@@ -1,6 +1,11 @@
 import { Routes } from '@angular/router';
 
 export const adminRoutes: Routes = [
+  {
+    path: 'site-images',
+    loadComponent: () => import('./sections/site-images/site-images.page').then(m => m.AdminSiteImagesPageComponent),
+    data: { sectionId: 'site-images', titleKey: 'admin.nav.site_images' },
+  },
   { path: '', redirectTo: 'overview', pathMatch: 'full' },
   {
     path: 'overview',

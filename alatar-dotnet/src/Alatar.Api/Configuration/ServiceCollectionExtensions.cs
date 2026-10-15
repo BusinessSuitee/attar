@@ -75,6 +75,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IProductImageStorage, LocalProductImageStorage>();
         services.AddScoped<ISocialIconStorage, LocalSocialIconStorage>();
+        services.AddScoped<ISiteImageStorage, LocalSiteImageStorage>();
+        services.AddScoped<Controllers.SiteImageValidationFilter>();
 
         return services;
     }

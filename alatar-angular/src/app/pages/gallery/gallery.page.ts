@@ -1,7 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslocoModule } from '@jsverse/transloco';
-import { ChangeDetectionStrategy, Component, computed, signal, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, HostListener, inject, OnInit, OnDestroy } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+
+import { PublicSiteImagesStore } from '../../core/site-images/public-site-images.store';
+import { SiteImageStatusComponent } from '../../components/site-image-status/site-image-status.component';
 
 type GalleryCategory = 'all' | 'farms' | 'stations' | 'crops' | 'legacy';
 
@@ -11,24 +14,23 @@ interface FilterOption {
   icon: string;
 }
 
-interface GalleryItem {
-  id: number;
-  category: GalleryCategory;
-  src: string;
-  alt: string;
-  titleKey: string;
-  descKey?: string;
-}
 
 @Component({
   selector: 'app-gallery-page',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, TranslocoModule],
+  imports: [CommonModule, NavbarComponent, TranslocoModule, SiteImageStatusComponent],
+  providers: [PublicSiteImagesStore],
   templateUrl: './gallery.page.html',
   styleUrl: './gallery.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GalleryPageComponent {
+export class GalleryPageComponent implements OnInit, OnDestroy {
+  private readonly document = inject(DOCUMENT);
+  readonly media = inject(PublicSiteImagesStore);
+  readonly items = computed(() => this.media.album('gallery'));
+  ngOnInit(): void { this.loadImages(); }
+  ngOnDestroy(): void { this.closeImage(); }
+  loadImages(): void { this.closeImage(); this.media.load('gallery'); }
   readonly activeFilter = signal<GalleryCategory>('all');
   readonly selectedImageIndex = signal<number | null>(null);
 
@@ -40,164 +42,10 @@ export class GalleryPageComponent {
     { id: 'legacy', labelKey: 'legacy', icon: 'workspace_premium' },
   ];
 
-  readonly items: GalleryItem[] = [
-    {
-      id: 1,
-      category: 'crops',
-      src: 'assets/Images/2.jpeg',
-      alt: 'Orange',
-      titleKey: 'crops_1',
-      descKey: 'crops_1',
-    },
-    {
-      id: 2,
-      category: 'crops',
-      src: 'assets/Images/1.jpeg',
-      alt: 'Pepper',
-      titleKey: 'crops_2',
-      descKey: 'crops_2',
-    },
-    {
-      id: 3,
-      category: 'crops',
-      src: 'assets/Images/3.jpeg',
-      alt: 'Grapes',
-      titleKey: 'crops_3',
-      descKey: 'crops_3',
-    },
-    {
-      id: 4,
-      category: 'crops',
-      src: 'assets/Images/4.jpeg',
-      alt: 'Mango',
-      titleKey: 'crops_4',
-      descKey: 'crops_4',
-    },
-    {
-      id: 6,
-      category: 'crops',
-      src: 'assets/Images/8.jpeg',
-      alt: 'Onion',
-      titleKey: 'crops_6',
-      descKey: 'crops_6',
-    },
-    {
-      id: 7,
-      category: 'stations',
-      src: 'assets/Images/mhaoutside.jpeg',
-      alt: 'MHA station exterior',
-      titleKey: 'mha_1',
-      descKey: 'mha_1',
-    },
-    {
-      id: 8,
-      category: 'stations',
-      src: 'assets/Images/outsidemha.jpeg',
-      alt: 'MHA station outside view',
-      titleKey: 'mha_2',
-      descKey: 'mha_2',
-    },
-    {
-      id: 9,
-      category: 'stations',
-      src: 'assets/Images/mhainside.jpeg',
-      alt: 'MHA station inside line',
-      titleKey: 'mha_3',
-      descKey: 'mha_3',
-    },
-    {
-      id: 10,
-      category: 'stations',
-      src: 'assets/Images/mhainside2.jpeg',
-      alt: 'MHA station sorting line',
-      titleKey: 'mha_4',
-      descKey: 'mha_4',
-    },
-    {
-      id: 11,
-      category: 'stations',
-      src: 'assets/Images/mhainside3.jpeg',
-      alt: 'MHA station packaging area',
-      titleKey: 'mha_5',
-      descKey: 'mha_5',
-    },
-    {
-      id: 12,
-      category: 'stations',
-      src: 'assets/Images/mhainside4.jpeg',
-      alt: 'MHA station operations',
-      titleKey: 'mha_6',
-      descKey: 'mha_6',
-    },
-    {
-      id: 13,
-      category: 'stations',
-      src: 'assets/Images/alattarstation2.jpeg',
-      alt: 'Al Attar station exterior',
-      titleKey: 'attar_1',
-      descKey: 'attar_1',
-    },
-    {
-      id: 14,
-      category: 'stations',
-      src: 'assets/Images/alattarstationinside.jpeg',
-      alt: 'Al Attar station yard',
-      titleKey: 'attar_2',
-      descKey: 'attar_2',
-    },
-    {
-      id: 15,
-      category: 'stations',
-      src: 'assets/Images/alattarstationinside2.jpeg',
-      alt: 'Al Attar station processing line',
-      titleKey: 'attar_3',
-      descKey: 'attar_3',
-    },
-    {
-      id: 16,
-      category: 'stations',
-      src: 'assets/Images/alattarstationinside3.jpeg',
-      alt: 'Al Attar station sorting and handling',
-      titleKey: 'attar_4',
-      descKey: 'attar_4',
-    },
-    {
-      id: 17,
-      category: 'stations',
-      src: 'assets/Images/alattarstationinside4.jpeg',
-      alt: 'QTC station modern facility',
-      titleKey: 'qtc_1',
-      descKey: 'qtc_1',
-    },
-    {
-      id: 18,
-      category: 'stations',
-      src: 'assets/Images/alattarstationinside5.jpeg',
-      alt: 'QTC station optical sorting',
-      titleKey: 'qtc_2',
-      descKey: 'qtc_2',
-    },
-    {
-      id: 19,
-      category: 'stations',
-      src: 'assets/Images/mhainside.jpeg',
-      alt: 'QTC station automated packaging',
-      titleKey: 'qtc_3',
-      descKey: 'qtc_3',
-    },
-    {
-      id: 20,
-      category: 'stations',
-      src: 'assets/Images/outsidemha.jpeg',
-      alt: 'QTC station loading and logistics',
-      titleKey: 'qtc_4',
-      descKey: 'qtc_4',
-    },
-  ];
 
   readonly visibleItems = computed(() => {
     const filter = this.activeFilter();
-    return filter === 'all' ? this.items : this.items.filter((item) => item.category === filter);
+    return filter === 'all' ? this.items() : this.items().filter((item) => item.category === filter);
   });
 
   readonly currentSelectedImage = computed(() => {
@@ -208,17 +56,17 @@ export class GalleryPageComponent {
 
   setFilter(filter: GalleryCategory): void {
     this.activeFilter.set(filter);
-    this.selectedImageIndex.set(null); // Reset on filter change just in case
+    this.closeImage();
   }
 
   openImage(index: number): void {
     this.selectedImageIndex.set(index);
-    document.body.style.overflow = 'hidden';
+    this.document.body.style.overflow = 'hidden';
   }
 
   closeImage(): void {
     this.selectedImageIndex.set(null);
-    document.body.style.overflow = '';
+    this.document.body.style.overflow = '';
   }
 
   nextImage(event: Event): void {
